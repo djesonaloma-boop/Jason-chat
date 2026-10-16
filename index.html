@@ -1,329 +1,220 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta name="theme-color" content="#050914">
-<meta name="description" content="JASON CHAT — Messagerie intelligente créée par Jason Aloma.">
-<title>JASON CHAT — Messagerie</title>
-
+<title>JASON FACE - Reste connecté avec Biso</title>
+<link rel="manifest" href="/manifest.json">
 <style>
-:root {
-  --bg: #050914;
-  --panel: #0b1426;
-  --blue: #087cff;
-  --gold: #d8aa45;
-  --green: #22c55e;
-  --text: #f4f7ff;
-  --muted: #98a7c2;
+:root{
+ --bg:#050914;--card:#0f1c32;--card2:#13203c;--border:rgba(255,255,255,.09);
+ --text:#eef3ff;--muted:#8da2bc;--blue:#1877f2;--blue2:#00c8ff;--green:#23c55e;
 }
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-body {
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  color: var(--text);
-  background:
-    radial-gradient(ellipse at 50% 15%, #123263 0%, transparent 48%),
-    var(--bg);
-  display: flex;
-  flex-direction: column;
-}
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 19px 6%;
-  border-bottom: 1px solid #ffffff12;
-  background: #050914c9;
-  backdrop-filter: blur(12px);
-  position: relative;
-  z-index: 2;
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.logo {
-  width: 43px;
-  height: 43px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--blue), #081c45);
-  border: 1px solid var(--gold);
-  display: grid;
-  place-items: center;
-  color: var(--gold);
-  font-weight: 900;
-  font-size: 19px;
-  box-shadow: 0 0 20px #087cff35;
-}
-.brand-name {
-  font-weight: 900;
-  letter-spacing: 1px;
-}
-.brand-name span {
-  color: var(--gold);
-}
-.online {
-  font-size: 11px;
-  color: var(--green);
-  margin-top: 4px;
-}
-.header-btn {
-  color: white;
-  text-decoration: none;
-  border: 1px solid #ffffff30;
-  padding: 10px 14px;
-  border-radius: 10px;
-  font-size: 13px;
-}
-main {
-  width: 100%;
-  max-width: 1100px;
-  margin: auto;
-  padding: 65px 22px 55px;
-  text-align: center;
-}
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid #d8aa4545;
-  background: #d8aa4510;
-  padding: 9px 14px;
-  border-radius: 50px;
-  color: var(--gold);
-  font-size: 11px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  margin-bottom: 28px;
-}
-.dot {
-  width: 7px;
-  height: 7px;
-  background: var(--green);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--green);
-}
-.hero-logo {
-  width: 105px;
-  height: 105px;
-  margin: 0 auto 24px;
-  border-radius: 30px;
-  border: 2px solid var(--gold);
-  background: linear-gradient(145deg, #123f83, #071127 75%);
-  display: grid;
-  place-items: center;
-  color: var(--gold);
-  font-size: 43px;
-  font-weight: 900;
-  box-shadow: 0 0 55px #087cff30;
-  animation: float 3s ease-in-out infinite;
-}
-h1 {
-  font-size: clamp(37px, 8vw, 67px);
-  letter-spacing: -2px;
-  line-height: 1.12;
-  margin-bottom: 19px;
-}
-h1 span {
-  color: var(--gold);
-}
-.description {
-  color: var(--muted);
-  max-width: 540px;
-  margin: 0 auto;
-  font-size: 16px;
-  line-height: 1.8;
-}
-.actions {
-  display: flex;
-  justify-content: center;
-  gap: 13px;
-  flex-wrap: wrap;
-  margin: 32px auto 35px;
-}
-.btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 9px;
-  min-width: 175px;
-  padding: 16px 22px;
-  border-radius: 13px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 14px;
-  transition: transform .2s, box-shadow .2s;
-}
-.btn:active {
-  transform: scale(.97);
-}
-.btn-primary {
-  color: #08101e;
-  background: linear-gradient(135deg, #f1ce75, var(--gold));
-  box-shadow: 0 8px 25px #d8aa4522;
-}
-.btn-secondary {
-  color: white;
-  background: #ffffff08;
-  border: 1px solid #ffffff30;
-}
-.features {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 13px;
-  max-width: 790px;
-  margin: 48px auto 0;
-  text-align: left;
-}
-.feature {
-  background: linear-gradient(145deg, #101d33, #091222);
-  border: 1px solid #ffffff12;
-  padding: 20px 16px;
-  border-radius: 17px;
-  transition: border-color .2s, transform .2s;
-}
-.feature:hover {
-  border-color: #d8aa4570;
-  transform: translateY(-3px);
-}
-.feature-icon {
-  font-size: 24px;
-  margin-bottom: 13px;
-}
-.feature h3 {
-  font-size: 14px;
-  margin-bottom: 9px;
-}
-.feature p {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.7;
-}
-.creator {
-  margin-top: 37px;
-  font-size: 12px;
-  color: var(--muted);
-}
-.creator strong {
-  color: var(--gold);
-}
-footer {
-  border-top: 1px solid #ffffff12;
-  text-align: center;
-  padding: 20px 12px;
-  color: #7f8ca5;
-  font-size: 11px;
-  line-height: 1.8;
-}
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-@media(max-width: 600px) {
-  header { padding: 14px 16px; }
-  .brand-name { font-size: 14px; }
-  .header-btn { padding: 9px 11px; }
-  main { padding: 45px 18px 40px; }
-  .hero-logo { width: 88px; height: 88px; font-size: 36px; }
-  .description { font-size: 14px; }
-  .actions { flex-direction: column; }
-  .btn { width: 100%; }
-  .features { grid-template-columns: 1fr; margin-top: 35px; }
-  .feature { display: flex; gap: 13px; align-items: flex-start; }
-  .feature-icon { margin: 0; }
-}
-@media(prefers-reduced-motion:reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-  }
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
+body{background:radial-gradient(ellipse at top,rgba(0,140,255,.12),transparent 50%),var(--bg);color:var(--text);padding-bottom:80px}
+button,input{font:inherit}button{cursor:pointer}
+.header{position:sticky;top:0;z-index:30;background:rgba(10,18,37,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px}
+.logo{font-weight:900;font-size:22px;letter-spacing:.5px}.logo b{color:var(--blue)}.logo span{color:var(--blue2)}
+.search{flex:1;max-width:360px;background:var(--card2);border:1px solid var(--border);border-radius:22px;padding:9px 14px;display:flex;gap:8px;align-items:center}
+.search input{background:transparent;border:0;outline:none;color:white;width:100%;font-size:13px}
+.h-icons{display:flex;gap:8px;align-items:center}
+.ico{width:40px;height:40px;border-radius:50%;background:var(--card2);border:1px solid var(--border);display:grid;place-items:center;font-size:18px;color:white}
+.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue2));display:grid;place-items:center;font-weight:900;font-size:16px;flex-shrink:0}
+.layout{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:280px 1fr 300px;gap:16px;padding:16px}
+.card{background:linear-gradient(180deg,#101d35,#0c152a);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.card-pad{padding:14px}
+.side{position:sticky;top:70px;height:fit-content}
+.menu{display:flex;align-items:center;gap:12px;padding:11px;border-radius:12px;cursor:pointer;font-size:14px;font-weight:600}
+.menu:hover{background:var(--card2)}
+.menu.active{background:#1877f21a;color:white;border:1px solid #1877f233}
+.stories{display:flex;gap:10px;overflow-x:auto;padding:12px;scrollbar-width:none}
+.story-card{min-width:115px;height:185px;border-radius:16px;position:relative;overflow:hidden;border:1px solid var(--border);flex-shrink:0;cursor:pointer;background:var(--card2)}
+.story-card img{width:100%;height:100%;object-fit:cover}
+.story-card.overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 20%,#000a 100%)}
+.story-card.s-name{position:absolute;bottom:8px;left:8px;right:8px;font-size:11px;font-weight:800;line-height:1.2}
+.story-add{display:grid;place-items:center;background:linear-gradient(135deg,#13203c,#0f1c32)}
+.create{display:flex;gap:10px;align-items:center}
+.create input{flex:1;background:var(--card2);border:1px solid var(--border);border-radius:22px;padding:11px 14px;color:white;outline:none}
+.create-actions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.c-btn{flex:1;border:0;border-radius:10px;padding:10px;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px}
+.c-btn.photo{background:#ff3b3015;color:#ff6b6b}.c-btn.video{background:#1877f215;color:#5aa5ff}.c-btn.feel{background:#ffcc0015;color:#ffcc33}
+.feed{display:flex;flex-direction:column;gap:14px}
+.post-h{display:flex;gap:10px;align-items:center}
+.post-h b{font-size:14px}.post-h small{color:var(--muted);font-size:11px}
+.post-text{margin:12px 0;font-size:14px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.post-img{width:100%;max-height:480px;object-fit:cover;border-radius:12px;margin-top:8px;border:1px solid var(--border)}
+.stats{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;padding:10px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:10px}
+.p-actions{display:flex}.p-actions button{flex:1;background:transparent;border:0;color:var(--muted);padding:11px;font-weight:800;font-size:13px;border-radius:8px}
+.p-actions button:hover{background:var(--card2);color:white}
+.comment-list{margin-top:8px}
+.cmt{font-size:13px;padding:8px 12px;background:var(--card2);border-radius:14px;margin:6px 0;display:flex;gap:8px}
+.cmt b{font-size:12px}
+.cmt-input{display:flex;gap:8px;margin-top:10px}
+.cmt-input input{flex:1;background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:10px 14px;color:white;outline:none}
+.online{display:flex;align-items:center;gap:10px;padding:9px;border-radius:10px;cursor:pointer}
+.online:hover{background:var(--card2)}
+.dot{width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green)}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,18,37,.98);border-top:1px solid var(--border);display:none;justify-content:space-around;padding:8px 0;z-index:40}
+.bottom-nav button{background:transparent;border:0;color:var(--muted);font-size:20px;padding:8px}
+.bottom-nav button.active{color:var(--blue)}
+.empty{text-align:center;color:var(--muted);padding:20px;font-size:13px}
+@media(max-width:1020px){.layout{grid-template-columns:1fr 320px}}
+@media(max-width:760px){.layout{grid-template-columns:1fr; padding:10px}.side.right{display:none}.side.left{display:none}.bottom-nav{display:flex}.search{display:none}}
 </style>
 </head>
-
 <body>
-<header>
-  <div class="brand">
-    <div class="logo">JC</div>
-    <div>
-      <div class="brand-name">JASON <span>CHAT</span></div>
-      <div class="online">● Messagerie nouvelle génération</div>
-    </div>
-  </div>
-  <a class="header-btn" href="login.html">Connexion</a>
+
+<header class="header">
+ <div class="logo">JASON <b>FACE</b> <span style="font-size:10px;background:var(--blue);color:white;padding:2px 6px;border-radius:10px;margin-left:4px">BETA</span></div>
+ <div class="search">🔍 <input id="searchInput" placeholder="Rechercher sur JASON FACE"></div>
+ <div class="h-icons">
+  <button class="ico" onclick="location.href='/dashboard.html'">📊</button>
+  <button class="ico" onclick="location.href='/messager.html'">💬</button>
+  <button class="ico" onclick="location.href='/parametres.html'">⚙️</button>
+  <div class="avatar" id="topAvatar">J</div>
+ </div>
 </header>
 
-<main>
-  <div class="badge">
-    <span class="dot"></span>
-    CONNECTE-TOI AU MONDE
+<div class="layout">
+ <!-- LEFT -->
+ <aside class="side left">
+  <div class="card card-pad">
+   <div class="menu active"><div class="avatar" id="leftAvatar">J</div><div><div id="leftName" style="font-weight:900">Chargement...</div><small id="leftPhone" style="color:var(--muted)"></small></div></div>
+   <div class="menu" onclick="location.href='/'">📰 Fil d'actualité</div>
+   <div class="menu" onclick="location.href='/messager.html'">💬 Messager <span style="margin-left:auto;background:var(--blue);color:white;padding:2px 7px;border-radius:10px;font-size:10px">Nouveau</span></div>
+   <div class="menu" onclick="location.href='/story.html'">📖 Stories</div>
+   <div class="menu" onclick="location.href='/dashboard.html'">📊 Dashboard Admin</div>
+   <div class="menu">👥 Groupes</div>
+   <div class="menu">🏪 Marketplace</div>
+   <div class="menu" onclick="location.href='/parametres.html'">⚙️ Paramètres</div>
+  </div>
+  <div class="card card-pad" style="margin-top:14px">
+   <b style="font-size:13px">Mes raccourcis JASON BUSINESS</b>
+   <div class="menu">🛒 Boost Réseaux</div>
+   <div class="menu">💳 Recharger solde</div>
+   <div class="menu">👑 Devenir VIP</div>
+  </div>
+ </aside>
+
+ <!-- CENTER -->
+ <main>
+  <div class="card card-pad stories" id="storiesRow"></div>
+
+  <div class="card card-pad" style="margin-top:14px">
+   <div class="create"><div class="avatar" id="createAvatar">J</div><input id="postText" placeholder="Quoi de neuf, boss?"></div>
+   <input id="postImage" placeholder="Lien image (optionnel) https://..." style="width:100%;margin-top:10px;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px;color:white;outline:none;font-size:13px">
+   <div class="create-actions">
+    <button class="c-btn photo" onclick="document.getElementById('postImage').focus()">📸 Photo</button>
+    <button class="c-btn video">🎥 Reel</button>
+    <button class="c-btn feel" onclick="document.getElementById('postText').value+=' 😊'">😊 Humeur</button>
+    <button class="c-btn" style="background:var(--blue);color:white;flex:.8" onclick="createPost()">Publier</button>
+   </div>
   </div>
 
-  <div class="hero-logo">JC</div>
+  <div class="feed" id="feed" style="margin-top:14px"></div>
+ </main>
 
-  <h1>Parle librement.<br><span>Reste connecté.</span></h1>
-
-  <p class="description">
-    Bienvenue sur JASON CHAT, ton espace de communication.
-    Prépare-toi à échanger des messages et à retrouver tes contacts
-    dans une interface moderne conçue pour toi.
-  </p>
-
-  <div class="actions">
-    <a class="btn btn-primary" href="register.html">
-      Créer mon compte <span>→</span>
-    </a>
-    <a class="btn btn-secondary" href="login.html">
-      <span>↪</span> Se connecter
-    </a>
+ <!-- RIGHT -->
+ <aside class="side right">
+  <div class="card card-pad"><b>Contacts - Biso</b><div id="contacts" style="margin-top:10px"></div></div>
+  <div class="card card-pad" style="margin-top:14px;font-size:11px;color:var(--muted);line-height:1.6">
+   <b style="color:white">JASON FACE</b><br>
+   Réseau social de JASON BUSINESS<br>
+   Firebase: starlink-investit<br>
+   Code Admin: 10092007<br><br>
+   Confidentialité · Conditions · Biso
   </div>
+ </aside>
+</div>
 
-  <section class="features">
-    <article class="feature">
-      <div class="feature-icon">💬</div>
-      <div>
-        <h3>Messages privés</h3>
-        <p>Une interface pensée pour faciliter les conversations entre utilisateurs.</p>
-      </div>
-    </article>
+<div class="bottom-nav">
+ <button class="active" onclick="location.href='/'">📰</button>
+ <button onclick="location.href='/messager.html'">💬</button>
+ <button onclick="location.href='/story.html'">📖</button>
+ <button onclick="location.href='/parametres.html'">⚙️</button>
+ <button onclick="location.href='/dashboard.html'">👤</button>
+</div>
 
-    <article class="feature">
-      <div class="feature-icon">📷</div>
-      <div>
-        <h3>Photos et médias</h3>
-        <p>Prépare-toi à partager des photos et d'autres contenus compatibles.</p>
-      </div>
-    </article>
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    <article class="feature">
-      <div class="feature-icon">🔒</div>
-      <div>
-        <h3>Compte personnel</h3>
-        <p>Un espace personnel pour accéder à tes futures conversations.</p>
-      </div>
-    </article>
-  </section>
+const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
+const app=getApps().length?getApps()[0]:initializeApp(firebaseConfig);
+const db=getDatabase(app);
+const ROOT="jasonBusiness";
+const POSTS=`${ROOT}/facebook_posts`;
+const USERS=`${ROOT}/users`;
 
-  <div class="creator">
-    Une création de <strong>Jason Aloma 🇨🇩</strong><br>
-    Développeur congolais · Kinshasa, RDC
-  </div>
-</main>
+function getPhone(){return (localStorage.getItem("jasonBusinessUserPhone")||localStorage.getItem("userPhone")||localStorage.getItem("telephone")||"0820000000").trim();}
+function getName(){return localStorage.getItem("jasonBusinessUserName")||localStorage.getItem("nom")||getPhone()||"JASON User";}
 
-<footer>
-  © <span id="year"></span> JASON CHAT · Tous droits réservés.<br>
-  Communication et technologie au service de tous.
-</footer>
+const phone=getPhone(); const name=getName();
+const letter=name[0]?.toUpperCase()||"J";
+["topAvatar","leftAvatar","createAvatar"].forEach(id=>{const el=document.getElementById(id); if(el) el.textContent=letter;});
+document.getElementById("leftName").textContent=name;
+document.getElementById("leftPhone").textContent=phone;
 
-<script>
-document.getElementById("year").textContent = new Date().getFullYear();
+onValue(ref(db, USERS), snap=>{
+  let storiesHTML=`<div class="story-card story-add" onclick="document.getElementById('postText').focus()"><div style="text-align:center"><div style="width:44px;height:44px;border-radius:50%;background:var(--blue);display:grid;place-items:center;margin:0 auto 8px;font-size:22px">+</div><small style="font-weight:800">Créer story<br><span style="color:var(--muted);font-weight:400">Biso</span></small></div></div>`;
+  let contactsHTML="";
+  let count=0;
+  snap.forEach(child=>{
+    const d=child.val()||{}; const display=d.nom||child.key; const initial=display[0]?.toUpperCase()||"U";
+    if(count<10){
+      storiesHTML+=`<div class="story-card"><div style="width:100%;height:100%;display:grid;place-items:center;background:linear-gradient(135deg,#1877f2,#00c8ff);font-size:28px;font-weight:900">${initial}</div><div class="overlay"></div><div class="s-name">${display.slice(0,12)}</div></div>`;
+      count++;
+    }
+    contactsHTML+=`<div class="online"><div class="avatar" style="width:32px;height:32px;font-size:12px">${initial}</div><span style="font-size:13px">${child.key.slice(0,14)}</span><span class="dot" style="margin-left:auto"></span></div>`;
+  });
+  document.getElementById("storiesRow").innerHTML=storiesHTML;
+  document.getElementById("contacts").innerHTML=contactsHTML||"<div class='empty'>Aucun contact</div>";
+});
+
+window.createPost=async()=>{
+  const text=document.getElementById("postText").value.trim();
+  const image=document.getElementById("postImage").value.trim();
+  if(!text &&!image){ alert("Écris quelque chose boss"); return; }
+  await push(ref(db, POSTS), { telephone:phone, nom:name, text, image, likes:0, comments:{}, createdAt:Date.now(), date:new Date().toLocaleString("fr-FR") });
+  document.getElementById("postText").value=""; document.getElementById("postImage").value="";
+};
+
+onValue(ref(db, POSTS), snap=>{
+  const feed=document.getElementById("feed"); feed.innerHTML="";
+  const posts=[]; snap.forEach(c=> posts.push({id:c.key,...c.val()}));
+  posts.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  if(!posts.length){ feed.innerHTML="<div class='card card-pad empty'>Aucun post - Sois le premier à publier sur JASON FACE 👑</div>"; return; }
+  posts.forEach(p=>{
+    const commentsObj=p.comments||{}; const commentsArr=Object.values(commentsObj);
+    const commentsHTML=commentsArr.slice(-3).map(c=>`<div class="cmt"><div class="avatar" style="width:26px;height:26px;font-size:10px">${(c.nom||"U")[0]}</div><div><b>${(c.nom||c.telephone||"User").slice(0,16)}</b><br>${String(c.text||"").replace(/</g,"&lt;")}</div></div>`).join("");
+    const div=document.createElement("div"); div.className="card card-pad";
+    div.innerHTML=`
+      <div class="post-h"><div class="avatar">${(p.nom||"J")[0].toUpperCase()}</div><div><b>${(p.nom||p.telephone||"JASON User").slice(0,20)}</b><br><small>${p.date||""} · 🌍 Biso</small></div><button style="margin-left:auto;background:transparent;border:0;color:var(--muted)">⋯</button></div>
+      <div class="post-text">${String(p.text||"").replace(/</g,"&lt;")}</div>
+      ${p.image?`<img class="post-img" src="${p.image}" onerror="this.style.display='none'" loading="lazy">`:""}
+      <div class="stats"><span>👍 ${p.likes||0} J'aime</span><span>${commentsArr.length} commentaires</span></div>
+      <div class="p-actions"><button onclick="likePost('${p.id}')">👍 J'aime</button><button onclick="focusCmt('${p.id}')">💬 Commenter</button><button onclick="sharePost('${p.id}')">↗️ Partager</button></div>
+      <div class="comment-list" id="clist-${p.id}">${commentsHTML}</div>
+      <div class="cmt-input"><div class="avatar" style="width:32px;height:32px;font-size:12px">${letter}</div><input id="input-${p.id}" placeholder="Écrire un commentaire..." onkeydown="if(event.key==='Enter')commentPost('${p.id}')"><button onclick="commentPost('${p.id}')" style="background:var(--blue);border:0;border-radius:20px;padding:0 14px;color:white;font-weight:800">➤</button></div>
+    `;
+    feed.appendChild(div);
+  });
+});
+
+window.likePost=async(id)=>{ await runTransaction(ref(db, `${POSTS}/${id}/likes`), curr=>(Number(curr)||0)+1); };
+window.commentPost=async(id)=>{
+  const input=document.getElementById(`input-${id}`); const text=input?.value.trim(); if(!text) return;
+  await push(ref(db, `${POSTS}/${id}/comments`), { telephone:phone, nom:name, text, createdAt:Date.now() });
+  if(input) input.value="";
+};
+window.focusCmt=id=> document.getElementById(`input-${id}`)?.focus();
+window.sharePost=id=>{ const url=location.origin+"#post-"+id; navigator.clipboard.writeText(url).then(()=>alert("Lien JASON FACE copié: "+url)); };
+
+// Search filter
+document.getElementById("searchInput")?.addEventListener("input", e=>{
+  const q=e.target.value.toLowerCase(); document.querySelectorAll("#feed.card").forEach(card=>{ card.style.display=card.innerText.toLowerCase().includes(q)?"":"none"; });
+});
 </script>
 </body>
 </html>
