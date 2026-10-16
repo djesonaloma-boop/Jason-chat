@@ -1,76 +1,143 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#050a14">
-<title>Mon espace — JASON BUSINESS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>JASON FACE - Dashboard</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:#050a14;color:#f5f7fb;font-family:Arial,sans-serif;padding:22px}
-header{display:flex;align-items:center;gap:12px;margin-bottom:25px}
-.logo{background:#00d4ff;color:#06111e;border-radius:13px;padding:13px;font-weight:900}
-.card{max-width:600px;margin:auto;background:#0c1525;border:1px solid #26364b;border-radius:20px;padding:23px}
-p{color:#a7b5c9;overflow-wrap:anywhere}
-button{width:100%;padding:14px;background:#d8aa45;border:0;border-radius:10px;font-weight:800;margin-top:15px}
+:root{--bg:#050914;--card:#0f1c32;--card2:#13203c;--border:rgba(255,255,255,.09);--text:#eef3ff;--muted:#8da2bc;--blue:#1877f2;--blue2:#00c8ff;--green:#23c55e;--orange:#ff8c00}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:radial-gradient(ellipse at top,rgba(0,140,255,.12),transparent 50%),var(--bg);color:var(--text);padding-bottom:90px}
+.header{position:sticky;top:0;z-index:20;background:rgba(10,18,37,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:12px 14px}
+.logo{font-weight:900;font-size:20px}.logo b{color:var(--blue)}
+.card{background:linear-gradient(180deg,#101d35,#0c152a);border:1px solid var(--border);border-radius:16px}
+.card-pad{padding:16px}
+.wrap{max-width:1100px;margin:0 auto;padding:14px;display:grid;grid-template-columns:1fr 340px;gap:14px}
+.hero{display:flex;align-items:center;gap:14px}
+.avatar{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue2));display:grid;place-items:center;font-weight:900;font-size:20px}
+.balance{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bal{background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:12px}
+.bal small{color:var(--muted);font-size:11px}.bal b{font-size:18px;display:block;margin-top:4px}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.act{background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer}
+.act:hover{border-color:var(--blue)}
+.act span{font-size:22px;display:block;margin-bottom:4px}
+.act small{font-size:11px;font-weight:800}
+.vip-banner{margin-top:14px;background:linear-gradient(100deg,#533b10,#d8aa45,#76501b);color:#111;border-radius:14px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.stats{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.feed-mini{margin-top:14px}
+.post-mini{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #ffffff0a;font-size:13px}
+.side{position:sticky;top:70px;height:fit-content}
+.menu{padding:11px;border-radius:10px;cursor:pointer;display:flex;gap:10px;align-items:center;font-size:13px;font-weight:700}
+.menu:hover{background:var(--card2)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.btn-blue{background:var(--blue);color:white}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,18,37,.98);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:8px 0}
+.bottom-nav button{background:transparent;border:0;color:var(--muted);font-size:22px;padding:8px}
+@media(max-width:860px){.wrap{grid-template-columns:1fr}.side{display:none}.actions{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
-<header>
-<div class="logo">JB</div>
-<div><strong>JASON BUSINESS</strong><br><small>Mon espace membre</small></div>
-</header>
-<main class="card">
-<h1>Bienvenue !</h1>
-<p id="status">Vérification de la session...</p>
-<div id="profile" hidden>
-<p><strong>Nom :</strong> <span id="name"></span></p>
-<p><strong>Gmail :</strong> <span id="email"></span></p>
-<p><strong>Téléphone :</strong> <span id="phone"></span></p>
-<p><strong>Parrainage :</strong> <span id="referral"></span></p>
-<button id="logout">Se déconnecter</button>
+
+<div class="header">
+ <div class="logo">JASON <b>FACE</b></div>
+ <div style="display:flex;gap:8px"><button class="btn btn-blue" style="padding:8px 12px;font-size:12px" onclick="location.href='/'">📰 Fil</button><div class="avatar" id="topAvatar" style="width:36px;height:36px;font-size:14px">J</div></div>
 </div>
-</main>
 
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
-<script src="firebase-config.js"></script>
-<script>
-auth.onAuthStateChanged(async user => {
-  const status = document.getElementById("status");
-  const profile = document.getElementById("profile");
+<div class="wrap">
+ <main>
+  <div class="card card-pad">
+   <div class="hero"><div class="avatar" id="mainAvatar">J</div><div><b id="userName" style="font-size:18px">Chargement...</b><br><small id="userPhone" style="color:var(--muted)"></small><br><small id="vipBadge" style="background:#22c55e1a;color:#22c55e;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:800">Standard</small></div><button class="btn btn-blue" style="margin-left:auto" onclick="location.href='/parametres.html'">⚙️</button></div>
 
-  if (!user) {
-    location.replace("login.html");
-    return;
-  }
+   <div class="balance">
+    <div class="bal"><small>💰 Solde principal</small><b id="balMain" style="color:var(--green)">0 FC</b></div>
+    <div class="bal"><small>👑 Réduction VIP</small><b id="balVip">0%</b></div>
+    <div class="bal"><small>📊 Posts</small><b id="balPosts">0</b></div>
+   </div>
 
-  try {
-    const snapshot = await db.ref("users/" + user.uid).once("value");
-    const data = snapshot.val() || {};
+   <div class="actions">
+    <div class="act" onclick="location.href='/'"><span>📝</span><small>Publier</small></div>
+    <div class="act" onclick="alert('Page recharge - à connecter')"><span>💳</span><small>Recharger</small></div>
+    <div class="act" onclick="location.href='/story.html'"><span>📖</span><small>Story</small></div>
+    <div class="act" onclick="location.href='/messager.html'"><span>💬</span><small>Messages</small></div>
+   </div>
 
-    document.getElementById("name").textContent =
-      data.name || user.displayName || "Membre";
-    document.getElementById("email").textContent = user.email || "";
-    document.getElementById("phone").textContent = data.phone || "Non renseigné";
-    document.getElementById("referral").textContent = data.referral || "Aucun";
+   <div class="vip-banner" id="vipBanner">
+    <div><b>👑 Passe VIP</b><br><small>Obtiens jusqu'à -20% sur tes commandes</small></div>
+    <button class="btn" style="background:#111;color:#d8aa45" onclick="location.href='/parametres.html'">Activer</button>
+   </div>
+  </div>
 
-    status.hidden = true;
-    profile.hidden = false;
-  } catch (error) {
-    status.textContent = "Impossible de charger le profil. Vérifie les règles Firebase et réessaie.";
-  }
+  <div class="card card-pad feed-mini" style="margin-top:14px">
+   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>Derniers posts Biso</b><a href="/" style="color:var(--blue2);font-size:12px;text-decoration:none">Voir tout</a></div>
+   <div id="miniFeed"><div style="color:var(--muted);font-size:13px;text-align:center;padding:20px">Chargement feed JASON FACE...</div></div>
+  </div>
+ </main>
+
+ <aside class="side">
+  <div class="card card-pad">
+   <b>Navigation</b>
+   <div class="menu" onclick="location.href='/'">📰 Fil d'actualité</div>
+   <div class="menu" onclick="location.href='/messager.html'">💬 Messager</div>
+   <div class="menu" onclick="location.href='/story.html'">📖 Stories</div>
+   <div class="menu" onclick="location.href='/parametres.html'">👑 VIP & Paramètres</div>
+   <div class="menu" onclick="location.href='/login.html'">🚪 Déconnexion</div>
+  </div>
+  <div class="card card-pad" style="margin-top:14px">
+   <b>Statut Firebase</b>
+   <div id="fbStatus" style="margin-top:8px;font-size:12px;color:var(--muted)">Connexion...</div>
+  </div>
+ </aside>
+</div>
+
+<div class="bottom-nav">
+ <button onclick="location.href='/'">📰</button>
+ <button onclick="location.href='/dashboard.html'" style="color:var(--blue)">📊</button>
+ <button onclick="location.href='/messager.html'">💬</button>
+ <button onclick="location.href='/story.html'">📖</button>
+ <button onclick="location.href='/parametres.html'">⚙️</button>
+</div>
+
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
+const app=getApps().length?getApps()[0]:initializeApp(firebaseConfig);
+const db=getDatabase(app);
+
+function getPhone(){return (localStorage.getItem("jasonBusinessUserPhone")||localStorage.getItem("userPhone")||"").trim();}
+function getName(){return localStorage.getItem("jasonBusinessUserName")||getPhone()||"JASON User";}
+const phone=getPhone();
+if(!phone){ location.href="/login.html"; }
+
+const name=getName();
+const letter=name[0]?.toUpperCase()||"J";
+document.getElementById("mainAvatar").textContent=letter;
+document.getElementById("topAvatar").textContent=letter;
+document.getElementById("userName").textContent=name;
+document.getElementById("userPhone").textContent=phone;
+
+onValue(ref(db, `jasonBusiness/users/${phone}`), snap=>{
+  const d=snap.val()||{};
+  const bal=Number(d.solde_principal??d.solde??0)||0;
+  document.getElementById("balMain").textContent=bal.toLocaleString("fr-FR")+" FC";
+  document.getElementById("balVip").textContent=(d.vipDiscount||0)+"%";
+  const isVip=d.vip||d.isVip||false;
+  document.getElementById("vipBadge").textContent=isVip?`👑 ${d.vipLevel||"VIP"} -${d.vipDiscount||0}%`:"Standard";
+  document.getElementById("vipBadge").style.background=isVip?"#22c55e22":"#ffffff10";
+  document.getElementById("vipBadge").style.color=isVip?"#22c55e":"#8da2bc";
+  if(isVip){ document.getElementById("vipBanner").style.display="none"; }
+  document.getElementById("fbStatus").innerHTML=`✅ Connecté<br>Solde: ${bal} FC<br>VIP: ${d.vipLevel||"Aucun"}<br>Source: jasonBusiness/users/${phone}`;
 });
 
-document.getElementById("logout").addEventListener("click", async () => {
-  try {
-    await auth.signOut();
-    location.replace("login.html");
-  } catch (error) {
-    document.getElementById("status").textContent = error.message;
-  }
+onValue(ref(db, `jasonBusiness/facebook_posts`), snap=>{
+  let posts=[]; snap.forEach(c=>posts.push({id:c.key,...c.val()}));
+  posts.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  document.getElementById("balPosts").textContent=posts.filter(p=>p.telephone===phone).length;
+  const mini=document.getElementById("miniFeed");
+  if(!posts.length){ mini.innerHTML="<div style='color:var(--muted);font-size:12px;text-align:center'>Aucun post - publie le premier!</div>"; return; }
+  mini.innerHTML=posts.slice(0,5).map(p=>`<div class="post-mini"><div class="avatar" style="width:32px;height:32px;font-size:12px">${(p.nom||"J")[0]}</div><div><b style="font-size:12px">${(p.nom||p.telephone||"User").slice(0,20)}</b> <small style="color:var(--muted)">${p.date||""}</small><br><span style="font-size:13px">${String(p.text||"").slice(0,80).replace(/</g,"&lt;")}${String(p.text||"").length>80?"...":""}</span></div></div>`).join("");
 });
 </script>
 </body>
