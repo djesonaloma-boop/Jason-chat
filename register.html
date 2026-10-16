@@ -1,143 +1,72 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#050a14">
-<title>Inscription — JASON BUSINESS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>JASON FACE - Inscription</title>
 <style>
-:root{--bg:#050a14;--card:#0c1525;--blue:#00d4ff;--gold:#d8aa45;--text:#f5f7fb;--muted:#9aa8bd}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#102644,var(--bg) 65%);font-family:Arial,sans-serif;color:var(--text);display:flex;align-items:center;justify-content:center;padding:20px}
-.card{width:100%;max-width:440px;background:var(--card);border:1px solid #26364b;border-radius:22px;padding:25px;box-shadow:0 20px 60px #0008}
-.logo{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--blue),#1763a8);display:grid;place-items:center;color:#06111e;font-weight:900;font-size:24px;margin-bottom:15px}
-h1{font-size:25px;margin:0 0 8px}
-p{color:var(--muted);line-height:1.5;font-size:14px}
-input{width:100%;padding:14px;margin:7px 0;background:#07101e;border:1px solid #2b3a50;border-radius:11px;color:white;font-size:15px;outline:none}
-input:focus{border-color:var(--blue)}
-button{width:100%;padding:15px;margin-top:15px;border:0;border-radius:11px;background:linear-gradient(90deg,var(--blue),#58a9ff);color:#06111e;font-weight:800;font-size:15px}
-label{font-size:13px;color:#d9e2ef;display:flex;gap:9px;align-items:flex-start;margin-top:15px}
-label input{width:auto;margin:2px 0}
-a{color:var(--gold)}
-#message{font-size:14px;overflow-wrap:anywhere}
+:root{--bg:#050914;--card:#0f1c32;--border:rgba(255,255,255,.09);--text:#eef3ff;--muted:#8da2bc;--blue:#1877f2;--green:#23c55e}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{min-height:100vh;background:radial-gradient(ellipse at top,rgba(0,140,255,.15),transparent 55%),var(--bg);display:flex;align-items:center;justify-content:center;padding:20px;color:var(--text)}
+.card{width:100%;max-width:440px;background:linear-gradient(180deg,#101d35,#0c152a);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:0 20px 80px #0006}
+.logo{font-weight:900;font-size:24px;text-align:center;margin-bottom:6px}.logo b{color:var(--blue)}
+.sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:20px}
+.input{width:100%;background:#13203c;border:1px solid var(--border);border-radius:12px;padding:13px;color:white;outline:none;margin-bottom:12px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{width:100%;border:0;border-radius:12px;padding:13px;font-weight:900;cursor:pointer}
+.btn-blue{background:var(--blue);color:white}.btn-dark{background:#1b2947;color:white}
+.error{color:#ff6b6b;font-size:12px;min-height:18px;text-align:center;margin:8px 0}
 </style>
 </head>
 <body>
-<main class="card">
-<div class="logo">JB</div>
-<h1>Créer un compte</h1>
-<p>JASON BUSINESS — Web • Design • Digital • Intelligence artificielle</p>
-<form id="registerForm">
-<input id="name" placeholder="Nom complet" autocomplete="name" required maxlength="100">
-<input id="phone" type="tel" placeholder="Numéro de téléphone" autocomplete="tel" required maxlength="25">
-<input id="email" type="email" placeholder="Adresse Gmail" autocomplete="email" required>
-<input id="password" type="password" placeholder="Mot de passe (6 caractères minimum)" autocomplete="new-password" minlength="6" required>
-<input id="confirmPassword" type="password" placeholder="Confirmer le mot de passe" autocomplete="new-password" minlength="6" required>
-<input id="referral" placeholder="Code de parrainage (facultatif)" maxlength="50">
-<label>
-<input id="terms" type="checkbox" required>
-<span>J’accepte les conditions d’utilisation et confirme l’exactitude des informations fournies.</span>
-</label>
-<button id="registerBtn" type="submit">Créer mon compte</button>
-<p id="message" role="status" aria-live="polite"></p>
-</form>
-<p>Tu as déjà un compte ? <a href="login.html">Se connecter</a></p>
-<p>🔒 Ne partage jamais ton mot de passe.</p>
-</main>
+<div class="card">
+ <div class="logo">JASON <b>FACE</b></div>
+ <div class="sub">Crée ton compte Biso — rapide et gratuit</div>
+ <div class="row"><input id="nom" class="input" placeholder="Nom complet"><input id="prenom" class="input" placeholder="Prénom"></div>
+ <input id="phone" class="input" type="tel" placeholder="Numéro WhatsApp (082...)">
+ <input id="password" class="input" type="password" placeholder="Mot de passe (min 6)">
+ <input id="confirm" class="input" type="password" placeholder="Confirmer mot de passe">
+ <div id="error" class="error"></div>
+ <button class="btn btn-blue" id="regBtn">S'inscrire</button>
+ <div style="height:12px"></div>
+ <button class="btn btn-dark" onclick="location.href='/login.html'">Déjà un compte? Se connecter</button>
+ <div style="margin-top:14px;font-size:11px;color:var(--muted);text-align:center">En créant ton compte, ton profil sera créé dans Firebase : jasonBusiness/users/{ton numéro} avec solde 0 FC</div>
+</div>
 
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
-<script src="firebase-config.js"></script>
-<script>
-const form = document.getElementById("registerForm");
-const message = document.getElementById("message");
-const btn = document.getElementById("registerBtn");
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
+const app=getApps().length?getApps()[0]:initializeApp(firebaseConfig);
+const db=getDatabase(app);
+const $=id=>document.getElementById(id);
 
-function showMessage(text, ok=false) {
-  message.textContent = text;
-  message.style.color = ok ? "#4ade80" : "#ff8d8d";
-}
-
-function friendlyError(error) {
-  const errors = {
-    "auth/email-already-in-use": "Cette adresse possède déjà un compte.",
-    "auth/invalid-email": "Adresse Gmail invalide.",
-    "auth/weak-password": "Choisis un mot de passe plus robuste.",
-    "auth/network-request-failed": "Connexion Internet indisponible.",
-    "auth/operation-not-allowed": "Active Email/Password dans Firebase Authentication.",
-    "auth/too-many-requests": "Trop de tentatives. Réessaie plus tard.",
-    "PERMISSION_DENIED": "Firebase Database refuse l'enregistrement. Vérifie les règles."
-  };
-  return errors[error.code] || error.message || "Une erreur est survenue.";
-}
-
-form.addEventListener("submit", async function(e) {
-  e.preventDefault();
-
-  const name = document.getElementById("name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const email = document.getElementById("email").value.trim().toLowerCase();
-  const password = document.getElementById("password").value;
-  const confirmation = document.getElementById("confirmPassword").value;
-  const referral = document.getElementById("referral").value.trim();
-
-  if (!name || !phone || !email) {
-    return showMessage("Remplis tous les champs obligatoires.");
-  }
-  if (password !== confirmation) {
-    return showMessage("Les deux mots de passe ne correspondent pas.");
-  }
-  if (password.length < 6) {
-    return showMessage("Le mot de passe doit contenir au moins 6 caractères.");
-  }
-  if (!document.getElementById("terms").checked) {
-    return showMessage("Accepte les conditions pour continuer.");
-  }
-
-  btn.disabled = true;
-  btn.textContent = "Création du compte...";
-  showMessage("");
-
-  let credential = null;
-
-  try {
-    credential = await auth.createUserWithEmailAndPassword(email, password);
-    const user = credential.user;
-
-    await user.updateProfile({ displayName: name });
-
-    const profile = {
-      name: name,
-      phone: phone,
-      referral: referral,
-      createdAt: firebase.database.ServerValue.TIMESTAMP
-    };
-
-    const updates = {};
-    for (const [key, value] of Object.entries(profile)) {
-      updates["users/" + user.uid + "/" + key] = value;
-    }
-    await db.ref().update(updates);
-
-    showMessage("Compte créé avec succès ! Ouverture de ton espace...", true);
-    location.replace("dashboard.html");
-
-  } catch (error) {
-    if (credential && credential.user) {
-      showMessage(
-        "Le compte d'authentification existe, mais le profil n'a pas pu être enregistré. " +
-        "Vérifie les règles Firebase, puis reconnecte-toi. Détail : " + friendlyError(error)
-      );
-    } else {
-      showMessage(friendlyError(error));
-    }
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Créer mon compte";
-  }
-});
+$("regBtn").onclick=async()=>{
+  const nom=$("nom").value.trim(); const prenom=$("prenom").value.trim(); const phone=$("phone").value.trim();
+  const pass=$("password").value.trim(); const conf=$("confirm").value.trim(); const err=$("error");
+  if(!nom||!phone||!pass){ err.textContent="Remplis tout"; return; }
+  if(pass.length<6){ err.textContent="Mot de passe min 6 caractères"; return; }
+  if(pass!==conf){ err.textContent="Mots de passe différents"; return; }
+  err.textContent="Vérification...";
+  try{
+    const exists=await get(ref(db, `jasonBusiness/users/${phone}`));
+    if(exists.exists()){ err.textContent="❌ Ce numéro existe déjà - Connecte-toi"; return; }
+    err.textContent="Création...";
+    await set(ref(db, `jasonBusiness/users/${phone}`), {
+      nom: nom+" "+prenom, name: nom+" "+prenom, telephone: phone, phone: phone,
+      mot_de_passe: pass, password: pass,
+      solde_principal: 0, solde:0, balance:0,
+      vip:false, vipLevel:"Aucun", vipStatus:"Inactif",
+      createdAt: Date.now(), date: new Date().toLocaleString("fr-FR"),
+      source:"jasonFace"
+    });
+    localStorage.setItem("jasonBusinessUserPhone", phone);
+    localStorage.setItem("userPhone", phone);
+    localStorage.setItem("jasonBusinessUserName", nom+" "+prenom);
+    err.textContent="✅ Compte créé";
+    location.href="/";
+  }catch(e){ err.textContent="Erreur: "+e.message; }
+};
 </script>
 </body>
 </html>
