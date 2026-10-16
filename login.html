@@ -1,90 +1,77 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#050a14">
-<title>Connexion — JASON BUSINESS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>JASON FACE - Connexion</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#102644,#050a14 65%);color:#f5f7fb;font-family:Arial,sans-serif;display:grid;place-items:center;padding:20px}
-.card{width:100%;max-width:420px;background:#0c1525;border:1px solid #26364b;border-radius:22px;padding:25px}
-.logo{width:54px;height:54px;display:grid;place-items:center;background:#00d4ff;color:#06111e;border-radius:16px;font-size:24px;font-weight:900}
-h1{font-size:25px;margin-bottom:8px}
-p{color:#9aa8bd;line-height:1.5}
-input{width:100%;padding:14px;margin:8px 0;background:#07101e;border:1px solid #2b3a50;border-radius:11px;color:white;font-size:15px}
-button{width:100%;padding:15px;margin-top:12px;border:0;border-radius:11px;background:linear-gradient(90deg,#00d4ff,#58a9ff);font-weight:800}
-a{color:#d8aa45}
-#message{overflow-wrap:anywhere;font-size:14px}
+:root{--bg:#050914;--card:#0f1c32;--border:rgba(255,255,255,.09);--text:#eef3ff;--muted:#8da2bc;--blue:#1877f2;--blue2:#00c8ff}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{min-height:100vh;background:radial-gradient(ellipse at top,rgba(0,140,255,.15),transparent 55%),var(--bg);display:flex;align-items:center;justify-content:center;padding:20px;color:var(--text)}
+.wrap{width:100%;max-width:1000px;display:grid;grid-template-columns:1fr 400px;gap:40px;align-items:center}
+.left h1{font-size:54px;font-weight:900;line-height:.9}.left h1 b{color:var(--blue)}.left h1 span{color:var(--blue2)}
+.left p{margin-top:18px;color:var(--muted);font-size:18px;line-height:1.5;max-width:420px}
+.card{background:linear-gradient(180deg,#101d35,#0c152a);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 20px 80px #0006}
+.input{width:100%;background:#13203c;border:1px solid var(--border);border-radius:12px;padding:14px 14px;color:white;outline:none;margin-bottom:12px;font-size:15px}
+.input:focus{border-color:var(--blue)}
+.btn{width:100%;border:0;border-radius:12px;padding:14px;font-weight:900;font-size:15px;cursor:pointer}
+.btn-blue{background:var(--blue);color:white}.btn-green{background:#23c55e;color:white;margin-top:16px}
+.divider{height:1px;background:var(--border);margin:18px 0}
+.small{font-size:12px;color:var(--muted);text-align:center;line-height:1.6;margin-top:12px}
+.error{color:#ff6b6b;font-size:12px;min-height:18px;text-align:center;margin-top:8px}
+.logo{font-weight:900;font-size:26px;margin-bottom:20px}.logo b{color:var(--blue)}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}.left h1{font-size:40px}.left{display:none}}
 </style>
 </head>
 <body>
-<main class="card">
-<div class="logo">JB</div>
-<h1>Connexion</h1>
-<p>Connecte-toi à ton espace JASON BUSINESS.</p>
-<form id="loginForm">
-<input id="email" type="email" placeholder="Adresse Gmail" autocomplete="email" required>
-<input id="password" type="password" placeholder="Mot de passe" autocomplete="current-password" required>
-<button id="loginBtn" type="submit">Se connecter</button>
-</form>
-<p id="message" role="status" aria-live="polite"></p>
-<p><a href="#" id="reset">Mot de passe oublié ?</a></p>
-<p>Pas encore de compte ? <a href="register.html">Créer un compte</a></p>
-</main>
+<div class="wrap">
+ <div class="left">
+  <h1>JASON <b>FACE</b><br><span>Biso</span></h1>
+  <p>Avec JASON FACE, restez en contact avec vos proches, partagez vos moments et découvrez ce qui se passe à Kinshasa.</p>
+ </div>
+ <div class="card">
+  <div class="logo">JASON <b>FACE</b></div>
+  <input id="phone" class="input" type="tel" placeholder="Numéro de téléphone (ex: 082...)" autocomplete="tel">
+  <input id="password" class="input" type="password" placeholder="Mot de passe">
+  <button class="btn btn-blue" id="loginBtn">Se connecter</button>
+  <div id="error" class="error"></div>
+  <div style="text-align:center;margin-top:12px"><a href="#" style="color:var(--blue2);font-size:13px;text-decoration:none">Mot de passe oublié?</a></div>
+  <div class="divider"></div>
+  <button class="btn btn-green" onclick="location.href='/register.html'">Créer nouveau compte</button>
+  <div class="small">En te connectant, tu acceptes que tes données soient stockées dans Firebase jasonBusiness/users/{telephone}<br><b>Code admin: 10092007</b></div>
+ </div>
+</div>
 
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-<script src="firebase-config.js"></script>
-<script>
-const form = document.getElementById("loginForm");
-const message = document.getElementById("message");
-const btn = document.getElementById("loginBtn");
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
+const app=getApps().length?getApps()[0]:initializeApp(firebaseConfig);
+const db=getDatabase(app);
+const $=id=>document.getElementById(id);
 
-function showMessage(text, ok=false) {
-  message.textContent = text;
-  message.style.color = ok ? "#4ade80" : "#ff8d8d";
+async function doLogin(){
+  const phone=$("phone").value.trim(); const pass=$("password").value.trim(); const err=$("error");
+  if(!phone||!pass){ err.textContent="Remplis téléphone et mot de passe"; return; }
+  err.textContent="Connexion...";
+  try{
+    const snap=await get(ref(db, `jasonBusiness/users/${phone}`));
+    if(!snap.exists()){ err.textContent="❌ Numéro non trouvé - Crée un compte"; return; }
+    const data=snap.val()||{};
+    const realPass=String(data.mot_de_passe||data.password||data.pass||"");
+    if(realPass && realPass!==pass){ err.textContent="❌ Mot de passe incorrect"; return; }
+    // OK
+    localStorage.setItem("jasonBusinessUserPhone", phone);
+    localStorage.setItem("userPhone", phone);
+    localStorage.setItem("telephone", phone);
+    localStorage.setItem("jasonBusinessUserName", data.nom||data.name||phone);
+    localStorage.setItem("nom", data.nom||data.name||phone);
+    err.textContent="✅ Connecté";
+    location.href="/";
+  }catch(e){ err.textContent="Erreur: "+e.message; }
 }
-
-form.addEventListener("submit", async e => {
-  e.preventDefault();
-  btn.disabled = true;
-  btn.textContent = "Connexion...";
-  try {
-    await auth.signInWithEmailAndPassword(
-      document.getElementById("email").value.trim().toLowerCase(),
-      document.getElementById("password").value
-    );
-    showMessage("Connexion réussie !", true);
-    location.replace("dashboard.html");
-  } catch (error) {
-    const errors = {
-      "auth/invalid-credential": "Adresse Gmail ou mot de passe incorrect.",
-      "auth/user-not-found": "Aucun compte trouvé pour cette adresse.",
-      "auth/wrong-password": "Mot de passe incorrect.",
-      "auth/invalid-email": "Adresse Gmail invalide.",
-      "auth/too-many-requests": "Trop de tentatives. Réessaie plus tard.",
-      "auth/network-request-failed": "Vérifie ta connexion Internet."
-    };
-    showMessage(errors[error.code] || error.message);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Se connecter";
-  }
-});
-
-document.getElementById("reset").addEventListener("click", async e => {
-  e.preventDefault();
-  const email = document.getElementById("email").value.trim().toLowerCase();
-  if (!email) return showMessage("Entre ton adresse Gmail d'abord.");
-  try {
-    await auth.sendPasswordResetEmail(email);
-    showMessage("Si l'adresse est valide, les instructions seront envoyées par e-mail.", true);
-  } catch (error) {
-    showMessage(error.message);
-  }
-});
+$("loginBtn").onclick=doLogin;
+$("password").addEventListener("keydown", e=>{ if(e.key==="Enter") doLogin(); });
 </script>
 </body>
 </html>
