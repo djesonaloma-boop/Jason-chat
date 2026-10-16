@@ -3,546 +3,75 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050a14">
-<meta name="description" content="JASON BUSINESS — Tableau de bord intelligent">
-<title>JASON BUSINESS — Dashboard</title>
-
+<title>Mon espace — JASON BUSINESS</title>
 <style>
-:root{
-  --blue:#00d2ff;--blue2:#0077ff;--dark:#050a14;
-  --green:#00e676;--red:#ff4757;--gold:#ffd700;
-  --glass:rgba(255,255,255,.055);
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth}
-body{
-  margin:0;min-height:100vh;padding-bottom:100px;overflow-x:hidden;
-  font-family:"Segoe UI",Arial,sans-serif;color:#fff;
-  background:radial-gradient(ellipse at 10% 5%,#00d2ff18,transparent 35%),
-  radial-gradient(ellipse at 90% 25%,#ffd70012,transparent 32%),
-  linear-gradient(145deg,#081525,#050a14 65%);
-}
-button,input,textarea{font:inherit}
-a{color:inherit}
-button{cursor:pointer}
-.jb-header{
-  padding:24px 20px 22px;
-  background:linear-gradient(135deg,#00d2ff20,#050a14e8 60%,#ffd7000d);
-  border-bottom:1px solid #00d2ff50;backdrop-filter:blur(20px)
-}
-.jb-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.jb-brand{font-size:19px;font-weight:900;letter-spacing:1.5px;color:var(--blue)}
-.jb-status{font-size:10px;color:var(--green);padding:7px 10px;border-radius:20px;background:#00e67612;border:1px solid #00e67640}
-.jb-user-box{margin-top:20px}
-.jb-user-box small{font-size:10px;opacity:.6;letter-spacing:1px}
-.jb-user-box h2{margin:7px 0 0;font-size:19px;overflow-wrap:anywhere}
-#jbDashboardStatus{text-align:center;min-height:20px;padding:10px 18px;font-size:11px;color:#ffeb3b}
-.jb-balance-card{
-  margin:18px;padding:23px;border-radius:24px;
-  background:linear-gradient(145deg,#00d2ff25,#050a14dc 60%,#0077ff18);
-  border:1px solid #00d2ff60;box-shadow:0 18px 40px #0005;
-  animation:floatCard 6s ease-in-out infinite
-}
-@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-.jb-balance-title{font-size:11px;opacity:.7;text-transform:uppercase;letter-spacing:1px}
-.jb-balance{margin:10px 0;font-size:35px;font-weight:900;color:var(--blue);overflow-wrap:anywhere}
-.jb-currency{font-size:12px;opacity:.7}
-.jb-balance-description{font-size:10px;opacity:.5}
-.jb-balance-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:20px}
-.jb-money-box{text-align:center;padding:12px 4px;border-radius:14px;background:#ffffff09;border:1px solid #ffffff12;min-width:0}
-.jb-icon{font-size:20px}
-.jb-money-box small{display:block;font-size:8px;opacity:.6;margin-top:6px}
-.jb-money-box b{display:block;font-size:10px;margin-top:6px;overflow-wrap:anywhere}
-.jb-actions{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:18px}
-.jb-action{padding:15px 8px;border-radius:14px;text-align:center;text-decoration:none;font-size:11px;font-weight:900}
-.jb-recharge{color:#001018;background:linear-gradient(120deg,#00d2ff,#00a8ff)}
-.jb-withdraw{color:#ff7c85;background:#ff475713;border:1px solid #ff475755}
-.jb-points-card{margin:18px;padding:19px;border-radius:20px;background:linear-gradient(135deg,#ffd70016,#050a14dc);border:1px solid #ffd70045}
-.jb-points-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.jb-points-title{font-size:12px;color:var(--gold);font-weight:bold}
-.jb-points-value{margin-top:8px;font-size:10px;opacity:.7}
-.jb-points-value b{color:var(--gold)}
-.jb-points-number{font-size:25px;color:var(--gold);font-weight:900}
-#jbConvertPoints{width:100%;margin-top:15px;padding:14px;border:0;border-radius:12px;background:linear-gradient(120deg,#ffd700,#ffeb80);color:#171000;font-size:11px;font-weight:900}
-#jbConvertPoints:disabled{opacity:.4}
-.jb-section{padding:0 18px}
-.jb-section-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:28px 0 15px}
-.jb-section-title h3{margin:0;font-size:15px}
-.jb-section-title a{color:var(--blue);font-size:10px;text-decoration:none;font-weight:bold}
-.jb-service-card{display:flex;align-items:center;gap:12px;margin-bottom:11px;padding:13px;border-radius:17px;background:linear-gradient(120deg,#ffffff0e,#ffffff04);border:1px solid #00d2ff25;cursor:pointer;transition:.2s}
-.jb-service-card:active{transform:scale(.98);border-color:var(--blue)}
-.jb-service-icon{width:44px;height:44px;display:grid;place-items:center;flex-shrink:0;border-radius:13px;background:#00d2ff15;border:1px solid #00d2ff35;font-size:21px}
-.jb-service-info{flex:1;min-width:0}
-.jb-service-name{font-size:12px;font-weight:bold}
-.jb-service-desc{margin-top:5px;font-size:9px;opacity:.6;line-height:1.5}
-.jb-service-price{font-size:10px;color:var(--blue);font-weight:bold;white-space:nowrap}
-.jb-invest-card{margin-bottom:10px;padding:14px;border-radius:15px;background:#00e6760b;border:1px solid #00e67630}
-.jb-invest-row{display:flex;justify-content:space-between;gap:8px}
-.jb-invest-name{font-size:11px;font-weight:bold;overflow-wrap:anywhere}
-.jb-invest-gain{font-size:10px;color:var(--green);white-space:nowrap}
-.jb-invest-date,.jb-invest-status{margin-top:7px;font-size:9px;opacity:.7}
-.jb-empty{padding:23px 12px;text-align:center;border-radius:15px;background:#ffffff08;font-size:11px;opacity:.7;line-height:1.7}
-.jb-navbar{position:fixed;z-index:30;bottom:0;left:0;width:100%;display:flex;justify-content:space-around;padding:10px 0 calc(10px + env(safe-area-inset-bottom));background:#050a14f5;border-top:1px solid #00d2ff40;backdrop-filter:blur(20px)}
-.jb-nav-link{flex:1;min-width:0;text-align:center;text-decoration:none;color:white;opacity:.55;font-size:9px;border:0;background:none}
-.jb-nav-link.active{color:var(--blue);opacity:1;font-weight:bold}
-.jb-nav-icon{font-size:19px;margin-bottom:4px}
-.jb-loading{position:fixed;z-index:9999;inset:0;display:flex;align-items:center;justify-content:center;background:#050a14;transition:opacity .3s}
-.jb-loader{width:40px;height:40px;margin:auto;border-radius:50%;border:3px solid #ffffff18;border-top-color:var(--blue);border-right-color:var(--gold);animation:spin .8s linear infinite}
-.jb-loading-text{margin-top:14px;font-size:11px;letter-spacing:2px;color:var(--blue)}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* Messagerie */
-.chat-tools{margin:18px;padding:15px;border-radius:19px;background:#ffffff08;border:1px solid #ffffff13}
-.chat-tools-title{font-size:13px;font-weight:bold;margin-bottom:12px}
-.chat-search{display:flex;align-items:center;gap:8px;padding:5px 6px 5px 13px;border:1px solid #ffffff20;border-radius:30px;background:#07111f}
-.chat-search input{flex:1;min-width:0;border:0;outline:none;background:transparent;color:white;padding:9px 0;font-size:12px}
-.chat-search button{width:37px;height:37px;border:0;border-radius:50%;background:var(--blue);color:#001018}
-.chat-shortcuts{display:flex;gap:7px;overflow-x:auto;padding-top:12px}
-.chat-shortcuts button{white-space:nowrap;border:1px solid #00d2ff35;background:#00d2ff0d;color:#eafaff;padding:9px 11px;border-radius:20px;font-size:10px}
-
-/* Boutons flottants */
-.floating-actions{position:fixed;z-index:40;right:13px;bottom:92px;display:flex;flex-direction:column;gap:12px}
-.float-btn{display:grid;place-items:center;width:51px;height:51px;border:0;border-radius:50%;font-size:22px;box-shadow:0 5px 20px #0009}
-.float-wa{background:#18c96a;color:white;text-decoration:none}
-.float-ai{background:linear-gradient(135deg,#00d2ff,#0077ff);color:#001018}
-.float-label{text-align:center;font-size:9px;margin-top:4px;text-shadow:0 1px 5px black}
-
-/* Fenêtre JASONBOT */
-.ai-panel{display:none;position:fixed;z-index:50;right:10px;bottom:155px;width:min(390px,calc(100vw - 20px));height:min(520px,calc(100dvh - 180px));border:1px solid #00d2ff60;border-radius:21px;overflow:hidden;background:#08111f;box-shadow:0 15px 55px #000b}
-.ai-panel.open{display:flex;flex-direction:column}
-.ai-head{display:flex;align-items:center;gap:10px;padding:13px;background:linear-gradient(135deg,#092b45,#08111f);border-bottom:1px solid #ffffff15}
-.ai-avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#00d2ff20;color:var(--blue);font-weight:900}
-.ai-head-info{flex:1}
-.ai-head-info b{display:block;font-size:12px}
-.ai-head-info small{display:block;margin-top:4px;color:var(--green);font-size:10px}
-.ai-close{width:32px;height:32px;border:0;border-radius:50%;background:#ffffff12;color:white;font-size:19px}
-.ai-messages{flex:1;overflow-y:auto;padding:13px;display:flex;flex-direction:column;gap:10px}
-.ai-message{max-width:88%;padding:10px 12px;border-radius:15px;font-size:12px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
-.ai-message.bot{align-self:flex-start;background:#ffffff0d;border:1px solid #ffffff12;border-bottom-left-radius:4px}
-.ai-message.user{align-self:flex-end;background:#075a75;border-bottom-right-radius:4px}
-.ai-typing{display:none;padding:0 13px 8px;font-size:10px;color:#9fb4c8}
-.ai-typing.show{display:block}
-.ai-compose{display:flex;align-items:flex-end;gap:8px;padding:10px;background:#050b14;border-top:1px solid #ffffff15}
-.ai-compose textarea{flex:1;min-width:0;max-height:100px;resize:none;border:1px solid #ffffff20;border-radius:18px;padding:11px 13px;background:#101b2b;color:white;outline:none;font-size:12px}
-.ai-send{width:42px;height:42px;border:0;border-radius:50%;background:var(--blue);color:#001018;font-weight:bold}
-.ai-note{padding:0 12px 8px;background:#050b14;font-size:9px;opacity:.55}
-@media(min-width:700px){
-  .jb-balance-card,.jb-actions,.jb-points-card,.chat-tools,.jb-section{max-width:700px;margin-left:auto;margin-right:auto}
-  .jb-section{padding:0}
-}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#050a14;color:#f5f7fb;font-family:Arial,sans-serif;padding:22px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:25px}
+.logo{background:#00d4ff;color:#06111e;border-radius:13px;padding:13px;font-weight:900}
+.card{max-width:600px;margin:auto;background:#0c1525;border:1px solid #26364b;border-radius:20px;padding:23px}
+p{color:#a7b5c9;overflow-wrap:anywhere}
+button{width:100%;padding:14px;background:#d8aa45;border:0;border-radius:10px;font-weight:800;margin-top:15px}
 </style>
 </head>
-
 <body>
-
-<div id="jbLoading" class="jb-loading">
-  <div style="text-align:center">
-    <div class="jb-loader"></div>
-    <div class="jb-loading-text">JASON BUSINESS</div>
-  </div>
-</div>
-
-<div class="jb-overlay">
-<header class="jb-header">
-  <div class="jb-top">
-    <div class="jb-brand">JASON BUSINESS</div>
-    <div class="jb-status">● EN LIGNE</div>
-  </div>
-  <div class="jb-user-box">
-    <small>BIENVENUE SUR VOTRE ESPACE</small>
-    <h2 id="jbUserPhone">Chargement...</h2>
-  </div>
+<header>
+<div class="logo">JB</div>
+<div><strong>JASON BUSINESS</strong><br><small>Mon espace membre</small></div>
 </header>
-
-<div id="jbDashboardStatus"></div>
-
-<section class="jb-balance-card">
-  <div class="jb-balance-title">Solde principal</div>
-  <div class="jb-balance"><span id="jbMainBalance">0</span> <span class="jb-currency">FC</span></div>
-  <div class="jb-balance-description">Disponible pour vos commandes</div>
-  <div class="jb-balance-grid">
-    <div class="jb-money-box"><div class="jb-icon">💰</div><small>Commissions</small><b id="jbCommissionBalance">0 FC</b></div>
-    <div class="jb-money-box"><div class="jb-icon">📈</div><small>Gains</small><b id="jbGainBalance">0 FC</b></div>
-    <div class="jb-money-box"><div class="jb-icon">💎</div><small>Total</small><b id="jbTotalBalance">0 FC</b></div>
-  </div>
-</section>
-
-<div class="jb-actions">
-  <a href="recharge.html" class="jb-action jb-recharge">📥 RECHARGER</a>
-  <a href="retrait.html" class="jb-action jb-withdraw">📤 RETIRER</a>
+<main class="card">
+<h1>Bienvenue !</h1>
+<p id="status">Vérification de la session...</p>
+<div id="profile" hidden>
+<p><strong>Nom :</strong> <span id="name"></span></p>
+<p><strong>Gmail :</strong> <span id="email"></span></p>
+<p><strong>Téléphone :</strong> <span id="phone"></span></p>
+<p><strong>Parrainage :</strong> <span id="referral"></span></p>
+<button id="logout">Se déconnecter</button>
 </div>
+</main>
 
-<section class="jb-points-card">
-  <div class="jb-points-top">
-    <div>
-      <div class="jb-points-title">⭐ POINTS DE FIDÉLITÉ</div>
-      <div class="jb-points-value">100 points = <b>50 FC</b></div>
-    </div>
-    <div id="jbLoyaltyPoints" class="jb-points-number">0</div>
-  </div>
-  <button id="jbConvertPoints" disabled>💱 CONVERTIR MES POINTS</button>
-</section>
-
-<section class="chat-tools">
-  <div class="chat-tools-title">💬 Discussions et assistant</div>
-  <div class="chat-search">
-    <input id="chatSearchInput" type="text" placeholder="Écrire à JASONBOT AI…">
-    <button id="chatSearchSend" aria-label="Ouvrir la discussion">➤</button>
-  </div>
-  <div class="chat-shortcuts">
-    <button type="button" data-prompt="Bonjour, présente-toi.">🤖 JASONBOT AI</button>
-    <button type="button" data-prompt="Aide-moi à utiliser JASON BUSINESS.">❓ Aide</button>
-    <button type="button" data-prompt="Quels sont les services disponibles ?">🛍 Services</button>
-    <button type="button" data-prompt="Je veux contacter le support.">☎ Support</button>
-  </div>
-</section>
-
-<section class="jb-section">
-  <div class="jb-section-title"><h3>🛍️ Nos services</h3><a href="shop.html">VOIR TOUT →</a></div>
-
-  <div class="jb-service-card" onclick="openService('boost')">
-    <div class="jb-service-icon">📈</div>
-    <div class="jb-service-info"><div class="jb-service-name">Boostage</div><div class="jb-service-desc">Followers, likes et vues</div></div>
-    <div class="jb-service-price">10 FC</div>
-  </div>
-  <div class="jb-service-card" onclick="openService('app')">
-    <div class="jb-service-icon">📱</div>
-    <div class="jb-service-info"><div class="jb-service-name">Application</div><div class="jb-service-desc">Création d'application mobile</div></div>
-    <div class="jb-service-price">10 000 FC</div>
-  </div>
-  <div class="jb-service-card" onclick="openService('site')">
-    <div class="jb-service-icon">🌐</div>
-    <div class="jb-service-info"><div class="jb-service-name">Site web</div><div class="jb-service-desc">Site vitrine, boutique et portfolio</div></div>
-    <div class="jb-service-price">15 000 FC</div>
-  </div>
-  <div class="jb-service-card" onclick="openService('chatbot')">
-    <div class="jb-service-icon">🤖</div>
-    <div class="jb-service-info"><div class="jb-service-name">Chatbot</div><div class="jb-service-desc">Assistant et automatisation</div></div>
-    <div class="jb-service-price">7 000 FC</div>
-  </div>
-  <div class="jb-service-card" onclick="openService('music')">
-    <div class="jb-service-icon">🎵</div>
-    <div class="jb-service-info"><div class="jb-service-name">Chanson</div><div class="jb-service-desc">Création musicale personnalisée</div></div>
-    <div class="jb-service-price">500 FC</div>
-  </div>
-  <div class="jb-service-card" onclick="openService('ads')">
-    <div class="jb-service-icon">📣</div>
-    <div class="jb-service-info"><div class="jb-service-name">Publicité</div><div class="jb-service-desc">Promotion et visibilité</div></div>
-    <div class="jb-service-price">1 000 FC</div>
-  </div>
-  <div class="jb-service-card" onclick="openService('logo')">
-    <div class="jb-service-icon">🎨</div>
-    <div class="jb-service-info"><div class="jb-service-name">Logo</div><div class="jb-service-desc">Identité visuelle personnalisée</div></div>
-    <div class="jb-service-price">3 000 FC</div>
-  </div>
-</section>
-
-<section class="jb-section">
-  <div class="jb-section-title"><h3>⚡ Mes activités</h3><a href="shop.html">COMMANDER →</a></div>
-  <div id="jbInvestments"><div class="jb-empty">Chargement...</div></div>
-</section>
-</div>
-
-<nav class="jb-navbar">
-  <a href="dashboard.html" class="jb-nav-link active"><div class="jb-nav-icon">📊</div>Dashboard</a>
-  <a href="shop.html" class="jb-nav-link"><div class="jb-nav-icon">🛍️</div>Boutique</a>
-  <a href="store.html" class="jb-nav-link"><div class="jb-nav-icon">🛒</div>Store</a>
-  <a href="equipe.html" class="jb-nav-link"><div class="jb-nav-icon">👥</div>Équipe</a>
-  <a href="profil.html" class="jb-nav-link"><div class="jb-nav-icon">👤</div>Profil</a>
-</nav>
-
-<div class="floating-actions">
-  <div>
-    <a class="float-btn float-wa" id="whatsappButton" href="#" aria-label="Contacter WhatsApp">☎</a>
-    <div class="float-label">WhatsApp</div>
-  </div>
-  <div>
-    <button class="float-btn float-ai" id="openAIButton" aria-label="Ouvrir JASONBOT AI">✦</button>
-    <div class="float-label">JASONBOT</div>
-  </div>
-</div>
-
-<section class="ai-panel" id="aiPanel" aria-label="Discussion JASONBOT AI">
-  <header class="ai-head">
-    <div class="ai-avatar">JB</div>
-    <div class="ai-head-info"><b>JASONBOT AI</b><small>● Assistant intelligent</small></div>
-    <button class="ai-close" id="closeAIButton" aria-label="Fermer">×</button>
-  </header>
-  <div class="ai-messages" id="aiMessages" aria-live="polite">
-    <div class="ai-message bot">Bonjour ! 👋 Je suis JASONBOT AI, créé par Jason Aloma 🇨🇩. Comment puis-je t'aider aujourd'hui ?</div>
-  </div>
-  <div class="ai-typing" id="aiTyping">JASONBOT écrit…</div>
-  <div class="ai-compose">
-    <textarea id="aiInput" rows="1" placeholder="Écris ton message…"></textarea>
-    <button class="ai-send" id="aiSendButton" aria-label="Envoyer">➤</button>
-  </div>
-  <div class="ai-note">Les réponses automatiques nécessitent un serveur IA fonctionnel.</div>
-</section>
-
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="firebase-config.js"></script>
 <script>
-function goPage(page){window.location.href=page}
-function openService(type){
-  localStorage.setItem("jb_open_service",type);
-  window.location.href="shop.html";
-}
+auth.onAuthStateChanged(async user => {
+  const status = document.getElementById("status");
+  const profile = document.getElementById("profile");
 
-/* Remplace par ton numéro WhatsApp réel, sans + ni espaces. */
-const WHATSAPP_NUMBER="243000000000";
-document.getElementById("whatsappButton").href="https://wa.me/"+WHATSAPP_NUMBER;
-document.getElementById("whatsappButton").target="_blank";
-document.getElementById("whatsappButton").rel="noopener";
-
-const panel=document.getElementById("aiPanel");
-const messages=document.getElementById("aiMessages");
-const input=document.getElementById("aiInput");
-const typing=document.getElementById("aiTyping");
-const sendButton=document.getElementById("aiSendButton");
-
-/* Endpoint de ton serveur IA existant. */
-const AI_ENDPOINT="/api/intelligence-artificielle/ask";
-
-function openAI(prefill){
-  panel.classList.add("open");
-  if(prefill)input.value=prefill;
-  setTimeout(()=>input.focus(),100);
-}
-function closeAI(){panel.classList.remove("open")}
-document.getElementById("openAIButton").addEventListener("click",()=>openAI());
-document.getElementById("closeAIButton").addEventListener("click",closeAI);
-document.getElementById("chatSearchSend").addEventListener("click",()=>{
-  openAI(document.getElementById("chatSearchInput").value.trim());
-});
-document.getElementById("chatSearchInput").addEventListener("keydown",e=>{
-  if(e.key==="Enter"){e.preventDefault();document.getElementById("chatSearchSend").click()}
-});
-document.querySelectorAll("[data-prompt]").forEach(button=>{
-  button.addEventListener("click",()=>openAI(button.dataset.prompt));
-});
-
-function addMessage(text,role){
-  const node=document.createElement("div");
-  node.className="ai-message "+role;
-  node.textContent=text;
-  messages.appendChild(node);
-  messages.scrollTop=messages.scrollHeight;
-}
-
-async function sendMessage(){
-  const message=input.value.trim();
-  if(!message||sendButton.disabled)return;
-  addMessage(message,"user");
-  input.value="";
-  input.style.height="auto";
-  sendButton.disabled=true;
-  typing.classList.add("show");
-
-  try{
-    const response=await fetch(AI_ENDPOINT,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        message:message,
-        question:message,
-        assistant:"JASONBOT AI",
-        creator:"Jason Aloma"
-      })
-    });
-    if(!response.ok)throw new Error("Erreur HTTP "+response.status);
-    const data=await response.json();
-    const answer=data.answer||data.response||data.reply||data.message||data.text;
-    if(typeof answer!=="string"||!answer.trim()){
-      throw new Error("Format de réponse JSON non reconnu");
-    }
-    addMessage(answer.trim(),"bot");
-  }catch(error){
-    console.error("JASONBOT:",error);
-    addMessage("Je ne peux pas contacter le serveur IA pour le moment. Vérifie que l'endpoint "+AI_ENDPOINT+" existe et accepte les requêtes POST.", "bot");
-  }finally{
-    typing.classList.remove("show");
-    sendButton.disabled=false;
-    input.focus();
-  }
-}
-sendButton.addEventListener("click",sendMessage);
-input.addEventListener("keydown",e=>{
-  if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}
-});
-input.addEventListener("input",()=>{
-  input.style.height="auto";
-  input.style.height=Math.min(input.scrollHeight,100)+"px";
-});
-</script>
-
-<script type="module">
-import {initializeApp,getApps}
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {
-  getDatabase,ref,onValue,runTransaction
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-/* Configuration Firebase fournie dans ton ancien code. */
-const jbFirebaseConfig={
-  apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",
-  authDomain:"starlink-investit.firebaseapp.com",
-  databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",
-  projectId:"starlink-investit",
-  storageBucket:"starlink-investit.firebasestorage.app",
-  messagingSenderId:"807081599583",
-  appId:"1:807081599583:web:e00ec3959bc4acdae031ea"
-};
-
-const jbApp=getApps().length?getApps()[0]:initializeApp(jbFirebaseConfig);
-const jbDatabase=getDatabase(jbApp);
-
-const jbPhone=
-  localStorage.getItem("jasonBusinessUserPhone")||
-  localStorage.getItem("userPhone")||
-  localStorage.getItem("jasonPhone")||
-  localStorage.getItem("phone");
-
-if(!jbPhone){
-  document.getElementById("jbLoading").style.display="none";
-  window.location.replace("login.html");
-  throw new Error("Session introuvable.");
-}
-
-localStorage.setItem("jasonBusinessUserPhone",jbPhone);
-localStorage.setItem("userPhone",jbPhone);
-localStorage.setItem("jasonBusinessLogged","true");
-
-const jbUserReference=ref(jbDatabase,"jasonBusiness/users/"+jbPhone);
-
-function jbFormatFC(value){
-  return Math.floor(Number(value)||0).toLocaleString("fr-FR");
-}
-function jbFormatDate(value){
-  if(!value)return "Date inconnue";
-  const date=new Date(value);
-  if(Number.isNaN(date.getTime()))return "Date inconnue";
-  return date.toLocaleDateString("fr-FR");
-}
-function jbEscapeHTML(value){
-  return String(value??"").replace(/[&<>"']/g,char=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  }[char]));
-}
-
-function jbRenderInvestments(investments){
-  const container=document.getElementById("jbInvestments");
-  container.replaceChildren();
-
-  if(!investments||typeof investments!=="object"||Object.keys(investments).length===0){
-    container.innerHTML='<div class="jb-empty">📦 Aucune activité pour le moment.<br><br>Découvrez nos services dans la boutique.</div>';
+  if (!user) {
+    location.replace("login.html");
     return;
   }
 
-  Object.entries(investments).reverse().forEach(([id,item])=>{
-    if(!item||typeof item!=="object")return;
-    const card=document.createElement("div");
-    card.className="jb-invest-card";
-    const name=item.nom||item.service||item.name||"Service";
-    const gain=Number(item.gainJournalier??item.gain??0);
-    const date=item.dateAchat||item.date||item.createdAt;
-    const status=item.statut||item.status||"actif";
-    card.innerHTML=`
-      <div class="jb-invest-row">
-        <div class="jb-invest-name">⚡ ${jbEscapeHTML(name)}</div>
-        <div class="jb-invest-gain">${jbFormatFC(gain)} FC</div>
-      </div>
-      <div class="jb-invest-date">Activé le ${jbEscapeHTML(jbFormatDate(date))}</div>
-      <div class="jb-invest-status">● ${jbEscapeHTML(status)}</div>`;
-    container.appendChild(card);
-  });
-}
+  try {
+    const snapshot = await db.ref("users/" + user.uid).once("value");
+    const data = snapshot.val() || {};
 
-onValue(jbUserReference,snapshot=>{
-  document.getElementById("jbLoading").style.display="none";
+    document.getElementById("name").textContent =
+      data.name || user.displayName || "Membre";
+    document.getElementById("email").textContent = user.email || "";
+    document.getElementById("phone").textContent = data.phone || "Non renseigné";
+    document.getElementById("referral").textContent = data.referral || "Aucun";
 
-  if(!snapshot.exists()){
-    document.getElementById("jbDashboardStatus").textContent="Compte introuvable dans Firebase.";
-    return;
+    status.hidden = true;
+    profile.hidden = false;
+  } catch (error) {
+    status.textContent = "Impossible de charger le profil. Vérifie les règles Firebase et réessaie.";
   }
-
-  const user=snapshot.val()||{};
-  document.getElementById("jbUserPhone").textContent=user.telephone||jbPhone;
-
-  const principal=Number(user.solde_principal||user.solde||0);
-  const commissions=Number(user.solde_commissions||0);
-  const gains=Number(user.solde_gains||0);
-
-  document.getElementById("jbMainBalance").textContent=jbFormatFC(principal);
-  document.getElementById("jbCommissionBalance").textContent=jbFormatFC(commissions)+" FC";
-  document.getElementById("jbGainBalance").textContent=jbFormatFC(gains)+" FC";
-  document.getElementById("jbTotalBalance").textContent=jbFormatFC(principal+commissions+gains);
-
-  const points=Number(user.points_fidelite??user.points??user.loyaltyPoints??0);
-  document.getElementById("jbLoyaltyPoints").textContent=jbFormatFC(points);
-  document.getElementById("jbConvertPoints").disabled=points<100;
-
-  jbRenderInvestments(user.mes_investissements);
-  document.getElementById("jbDashboardStatus").textContent=
-    user.disabled===true||user.bloque===true||user.statut==="bloque"
-    ?"🔒 Ton compte est actuellement bloqué.":"";
-},error=>{
-  document.getElementById("jbLoading").style.display="none";
-  console.error("Erreur Firebase:",error);
-  document.getElementById("jbDashboardStatus").textContent=
-    "Impossible de charger les données. Vérifie la connexion et les règles Firebase.";
 });
 
-/* Conversion transactionnelle des points de fidélité. */
-document.getElementById("jbConvertPoints").addEventListener("click",async()=>{
-  const button=document.getElementById("jbConvertPoints");
-  button.disabled=true;
-
-  try{
-    const snapshot=await new Promise((resolve,reject)=>{
-      onValue(jbUserReference,resolve,reject,{onlyOnce:true});
-    });
-
-    if(!snapshot.exists()){
-      alert("Compte introuvable.");
-      return;
-    }
-
-    const user=snapshot.val()||{};
-    const points=Number(user.points_fidelite??user.points??user.loyaltyPoints??0);
-    const convertible=Math.floor(points/100)*100;
-
-    if(convertible<100){
-      alert("Il faut au minimum 100 points.");
-      return;
-    }
-
-    const amount=(convertible/100)*50;
-    if(!confirm("Convertir "+jbFormatFC(convertible)+" points en "+jbFormatFC(amount)+" FC ?"))return;
-
-    const result=await runTransaction(jbUserReference,current=>{
-      if(!current)return;
-      const freshPoints=Number(current.points_fidelite??current.points??current.loyaltyPoints??0);
-      const freshConvertible=Math.floor(freshPoints/100)*100;
-      if(freshConvertible<100)return;
-
-      current.points_fidelite=freshPoints-freshConvertible;
-      current.solde_principal=Number(current.solde_principal||current.solde||0)+(freshConvertible/100)*50;
-      return current;
-    });
-
-    if(result.committed){
-      alert("✅ Conversion effectuée. Consulte ton nouveau solde.");
-    }else{
-      alert("La conversion n'a pas été effectuée. Vérifie tes points.");
-    }
-  }catch(error){
-    console.error("Erreur de conversion:",error);
-    alert("Erreur lors de la conversion. Réessaie plus tard.");
-  }finally{
-    button.disabled=false;
+document.getElementById("logout").addEventListener("click", async () => {
+  try {
+    await auth.signOut();
+    location.replace("login.html");
+  } catch (error) {
+    document.getElementById("status").textContent = error.message;
   }
 });
 </script>
-
 </body>
 </html>
