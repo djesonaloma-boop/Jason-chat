@@ -3,675 +3,86 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#030812">
-<meta name="description" content="Connexion sécurisée à JASON BUSINESS">
-<title>JASON BUSINESS — Connexion</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050a14">
+<title>Connexion — JASON BUSINESS</title>
 <style>
-:root{
-  --blue:#00d2ff;
-  --blue2:#0077ff;
-  --dark:#030812;
-  --gold:#d8aa45;
-  --gold2:#f4d58a;
-  --card:rgba(7,15,31,.91);
-  --red:#ff4757;
-  --green:#00e676;
-  --yellow:#ffeb3b;
-  --muted:#93a7c4;
-  --border:rgba(0,210,255,.22);
-}
 *{box-sizing:border-box}
-html{min-height:100%;scroll-behavior:smooth}
-body{
-  margin:0;
-  min-height:100vh;
-  padding:24px 16px;
-  font-family:"Segoe UI",Arial,sans-serif;
-  color:#fff;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  overflow-x:hidden;
-  background:
-    radial-gradient(ellipse at 12% 15%,rgba(0,119,255,.17),transparent 40%),
-    radial-gradient(ellipse at 90% 85%,rgba(216,170,69,.10),transparent 38%),
-    linear-gradient(145deg,#030812,#071326 55%,#02050c);
-}
-body::before,body::after{
-  content:"";
-  position:fixed;
-  width:250px;height:250px;
-  border:1px solid rgba(0,210,255,.10);
-  border-radius:50%;
-  pointer-events:none;
-  z-index:0;
-}
-body::before{top:-130px;right:-80px}
-body::after{bottom:-160px;left:-90px;width:330px;height:330px}
-
-.overlay-login{
-  position:fixed;inset:0;
-  background:radial-gradient(circle at center,rgba(0,210,255,.055),transparent 55%);
-  pointer-events:none;z-index:0;
-}
-.card{
-  width:100%;
-  max-width:420px;
-  padding:32px 27px 26px;
-  position:relative;
-  z-index:2;
-  border:1px solid rgba(0,210,255,.36);
-  border-radius:26px;
-  background:linear-gradient(150deg,rgba(10,24,46,.96),rgba(3,8,18,.97));
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  box-shadow:0 25px 80px rgba(0,0,0,.48),0 0 35px rgba(0,210,255,.09),inset 0 1px rgba(255,255,255,.04);
-  animation:cardEnter .65s ease both;
-}
-.card::before{
-  content:"";
-  position:absolute;
-  top:0;left:12%;right:12%;
-  height:2px;
-  border-radius:10px;
-  background:linear-gradient(90deg,transparent,var(--blue),var(--gold),transparent);
-}
-.brand-top{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:9px;
-  margin-bottom:25px;
-  color:#b9c8dc;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:2px;
-}
-.brand-dot{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 12px rgba(0,230,118,.7);
-}
-.logo{
-  width:82px;height:82px;
-  margin:0 auto 17px;
-  border-radius:25px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  background:linear-gradient(145deg,#123e70,#07518b 48%,#07172e);
-  border:1px solid rgba(216,170,69,.85);
-  color:var(--gold2);
-  font-size:29px;
-  font-weight:1000;
-  letter-spacing:-1px;
-  box-shadow:0 0 35px rgba(0,119,255,.20),inset 0 0 20px rgba(255,255,255,.04);
-}
-.logo::after{
-  content:"";
-  position:absolute;
-  inset:5px;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:20px;
-}
-h1{
-  color:#fff;
-  text-align:center;
-  letter-spacing:2.5px;
-  margin:0 0 9px;
-  font-size:23px;
-  font-weight:900;
-}
-h1 span{color:var(--blue)}
-.subtitle{
-  margin:0 0 27px;
-  font-size:10px;
-  color:var(--muted);
-  letter-spacing:2px;
-  text-align:center;
-}
-.separator{
-  width:48px;height:3px;
-  margin:0 auto 26px;
-  border-radius:5px;
-  background:linear-gradient(90deg,var(--blue),var(--gold));
-}
-.input-group{text-align:left;margin-top:18px}
-.input-group label{
-  display:block;
-  margin-bottom:9px;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:1px;
-  color:#b3c4dc;
-}
-.input-box{position:relative}
-.input-box>span:first-child{
-  position:absolute;
-  left:15px;top:50%;
-  transform:translateY(-50%);
-  font-size:17px;
-  opacity:.85;
-  pointer-events:none;
-}
-.input-box input{
-  width:100%;
-  min-width:0;
-  padding:16px 46px;
-  border-radius:13px;
-  border:1px solid rgba(255,255,255,.11);
-  background:rgba(255,255,255,.035);
-  color:#fff;
-  outline:none;
-  font-size:14px;
-  transition:border-color .25s,background .25s,box-shadow .25s;
-}
-.input-box input::placeholder{color:#667c99}
-.input-box input:focus{
-  border-color:var(--blue);
-  background:rgba(0,210,255,.045);
-  box-shadow:0 0 0 3px rgba(0,210,255,.075);
-}
-.password-toggle{
-  position:absolute;
-  right:12px;top:50%;
-  transform:translateY(-50%);
-  cursor:pointer;
-  font-size:17px;
-  opacity:.8;
-  user-select:none;
-  z-index:3;
-  padding:5px;
-}
-button{
-  font-family:inherit;
-  -webkit-tap-highlight-color:transparent;
-}
-#jasonLoginButton{
-  width:100%;
-  padding:16px 12px;
-  margin-top:25px;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:13px;
-  background:linear-gradient(110deg,#00c9ff,#008bff 58%,#0875e8);
-  color:#03101d;
-  font-size:13px;
-  font-weight:1000;
-  letter-spacing:1px;
-  cursor:pointer;
-  box-shadow:0 8px 25px rgba(0,119,255,.19);
-  transition:transform .2s,box-shadow .2s,opacity .2s;
-}
-#jasonLoginButton:hover{
-  box-shadow:0 8px 30px rgba(0,210,255,.30);
-}
-#jasonLoginButton:active{transform:scale(.98)}
-#jasonLoginButton:disabled{opacity:.6;cursor:not-allowed}
-.forgot-link{
-  margin-top:20px;
-  display:block;
-  text-align:center;
-  font-size:12px;
-  color:var(--gold2);
-  cursor:pointer;
-  text-decoration:none;
-  font-weight:700;
-}
-.forgot-link:hover{text-decoration:underline}
-.status{
-  min-height:22px;
-  margin-top:15px;
-  font-size:12px;
-  color:var(--yellow);
-  font-weight:700;
-  line-height:1.6;
-  overflow-wrap:anywhere;
-}
-.register{
-  margin-top:20px;
-  font-size:12px;
-  line-height:1.8;
-  color:var(--muted);
-  text-align:center;
-}
-.register strong{color:#fff}
-.register a{
-  color:var(--blue);
-  text-decoration:none;
-  font-weight:800;
-}
-.register a:hover{text-decoration:underline}
-.security{
-  margin-top:22px;
-  padding:12px 10px;
-  border-radius:11px;
-  background:rgba(0,230,118,.045);
-  border:1px solid rgba(0,230,118,.13);
-  color:#75eeb0;
-  font-size:10px;
-  text-align:center;
-  line-height:1.7;
-}
-.footer{
-  z-index:1;
-  position:relative;
-  text-align:center;
-  margin-top:22px;
-  color:#657b99;
-  font-size:10px;
-  line-height:1.8;
-}
-.footer strong{color:var(--gold)}
-/* MODAL MOT DE PASSE OUBLIE */
-.overlay{
-  position:fixed;inset:0;
-  background:rgba(1,4,12,.86);
-  backdrop-filter:blur(9px);
-  -webkit-backdrop-filter:blur(9px);
-  z-index:1000;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:16px;
-  overflow-y:auto;
-}
-.overlay.show{display:flex}
-.modal-forgot{
-  width:100%;
-  max-width:410px;
-  max-height:calc(100vh - 32px);
-  overflow-y:auto;
-  background:linear-gradient(145deg,#10213d,#060d1b);
-  border:1px solid rgba(0,210,255,.36);
-  border-radius:23px;
-  padding:25px 23px;
-  text-align:left;
-  box-shadow:0 25px 80px rgba(0,0,0,.6),0 0 35px rgba(0,210,255,.10);
-  animation:modalEnter .25s ease both;
-}
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:13px;
-}
-.modal-forgot h3{
-  margin:0;
-  color:var(--blue);
-  font-size:16px;
-  letter-spacing:.4px;
-}
-.modal-forgot p{
-  font-size:12px;
-  color:#9cafc8;
-  text-align:center;
-  margin:0 0 21px;
-  line-height:1.7;
-}
-.close{
-  flex-shrink:0;
-  width:35px;height:35px;
-  padding:0;
-  margin:0;
-  border-radius:10px;
-  border:1px solid #ffffff18;
-  background:#17253b;
-  color:white;
-  font-size:22px;
-  cursor:pointer;
-}
-.close:hover{background:#253b58}
-.btn-gold{
-  width:100%;
-  padding:15px;
-  margin-top:20px;
-  border:0;
-  border-radius:12px;
-  background:linear-gradient(110deg,#c08a2c,#f1d48b);
-  color:#111;
-  font-size:12px;
-  font-weight:1000;
-  letter-spacing:.4px;
-  cursor:pointer;
-}
-.btn-gold:disabled{opacity:.6;cursor:not-allowed}
-.spinner{
-  display:inline-block;
-  width:16px;height:16px;
-  border:2.5px solid rgba(0,0,0,.25);
-  border-top-color:#111;
-  border-radius:50%;
-  animation:spin .6s linear infinite;
-  margin-right:8px;
-  vertical-align:middle;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes cardEnter{
-  from{opacity:0;transform:translateY(16px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes modalEnter{
-  from{opacity:0;transform:translateY(10px) scale(.98)}
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
-@media(max-width:380px){
-  body{padding:16px 12px}
-  .card{padding:27px 19px 22px;border-radius:21px}
-  .logo{width:72px;height:72px;border-radius:22px}
-  h1{font-size:20px;letter-spacing:1.8px}
-  .modal-forgot{padding:21px 17px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
-    scroll-behavior:auto!important;
-    transition-duration:.01ms!important;
-  }
-}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#102644,#050a14 65%);color:#f5f7fb;font-family:Arial,sans-serif;display:grid;place-items:center;padding:20px}
+.card{width:100%;max-width:420px;background:#0c1525;border:1px solid #26364b;border-radius:22px;padding:25px}
+.logo{width:54px;height:54px;display:grid;place-items:center;background:#00d4ff;color:#06111e;border-radius:16px;font-size:24px;font-weight:900}
+h1{font-size:25px;margin-bottom:8px}
+p{color:#9aa8bd;line-height:1.5}
+input{width:100%;padding:14px;margin:8px 0;background:#07101e;border:1px solid #2b3a50;border-radius:11px;color:white;font-size:15px}
+button{width:100%;padding:15px;margin-top:12px;border:0;border-radius:11px;background:linear-gradient(90deg,#00d4ff,#58a9ff);font-weight:800}
+a{color:#d8aa45}
+#message{overflow-wrap:anywhere;font-size:14px}
 </style>
 </head>
-
 <body>
-<div class="overlay-login"></div>
+<main class="card">
+<div class="logo">JB</div>
+<h1>Connexion</h1>
+<p>Connecte-toi à ton espace JASON BUSINESS.</p>
+<form id="loginForm">
+<input id="email" type="email" placeholder="Adresse Gmail" autocomplete="email" required>
+<input id="password" type="password" placeholder="Mot de passe" autocomplete="current-password" required>
+<button id="loginBtn" type="submit">Se connecter</button>
+</form>
+<p id="message" role="status" aria-live="polite"></p>
+<p><a href="#" id="reset">Mot de passe oublié ?</a></p>
+<p>Pas encore de compte ? <a href="register.html">Créer un compte</a></p>
+</main>
 
-<div class="card">
-  <div class="brand-top">
-    <span class="brand-dot"></span>
-    ESPACE CLIENT SÉCURISÉ
-  </div>
-
-  <div class="logo">JB</div>
-
-  <h1>JASON <span>BUSINESS</span></h1>
-  <p class="subtitle">ACCÈS À VOTRE ESPACE</p>
-  <div class="separator"></div>
-
-  <div class="input-group">
-    <label for="jasonLoginPhone">NUMÉRO DE TÉLÉPHONE</label>
-    <div class="input-box">
-      <span>📱</span>
-      <input type="tel" id="jasonLoginPhone"
-        placeholder="Ex : 243XXXXXXXXX"
-        autocomplete="tel" inputmode="tel">
-    </div>
-  </div>
-
-  <div class="input-group">
-    <label for="jasonLoginPassword">MOT DE PASSE</label>
-    <div class="input-box">
-      <span>🔐</span>
-      <input type="password" id="jasonLoginPassword"
-        placeholder="Votre mot de passe"
-        autocomplete="current-password">
-      <span class="password-toggle" id="jasonPasswordToggle"
-        title="Afficher">👁️</span>
-    </div>
-  </div>
-
-  <button id="jasonLoginButton" type="button">
-    🚀 SE CONNECTER
-  </button>
-
-  <a class="forgot-link" id="openForgot">
-    🔑 Mot de passe oublié ?
-  </a>
-
-  <div id="jasonLoginStatus" class="status" aria-live="polite"></div>
-
-  <div class="register">
-    Nouveau sur <strong>Jason Business</strong> ?<br>
-    <a href="register.html">Créer un compte gratuitement →</a>
-  </div>
-
-  <div class="security">
-    🔒 Connexion à votre espace Jason Business
-  </div>
-</div>
-
-<div class="footer">
-  © <span id="jasonYear"></span> JASON BUSINESS<br>
-  Créé par <strong>Jason Aloma 🇨🇩</strong> · Kinshasa, RDC
-</div>
-
-<!-- MODAL RESET -->
-<div class="overlay" id="forgotModal">
-  <div class="modal-forgot">
-    <div class="modal-head">
-      <h3>🔑 Nouveau mot de passe</h3>
-      <button class="close" id="closeForgot"
-        type="button" aria-label="Fermer">×</button>
-    </div>
-
-    <p>
-      Entre ton numéro et crée un nouveau mot de passe.
-      Cette fonction doit être sécurisée par une vérification
-      de ton identité avant toute utilisation réelle.
-    </p>
-
-    <div class="input-group">
-      <label for="forgotPhone">NUMÉRO DE TÉLÉPHONE</label>
-      <div class="input-box">
-        <span>📱</span>
-        <input type="tel" id="forgotPhone"
-          placeholder="243XXXXXXXXX" autocomplete="tel">
-      </div>
-    </div>
-
-    <div class="input-group">
-      <label for="forgotNewPass">NOUVEAU MOT DE PASSE</label>
-      <div class="input-box">
-        <span>🔐</span>
-        <input type="password" id="forgotNewPass"
-          placeholder="Min 6 caractères" autocomplete="new-password">
-        <span class="password-toggle" id="toggleNewPass">👁️</span>
-      </div>
-    </div>
-
-    <div class="input-group">
-      <label for="forgotConfirmPass">CONFIRMER MOT DE PASSE</label>
-      <div class="input-box">
-        <span>✅</span>
-        <input type="password" id="forgotConfirmPass"
-          placeholder="Confirme le mot de passe"
-          autocomplete="new-password">
-        <span class="password-toggle" id="toggleConfirmPass">👁️</span>
-      </div>
-    </div>
-
-    <button id="forgotButton" type="button" class="btn-gold">
-      🔄 CHANGER MON MOT DE PASSE
-    </button>
-
-    <div id="forgotStatus" class="status"
-      style="text-align:center" aria-live="polite"></div>
-  </div>
-</div>
-
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="firebase-config.js"></script>
 <script>
-document.getElementById("jasonYear").textContent =
-  new Date().getFullYear();
-</script>
+const form = document.getElementById("loginForm");
+const message = document.getElementById("message");
+const btn = document.getElementById("loginBtn");
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-const firebaseConfig = {
-    apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",
-    authDomain:"starlink-investit.firebaseapp.com",
-    databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",
-    projectId:"starlink-investit",
-    storageBucket:"starlink-investit.firebasestorage.app",
-    messagingSenderId:"807081599583",
-    appId:"1:807081599583:web:e00ec3959bc4acdae031ea"
-};
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
-const PATHS_TO_CHECK = ["jasonBusiness/users", "Jasonuser", "users"];
-const JASON_SESSION_KEY = "jasonBusinessUserPhone";
-
-const loginPhoneInput = document.getElementById("jasonLoginPhone");
-const loginPasswordInput = document.getElementById("jasonLoginPassword");
-const loginButton = document.getElementById("jasonLoginButton");
-const loginStatus = document.getElementById("jasonLoginStatus");
-const passwordToggle = document.getElementById("jasonPasswordToggle");
-
-passwordToggle.addEventListener("click",()=>{
-  if(loginPasswordInput.type==="password"){loginPasswordInput.type="text"; passwordToggle.innerText="🙈";}
-  else{loginPasswordInput.type="password"; passwordToggle.innerText="👁️";}
-});
-
-function cleanJasonPhone(phone){
-  return String(phone||"").trim().replace(/\s+/g,"").replace(/-/g,"").replace(/\(/g,"").replace(/\)/g,"");
-}
-function showJasonStatus(msg,type="warning"){
-  loginStatus.innerText=msg;
-  if(type==="success") loginStatus.style.color="#00e676";
-  else if(type==="error") loginStatus.style.color="#ff4757";
-  else loginStatus.style.color="#ffeb3b";
-}
-function resetLoginButton(){loginButton.disabled=false; loginButton.innerText="🚀 SE CONNECTER";}
-function getStoredPassword(userData){
-  return String(userData.password ?? userData.mot_de_passe ?? userData.motDePasse ?? userData.pass ?? userData.mdp ?? userData.code ?? "").trim();
+function showMessage(text, ok=false) {
+  message.textContent = text;
+  message.style.color = ok ? "#4ade80" : "#ff8d8d";
 }
 
-async function findUserByPhone(phoneRaw){
-  for(const basePath of PATHS_TO_CHECK){
-    let r = ref(db, basePath + "/" + phoneRaw);
-    let snap = await get(r);
-    if(snap.exists()) return {data:snap.val(), path:basePath, key:phoneRaw};
-    if(phoneRaw.startsWith("0")){
-      const withoutZero = phoneRaw.substring(1);
-      r = ref(db, basePath + "/" + withoutZero);
-      snap = await get(r);
-      if(snap.exists()) return {data:snap.val(), path:basePath, key:withoutZero};
-    }
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  btn.disabled = true;
+  btn.textContent = "Connexion...";
+  try {
+    await auth.signInWithEmailAndPassword(
+      document.getElementById("email").value.trim().toLowerCase(),
+      document.getElementById("password").value
+    );
+    showMessage("Connexion réussie !", true);
+    location.replace("dashboard.html");
+  } catch (error) {
+    const errors = {
+      "auth/invalid-credential": "Adresse Gmail ou mot de passe incorrect.",
+      "auth/user-not-found": "Aucun compte trouvé pour cette adresse.",
+      "auth/wrong-password": "Mot de passe incorrect.",
+      "auth/invalid-email": "Adresse Gmail invalide.",
+      "auth/too-many-requests": "Trop de tentatives. Réessaie plus tard.",
+      "auth/network-request-failed": "Vérifie ta connexion Internet."
+    };
+    showMessage(errors[error.code] || error.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Se connecter";
   }
-  return null;
-}
-
-async function loginJasonBusiness(){
-  const phoneRaw = cleanJasonPhone(loginPhoneInput.value);
-  const password = loginPasswordInput.value.trim();
-  if(!phoneRaw){showJasonStatus("❌ Entrez votre numéro.","error"); return;}
-  if(!password){showJasonStatus("❌ Entrez votre mot de passe.","error"); return;}
-  loginButton.disabled=true; loginButton.innerText="⏳ AUTHENTIFICATION...";
-  showJasonStatus("Connexion à Jason Business...","warning");
-  try{
-    const found = await findUserByPhone(phoneRaw);
-    if(!found){showJasonStatus("❌ Aucun compte trouvé.","error"); resetLoginButton(); return;}
-    if(found.data.disabled===true || found.data.bloque===true || found.data.active===false){
-      showJasonStatus("🚫 Compte désactivé.","error"); resetLoginButton(); return;
-    }
-    const savedPassword = getStoredPassword(found.data);
-    if(savedPassword !== String(password).trim()){
-      showJasonStatus("❌ Mot de passe incorrect.","error"); resetLoginButton(); return;
-    }
-    if(found.data.forceLogout){
-      try{await update(ref(db, found.path + "/" + found.key), {forceLogout: null});}catch(e){}
-    }
-    const finalPhone = found.key;
-    localStorage.setItem("userPhone", finalPhone);
-    localStorage.setItem("jasonPhone", finalPhone);
-    localStorage.setItem("phone", finalPhone);
-    localStorage.setItem("jasonBusinessPhone", finalPhone);
-    localStorage.setItem(JASON_SESSION_KEY, finalPhone);
-    localStorage.setItem("jasonBusinessLogged","true");
-    localStorage.setItem("jasonBusinessLoginTime", Date.now().toString());
-    localStorage.setItem("jasonBusinessUserName", String(found.data.nom||found.data.name||"Utilisateur"));
-    showJasonStatus("✅ Accès autorisé !","success");
-    loginButton.innerText="✅ CONNEXION RÉUSSIE";
-    setTimeout(()=>{window.location.replace("dashboard.html");},700);
-  }catch(error){
-    console.error(error); showJasonStatus("⚠️ Erreur Firebase.","error"); resetLoginButton();
-  }
-}
-loginButton.addEventListener("click",loginJasonBusiness);
-loginPhoneInput.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault(); loginJasonBusiness();}});
-loginPasswordInput.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault(); loginJasonBusiness();}});
-
-// ==== MOT DE PASSE OUBLIE ====
-const forgotModal = document.getElementById("forgotModal");
-const openForgot = document.getElementById("openForgot");
-const closeForgot = document.getElementById("closeForgot");
-const forgotPhone = document.getElementById("forgotPhone");
-const forgotNewPass = document.getElementById("forgotNewPass");
-const forgotConfirmPass = document.getElementById("forgotConfirmPass");
-const forgotButton = document.getElementById("forgotButton");
-const forgotStatus = document.getElementById("forgotStatus");
-
-function showForgotStatus(msg,type="warning"){
-  forgotStatus.innerText=msg;
-  if(type==="success") forgotStatus.style.color="#00e676";
-  else if(type==="error") forgotStatus.style.color="#ff4757";
-  else forgotStatus.style.color="#ffeb3b";
-}
-
-openForgot.addEventListener("click",()=>{
-  forgotPhone.value = cleanJasonPhone(loginPhoneInput.value);
-  forgotModal.classList.add("show");
-});
-closeForgot.addEventListener("click",()=>forgotModal.classList.remove("show"));
-forgotModal.addEventListener("click",e=>{if(e.target===forgotModal) forgotModal.classList.remove("show");});
-
-document.getElementById("toggleNewPass").addEventListener("click",function(){
-  if(forgotNewPass.type==="password"){forgotNewPass.type="text"; this.innerText="🙈";}else{forgotNewPass.type="password"; this.innerText="👁️";}
-});
-document.getElementById("toggleConfirmPass").addEventListener("click",function(){
-  if(forgotConfirmPass.type==="password"){forgotConfirmPass.type="text"; this.innerText="🙈";}else{forgotConfirmPass.type="password"; this.innerText="👁️";}
 });
 
-forgotButton.addEventListener("click", async()=>{
-  const phoneRaw = cleanJasonPhone(forgotPhone.value);
-  const newPass = forgotNewPass.value.trim();
-  const confirmPass = forgotConfirmPass.value.trim();
-
-  if(!phoneRaw){showForgotStatus("❌ Entre ton numéro","error"); return;}
-  if(newPass.length<6){showForgotStatus("❌ Min 6 caractères","error"); return;}
-  if(newPass!==confirmPass){showForgotStatus("❌ Les mots de passe ne correspondent pas","error"); return;}
-
-  forgotButton.disabled=true;
-  const oldText=forgotButton.innerHTML;
-  forgotButton.innerHTML=`<span class="spinner"></span> Traitement...`;
-  showForgotStatus("Vérification du compte...","warning");
-
-  try{
-    const found = await findUserByPhone(phoneRaw);
-    if(!found){showForgotStatus("❌ Aucun compte avec ce numéro","error"); forgotButton.disabled=false; forgotButton.innerHTML=oldText; return;}
-
-    // MISE A JOUR MOT DE PASSE - compatible toutes versions
-    await update(ref(db, found.path + "/" + found.key), {
-      password: newPass,
-      mot_de_passe: newPass,
-      motDePasse: newPass,
-      pass: newPass,
-      lastPasswordReset: Date.now(),
-      forceLogout: null
-    });
-
-    showForgotStatus("✅ Mot de passe changé ! Connecte-toi maintenant","success");
-    forgotButton.innerHTML=`✅ CHANGÉ !`;
-    setTimeout(()=>{
-      forgotModal.classList.remove("show");
-      loginPhoneInput.value=phoneRaw;
-      loginPasswordInput.value=newPass;
-      showJasonStatus("✅ Nouveau mot de passe défini, connecte-toi","success");
-      forgotButton.disabled=false;
-      forgotButton.innerHTML=oldText;
-      forgotNewPass.value=""; forgotConfirmPass.value="";
-    },1200);
-
-  }catch(e){
-    console.error(e);
-    showForgotStatus("⚠️ Erreur: "+e.message,"error");
-    forgotButton.disabled=false; forgotButton.innerHTML=oldText;
+document.getElementById("reset").addEventListener("click", async e => {
+  e.preventDefault();
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  if (!email) return showMessage("Entre ton adresse Gmail d'abord.");
+  try {
+    await auth.sendPasswordResetEmail(email);
+    showMessage("Si l'adresse est valide, les instructions seront envoyées par e-mail.", true);
+  } catch (error) {
+    showMessage(error.message);
   }
 });
 </script>
