@@ -4,405 +4,206 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050914">
-<meta name="description" content="Créer un compte JASON CHAT.">
-<title>Inscription — JASON CHAT</title>
+<meta name="theme-color" content="#050a14">
+<title>Inscription — JASON BUSINESS</title>
 
 <style>
 :root{
-  --bg:#050914;
-  --blue:#087cff;
+  --bg:#050a14;
+  --panel:#0b1425;
+  --blue:#00cfff;
   --gold:#d8aa45;
   --green:#22c55e;
-  --text:#f4f7ff;
-  --muted:#98a7c2;
-  --border:#ffffff18;
+  --text:#f5f7ff;
+  --muted:#9aa9bd;
+  --border:rgba(255,255,255,.1);
 }
-*{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box}
 body{
+  margin:0;
   min-height:100vh;
-  padding:22px 16px;
+  padding:25px 16px;
   display:flex;
-  flex-direction:column;
   align-items:center;
   justify-content:center;
   font-family:Arial,sans-serif;
   color:var(--text);
   background:
-    radial-gradient(ellipse at 50% 8%,#123263 0%,transparent 48%),
-    var(--bg);
+    radial-gradient(ellipse at top,#102d50 0%,transparent 55%),
+    linear-gradient(145deg,#030711,#071426 65%,#101b2b);
 }
-a{text-decoration:none;color:inherit}
-.top{
-  width:100%;
-  max-width:470px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:22px;
-}
-.brand{display:flex;align-items:center;gap:10px}
+.container{width:100%;max-width:440px}
+.brand{text-align:center;margin-bottom:24px}
 .logo{
-  width:43px;height:43px;
-  display:grid;place-items:center;
-  border:1px solid var(--gold);
-  border-radius:14px;
-  color:var(--gold);
-  font-size:19px;font-weight:900;
-  background:linear-gradient(135deg,#123f83,#071127);
+  width:76px;height:76px;margin:0 auto 13px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:23px;
+  background:linear-gradient(145deg,#102a48,#050a14);
+  border:1px solid rgba(216,170,69,.7);
+  box-shadow:0 0 30px #00cfff20;
+  color:var(--gold);font-size:27px;font-weight:900;
 }
-.brand-name{font-size:15px;font-weight:900;letter-spacing:1px}
-.brand-name span{color:var(--gold)}
-.back{font-size:13px;color:var(--muted)}
+.brand h1{font-size:25px;margin:0;letter-spacing:1px}
+.brand h1 span{color:var(--gold)}
+.brand p{color:var(--muted);font-size:13px;margin:9px 0 0}
 .card{
-  width:100%;
-  max-width:470px;
-  padding:28px 24px;
+  padding:25px 21px;
   border:1px solid var(--border);
   border-radius:23px;
-  background:linear-gradient(145deg,#101c31ee,#080f1eee);
-  box-shadow:0 25px 80px #0005;
-  animation:appear .5s ease;
+  background:linear-gradient(150deg,rgba(14,29,49,.97),rgba(6,13,25,.98));
+  box-shadow:0 20px 55px #0005;
 }
-.avatar{
-  width:65px;height:65px;
-  display:grid;place-items:center;
-  margin:0 auto 17px;
-  border-radius:21px;
-  font-size:29px;
-  color:var(--gold);
-  border:1px solid #d8aa4570;
-  background:#d8aa4510;
-}
-h1{text-align:center;font-size:26px;margin-bottom:9px}
-.subtitle{
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.7;
-  margin-bottom:25px;
-}
+.card h2{font-size:23px;margin:0 0 7px}
+.subtitle{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 23px}
 .field{margin-bottom:16px}
-label{
-  display:block;
-  margin-bottom:8px;
-  font-size:12px;
-  font-weight:bold;
-}
+label{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
 input{
-  width:100%;
-  display:block;
-  padding:14px;
-  border:1px solid #ffffff20;
-  border-radius:11px;
-  outline:none;
-  background:#050b18;
-  color:white;
-  font-size:14px;
-  font-family:inherit;
-  transition:border-color .2s;
+  display:block;width:100%;padding:14px;
+  border:1px solid #26364d;border-radius:12px;
+  outline:none;background:#050c18;color:white;
+  font-size:15px;transition:.2s;
 }
-input:focus{border-color:var(--blue)}
+input:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px #00cfff18;
+}
 input::placeholder{color:#64748b}
-.password-wrap{position:relative}
-.password-wrap input{padding-right:65px}
-.show-pass{
-  position:absolute;
-  right:10px;top:50%;
-  transform:translateY(-50%);
-  border:0;background:none;
-  color:var(--gold);
-  font-size:12px;cursor:pointer;
-  padding:7px;
+.hint{font-size:11px;color:var(--muted);margin-top:7px}
+.terms{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:12px;color:#bdc9d9;line-height:1.6;
+  margin:17px 0;
 }
-.hint{
-  color:var(--muted);
-  font-size:10px;
-  line-height:1.6;
-  margin-top:7px;
+.terms input{width:17px;height:17px;margin:1px 0 0;accent-color:var(--blue);flex-shrink:0}
+.terms a,.footer a{color:var(--blue);text-decoration:none}
+button{
+  width:100%;border:0;border-radius:12px;padding:15px;
+  font-weight:800;font-size:15px;cursor:pointer;
+  color:#06101d;background:linear-gradient(100deg,var(--blue),#71e6ff);
+  box-shadow:0 8px 22px #00cfff20;transition:transform .2s,opacity .2s;
 }
-.check-row{
-  display:flex;
-  align-items:flex-start;
-  gap:10px;
-  margin:19px 0;
-}
-.check-row input{
-  width:16px;height:16px;
-  flex-shrink:0;
-  margin-top:2px;
-  accent-color:var(--blue);
-}
-.check-row label{
-  color:var(--muted);
-  font-size:11px;
-  line-height:1.7;
-  font-weight:normal;
-  margin:0;
-}
-.check-row a{color:var(--gold)}
-.submit{
-  width:100%;
-  padding:16px;
-  border:0;
-  border-radius:12px;
-  color:#08101e;
-  background:linear-gradient(135deg,#f1ce75,var(--gold));
-  font-size:14px;font-weight:900;
-  cursor:pointer;
-}
-.submit:disabled{opacity:.65;cursor:wait}
-.message{
-  display:none;
-  margin-bottom:17px;
-  padding:12px;
-  border-radius:10px;
-  font-size:12px;
-  line-height:1.7;
-}
-.message.error{
-  display:block;
-  background:#ef444418;
-  color:#fca5a5;
-  border:1px solid #ef444440;
-}
-.message.info{
-  display:block;
-  background:#087cff18;
-  color:#93c5fd;
-  border:1px solid #087cff40;
-}
-.message.success{
-  display:block;
-  background:#22c55e15;
-  color:#86efac;
-  border:1px solid #22c55e40;
-}
-.login{
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-  margin-top:22px;
-}
-.login a{color:var(--gold);font-weight:bold}
-footer{
-  text-align:center;
-  color:#71809a;
-  font-size:11px;
-  line-height:1.8;
-  margin-top:22px;
-}
-footer strong{color:var(--gold)}
-@keyframes appear{
-  from{opacity:0;transform:translateY(12px)}
-  to{opacity:1;transform:translateY(0)}
-}
+button:active{transform:scale(.98)}
+button:disabled{opacity:.55;cursor:not-allowed}
+.message{display:none;padding:12px;border-radius:10px;font-size:13px;line-height:1.5;margin:0 0 15px}
+.message.error{display:block;background:#7f1d1d35;color:#ffaaaa;border:1px solid #ef444455}
+.message.success{display:block;background:#14532d40;color:#86efac;border:1px solid #22c55e55}
+.footer{text-align:center;font-size:13px;color:var(--muted);margin-top:20px}
+.security{text-align:center;color:#6f8199;font-size:11px;margin-top:18px}
 @media(max-width:380px){
-  .card{padding:24px 17px}
-  h1{font-size:23px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    animation:none!important;
-    transition:none!important;
-  }
+  .card{padding:21px 16px}
+  .brand h1{font-size:22px}
 }
 </style>
 </head>
 
 <body>
-<header class="top">
-  <a href="index.html" class="brand">
-    <div class="logo">JC</div>
-    <div class="brand-name">JASON <span>CHAT</span></div>
-  </a>
-  <a href="index.html" class="back">← Accueil</a>
-</header>
+<main class="container">
+  <header class="brand">
+    <div class="logo">JB</div>
+    <h1>JASON <span>BUSINESS</span></h1>
+    <p>Web • Design • Digital • Intelligence artificielle</p>
+  </header>
 
-<main class="card">
-  <div class="avatar">👤</div>
+  <section class="card">
+    <h2>Créer un compte</h2>
+    <p class="subtitle">Rejoins JASON BUSINESS et découvre nos services numériques.</p>
 
-  <h1>Créer un compte</h1>
-  <p class="subtitle">
-    Rejoins JASON CHAT et prépare ton espace personnel
-    pour communiquer avec tes contacts.
-  </p>
+    <div id="message" class="message" role="status" aria-live="polite"></div>
 
-  <div id="message" class="message"
-       role="status" aria-live="polite"></div>
-
-  <form id="registerForm">
-    <div class="field">
-      <label for="name">Nom complet</label>
-      <input
-        id="name"
-        name="name"
-        type="text"
-        placeholder="Entre ton nom complet"
-        autocomplete="name"
-        maxlength="80"
-        required>
-    </div>
-
-    <div class="field">
-      <label for="phone">Numéro de téléphone</label>
-      <input
-        id="phone"
-        name="phone"
-        type="tel"
-        placeholder="Ex. : +243..."
-        autocomplete="tel"
-        maxlength="20"
-        required>
-    </div>
-
-    <div class="field">
-      <label for="email">Adresse e-mail</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        placeholder="nom@exemple.com"
-        autocomplete="email"
-        maxlength="150"
-        required>
-    </div>
-
-    <div class="field">
-      <label for="password">Créer un mot de passe</label>
-      <div class="password-wrap">
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="8 caractères minimum"
-          autocomplete="new-password"
-          minlength="8"
-          maxlength="128"
-          required>
-        <button type="button" class="show-pass"
-                data-target="password">Voir</button>
+    <form id="registerForm">
+      <div class="field">
+        <label for="name">Nom complet</label>
+        <input id="name" name="name" type="text" placeholder="Ton nom complet" autocomplete="name" required>
       </div>
-      <p class="hint">
-        Utilise au moins 8 caractères et choisis un mot de passe
-        difficile à deviner.
-      </p>
-    </div>
 
-    <div class="field">
-      <label for="confirmPassword">Confirmer le mot de passe</label>
-      <div class="password-wrap">
-        <input
-          id="confirmPassword"
-          name="confirmPassword"
-          type="password"
-          placeholder="Répète ton mot de passe"
-          autocomplete="new-password"
-          minlength="8"
-          maxlength="128"
-          required>
-        <button type="button" class="show-pass"
-                data-target="confirmPassword">Voir</button>
+      <div class="field">
+        <label for="phone">Numéro de téléphone</label>
+        <input id="phone" name="phone" type="tel" placeholder="Ex. : +243..." autocomplete="tel" required>
       </div>
-    </div>
 
-    <div class="check-row">
-      <input type="checkbox" id="terms" required>
-      <label for="terms">
-        J'accepte les conditions d'utilisation et la politique
-        de confidentialité de JASON CHAT.
+      <div class="field">
+        <label for="email">Adresse Gmail (facultatif)</label>
+        <input id="email" name="email" type="email" placeholder="exemple@gmail.com" autocomplete="email">
+      </div>
+
+      <div class="field">
+        <label for="password">Mot de passe</label>
+        <input id="password" name="password" type="password" placeholder="Au moins 6 caractères" autocomplete="new-password" minlength="6" required>
+      </div>
+
+      <div class="field">
+        <label for="confirmPassword">Confirmer le mot de passe</label>
+        <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Répète ton mot de passe" autocomplete="new-password" minlength="6" required>
+      </div>
+
+      <div class="field">
+        <label for="referral">Code de parrainage (facultatif)</label>
+        <input id="referral" name="referral" type="text" placeholder="Entre un code si tu en as un">
+        <div class="hint">Vérifie le code auprès de la personne qui t’invite.</div>
+      </div>
+
+      <label class="terms">
+        <input id="acceptTerms" type="checkbox" required>
+        <span>J’accepte les conditions d’utilisation et je confirme que les informations fournies sont exactes.</span>
       </label>
+
+      <button id="registerBtn" type="submit">Créer mon compte</button>
+    </form>
+
+    <div class="footer">
+      Tu as déjà un compte ? <a href="login.html">Se connecter</a>
     </div>
+  </section>
 
-    <button type="submit" class="submit" id="submitBtn">
-      Créer mon compte →
-    </button>
-  </form>
-
-  <p class="login">
-    Tu as déjà un compte ?
-    <a href="login.html">Se connecter</a>
-  </p>
+  <div class="security">🔒 Protège ton mot de passe et ne le partage jamais.</div>
 </main>
 
-<footer>
-  © <span id="year"></span> JASON CHAT<br>
-  Créé par <strong>Jason Aloma 🇨🇩</strong> · Kinshasa, RDC
-</footer>
-
-<script>
-document.getElementById("year").textContent =
-  new Date().getFullYear();
-
+<!--
+  Pour activer Firebase, ajoute ici le code Firebase de TON projet.
+  Ce formulaire ne crée aucun compte tant que Firebase n'est pas connecté.
+-->
+<script type="module">
 const form = document.getElementById("registerForm");
+const button = document.getElementById("registerBtn");
 const message = document.getElementById("message");
-const submitBtn = document.getElementById("submitBtn");
 
-document.querySelectorAll(".show-pass").forEach(function(button){
-  button.addEventListener("click", function(){
-    const field = document.getElementById(button.dataset.target);
-    const visible = field.type === "password";
-
-    field.type = visible ? "text" : "password";
-    button.textContent = visible ? "Cacher" : "Voir";
-  });
-});
-
-function showMessage(text, type){
+function showMessage(text, type = "error") {
   message.textContent = text;
   message.className = "message " + type;
 }
 
-form.addEventListener("submit", async function(event){
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
-  const confirmPassword =
-    document.getElementById("confirmPassword").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+  const referral = document.getElementById("referral").value.trim();
 
-  if(!name || !phone || !email || !password || !confirmPassword){
-    showMessage("Remplis tous les champs.", "error");
+  if (password.length < 6) {
+    showMessage("Le mot de passe doit contenir au moins 6 caractères.");
     return;
   }
 
-  if(password.length < 8){
-    showMessage(
-      "Ton mot de passe doit contenir au moins 8 caractères.",
-      "error"
-    );
+  if (password !== confirmPassword) {
+    showMessage("Les deux mots de passe ne correspondent pas.");
     return;
   }
 
-  if(password !== confirmPassword){
-    showMessage(
-      "Les deux mots de passe ne correspondent pas.",
-      "error"
-    );
-    return;
-  }
-
-  if(!document.getElementById("terms").checked){
-    showMessage(
-      "Tu dois accepter les conditions pour continuer.",
-      "error"
-    );
+  if (!document.getElementById("acceptTerms").checked) {
+    showMessage("Tu dois accepter les conditions d’utilisation.");
     return;
   }
 
   /*
-    L'interface est prête, mais aucun compte n'est créé pour le moment.
-    La prochaine étape consiste à connecter un véritable service
-    d'authentification sécurisé côté serveur.
-    Ne stocke jamais le mot de passe dans localStorage.
+    Le formulaire est prêt, mais aucune inscription Firebase
+    n'est exécutée sans la configuration et la logique de ton projet.
   */
-
   showMessage(
-    "Vérification réussie ! Le serveur d'inscription doit encore être connecté. " +
-    "Aucun compte n'a été créé pour le moment.",
-    "info"
+    "Le formulaire est valide, mais Firebase n’est pas encore connecté. Ajoute le code Firebase de ton projet pour activer l’inscription.",
+    "error"
   );
 });
 </script>
