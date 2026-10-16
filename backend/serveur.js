@@ -1,49 +1,21 @@
+import express from "express";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-/**
- * JASON BUSINESS — Serveur local Express
- * Fichier : backend/server.js
- *
- * Lancement local :
- * node backend/server.js
- *
- * Sur Vercel, utilise le point d'entrée API prévu
- * pour le déploiement serverless.
- */
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
 
-"use strict";
+app.get("/api/health", (req,res)=> res.json({status:"JASON FACE API OK", time: new Date().toISOString()}));
 
-const app = require("./app");
-
-const PORT = Number(process.env.PORT) || 3000;
-
-const server = app.listen(PORT, "0.0.0.0", () => {
-  console.log(
-    `JASON BUSINESS backend disponible sur le port ${PORT}`
-  );
+app.get("*", (req,res)=>{
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-server.on("error", error => {
-  if (error.code === "EADDRINUSE") {
-    console.error(`Le port ${PORT} est déjà utilisé.`);
-  } else {
-    console.error("Erreur de démarrage du serveur :", error.message);
-  }
-
-  process.exitCode = 1;
-});
-
-function shutdown(signal) {
-  console.log(`\n${signal} reçu : arrêt du serveur...`);
-
-  server.close(error => {
-    if (error) {
-      console.error("Erreur pendant l'arrêt :", error.message);
-      process.exitCode = 1;
-    }
-
-    process.exit();
-  });
-}
-
-process.on("SIGINT", () => shutdown("SIGINT"));
-process.on("SIGTERM", () => shutdown("SIGTERM"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, ()=> console.log(`JASON FACE sur http://localhost:${PORT}`));
+export default app;
