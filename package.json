@@ -1,19 +1,18 @@
-
 {
-  "name": "jason-business-vercel",
-  "version": "1.1.0",
-  "private": true,
-  "description": "JASON BUSINESS - Backend Express avec Firebase Admin SDK",
-  "main": "backend/server.js",
+  "name": "jason-face",
+  "version": "1.0.0",
+  "description": "JASON FACE - Réseau social comme Facebook",
+  "main": "serveur.js",
+  "type": "module",
   "scripts": {
-    "start": "node backend/server.js"
-  },
-  "engines": {
-    "node": ">=20"
+    "start": "node serveur.js",
+    "dev": "node serveur.js"
   },
   "dependencies": {
+    "express": "^4.18.2",
     "cors": "^2.8.5",
-    "express": "^4.21.2",
-    "firebase-admin": "^13.0.2"
+    "dotenv": "^16.3.1",
+    "firebase-admin": "^12.0.0",
+    "firebase": "^10.7.1"
   }
 }
