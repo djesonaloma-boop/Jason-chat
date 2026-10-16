@@ -3,208 +3,140 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050a14">
 <title>Inscription — JASON BUSINESS</title>
-
 <style>
-:root{
-  --bg:#050a14;
-  --panel:#0b1425;
-  --blue:#00cfff;
-  --gold:#d8aa45;
-  --green:#22c55e;
-  --text:#f5f7ff;
-  --muted:#9aa9bd;
-  --border:rgba(255,255,255,.1);
-}
+:root{--bg:#050a14;--card:#0c1525;--blue:#00d4ff;--gold:#d8aa45;--text:#f5f7fb;--muted:#9aa8bd}
 *{box-sizing:border-box}
-body{
-  margin:0;
-  min-height:100vh;
-  padding:25px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:Arial,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(ellipse at top,#102d50 0%,transparent 55%),
-    linear-gradient(145deg,#030711,#071426 65%,#101b2b);
-}
-.container{width:100%;max-width:440px}
-.brand{text-align:center;margin-bottom:24px}
-.logo{
-  width:76px;height:76px;margin:0 auto 13px;
-  display:flex;align-items:center;justify-content:center;
-  border-radius:23px;
-  background:linear-gradient(145deg,#102a48,#050a14);
-  border:1px solid rgba(216,170,69,.7);
-  box-shadow:0 0 30px #00cfff20;
-  color:var(--gold);font-size:27px;font-weight:900;
-}
-.brand h1{font-size:25px;margin:0;letter-spacing:1px}
-.brand h1 span{color:var(--gold)}
-.brand p{color:var(--muted);font-size:13px;margin:9px 0 0}
-.card{
-  padding:25px 21px;
-  border:1px solid var(--border);
-  border-radius:23px;
-  background:linear-gradient(150deg,rgba(14,29,49,.97),rgba(6,13,25,.98));
-  box-shadow:0 20px 55px #0005;
-}
-.card h2{font-size:23px;margin:0 0 7px}
-.subtitle{color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 23px}
-.field{margin-bottom:16px}
-label{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
-input{
-  display:block;width:100%;padding:14px;
-  border:1px solid #26364d;border-radius:12px;
-  outline:none;background:#050c18;color:white;
-  font-size:15px;transition:.2s;
-}
-input:focus{
-  border-color:var(--blue);
-  box-shadow:0 0 0 3px #00cfff18;
-}
-input::placeholder{color:#64748b}
-.hint{font-size:11px;color:var(--muted);margin-top:7px}
-.terms{
-  display:flex;align-items:flex-start;gap:10px;
-  font-size:12px;color:#bdc9d9;line-height:1.6;
-  margin:17px 0;
-}
-.terms input{width:17px;height:17px;margin:1px 0 0;accent-color:var(--blue);flex-shrink:0}
-.terms a,.footer a{color:var(--blue);text-decoration:none}
-button{
-  width:100%;border:0;border-radius:12px;padding:15px;
-  font-weight:800;font-size:15px;cursor:pointer;
-  color:#06101d;background:linear-gradient(100deg,var(--blue),#71e6ff);
-  box-shadow:0 8px 22px #00cfff20;transition:transform .2s,opacity .2s;
-}
-button:active{transform:scale(.98)}
-button:disabled{opacity:.55;cursor:not-allowed}
-.message{display:none;padding:12px;border-radius:10px;font-size:13px;line-height:1.5;margin:0 0 15px}
-.message.error{display:block;background:#7f1d1d35;color:#ffaaaa;border:1px solid #ef444455}
-.message.success{display:block;background:#14532d40;color:#86efac;border:1px solid #22c55e55}
-.footer{text-align:center;font-size:13px;color:var(--muted);margin-top:20px}
-.security{text-align:center;color:#6f8199;font-size:11px;margin-top:18px}
-@media(max-width:380px){
-  .card{padding:21px 16px}
-  .brand h1{font-size:22px}
-}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#102644,var(--bg) 65%);font-family:Arial,sans-serif;color:var(--text);display:flex;align-items:center;justify-content:center;padding:20px}
+.card{width:100%;max-width:440px;background:var(--card);border:1px solid #26364b;border-radius:22px;padding:25px;box-shadow:0 20px 60px #0008}
+.logo{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--blue),#1763a8);display:grid;place-items:center;color:#06111e;font-weight:900;font-size:24px;margin-bottom:15px}
+h1{font-size:25px;margin:0 0 8px}
+p{color:var(--muted);line-height:1.5;font-size:14px}
+input{width:100%;padding:14px;margin:7px 0;background:#07101e;border:1px solid #2b3a50;border-radius:11px;color:white;font-size:15px;outline:none}
+input:focus{border-color:var(--blue)}
+button{width:100%;padding:15px;margin-top:15px;border:0;border-radius:11px;background:linear-gradient(90deg,var(--blue),#58a9ff);color:#06111e;font-weight:800;font-size:15px}
+label{font-size:13px;color:#d9e2ef;display:flex;gap:9px;align-items:flex-start;margin-top:15px}
+label input{width:auto;margin:2px 0}
+a{color:var(--gold)}
+#message{font-size:14px;overflow-wrap:anywhere}
 </style>
 </head>
-
 <body>
-<main class="container">
-  <header class="brand">
-    <div class="logo">JB</div>
-    <h1>JASON <span>BUSINESS</span></h1>
-    <p>Web • Design • Digital • Intelligence artificielle</p>
-  </header>
-
-  <section class="card">
-    <h2>Créer un compte</h2>
-    <p class="subtitle">Rejoins JASON BUSINESS et découvre nos services numériques.</p>
-
-    <div id="message" class="message" role="status" aria-live="polite"></div>
-
-    <form id="registerForm">
-      <div class="field">
-        <label for="name">Nom complet</label>
-        <input id="name" name="name" type="text" placeholder="Ton nom complet" autocomplete="name" required>
-      </div>
-
-      <div class="field">
-        <label for="phone">Numéro de téléphone</label>
-        <input id="phone" name="phone" type="tel" placeholder="Ex. : +243..." autocomplete="tel" required>
-      </div>
-
-      <div class="field">
-        <label for="email">Adresse Gmail (facultatif)</label>
-        <input id="email" name="email" type="email" placeholder="exemple@gmail.com" autocomplete="email">
-      </div>
-
-      <div class="field">
-        <label for="password">Mot de passe</label>
-        <input id="password" name="password" type="password" placeholder="Au moins 6 caractères" autocomplete="new-password" minlength="6" required>
-      </div>
-
-      <div class="field">
-        <label for="confirmPassword">Confirmer le mot de passe</label>
-        <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Répète ton mot de passe" autocomplete="new-password" minlength="6" required>
-      </div>
-
-      <div class="field">
-        <label for="referral">Code de parrainage (facultatif)</label>
-        <input id="referral" name="referral" type="text" placeholder="Entre un code si tu en as un">
-        <div class="hint">Vérifie le code auprès de la personne qui t’invite.</div>
-      </div>
-
-      <label class="terms">
-        <input id="acceptTerms" type="checkbox" required>
-        <span>J’accepte les conditions d’utilisation et je confirme que les informations fournies sont exactes.</span>
-      </label>
-
-      <button id="registerBtn" type="submit">Créer mon compte</button>
-    </form>
-
-    <div class="footer">
-      Tu as déjà un compte ? <a href="login.html">Se connecter</a>
-    </div>
-  </section>
-
-  <div class="security">🔒 Protège ton mot de passe et ne le partage jamais.</div>
+<main class="card">
+<div class="logo">JB</div>
+<h1>Créer un compte</h1>
+<p>JASON BUSINESS — Web • Design • Digital • Intelligence artificielle</p>
+<form id="registerForm">
+<input id="name" placeholder="Nom complet" autocomplete="name" required maxlength="100">
+<input id="phone" type="tel" placeholder="Numéro de téléphone" autocomplete="tel" required maxlength="25">
+<input id="email" type="email" placeholder="Adresse Gmail" autocomplete="email" required>
+<input id="password" type="password" placeholder="Mot de passe (6 caractères minimum)" autocomplete="new-password" minlength="6" required>
+<input id="confirmPassword" type="password" placeholder="Confirmer le mot de passe" autocomplete="new-password" minlength="6" required>
+<input id="referral" placeholder="Code de parrainage (facultatif)" maxlength="50">
+<label>
+<input id="terms" type="checkbox" required>
+<span>J’accepte les conditions d’utilisation et confirme l’exactitude des informations fournies.</span>
+</label>
+<button id="registerBtn" type="submit">Créer mon compte</button>
+<p id="message" role="status" aria-live="polite"></p>
+</form>
+<p>Tu as déjà un compte ? <a href="login.html">Se connecter</a></p>
+<p>🔒 Ne partage jamais ton mot de passe.</p>
 </main>
 
-<!--
-  Pour activer Firebase, ajoute ici le code Firebase de TON projet.
-  Ce formulaire ne crée aucun compte tant que Firebase n'est pas connecté.
--->
-<script type="module">
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
 const form = document.getElementById("registerForm");
-const button = document.getElementById("registerBtn");
 const message = document.getElementById("message");
+const btn = document.getElementById("registerBtn");
 
-function showMessage(text, type = "error") {
+function showMessage(text, ok=false) {
   message.textContent = text;
-  message.className = "message " + type;
+  message.style.color = ok ? "#4ade80" : "#ff8d8d";
 }
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+function friendlyError(error) {
+  const errors = {
+    "auth/email-already-in-use": "Cette adresse possède déjà un compte.",
+    "auth/invalid-email": "Adresse Gmail invalide.",
+    "auth/weak-password": "Choisis un mot de passe plus robuste.",
+    "auth/network-request-failed": "Connexion Internet indisponible.",
+    "auth/operation-not-allowed": "Active Email/Password dans Firebase Authentication.",
+    "auth/too-many-requests": "Trop de tentatives. Réessaie plus tard.",
+    "PERMISSION_DENIED": "Firebase Database refuse l'enregistrement. Vérifie les règles."
+  };
+  return errors[error.code] || error.message || "Une erreur est survenue.";
+}
+
+form.addEventListener("submit", async function(e) {
+  e.preventDefault();
 
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
-  const email = document.getElementById("email").value.trim();
+  const email = document.getElementById("email").value.trim().toLowerCase();
   const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
+  const confirmation = document.getElementById("confirmPassword").value;
   const referral = document.getElementById("referral").value.trim();
 
+  if (!name || !phone || !email) {
+    return showMessage("Remplis tous les champs obligatoires.");
+  }
+  if (password !== confirmation) {
+    return showMessage("Les deux mots de passe ne correspondent pas.");
+  }
   if (password.length < 6) {
-    showMessage("Le mot de passe doit contenir au moins 6 caractères.");
-    return;
+    return showMessage("Le mot de passe doit contenir au moins 6 caractères.");
+  }
+  if (!document.getElementById("terms").checked) {
+    return showMessage("Accepte les conditions pour continuer.");
   }
 
-  if (password !== confirmPassword) {
-    showMessage("Les deux mots de passe ne correspondent pas.");
-    return;
-  }
+  btn.disabled = true;
+  btn.textContent = "Création du compte...";
+  showMessage("");
 
-  if (!document.getElementById("acceptTerms").checked) {
-    showMessage("Tu dois accepter les conditions d’utilisation.");
-    return;
-  }
+  let credential = null;
 
-  /*
-    Le formulaire est prêt, mais aucune inscription Firebase
-    n'est exécutée sans la configuration et la logique de ton projet.
-  */
-  showMessage(
-    "Le formulaire est valide, mais Firebase n’est pas encore connecté. Ajoute le code Firebase de ton projet pour activer l’inscription.",
-    "error"
-  );
+  try {
+    credential = await auth.createUserWithEmailAndPassword(email, password);
+    const user = credential.user;
+
+    await user.updateProfile({ displayName: name });
+
+    const profile = {
+      name: name,
+      phone: phone,
+      referral: referral,
+      createdAt: firebase.database.ServerValue.TIMESTAMP
+    };
+
+    const updates = {};
+    for (const [key, value] of Object.entries(profile)) {
+      updates["users/" + user.uid + "/" + key] = value;
+    }
+    await db.ref().update(updates);
+
+    showMessage("Compte créé avec succès ! Ouverture de ton espace...", true);
+    location.replace("dashboard.html");
+
+  } catch (error) {
+    if (credential && credential.user) {
+      showMessage(
+        "Le compte d'authentification existe, mais le profil n'a pas pu être enregistré. " +
+        "Vérifie les règles Firebase, puis reconnecte-toi. Détail : " + friendlyError(error)
+      );
+    } else {
+      showMessage(friendlyError(error));
+    }
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Créer mon compte";
+  }
 });
 </script>
 </body>
