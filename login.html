@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050914">
+<title>Connexion — JASON CHAT</title>
+
+<style>
+:root{
+  --bg:#050914;
+  --panel:#0b1426;
+  --blue:#087cff;
+  --gold:#d8aa45;
+  --green:#22c55e;
+  --text:#f4f7ff;
+  --muted:#98a7c2;
+  --border:#ffffff18;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-family:Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(ellipse at 50% 10%,#123263 0%,transparent 48%),
+    var(--bg);
+}
+a{color:inherit;text-decoration:none}
+.top{
+  width:100%;
+  max-width:440px;
+  margin-bottom:25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{
+  width:43px;height:43px;
+  border-radius:14px;
+  display:grid;place-items:center;
+  color:var(--gold);
+  font-weight:900;font-size:19px;
+  border:1px solid var(--gold);
+  background:linear-gradient(135deg,#123f83,#071127);
+}
+.brand-name{font-size:15px;font-weight:900;letter-spacing:1px}
+.brand-name span{color:var(--gold)}
+.back{font-size:13px;color:var(--muted)}
+.card{
+  width:100%;
+  max-width:440px;
+  padding:30px 25px;
+  border:1px solid var(--border);
+  border-radius:23px;
+  background:linear-gradient(145deg,#101c31ee,#080f1eee);
+  box-shadow:0 25px 80px #0005;
+  animation:appear .5s ease;
+}
+.avatar{
+  width:70px;height:70px;
+  display:grid;place-items:center;
+  margin:0 auto 20px;
+  border-radius:22px;
+  font-size:30px;
+  color:var(--gold);
+  border:1px solid #d8aa4570;
+  background:#d8aa4510;
+}
+h1{text-align:center;font-size:27px;margin-bottom:10px}
+.subtitle{
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:27px;
+}
+label{
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:9px;
+}
+.field{margin-bottom:19px}
+.input-wrap{position:relative}
+input{
+  display:block;
+  width:100%;
+  padding:15px;
+  border:1px solid #ffffff20;
+  border-radius:12px;
+  outline:none;
+  background:#050b18;
+  color:white;
+  font-size:14px;
+  transition:border-color .2s;
+}
+input:focus{border-color:var(--blue)}
+input::placeholder{color:#64748b}
+.password-input{padding-right:55px}
+.show-pass{
+  position:absolute;
+  right:12px;top:50%;
+  transform:translateY(-50%);
+  background:none;border:0;
+  color:var(--muted);
+  font-size:12px;cursor:pointer;
+  padding:8px;
+}
+.options{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:0 0 23px;
+  font-size:12px;
+}
+.remember{
+  display:flex;align-items:center;gap:7px;
+  color:var(--muted);
+}
+.remember input{width:15px;height:15px;accent-color:var(--blue)}
+.forgot{color:var(--gold)}
+.submit{
+  width:100%;
+  padding:16px;
+  border:0;
+  border-radius:12px;
+  color:#08101e;
+  background:linear-gradient(135deg,#f1ce75,var(--gold));
+  font-size:14px;font-weight:900;
+  cursor:pointer;
+}
+.submit:disabled{opacity:.65;cursor:wait}
+.message{
+  display:none;
+  padding:12px;
+  margin-bottom:17px;
+  border-radius:10px;
+  font-size:12px;
+  line-height:1.6;
+}
+.message.error{display:block;background:#ef444418;color:#fca5a5;border:1px solid #ef444440}
+.message.info{display:block;background:#087cff18;color:#93c5fd;border:1px solid #087cff40}
+.signup{
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+  margin-top:23px;
+}
+.signup a{color:var(--gold);font-weight:bold}
+.divider{
+  height:1px;background:var(--border);
+  margin:25px 0 17px;
+}
+.security{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;line-height:1.8;
+}
+footer{
+  text-align:center;
+  color:#71809a;
+  font-size:11px;
+  margin-top:24px;
+  line-height:1.8;
+}
+footer strong{color:var(--gold)}
+@keyframes appear{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(max-width:380px){
+  body{padding:15px}
+  .card{padding:25px 18px}
+  h1{font-size:24px}
+  .options{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+
+<body>
+<header class="top">
+  <a href="index.html" class="brand">
+    <div class="logo">JC</div>
+    <div class="brand-name">JASON <span>CHAT</span></div>
+  </a>
+  <a href="index.html" class="back">← Accueil</a>
+</header>
+
+<main class="card">
+  <div class="avatar">🔐</div>
+  <h1>Bon retour !</h1>
+  <p class="subtitle">
+    Connecte-toi à ton compte pour retrouver ton espace
+    de messagerie JASON CHAT.
+  </p>
+
+  <div id="message" class="message" role="status" aria-live="polite"></div>
+
+  <form id="loginForm">
+    <div class="field">
+      <label for="identity">Téléphone ou adresse e-mail</label>
+      <input
+        type="text"
+        id="identity"
+        name="identity"
+        placeholder="Ex. : +243... ou nom@email.com"
+        autocomplete="username"
+        required>
+    </div>
+
+    <div class="field">
+      <label for="password">Mot de passe</label>
+      <div class="input-wrap">
+        <input
+          class="password-input"
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Entre ton mot de passe"
+          autocomplete="current-password"
+          minlength="8"
+          required>
+        <button type="button" class="show-pass" id="togglePassword"
+          aria-label="Afficher le mot de passe">Voir</button>
+      </div>
+    </div>
+
+    <div class="options">
+      <label class="remember">
+        <input type="checkbox" id="remember">
+        Se souvenir de moi
+      </label>
+      <a class="forgot" href="register.html">Besoin d'aide ?</a>
+    </div>
+
+    <button class="submit" type="submit" id="submitBtn">
+      Se connecter →
+    </button>
+  </form>
+
+  <p class="signup">
+    Tu n'as pas encore de compte ?
+    <a href="register.html">Créer un compte</a>
+  </p>
+
+  <div class="divider"></div>
+
+  <p class="security">
+    🛡️ Protège ton mot de passe.<br>
+    Ne le partage jamais avec une autre personne.
+  </p>
+</main>
+
+<footer>
+  © <span id="year"></span> JASON CHAT<br>
+  Créé par <strong>Jason Aloma 🇨🇩</strong> · Kinshasa, RDC
+</footer>
+
+<script>
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+const form = document.getElementById("loginForm");
+const password = document.getElementById("password");
+const toggle = document.getElementById("togglePassword");
+const message = document.getElementById("message");
+const submitBtn = document.getElementById("submitBtn");
+
+toggle.addEventListener("click", function(){
+  const visible = password.type === "password";
+  password.type = visible ? "text" : "password";
+  toggle.textContent = visible ? "Cacher" : "Voir";
+  toggle.setAttribute(
+    "aria-label",
+    visible ? "Cacher le mot de passe" : "Afficher le mot de passe"
+  );
+});
+
+function showMessage(text, type){
+  message.textContent = text;
+  message.className = "message " + type;
+}
+
+form.addEventListener("submit", async function(event){
+  event.preventDefault();
+
+  const identity = document.getElementById("identity").value.trim();
+  const passwordValue = password.value;
+
+  if(!identity || !passwordValue){
+    showMessage("Remplis tous les champs.", "error");
+    return;
+  }
+
+  /*
+    Le backend d'authentification n'est pas encore connecté.
+    N'enregistre jamais les mots de passe dans localStorage.
+  */
+
+  showMessage(
+    "Le formulaire est prêt, mais le serveur de connexion n'est pas encore connecté. " +
+    "Nous devons configurer l'authentification avant de pouvoir ouvrir ta session.",
+    "info"
+  );
+});
+</script>
+</body>
+</html>
