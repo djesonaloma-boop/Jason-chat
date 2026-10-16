@@ -1,49 +1,18 @@
 
-/**
- * JASON BUSINESS — Firebase Admin SDK
- * Fichier : backend/firebase.js
- *
- * IMPORTANT :
- * - Serveur uniquement, jamais dans le navigateur.
- * - Ne publie jamais serviceAccountKey.json.
- */
+/* Configuration Web Firebase de JASON BUSINESS */
+const firebaseConfig = {
+  apiKey: "COLLE_TA_FIREBASE_API_KEY",
+  authDomain: "TON_PROJECT_ID.firebaseapp.com",
+  databaseURL: "COLLE_TON_URL_REALTIME_DATABASE",
+  projectId: "TON_PROJECT_ID",
+  storageBucket: "TON_PROJECT_ID.firebasestorage.app",
+  messagingSenderId: "TON_MESSAGING_SENDER_ID",
+  appId: "TON_APP_ID"
+};
 
-const fs = require("node:fs");
-const path = require("node:path");
-const admin = require("firebase-admin");
-
-const serviceAccountPath = path.join(
-  __dirname,
-  "serviceAccountKey.json"
-);
-
-if (!admin.apps.length) {
-  if (!fs.existsSync(serviceAccountPath)) {
-    throw new Error(
-      "Clé Firebase absente : ajoutez backend/serviceAccountKey.json depuis Firebase Console > Paramètres du projet > Comptes de service."
-    );
-  }
-
-  const serviceAccount = JSON.parse(
-    fs.readFileSync(serviceAccountPath, "utf8")
-  );
-
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL:
-      "https://starlink-investit-default-rtdb.firebaseio.com",
-    storageBucket:
-      "starlink-investit.firebasestorage.app"
-  });
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
 }
 
-const auth = admin.auth();
-const database = admin.database();
-const storage = admin.storage();
-
-module.exports = {
-  admin,
-  auth,
-  database,
-  storage
-};
+const auth = firebase.auth();
+const db = firebase.database();
