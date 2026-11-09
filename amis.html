@@ -6,53 +6,120 @@
 <title>JASONBOOK - Amis</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
-:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
-body{background:var(--bg);min-height:100vh}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.3px}
-.logo span{width:34px;height:34px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
-.icons{display:flex;gap:6px;align-items:center}
-.icons a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
-.avatar{width:60px;height:60px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;overflow:hidden;flex-shrink:0;cursor:pointer}
+html{overflow-x:clip;overflow-y:auto;-webkit-overflow-scrolling:touch}
+body{width:100%;overflow-x:clip;background:#0F0F14;min-height:100vh;color:#fff}
+:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--noir:#111;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35}
+header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid var(--or);box-shadow:0 2px 15px rgba(0,0,0,.5)}
+.top-bar{display:flex;align-items:center;gap:10px;padding:10px 12px 6px}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:22px;cursor:pointer;flex:1;white-space:nowrap}
+.logo span{width:36px;height:36px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 12px rgba(255,193,7,.5)}
+.logo i{color:var(--or);font-style:normal}
+.icon-top{width:40px;height:40px;background:#2A2A35;border:none;border-radius:50%;cursor:pointer;font-size:19px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.icon-top.menu{background:linear-gradient(135deg,var(--violet),var(--violet2));box-shadow:0 0 10px rgba(124,58,237,.5);font-weight:900}
+.nav-top{display:flex;justify-content:space-between;padding:2px 6px 6px}
+.nav-top a{flex:1;text-decoration:none;color:#A1A1AA;display:flex;align-items:center;justify-content:center;padding:8px 2px;position:relative;font-size:24px;border-bottom:3px solid transparent}
+.nav-top a.active{color:var(--or);border-bottom:3px solid var(--or)}
+.nav-top a .badge{position:absolute;top:1px;right:50%;transform:translateX(18px);background:#E0245E;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:999px;min-width:20px;text-align:center;border:2px solid #111}
+.nav-top a .badge.or{background:var(--or);color:#111}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:90;display:none}
+.overlay.open{display:block}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:290px;max-width:88vw;background:#17171F;z-index:100;transform:translateX(100%);transition:.28s;display:flex;flex-direction:column;overflow-y:auto;color:#fff}
+.drawer.open{transform:translateX(0)}
+.drawer-head{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--ligne);background:#17171F}
+.drawer-head .info{flex:1;min-width:0}
+.drawer-head b{font-size:16px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drawer-head small{color:var(--gris)}
+.drawer-close{border:none;background:#2A2A35;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;color:#fff}
+.drawer a{display:flex;align-items:center;gap:12px;padding:12px 16px;text-decoration:none;color:#fff;font-weight:600;font-size:14.5px;border-bottom:1px solid #22222D}
+.drawer a span{font-size:19px;width:28px;text-align:center;flex-shrink:0}
+.drawer .titre{padding:14px 16px 4px;font-size:11px;font-weight:800;color:var(--or);text-transform:uppercase;letter-spacing:1px}
+.drawer .logout{margin:14px 16px;padding:12px;background:#3A0A0A;color:#FF6B6B;border:1px solid #5A1A1A;border-radius:10px;font-weight:800;cursor:pointer;font-size:14px}
+.avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
-.avatar.small{width:38px;height:38px;font-size:14px}
-.wrap{max-width:1000px;margin:16px auto;padding:0 12px}
+.wrap{max-width:1000px;margin:16px auto;padding:0 12px 40px}
 .wrap h1{font-size:23px;letter-spacing:-.3px}
-.wrap .sub{color:var(--grey);font-size:14px;margin:4px 0 14px}
+.wrap .sub{color:var(--gris);font-size:14px;margin:4px 0 14px}
 .tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tabs button{border:none;background:#fff;padding:11px 16px;border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.05);font-size:13.5px}
-.tabs button.active{background:var(--blue);color:#fff}
+.tabs button{border:none;background:var(--carte);color:#fff;padding:11px 16px;border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;border:1px solid var(--ligne);font-size:13.5px}
+.tabs button.active{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff;border-color:transparent}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
-.friend-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05);border:1px solid var(--line);text-align:center;padding-bottom:12px}
-.friend-card .photo{height:168px;background:#e7f0ff;display:flex;align-items:center;justify-content:center;font-size:56px;font-weight:900;color:var(--blue);cursor:pointer;overflow:hidden}
+.friend-card{background:var(--carte);border-radius:16px;overflow:hidden;border:1px solid var(--ligne);text-align:center;padding-bottom:12px}
+.friend-card .photo{height:168px;background:#2A2A35;display:flex;align-items:center;justify-content:center;font-size:56px;font-weight:900;color:var(--or);cursor:pointer;overflow:hidden}
 .friend-card .photo img{width:100%;height:100%;object-fit:cover}
-.friend-card h3{font-size:15px;margin:11px 8px 2px;line-height:1.3}
-.friend-card p{font-size:12.5px;color:var(--grey);margin:0 8px 11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.friend-card h3{font-size:15px;margin:11px 8px 2px;line-height:1.3;color:#fff}
+.friend-card p{font-size:12.5px;color:var(--gris);margin:0 8px 11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .friend-card .btns{padding:0 11px;display:flex;flex-direction:column;gap:7px}
-.btn-blue{background:var(--blue);color:#fff;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
-.btn-grey{background:#f0f2f5;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
-.btn-green{background:#42b72a;color:#fff;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
-.btn-red{background:#fff0f0;color:#e0245e;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
-.search-big{width:100%;padding:12px 16px;border:none;border-radius:999px;font-size:14.5px;outline:none;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.05);background:#fff}
-.search-big:focus{box-shadow:0 0 0 3px rgba(24,119,242,.12)}
-.empty{text-align:center;color:var(--grey);padding:36px 10px;background:#fff;border-radius:14px;border:1px solid var(--line)}
-.empty .big{font-size:44px;width:72px;height:72px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
-.bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}.grid{grid-template-columns:1fr 1fr}}
+.btn-blue{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
+.btn-grey{background:#2A2A35;color:#fff;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
+.btn-green{background:#22C55E;color:#fff;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
+.btn-red{background:#3A0A0A;color:#FF6B6B;border:1px solid #5A1A1A;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
+.btn-or{background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border:none;padding:10px;border-radius:9px;font-weight:800;cursor:pointer;font-size:13.5px}
+.search-big{width:100%;padding:12px 16px;border:none;border-radius:999px;font-size:14.5px;outline:none;margin-bottom:14px;background:#2A2A35;color:#fff}
+.search-big::placeholder{color:#888}
+.empty{text-align:center;color:var(--gris);padding:36px 10px;background:var(--carte);border-radius:16px;border:1px solid var(--ligne)}
+.empty .big{font-size:44px;width:72px;height:72px;background:#2A2A35;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}}
 @media(max-width:420px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <header>
-<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="🔍 Rechercher" onclick="location.href='recherche.html'" readonly>
-<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar small" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+  <div class="top-bar">
+    <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+    <button class="icon-top" onclick="location.href='recherche.html'">🔍</button>
+    <button class="icon-top menu" onclick="ouvrirMenu()">☰</button>
+  </div>
+  <nav class="nav-top">
+    <a href="feed.html">🏠<span class="badge or" id="badgeFeed" style="display:none">0</span></a>
+    <a href="amis.html" class="active">👥<span class="badge" id="badgeAmis">0</span></a>
+    <a href="messages.html">💬<span class="badge" id="badgeMsg" style="display:none">0</span></a>
+    <a href="videos.html">🎥<span class="badge or" id="badgeVideos" style="display:none">0</span></a>
+    <a href="notifications.html">🔔<span class="badge" id="badgeNotif" style="display:none">0</span></a>
+    <a href="marketplace.html">🛒<span class="badge" id="badgeMarket">3</span></a>
+  </nav>
 </header>
+
+<div class="overlay" id="overlay" onclick="fermerMenu()"></div>
+<div class="drawer" id="drawer">
+<div class="drawer-head"><div class="avatar" id="drawerAvatar" style="width:48px;height:48px">?</div><div class="info"><b id="drawerNom">Jason</b><small>Voir ton profil</small></div><button class="drawer-close" onclick="fermerMenu()">✕</button></div>
+<div class="titre">Principal</div>
+<a href="feed.html"><span>🏠</span> Fil d'actualité</a>
+<a href="profil.html"><span>👤</span> Mon Profil</a>
+<a href="profil-ami.html"><span>👤</span> Profil Ami</a>
+<a href="amis.html"><span>👥</span> Amis</a>
+<a href="messages.html"><span>💬</span> Messages</a>
+<a href="notifications.html"><span>🔔</span> Notifications</a>
+<a href="recherche.html"><span>🔍</span> Recherche</a>
+<div class="titre">Publier & Voir</div>
+<a href="creer-post.html"><span>➕</span> Créer un post</a>
+<a href="stories.html"><span>✨</span> Stories</a>
+<a href="videos.html"><span>🎥</span> Vidéos</a>
+<a href="photos.html"><span>🖼️</span> Photos</a>
+<a href="lives.html"><span>🔴</span> Lives</a>
+<a href="souvenirs.html"><span>🕰️</span> Souvenirs</a>
+<div class="titre">Découvrir</div>
+<a href="groupes.html"><span>👨‍👩‍👧</span> Groupes</a>
+<a href="evenements.html"><span>📅</span> Événements</a>
+<a href="anniversaires.html"><span>🎂</span> Anniversaires</a>
+<a href="annonces.html"><span>📢</span> Annonces</a>
+<a href="sondages.html"><span>📊</span> Sondages</a>
+<a href="jeux.html"><span>🎮</span> Jeux</a>
+<a href="musique.html"><span>🎵</span> Musique</a>
+<a href="marche.html"><span>🛒</span> Marché</a>
+<a href="marketplace.html"><span>🏪</span> Marketplace</a>
+<a href="emploi.html"><span>💼</span> Emploi</a>
+<a href="favoris.html"><span>⭐</span> Favoris</a>
+<div class="titre">Paramètres & Aide</div>
+<a href="parametres.html"><span>⚙️</span> Paramètres</a>
+<a href="aide.html"><span>❓</span> Aide</a>
+<a href="signalements.html"><span>🚨</span> Signalements</a>
+<a href="bloques.html"><span>🚫</span> Bloqués</a>
+<a href="admin.html"><span>🛡️</span> Admin</a>
+<a href="index.html"><span>🚪</span> Connexion / Accueil</a>
+<button class="logout" onclick="deconnecter()">🚪 Se déconnecter</button>
+</div>
 
 <div class="wrap">
 <h1>Amis</h1>
@@ -72,8 +139,6 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-ra
 <div id="section-decouvrir" style="display:none"><div class="grid" id="gridDecouvrir"></div><div class="empty" id="emptyDecouvrir" style="display:none"><div class="big">🌍</div><p>Aucune personne à découvrir pour le moment</p></div></div>
 </div>
 
-<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="messages.html">💬</a><a href="profil.html">👤</a></nav>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, set, remove, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -82,11 +147,16 @@ const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
 const monNom = localStorage.getItem('jasonbook_nom')||"";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
-document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+const avHtml = maPhoto ? `<img src="${maPhoto}">` : (monNom.charAt(0).toUpperCase()||"?");
+const elD = document.getElementById('drawerAvatar'); if(elD) elD.innerHTML = avHtml;
+const elN = document.getElementById('drawerNom'); if(elN) elN.innerText = monNom||"Jason";
+if(elD) elD.onclick=()=>location.href='profil.html';
+window.ouvrirMenu=()=>{ document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); };
+window.fermerMenu=()=>{ document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); };
+window.deconnecter=()=>{ if(!confirm("Tu veux te déconnecter ?")) return; localStorage.clear(); location.href='index.html'; };
+function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
 let tousUsers=[], mesAmisIds=new Set(), demandesRecues=[], demandesEnvoyeesIds=new Set();
-let onglet='demandes';
 window.showTab=(t)=>{
-  onglet=t;
   ['demandes','amis','envoyees','decouvrir'].forEach(x=>{
     document.getElementById('section-'+x).style.display = x===t ? 'block' : 'none';
     document.getElementById('tabBtn-'+x).classList.toggle('active', x===t);
@@ -103,13 +173,14 @@ function carte(u, type){
   if(type==='demande') btns=`<div class="btns"><button class="btn-green" onclick="accepter('${u.uid}')">✅ Accepter</button><button class="btn-red" onclick="refuser('${u.uid}')">❌ Refuser</button></div>`;
   if(type==='ami') btns=`<div class="btns"><button class="btn-blue" onclick="location.href='messages.html?uid=${u.uid}'">💬 Message</button><button class="btn-grey" onclick="retirerAmi('${u.uid}')">Retirer</button></div>`;
   if(type==='envoyee') btns=`<div class="btns"><button class="btn-grey" disabled>En attente...</button><button class="btn-red" onclick="annulerDemande('${u.uid}')">Annuler</button></div>`;
-  if(type==='decouvrir') btns=`<div class="btns"><button class="btn-blue" onclick="envoyerDemande('${u.uid}')">➕ Ajouter</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Voir le profil</button></div>`;
+  if(type==='decouvrir') btns=`<div class="btns"><button class="btn-or" onclick="envoyerDemande('${u.uid}')">➕ Ajouter</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Voir le profil</button></div>`;
   return `<div class="friend-card" data-nom="${u.nomComplet||""}"><div class="photo" onclick="location.href='profil-ami.html?uid=${u.uid}'">${avatar(u.photoProfil, lettre)}</div><h3>${u.nomComplet||""}</h3><p>${u.activite||""} • ${u.pays||""}</p>${btns}</div>`;
 }
 function rendre(){
   const gD=document.getElementById('gridDemandes'); gD.innerHTML=""; document.getElementById('emptyDemandes').style.display = demandesRecues.length? 'none':'block';
   demandesRecues.forEach(u=> gD.innerHTML+=carte(u,'demande'));
   document.getElementById('countDemandes').innerText = demandesRecues.length? `(${demandesRecues.length})` : "";
+  setBadge('badgeAmis', demandesRecues.length);
   const amis=tousUsers.filter(u=>mesAmisIds.has(u.uid));
   const gA=document.getElementById('gridAmis'); gA.innerHTML=""; document.getElementById('emptyAmis').style.display = amis.length? 'none':'block';
   amis.forEach(u=> gA.innerHTML+=carte(u,'ami'));
@@ -135,6 +206,8 @@ onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), (snap)=>{
 onValue(ref(db,'jasonbook/users'), (snap)=>{
   const d=snap.val(); if(!d) return; tousUsers=Object.values(d).filter(u=>u.uid!==uid); rendre();
 });
+onValue(ref(db,'jasonbook/notifications/'+uid),s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(x=>{ if(!x.lu) n++; }); setBadge('badgeNotif', n); });
+onValue(ref(db,'jasonbook/messages'),s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(m=>{ if(m.pour===uid && !m.lu) n++; }); setBadge('badgeMsg', n); });
 window.envoyerDemande=async (cibleUid)=>{
   await set(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid), { deUid:uid, deNom:monNom, date:new Date().toLocaleString() });
   await set(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid), { versUid:cibleUid, date:new Date().toLocaleString() });
