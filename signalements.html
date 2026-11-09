@@ -2,48 +2,49 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>JASONBOOK - Signalements</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#f0f2f5}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
-.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
+:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3;--red:#e0245e}
+body{background:var(--bg);min-height:100vh}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.3px}
+.logo span{width:34px;height:34px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
 .logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
 .icons{display:flex;gap:6px;align-items:center}
-.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
-.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.icons a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .wrap{max-width:650px;margin:16px auto;padding:0 12px}
-.wrap h1{font-size:24px;margin-bottom:6px}
-.wrap .sub{color:#65676b;margin-bottom:14px}
-.form-box{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.wrap h1{font-size:23px;letter-spacing:-.3px}
+.wrap .sub{color:var(--grey);margin:4px 0 14px;font-size:14px}
+.form-box{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line)}
 .form-box h3{margin-bottom:10px}
-.form-box select,.form-box input,.form-box textarea{width:100%;padding:12px;border:1.5px solid #ddd;border-radius:10px;margin-top:8px;font-size:14px;outline:none}
+.form-box select,.form-box input,.form-box textarea{width:100%;padding:12px;border:1.5px solid #e4e6eb;border-radius:10px;margin-top:8px;font-size:14px;outline:none;background:#f8f9fa}
+.form-box select:focus,.form-box input:focus,.form-box textarea:focus{border-color:var(--blue);background:#fff}
 .form-box textarea{min-height:80px;resize:vertical}
-.btn-blue{background:#1877F2;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:800;cursor:pointer;width:100%}
-.btn-grey{background:#e4e6eb;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer}
+.btn-blue{background:var(--blue);color:#fff;border:none;padding:12px;border-radius:10px;font-weight:800;cursor:pointer;width:100%;font-size:14px}
+.btn-grey{background:#f0f2f5;border:none;padding:9px 14px;border-radius:9px;font-weight:700;cursor:pointer}
 .raison-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.raison-grid button{border:2px solid #eee;background:#fff;padding:12px;border-radius:10px;cursor:pointer;font-weight:600;font-size:13px}
-.raison-grid button.selected{border-color:#e0245e;background:#fff0f3;color:#e0245e}
-.s-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-.s-card p{font-size:14px;color:#333;margin:6px 0;white-space:pre-wrap}
-.badge{padding:4px 10px;border-radius:12px;font-size:11px;font-weight:800}
+.raison-grid button{border:1.5px solid var(--line);background:#fff;padding:12px;border-radius:10px;cursor:pointer;font-weight:600;font-size:13px}
+.raison-grid button.selected{border-color:var(--red);background:#fff0f3;color:var(--red)}
+.s-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line)}
+.s-card p{font-size:14px;color:#333;margin:6px 0;white-space:pre-wrap;line-height:1.5}
+.badge{padding:4px 10px;border-radius:999px;font-size:11px;font-weight:800}
 .badge-nouveau{background:#fff3cd;color:#856404}.badge-examine{background:#cce5ff;color:#004085}.badge-resolu{background:#d4edda;color:#155724}
-.empty{text-align:center;color:#65676b;padding:30px 10px;background:#fff;border-radius:12px}
+.empty{text-align:center;color:var(--grey);padding:30px 10px;background:#fff;border-radius:12px;border:1px solid var(--line)}
 .bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
 </style>
-<link rel="stylesheet" href="Assets/theme.css">
-<script src="Assets/theme.js"></script>
 </head>
 <body>
 
 <header>
 <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<input class="search" placeholder="🔍 Rechercher" onclick="location.href='recherche.html'" readonly>
 <div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
 </header>
 
@@ -83,7 +84,6 @@ const monNom = localStorage.getItem('jasonbook_nom')||"";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
 document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
 let raison="";
-
 window.choisirRaison=(btn,r)=>{ raison=r; document.querySelectorAll('#raisonGrid button').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); };
 window.envoyerSignalement=async()=>{
   const cible=document.getElementById('sigCible').value.trim();
