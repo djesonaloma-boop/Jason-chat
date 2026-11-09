@@ -6,48 +6,114 @@
 <title>JASONBOOK - Notifications</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
-:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
-body{background:var(--bg);min-height:100vh}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.3px}
-.logo span{width:34px;height:34px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
-.icons{display:flex;gap:6px;align-items:center}
-.icons a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
-.avatar{width:46px;height:46px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;overflow:hidden;flex-shrink:0;cursor:pointer}
+html{overflow-x:clip;overflow-y:auto;-webkit-overflow-scrolling:touch}
+body{width:100%;overflow-x:clip;background:#0F0F14;min-height:100vh;color:#fff}
+:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--noir:#111;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35}
+header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid var(--or);box-shadow:0 2px 15px rgba(0,0,0,.5)}
+.top-bar{display:flex;align-items:center;gap:10px;padding:10px 12px 6px}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:22px;cursor:pointer;flex:1;white-space:nowrap}
+.logo span{width:36px;height:36px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 12px rgba(255,193,7,.5)}
+.logo i{color:var(--or);font-style:normal}
+.icon-top{width:40px;height:40px;background:#2A2A35;border:none;border-radius:50%;cursor:pointer;font-size:19px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.icon-top.menu{background:linear-gradient(135deg,var(--violet),var(--violet2));box-shadow:0 0 10px rgba(124,58,237,.5);font-weight:900}
+.nav-top{display:flex;justify-content:space-between;padding:2px 6px 6px}
+.nav-top a{flex:1;text-decoration:none;color:#A1A1AA;display:flex;align-items:center;justify-content:center;padding:8px 2px;position:relative;font-size:24px;border-bottom:3px solid transparent}
+.nav-top a.active{color:var(--or);border-bottom:3px solid var(--or)}
+.nav-top a .badge{position:absolute;top:1px;right:50%;transform:translateX(18px);background:#E0245E;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:999px;min-width:20px;text-align:center;border:2px solid #111;display:none}
+.nav-top a .badge.or{background:var(--or);color:#111}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:90;display:none}
+.overlay.open{display:block}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:290px;max-width:88vw;background:#17171F;z-index:100;transform:translateX(100%);transition:.28s;display:flex;flex-direction:column;overflow-y:auto;color:#fff}
+.drawer.open{transform:translateX(0)}
+.drawer-head{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--ligne);background:#17171F}
+.drawer-head .info{flex:1;min-width:0}
+.drawer-head b{font-size:16px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drawer-head small{color:var(--gris)}
+.drawer-close{border:none;background:#2A2A35;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;color:#fff}
+.drawer a{display:flex;align-items:center;gap:12px;padding:12px 16px;text-decoration:none;color:#fff;font-weight:600;font-size:14.5px;border-bottom:1px solid #22222D}
+.drawer a span{font-size:19px;width:28px;text-align:center;flex-shrink:0}
+.drawer .titre{padding:14px 16px 4px;font-size:11px;font-weight:800;color:var(--or);text-transform:uppercase;letter-spacing:1px}
+.drawer .logout{margin:14px 16px;padding:12px;background:#3A0A0A;color:#FF6B6B;border:1px solid #5A1A1A;border-radius:10px;font-weight:800;cursor:pointer;font-size:14px}
+.avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
-.avatar.small{width:40px;height:40px;font-size:14px}
-.wrap{max-width:700px;margin:16px auto;padding:0 12px}
+.wrap{max-width:700px;margin:16px auto;padding:0 12px 40px}
 .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.top h1{font-size:23px;letter-spacing:-.3px}
-.top button{border:none;background:#fff;padding:9px 14px;border-radius:999px;font-weight:700;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.04);font-size:13px}
+.top h1{font-size:23px;letter-spacing:-.3px;color:#fff}
+.top button{border:none;background:var(--carte);color:#fff;padding:9px 14px;border-radius:999px;font-weight:700;cursor:pointer;border:1px solid var(--ligne);font-size:13px}
 .tabs{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tabs button{border:none;background:#fff;padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.tabs button.active{background:var(--blue);color:#fff}
-.notif{background:#fff;border-radius:12px;padding:13px 14px;display:flex;gap:12px;align-items:flex-start;margin-bottom:9px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line);position:relative}
-.notif.nonlu{background:#e7f3ff}
-.notif .dot{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:10px;height:10px;background:var(--blue);border-radius:50%}
-.notif b{font-size:14px}.notif p{font-size:14px;color:#333;line-height:1.4;margin-top:2px}.notif small{color:var(--grey);font-size:12px}
-.notif .icon{width:36px;height:36px;border-radius:50%;background:#f0f2f5;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.tabs button{border:none;background:var(--carte);color:#fff;padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;font-size:13px;border:1px solid var(--ligne)}
+.tabs button.active{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff;border-color:transparent}
+.notif{background:var(--carte);border-radius:14px;padding:13px 14px;display:flex;gap:12px;align-items:flex-start;margin-bottom:9px;cursor:pointer;border:1px solid var(--ligne);position:relative}
+.notif.nonlu{background:#2A1A3A;border-color:var(--violet)}
+.notif .dot{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:10px;height:10px;background:var(--or);border-radius:50%}
+.notif b{font-size:14px;color:#fff}.notif p{font-size:14px;color:#EDEDEF;line-height:1.4;margin-top:2px}.notif small{color:var(--gris);font-size:12px}
+.notif .icon{width:36px;height:36px;border-radius:50%;background:#2A2A35;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .notif .actions{margin-top:8px;display:flex;gap:8px}
 .notif .actions button{border:none;padding:8px 14px;border-radius:9px;font-weight:700;cursor:pointer;font-size:12px}
-.btn-blue{background:var(--blue);color:#fff}.btn-grey{background:#f0f2f5}
-.empty{text-align:center;color:var(--grey);padding:44px 10px;background:#fff;border-radius:12px;border:1px solid var(--line)}
+.btn-blue{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}.btn-grey{background:#2A2A35;color:#fff}
+.empty{text-align:center;color:var(--gris);padding:44px 10px;background:var(--carte);border-radius:16px;border:1px solid var(--ligne)}
 .empty .big{font-size:44px}
-.bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
 </style>
 </head>
 <body>
 
 <header>
-<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="🔍 Rechercher" onclick="location.href='recherche.html'" readonly>
-<div class="icons"><a href="feed.html">🏠</a><a href="messages.html">💬</a><div class="avatar small" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+  <div class="top-bar">
+    <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+    <button class="icon-top" onclick="location.href='recherche.html'">🔍</button>
+    <button class="icon-top menu" onclick="ouvrirMenu()">☰</button>
+  </div>
+  <!-- ✅ TOUS LES BADGES CACHÉS AU DÉPART -->
+  <nav class="nav-top">
+    <a href="feed.html">🏠<span class="badge or" id="badgeFeed"></span></a>
+    <a href="amis.html">👥<span class="badge" id="badgeAmis"></span></a>
+    <a href="messages.html">💬<span class="badge" id="badgeMsg"></span></a>
+    <a href="videos.html">🎥<span class="badge or" id="badgeVideos"></span></a>
+    <a href="notifications.html" class="active">🔔<span class="badge" id="badgeNotif"></span></a>
+    <a href="marketplace.html">🛒<span class="badge" id="badgeMarket"></span></a>
+  </nav>
 </header>
+
+<div class="overlay" id="overlay" onclick="fermerMenu()"></div>
+<div class="drawer" id="drawer">
+<div class="drawer-head"><div class="avatar" id="drawerAvatar" style="width:48px;height:48px">?</div><div class="info"><b id="drawerNom">Jason</b><small>Voir ton profil</small></div><button class="drawer-close" onclick="fermerMenu()">✕</button></div>
+<div class="titre">Principal</div>
+<a href="feed.html"><span>🏠</span> Fil d'actualité</a>
+<a href="profil.html"><span>👤</span> Mon Profil</a>
+<a href="profil-ami.html"><span>👤</span> Profil Ami</a>
+<a href="amis.html"><span>👥</span> Amis</a>
+<a href="messages.html"><span>💬</span> Messages</a>
+<a href="notifications.html"><span>🔔</span> Notifications</a>
+<a href="recherche.html"><span>🔍</span> Recherche</a>
+<div class="titre">Publier & Voir</div>
+<a href="creer-post.html"><span>➕</span> Créer un post</a>
+<a href="stories.html"><span>✨</span> Stories</a>
+<a href="videos.html"><span>🎥</span> Vidéos</a>
+<a href="photos.html"><span>🖼️</span> Photos</a>
+<a href="lives.html"><span>🔴</span> Lives</a>
+<a href="souvenirs.html"><span>🕰️</span> Souvenirs</a>
+<div class="titre">Découvrir</div>
+<a href="groupes.html"><span>👨‍👩‍👧</span> Groupes</a>
+<a href="evenements.html"><span>📅</span> Événements</a>
+<a href="anniversaires.html"><span>🎂</span> Anniversaires</a>
+<a href="annonces.html"><span>📢</span> Annonces</a>
+<a href="sondages.html"><span>📊</span> Sondages</a>
+<a href="jeux.html"><span>🎮</span> Jeux</a>
+<a href="musique.html"><span>🎵</span> Musique</a>
+<a href="marche.html"><span>🛒</span> Marché</a>
+<a href="marketplace.html"><span>🏪</span> Marketplace</a>
+<a href="emploi.html"><span>💼</span> Emploi</a>
+<a href="favoris.html"><span>⭐</span> Favoris</a>
+<div class="titre">Paramètres & Aide</div>
+<a href="parametres.html"><span>⚙️</span> Paramètres</a>
+<a href="aide.html"><span>❓</span> Aide</a>
+<a href="signalements.html"><span>🚨</span> Signalements</a>
+<a href="bloques.html"><span>🚫</span> Bloqués</a>
+<a href="admin.html"><span>🛡️</span> Admin</a>
+<a href="index.html"><span>🚪</span> Connexion / Accueil</a>
+<button class="logout" onclick="deconnecter()">🚪 Se déconnecter</button>
+</div>
 
 <div class="wrap">
 <div class="top"><h1>Notifications</h1><button onclick="toutMarquerLu()">Tout marquer comme lu</button></div>
@@ -62,8 +128,6 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-ra
 <div class="empty" id="emptyBox" style="display:none"><div class="big">🔔</div><h3>Aucune notification</h3><p>Quand quelqu'un aimera, commentera ou t'enverra une demande, tu le verras ici.</p></div>
 </div>
 
-<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="notifications.html">🔔</a><a href="profil.html">👤</a></nav>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, onValue, update, remove, get, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -72,7 +136,15 @@ const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
 const monNom = localStorage.getItem('jasonbook_nom')||"";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
-document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+const avHtml = maPhoto ? `<img src="${maPhoto}">` : (monNom.charAt(0).toUpperCase()||"?");
+const elD = document.getElementById('drawerAvatar'); if(elD) elD.innerHTML = avHtml;
+const elN = document.getElementById('drawerNom'); if(elN) elN.innerText = monNom||"Jason";
+if(elD) elD.onclick=()=>location.href='profil.html';
+window.ouvrirMenu=()=>{ document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); };
+window.fermerMenu=()=>{ document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); };
+window.deconnecter=()=>{ if(!confirm("Tu veux te déconnecter ?")) return; localStorage.clear(); location.href='index.html'; };
+// ✅ SI 0 = ON CACHE, SI +0 = ON AFFICHE
+function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; e.innerText=''; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
 let toutes=[], filtre='tout';
 window.filtrer=(f)=>{
   filtre=f;
@@ -132,7 +204,24 @@ onValue(ref(db,'jasonbook/notifications/'+uid), (snap)=>{
   const d=snap.val(); toutes=[];
   if(d) toutes=Object.entries(d).map(([id,n])=>({id,...n}));
   rendre();
+  // ✅ BADGE NOTIF = SEULEMENT LES NON LUES
+  let nNonLu = toutes.filter(x=>!x.lu).length;
+  setBadge('badgeNotif', nNonLu);
 });
+onValue(ref(db,'jasonbook/demandes/'+uid),s=>{ const d=s.val(); setBadge('badgeAmis', d?Object.keys(d).length:0); });
+onValue(ref(db,'jasonbook/messages'),s=>{
+  const d=s.val(); let n=0;
+  if(d) Object.values(d).forEach(chat=>{
+    if(chat && typeof chat==='object') Object.values(chat).forEach(m=>{
+      if(m && m.destinataireUid===uid && !m.lu) n++;
+      if(m && m.pour===uid && !m.lu) n++;
+    });
+  });
+  setBadge('badgeMsg', n);
+});
+setBadge('badgeMarket', 0);
+setBadge('badgeFeed', 0);
+setBadge('badgeVideos', 0);
 </script>
 </body>
 </html>
