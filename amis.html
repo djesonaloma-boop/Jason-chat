@@ -2,54 +2,47 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>JASONBOOK - Amis</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-:root{--blue:#1877F2;--blue2:#0d5fd6;--bg:#eef2f7;--grey:#65676b}
+html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
+:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
 body{background:var(--bg);min-height:100vh}
-header{background:rgba(255,255,255,.95);backdrop-filter:blur(10px);display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 10px rgba(0,0,0,.07)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.5px}
-.logo span{width:34px;height:34px;background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(24,119,242,.35)}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.3px}
+.logo span{width:34px;height:34px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
 .logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
-header .search:focus{background:#fff;box-shadow:0 0 0 3px rgba(24,119,242,.12)}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
 .icons{display:flex;gap:6px;align-items:center}
-.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px;transition:.2s}
-.icons a:hover{background:#e4e6eb}
-.avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#1877F2,#7a3cff);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;overflow:hidden;flex-shrink:0;cursor:pointer}
+.icons a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
+.avatar{width:60px;height:60px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
-.avatar.small{width:40px;height:40px;font-size:14px}
+.avatar.small{width:38px;height:38px;font-size:14px}
 .wrap{max-width:1000px;margin:16px auto;padding:0 12px}
-.wrap h1{font-size:24px;letter-spacing:-.5px}
+.wrap h1{font-size:23px;letter-spacing:-.3px}
 .wrap .sub{color:var(--grey);font-size:14px;margin:4px 0 14px}
 .tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tabs button{border:none;background:#fff;padding:11px 18px;border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.05);font-size:13.5px;transition:.2s}
-.tabs button:hover{background:#e7f0ff}
-.tabs button.active{background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;box-shadow:0 4px 12px rgba(24,119,242,.3)}
-.card{background:#fff;border-radius:14px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.05);margin-bottom:14px;border:1px solid #eef0f3}
+.tabs button{border:none;background:#fff;padding:11px 16px;border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.05);font-size:13.5px}
+.tabs button.active{background:var(--blue);color:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
-.friend-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06);border:1px solid #eef0f3;text-align:center;padding-bottom:13px;transition:.2s}
-.friend-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.10)}
-.friend-card .photo{height:165px;background:linear-gradient(135deg,#1877F2,#7a3cff);display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:900;color:#fff;cursor:pointer;overflow:hidden}
-.friend-card .photo img{width:100%;height:100%;object-fit:cover;transition:.3s}
-.friend-card:hover .photo img{transform:scale(1.05)}
+.friend-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05);border:1px solid var(--line);text-align:center;padding-bottom:12px}
+.friend-card .photo{height:168px;background:#e7f0ff;display:flex;align-items:center;justify-content:center;font-size:56px;font-weight:900;color:var(--blue);cursor:pointer;overflow:hidden}
+.friend-card .photo img{width:100%;height:100%;object-fit:cover}
 .friend-card h3{font-size:15px;margin:11px 8px 2px;line-height:1.3}
-.friend-card p{font-size:12.5px;color:var(--grey);margin:0 8px 11px}
+.friend-card p{font-size:12.5px;color:var(--grey);margin:0 8px 11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .friend-card .btns{padding:0 11px;display:flex;flex-direction:column;gap:7px}
-.btn-blue{background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;border:none;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;transition:.2s}
-.btn-blue:hover{transform:translateY(-1px)}
-.btn-grey{background:#eef2f7;border:none;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;transition:.2s}
-.btn-grey:hover{background:#e4e6eb}
-.btn-green{background:#42b72a;color:#fff;border:none;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:0 4px 10px rgba(66,183,42,.25)}
-.btn-red{background:#ffeaea;color:#e0245e;border:none;padding:10px;border-radius:10px;font-weight:700;cursor:pointer}
-.search-big{width:100%;padding:13px 16px;border:1px solid #eef0f3;border-radius:999px;font-size:15px;outline:none;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.05);background:#fff}
-.search-big:focus{box-shadow:0 0 0 3px rgba(24,119,242,.12);border-color:var(--blue)}
-.empty{text-align:center;color:var(--grey);padding:40px 10px;background:#fff;border-radius:16px;border:1px solid #eef0f3}
-.empty .big{font-size:50px;width:80px;height:80px;background:#f0f6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.btn-blue{background:var(--blue);color:#fff;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
+.btn-grey{background:#f0f2f5;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
+.btn-green{background:#42b72a;color:#fff;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
+.btn-red{background:#fff0f0;color:#e0245e;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
+.search-big{width:100%;padding:12px 16px;border:none;border-radius:999px;font-size:14.5px;outline:none;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.05);background:#fff}
+.search-big:focus{box-shadow:0 0 0 3px rgba(24,119,242,.12)}
+.empty{text-align:center;color:var(--grey);padding:36px 10px;background:#fff;border-radius:14px;border:1px solid var(--line)}
+.empty .big{font-size:44px;width:72px;height:72px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
 .bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);justify-content:space-around;padding:12px;box-shadow:0 -1px 10px rgba(0,0,0,.08);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}.grid{grid-template-columns:1fr 1fr}}
 @media(max-width:420px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -62,7 +55,7 @@ header .search:focus{background:#fff;box-shadow:0 0 0 3px rgba(24,119,242,.12)}
 </header>
 
 <div class="wrap">
-<h1>👥 Amis</h1>
+<h1>Amis</h1>
 <p class="sub">Gère tes demandes, tes amis et découvre du monde</p>
 <div class="tabs">
 <button id="tabBtn-demandes" class="active" onclick="showTab('demandes')">Demandes reçues <span id="countDemandes"></span></button>
