@@ -19,7 +19,7 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 .nav-top{display:flex;justify-content:space-between;padding:2px 6px 6px}
 .nav-top a{flex:1;text-decoration:none;color:#A1A1AA;display:flex;align-items:center;justify-content:center;padding:8px 2px;position:relative;font-size:24px;border-bottom:3px solid transparent}
 .nav-top a.active{color:var(--or);border-bottom:3px solid var(--or)}
-.nav-top a .badge{position:absolute;top:1px;right:50%;transform:translateX(18px);background:#E0245E;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:999px;min-width:20px;text-align:center;border:2px solid #111}
+.nav-top a .badge{position:absolute;top:1px;right:50%;transform:translateX(18px);background:#E0245E;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:999px;min-width:20px;text-align:center;border:2px solid #111;display:none}
 .nav-top a .badge.or{background:var(--or);color:#111}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:90;display:none}
 .overlay.open{display:block}
@@ -71,13 +71,14 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
     <button class="icon-top" onclick="location.href='recherche.html'">🔍</button>
     <button class="icon-top menu" onclick="ouvrirMenu()">☰</button>
   </div>
+  <!-- ✅ TOUS LES BADGES CACHÉS AU DÉPART -->
   <nav class="nav-top">
-    <a href="feed.html">🏠<span class="badge or" id="badgeFeed" style="display:none">0</span></a>
-    <a href="amis.html" class="active">👥<span class="badge" id="badgeAmis">0</span></a>
-    <a href="messages.html">💬<span class="badge" id="badgeMsg" style="display:none">0</span></a>
-    <a href="videos.html">🎥<span class="badge or" id="badgeVideos" style="display:none">0</span></a>
-    <a href="notifications.html">🔔<span class="badge" id="badgeNotif" style="display:none">0</span></a>
-    <a href="marketplace.html">🛒<span class="badge" id="badgeMarket">3</span></a>
+    <a href="feed.html">🏠<span class="badge or" id="badgeFeed"></span></a>
+    <a href="amis.html" class="active">👥<span class="badge" id="badgeAmis"></span></a>
+    <a href="messages.html">💬<span class="badge" id="badgeMsg"></span></a>
+    <a href="videos.html">🎥<span class="badge or" id="badgeVideos"></span></a>
+    <a href="notifications.html">🔔<span class="badge" id="badgeNotif"></span></a>
+    <a href="marketplace.html">🛒<span class="badge" id="badgeMarket"></span></a>
   </nav>
 </header>
 
@@ -154,7 +155,8 @@ if(elD) elD.onclick=()=>location.href='profil.html';
 window.ouvrirMenu=()=>{ document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); };
 window.fermerMenu=()=>{ document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); };
 window.deconnecter=()=>{ if(!confirm("Tu veux te déconnecter ?")) return; localStorage.clear(); location.href='index.html'; };
-function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
+// ✅ SI 0 = ON CACHE, SI +0 = ON AFFICHE
+function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; e.innerText=''; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
 let tousUsers=[], mesAmisIds=new Set(), demandesRecues=[], demandesEnvoyeesIds=new Set();
 window.showTab=(t)=>{
   ['demandes','amis','envoyees','decouvrir'].forEach(x=>{
@@ -179,6 +181,7 @@ function carte(u, type){
 function rendre(){
   const gD=document.getElementById('gridDemandes'); gD.innerHTML=""; document.getElementById('emptyDemandes').style.display = demandesRecues.length? 'none':'block';
   demandesRecues.forEach(u=> gD.innerHTML+=carte(u,'demande'));
+  // ✅ Le (3) dans l'onglet aussi : seulement si il y a vraiment des demandes
   document.getElementById('countDemandes').innerText = demandesRecues.length? `(${demandesRecues.length})` : "";
   setBadge('badgeAmis', demandesRecues.length);
   const amis=tousUsers.filter(u=>mesAmisIds.has(u.uid));
@@ -206,8 +209,21 @@ onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), (snap)=>{
 onValue(ref(db,'jasonbook/users'), (snap)=>{
   const d=snap.val(); if(!d) return; tousUsers=Object.values(d).filter(u=>u.uid!==uid); rendre();
 });
+// ✅ VRAIS BADGES SEULEMENT
 onValue(ref(db,'jasonbook/notifications/'+uid),s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(x=>{ if(!x.lu) n++; }); setBadge('badgeNotif', n); });
-onValue(ref(db,'jasonbook/messages'),s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(m=>{ if(m.pour===uid && !m.lu) n++; }); setBadge('badgeMsg', n); });
+onValue(ref(db,'jasonbook/messages'),s=>{
+  const d=s.val(); let n=0;
+  if(d) Object.values(d).forEach(chat=>{
+    if(chat && typeof chat==='object') Object.values(chat).forEach(m=>{
+      if(m && m.destinataireUid===uid && !m.lu) n++;
+      if(m && m.pour===uid && !m.lu) n++;
+    });
+  });
+  setBadge('badgeMsg', n);
+});
+setBadge('badgeMarket', 0);
+setBadge('badgeFeed', 0);
+setBadge('badgeVideos', 0);
 window.envoyerDemande=async (cibleUid)=>{
   await set(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid), { deUid:uid, deNom:monNom, date:new Date().toLocaleString() });
   await set(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid), { versUid:cibleUid, date:new Date().toLocaleString() });
