@@ -2,48 +2,49 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>JASONBOOK - Recherche</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#f0f2f5}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
-.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
+:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
+body{background:var(--bg);min-height:100vh}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.3px}
+.logo span{width:34px;height:34px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
 .logo i{color:#FFD700;font-style:normal}
 .icons{display:flex;gap:6px;align-items:center}
-.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
-.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.icons a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .avatar.big{width:56px;height:56px;font-size:20px}
 .wrap{max-width:800px;margin:16px auto;padding:0 12px}
-.search-box{display:flex;gap:8px;background:#fff;padding:12px;border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-.search-box input{flex:1;border:none;background:#f0f2f5;padding:13px 15px;border-radius:20px;outline:none;font-size:15px}
-.search-box button{border:none;background:#1877F2;color:#fff;padding:12px 20px;border-radius:20px;font-weight:800;cursor:pointer}
-.filters{display:flex;gap:8px;margin:12px 0;overflow-x:auto;padding-bottom:4px}
-.filters button{border:none;background:#fff;padding:10px 16px;border-radius:20px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.filters button.active{background:#1877F2;color:#fff}
-.filters select{border:none;background:#fff;padding:10px 14px;border-radius:20px;font-weight:700;cursor:pointer;outline:none;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.search-box{display:flex;gap:8px;background:#fff;padding:12px;border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line)}
+.search-box input{flex:1;border:none;background:#f0f2f5;padding:13px 15px;border-radius:999px;outline:none;font-size:15px}
+.search-box button{border:none;background:var(--blue);color:#fff;padding:12px 18px;border-radius:999px;font-weight:800;cursor:pointer;font-size:15px}
+.filters{display:flex;gap:8px;margin:12px 0;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters button{border:none;background:#fff;padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.04);font-size:13px}
+.filters button.active{background:var(--blue);color:#fff}
+.filters select{border:none;background:#fff;padding:10px 14px;border-radius:999px;font-weight:700;cursor:pointer;outline:none;box-shadow:0 1px 3px rgba(0,0,0,.04);font-size:13px}
+.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line)}
 .user-row{display:flex;gap:12px;align-items:center}
 .user-row .info{flex:1;min-width:0}
-.user-row b{font-size:15px}.user-row p{font-size:13px;color:#65676b}
+.user-row b{font-size:15px}.user-row p{font-size:13px;color:var(--grey)}
 .user-row .btns{display:flex;gap:6px;flex-wrap:wrap}
-.btn-blue{background:#1877F2;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px}
-.btn-grey{background:#e4e6eb;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px}
-.btn-green{background:#42b72a;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px}
+.btn-blue{background:var(--blue);color:#fff;border:none;padding:9px 14px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13px}
+.btn-grey{background:#f0f2f5;border:none;padding:9px 14px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13px}
+.btn-green{background:#42b72a;color:#fff;border:none;padding:9px 14px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13px}
 .post-head{display:flex;gap:10px;align-items:center}
-.post-text{margin:10px 0;font-size:15px;white-space:pre-wrap}
+.post-text{margin:10px 0;font-size:15px;white-space:pre-wrap;line-height:1.5}
 .post img.main{width:100%;border-radius:10px;max-height:420px;object-fit:cover}
 .actions{display:flex;gap:10px;margin-top:10px}
-.actions button{border:none;background:#f0f2f5;padding:8px 14px;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px}
-.empty{text-align:center;color:#65676b;padding:40px 10px;background:#fff;border-radius:12px}
-.empty .big{font-size:50px}
+.actions button{border:none;background:#f0f2f5;padding:8px 14px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13px}
+.empty{text-align:center;color:var(--grey);padding:36px 10px;background:#fff;border-radius:12px;border:1px solid var(--line)}
+.empty .big{font-size:44px}
 .bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
 </style>
-<link rel="stylesheet" href="Assets/theme.css">
-<script src="Assets/theme.js"></script>
 </head>
 <body>
 
@@ -101,17 +102,14 @@ const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index
 const monNom = localStorage.getItem('jasonbook_nom')||"";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
 document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
-
 let tousUsers=[], tousPosts=[], tousGroupes=[], mesAmis=new Set(), demandesEnvoyees=new Set(), filtre='tout';
 onValue(ref(db,'jasonbook/users'), s=>{ const d=s.val(); tousUsers=d?Object.values(d).filter(u=>u.uid!==uid):[]; rechercher(); });
 onValue(ref(db,'jasonbook/posts'), s=>{ const d=s.val(); tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).reverse():[]; rechercher(); });
 onValue(ref(db,'jasonbook/groupes'), s=>{ const d=s.val(); tousGroupes=d?Object.entries(d).map(([id,g])=>({id,...g})):[]; rechercher(); });
 onValue(ref(db,'jasonbook/amis/'+uid), s=>{ const d=s.val(); mesAmis=new Set(d?Object.keys(d):[]); rechercher(); });
 onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), s=>{ const d=s.val(); demandesEnvoyees=new Set(d?Object.keys(d):[]); rechercher(); });
-
 window.setFiltre=(f)=>{ filtre=f; ['tout','personnes','posts','groupes'].forEach(x=>document.getElementById('f-'+x).classList.toggle('active',x===f)); rechercher(); };
 function avatar(photo, lettre){ return photo ? `<img src="${photo}">` : lettre; }
-
 window.rechercher=()=>{
   const q=document.getElementById('query').value.trim().toLowerCase();
   const pays=document.getElementById('filtrePays').value.toLowerCase();
@@ -119,7 +117,6 @@ window.rechercher=()=>{
   const vide = !q && !pays;
   document.getElementById('emptyBox').style.display = vide ? 'block' : 'none';
   if(vide){
-    // Si rien tapé : montrer les personnes populaires
     if(filtre==='tout' || filtre==='personnes'){
       box.innerHTML+='<h3 style="margin:12px 0 8px">Personnes à découvrir 🌍</h3>';
       tousUsers.slice(0,10).forEach(u=> box.innerHTML+=carteUser(u));
@@ -127,7 +124,6 @@ window.rechercher=()=>{
     return;
   }
   let trouve=false;
-  // PERSONNES
   if(filtre==='tout' || filtre==='personnes'){
     const users=tousUsers.filter(u=>{
       const txt=((u.nomComplet||"")+" "+(u.ville||"")+" "+(u.pays||"")+" "+(u.activite||"")).toLowerCase();
@@ -135,7 +131,6 @@ window.rechercher=()=>{
     });
     if(users.length){ trouve=true; if(filtre==='tout') box.innerHTML+='<h3 style="margin:12px 0 8px">Personnes</h3>'; users.slice(0,30).forEach(u=> box.innerHTML+=carteUser(u)); }
   }
-  // POSTS
   if(filtre==='tout' || filtre==='posts'){
     const posts=tousPosts.filter(p=>{
       const txt=((p.texte||"")+" "+(p.nomAuteur||"")+" "+(p.ville||"")+" "+(p.pays||"")).toLowerCase();
@@ -143,7 +138,6 @@ window.rechercher=()=>{
     });
     if(posts.length){ trouve=true; if(filtre==='tout') box.innerHTML+='<h3 style="margin:12px 0 8px">Publications</h3>'; posts.slice(0,20).forEach(p=> box.innerHTML+=cartePost(p)); }
   }
-  // GROUPES
   if(filtre==='tout' || filtre==='groupes'){
     const groupes=tousGroupes.filter(g=>{
       const txt=((g.nom||"")+" "+(g.description||"")).toLowerCase();
@@ -155,7 +149,6 @@ window.rechercher=()=>{
     box.innerHTML=`<div class="empty"><div class="big">😔</div><h3>Aucun résultat</h3><p>Essaie un autre nom ou un autre mot.</p></div>`;
   }
 };
-
 function carteUser(u){
   const lettre=(u.prenom||"?").charAt(0).toUpperCase();
   let btn="";
@@ -175,7 +168,6 @@ window.envoyerDemande=async (cibleUid)=>{
   await set(nRef,{ type:"demande", texte:monNom+" t'a envoyé une demande d'ami", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), lu:false });
   alert("Demande envoyée !");
 };
-// Si ?q= dans l'URL
 const params=new URLSearchParams(location.search);
 if(params.get('q')){ document.getElementById('query').value=params.get('q'); }
 </script>
