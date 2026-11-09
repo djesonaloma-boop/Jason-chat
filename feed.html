@@ -7,73 +7,79 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
 html,body{width:100%;max-width:100%;overflow-x:hidden !important;touch-action:pan-y;overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
-:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
-body{background:var(--bg);min-height:100vh}
-header{background:#fff;display:flex;align-items:center;gap:8px;padding:10px 12px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06);width:100%;overflow:hidden}
-.logo{display:flex;align-items:center;gap:6px;font-weight:900;color:var(--blue);font-size:19px;cursor:pointer;flex-shrink:0;white-space:nowrap}
-.logo span{width:32px;height:32px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px}
-.logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;min-width:0;background:#f0f2f5;border:none;padding:11px 12px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
-.icons{display:flex;gap:5px;align-items:center;flex-shrink:0}
-.icons a{width:36px;height:36px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:17px;flex-shrink:0}
-.avatar{width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.menu-btn{width:38px;height:38px;background:#f0f2f5;border:none;border-radius:50%;cursor:pointer;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90;display:none}
+:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--or2:#FFD700;--noir:#111111;--noir2:#1A1A1A;--fond:#0F0F14;--carte:#1C1C24;--texte:#FFFFFF;--gris:#A1A1AA;--ligne:#2A2A35}
+body{background:var(--fond);min-height:100vh;color:var(--texte)}
+/* HEADER - NOIR + OR */
+header{background:var(--noir);display:flex;align-items:center;gap:8px;padding:10px 12px;position:sticky;top:0;z-index:20;box-shadow:0 2px 15px rgba(0,0,0,.5);width:100%;overflow:hidden;border-bottom:2px solid var(--or)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:19px;cursor:pointer;flex-shrink:0;white-space:nowrap;letter-spacing:.5px}
+.logo span{width:34px;height:34px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 0 12px rgba(255,193,7,.5)}
+.logo i{color:var(--or);font-style:normal}
+header .search{flex:1;min-width:0;background:#2A2A35;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer;color:#fff}
+header .search::placeholder{color:#888}
+.icons{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.icons a{width:38px;height:38px;background:#2A2A35;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:17px;flex-shrink:0;border:1px solid #3A3A45}
+.menu-btn{width:38px;height:38px;background:linear-gradient(135deg,var(--violet),var(--violet2));border:none;border-radius:50%;cursor:pointer;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;box-shadow:0 0 10px rgba(124,58,237,.5)}
+/* MENU */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:90;display:none}
 .overlay.open{display:block}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:290px;max-width:88vw;background:#fff;z-index:100;transform:translateX(100%);transition:.28s;box-shadow:-2px 0 12px rgba(0,0,0,.15);display:flex;flex-direction:column;overflow-y:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:290px;max-width:88vw;background:#17171F;z-index:100;transform:translateX(100%);transition:.28s;box-shadow:-2px 0 15px rgba(0,0,0,.6);display:flex;flex-direction:column;overflow-y:auto;color:#fff}
 .drawer.open{transform:translateX(0)}
-.drawer-head{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff}
+.drawer-head{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--ligne);position:sticky;top:0;background:#17171F}
 .drawer-head .info{flex:1;min-width:0}
 .drawer-head b{font-size:16px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.drawer-head small{color:var(--grey)}
-.drawer-close{border:none;background:#f0f2f5;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0}
-.drawer a{display:flex;align-items:center;gap:12px;padding:12px 16px;text-decoration:none;color:#111;font-weight:600;font-size:14.5px;border-bottom:1px solid #f8f9fa}
-.drawer a:active{background:#f0f2f5}
+.drawer-head small{color:var(--gris)}
+.drawer-close{border:none;background:#2A2A35;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;color:#fff}
+.drawer a{display:flex;align-items:center;gap:12px;padding:12px 16px;text-decoration:none;color:#fff;font-weight:600;font-size:14.5px;border-bottom:1px solid #22222D}
+.drawer a:active{background:#2A2A35}
 .drawer a span{font-size:19px;width:28px;text-align:center;flex-shrink:0}
-.drawer .titre{padding:12px 16px 4px;font-size:11px;font-weight:800;color:var(--grey);text-transform:uppercase;letter-spacing:.5px;position:sticky;top:81px;background:#fff}
-.drawer .logout{margin:14px 16px;padding:12px;background:#ffeef0;color:#e0245e;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:14px}
+.drawer .titre{padding:14px 16px 4px;font-size:11px;font-weight:800;color:var(--or);text-transform:uppercase;letter-spacing:1px}
+.drawer .logout{margin:14px 16px;padding:12px;background:#3A0A0A;color:#FF6B6B;border:1px solid #5A1A1A;border-radius:10px;font-weight:800;cursor:pointer;font-size:14px}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
 .wrap{max-width:650px;margin:14px auto;padding:0 10px;width:100%;overflow-x:hidden}
 .stories{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none;max-width:100%}
 .stories::-webkit-scrollbar{display:none}
-.s-card{width:110px;height:185px;flex:0 0 110px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:#ddd}
+.s-card{width:110px;height:185px;flex:0 0 110px;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;background:#222;border:2px solid #2A2A35}
 .s-card img{width:100%;height:100%;object-fit:cover}
-.s-card .overlay2{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.75))}
+.s-card .overlay2{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.8))}
 .s-card .name{position:absolute;bottom:8px;left:7px;right:7px;color:#fff;font-weight:700;font-size:12px}
-.s-card .av{position:absolute;top:7px;left:7px;width:34px;height:34px;border-radius:50%;border:3px solid var(--blue);background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden}
+.s-card .av{position:absolute;top:7px;left:7px;width:34px;height:34px;border-radius:50%;border:3px solid var(--or);background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden}
 .s-card .av img{width:100%;height:100%;object-fit:cover}
-.s-card.add{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1.5px dashed #ccc}
-.s-card.add .plus{width:42px;height:42px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px}
-.s-card.add p{font-size:12px;font-weight:700;color:#555}
-.create{background:#fff;border-radius:12px;padding:12px;margin:10px 0;border:1px solid var(--line);width:100%}
+.s-card.add{background:var(--carte);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--violet)}
+.s-card.add .plus{width:42px;height:42px;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px}
+.s-card.add p{font-size:12px;font-weight:700;color:#fff}
+/* CREER POST */
+.create{background:var(--carte);border-radius:16px;padding:12px;margin:10px 0;border:1px solid var(--ligne);width:100%}
 .create .top{display:flex;gap:10px;align-items:center}
-.create input{flex:1;min-width:0;background:#f0f2f5;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
+.create input{flex:1;min-width:0;background:#2A2A35;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer;color:#fff}
+.create input::placeholder{color:#888}
 .create .btns{display:flex;gap:6px;margin-top:10px}
-.create .btns button{flex:1;border:none;background:#f0f2f5;padding:9px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13px}
-.post{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;border:1px solid var(--line);width:100%;overflow:hidden}
+.create .btns button{flex:1;border:none;background:#2A2A35;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:13px;color:#fff}
+/* POSTS */
+.post{background:var(--carte);border-radius:16px;padding:14px;margin-bottom:12px;border:1px solid var(--ligne);width:100%;overflow:hidden}
 .post .head{display:flex;gap:10px;align-items:center}
-.post .head .info{flex:1;min-width:0}.post .head small{color:var(--grey)}
-.post p{margin:10px 0;white-space:pre-wrap;font-size:15px;line-height:1.5;word-break:break-word}
-.post img.pimg{width:100%;border-radius:10px;max-height:380px;object-fit:cover}
-.post video{width:100%;border-radius:10px;max-height:420px;background:#000}
-.post .actions{display:flex;justify-content:space-around;border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
-.post .actions button{border:none;background:none;font-weight:700;color:var(--grey);cursor:pointer;padding:8px;font-size:13.5px}
-.post .actions button.liked{color:var(--blue)}
-.empty{text-align:center;color:var(--grey);padding:30px 10px;background:#fff;border-radius:12px;border:1px solid var(--line)}
+.post .head .info{flex:1;min-width:0}.post .head small{color:var(--gris)}
+.post p{margin:10px 0;white-space:pre-wrap;font-size:15px;line-height:1.5;word-break:break-word;color:#EDEDEF}
+.post img.pimg{width:100%;border-radius:12px;max-height:380px;object-fit:cover}
+.post video{width:100%;border-radius:12px;max-height:420px;background:#000}
+.post .actions{display:flex;justify-content:space-around;border-top:1px solid var(--ligne);padding-top:8px;margin-top:8px}
+.post .actions button{border:none;background:none;font-weight:700;color:var(--gris);cursor:pointer;padding:8px;font-size:13.5px}
+.post .actions button.liked{color:var(--or)}
+.empty{text-align:center;color:var(--gris);padding:30px 10px;background:var(--carte);border-radius:16px;border:1px solid var(--ligne)}
 .bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#111;justify-content:space-around;padding:11px;box-shadow:0 -1px 12px rgba(0,0,0,.6);z-index:30;border-top:2px solid var(--or)}.bottom-nav a{text-decoration:none;font-size:22px;filter:grayscale(0)}.wrap{padding-bottom:70px}}
 </style>
 </head>
 <body>
 
 <header>
 <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="🔍 Rechercher" onclick="location.href='recherche.html'" readonly>
-<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+<input class="search" placeholder="🔍 Rechercher..." onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a></div>
 <button class="menu-btn" onclick="ouvrirMenu()">☰</button>
 </header>
 
-<!-- MENU ☰ AVEC TOUS LES FICHIERS -->
+<!-- MENU ☰ -->
 <div class="overlay" id="overlay" onclick="fermerMenu()"></div>
 <div class="drawer" id="drawer">
 <div class="drawer-head"><div class="avatar" id="drawerAvatar" style="width:48px;height:48px">?</div><div class="info"><b id="drawerNom">Jason</b><small>Voir ton profil</small></div><button class="drawer-close" onclick="fermerMenu()">✕</button></div>
@@ -147,7 +153,6 @@ const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index
 const monNom = localStorage.getItem('jasonbook_nom')||"Jason";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
 const avHtml = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
-document.getElementById('myAvatar').innerHTML = avHtml;
 document.getElementById('myAvatar2').innerHTML = avHtml;
 document.getElementById('drawerAvatar').innerHTML = avHtml;
 document.getElementById('drawerNom').innerText = monNom;
@@ -163,7 +168,7 @@ function rendrePosts(){
   tousPosts.forEach(p=>{
     const liked=mesLikes.has(p.id);
     const div=document.createElement('div'); div.className='post';
-    div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${p.auteurUid}'">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div class="info"><b>${p.nomAuteur||""}</b><br><small>${p.date||""}</small></div>${p.auteurUid===uid?`<button style="border:none;background:none;font-size:18px;cursor:pointer" onclick="supprimerPost('${p.id}')">🗑️</button>`:""}</div><p>${p.texte||""}</p>${p.photoUrl?`<img class="pimg" src="${p.photoUrl}">`:""}${p.image?`<img class="pimg" src="${p.image}">`:""}${p.videoUrl?`<video controls preload="metadata" src="${p.videoUrl}"></video>`:""}<div class="actions"><button class="${liked?'liked':''}" onclick="liker('${p.id}',${p.likesCount||0})">👍 ${p.likesCount||0} J'aime</button><button>💬 ${p.commentairesCount||0}</button><button>↗️ ${p.partagesCount||0}</button></div>`;
+    div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${p.auteurUid}'">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div class="info"><b>${p.nomAuteur||""}</b><br><small>${p.date||""}</small></div>${p.auteurUid===uid?`<button style="border:none;background:none;font-size:18px;cursor:pointer;color:#fff" onclick="supprimerPost('${p.id}')">🗑️</button>`:""}</div><p>${p.texte||""}</p>${p.photoUrl?`<img class="pimg" src="${p.photoUrl}">`:""}${p.image?`<img class="pimg" src="${p.image}">`:""}${p.videoUrl?`<video controls preload="metadata" src="${p.videoUrl}"></video>`:""}<div class="actions"><button class="${liked?'liked':''}" onclick="liker('${p.id}',${p.likesCount||0})">👍 ${p.likesCount||0} J'aime</button><button>💬 ${p.commentairesCount||0}</button><button>↗️ ${p.partagesCount||0}</button></div>`;
     box.appendChild(div);
   });
 }
