@@ -2,67 +2,56 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>JASONBOOK - Connecte-toi avec le monde</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
 :root{--blue:#1877F2;--blue2:#0d5fd6;--green:#42b72a;--green2:#36a422;--gold:#FFD700;--bg:#eef2f7;--card:#fff;--text:#1c1e21;--grey:#65676b}
 body{background:var(--bg);min-height:100vh;color:var(--text)}
-/* TOPBAR */
-.topbar{background:rgba(255,255,255,.92);backdrop-filter:blur(10px);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 10px rgba(0,0,0,.07);position:sticky;top:0;z-index:10}
+.topbar{background:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:10}
 .logo{font-weight:900;color:var(--blue);font-size:23px;display:flex;align-items:center;gap:8px;cursor:pointer;letter-spacing:-.5px}
-.logo span{width:38px;height:38px;background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 12px rgba(24,119,242,.35)}
+.logo span{width:38px;height:38px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
 .logo i{color:var(--gold);font-style:normal}
 .topbar .links{display:flex;gap:8px}
-.topbar .links button{border:none;padding:10px 18px;border-radius:999px;font-weight:800;cursor:pointer;font-size:14px;transition:.2s}
+.topbar .links button{border:none;padding:10px 18px;border-radius:999px;font-weight:800;cursor:pointer;font-size:14px}
 .btn-login{background:#f0f2f5;color:#1c1e21}
-.btn-login:hover{background:#e4e6eb}
-.btn-signup{background:var(--green);color:#fff;box-shadow:0 4px 12px rgba(66,183,42,.3)}
-.btn-signup:hover{background:var(--green2);transform:translateY(-1px)}
-/* HERO */
+.btn-signup{background:var(--green);color:#fff}
 .hero{display:flex;gap:28px;max-width:1020px;margin:28px auto;padding:0 16px;align-items:flex-start;flex-wrap:wrap;justify-content:center}
 .hero-left{flex:1;min-width:280px;max-width:500px;padding-top:18px}
 .hero-left .badge{display:inline-block;background:#e7f0ff;color:var(--blue);font-weight:800;font-size:13px;padding:7px 12px;border-radius:999px;margin-bottom:14px}
 .hero-left h1{font-size:44px;line-height:1.1;color:#1c1e21;letter-spacing:-1px}
-.hero-left h1 span{background:linear-gradient(90deg,#1877F2,#7a3cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-left h1 span{color:var(--blue)}
 .hero-left p{font-size:17.5px;color:#606770;margin:16px 0;line-height:1.6}
 .hero-left .stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-.stat{background:#fff;padding:13px 16px;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06);text-align:center;min-width:110px;flex:1}
+.stat{background:#fff;padding:13px 16px;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.05);border:1px solid #eef0f3;text-align:center;min-width:110px;flex:1}
 .stat b{font-size:21px;color:var(--blue);display:block}
 .stat small{color:var(--grey);font-weight:600}
 .hero-right{flex:1;min-width:300px;max-width:420px;position:sticky;top:76px}
-/* CARD */
-.card{background:#fff;border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.10);border:1px solid #eef0f3}
+.card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.08);border:1px solid #eef0f3}
 .card h2{text-align:center;margin-bottom:6px;font-size:22px}
 .card .sub{text-align:center;color:var(--grey);font-size:13.5px;margin-bottom:16px}
-.card input,.card select{width:100%;padding:13px 14px;border:1.5px solid #e4e6eb;border-radius:12px;margin-bottom:10px;font-size:15px;outline:none;background:#f8f9fa;transition:.2s}
+.card input,.card select{width:100%;padding:13px 14px;border:1.5px solid #e4e6eb;border-radius:12px;margin-bottom:10px;font-size:15px;outline:none;background:#f8f9fa}
 .card input:focus,.card select:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(24,119,242,.12)}
-.btn-main{width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 6px 16px rgba(24,119,242,.3);transition:.2s}
-.btn-main:hover{transform:translateY(-1px)}
-.btn-main:disabled{opacity:.6;transform:none}
-.btn-green{width:100%;padding:13px;border:none;border-radius:12px;background:var(--green);color:#fff;font-weight:800;font-size:16px;cursor:pointer;margin-top:12px;box-shadow:0 6px 16px rgba(66,183,42,.25)}
-.btn-green:hover{background:var(--green2)}
+.btn-main{width:100%;padding:13px;border:none;border-radius:12px;background:var(--blue);color:#fff;font-weight:800;font-size:16px;cursor:pointer}
+.btn-main:disabled{opacity:.6}
+.btn-green{width:100%;padding:13px;border:none;border-radius:12px;background:var(--green);color:#fff;font-weight:800;font-size:16px;cursor:pointer;margin-top:12px}
 .link{color:var(--blue);text-align:center;display:block;margin-top:12px;cursor:pointer;font-size:14px;font-weight:700}
-.link:hover{text-decoration:underline}
 .msg{text-align:center;font-size:13px;font-weight:700;min-height:18px;margin-top:8px}
-/* FEATURES */
 .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;max-width:1020px;margin:22px auto;padding:0 16px}
-.feat{background:#fff;padding:18px 14px;border-radius:16px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.05);border:1px solid #eef0f3;transition:.2s;cursor:default}
-.feat:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.feat{background:#fff;padding:18px 14px;border-radius:16px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.05);border:1px solid #eef0f3}
 .feat .ico{font-size:32px;width:56px;height:56px;background:#eef4ff;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto}
 .feat b{display:block;margin:10px 0 4px;font-size:15px}
 .feat small{color:var(--grey);line-height:1.4;display:block;font-size:13px}
-/* PREVIEW */
 .preview{max-width:1020px;margin:26px auto;padding:0 16px}
 .preview h2{text-align:center;margin-bottom:4px;font-size:21px}
 .preview p.sub{text-align:center;color:var(--grey);margin-bottom:14px;font-size:14px}
 .preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
 .p-card{background:#fff;border-radius:14px;padding:13px;display:flex;gap:11px;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.05);border:1px solid #eef0f3}
-.p-card .av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#1877F2,#7a3cff);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;overflow:hidden;flex-shrink:0}
+.p-card .av{width:48px;height:48px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;overflow:hidden;flex-shrink:0}
 .p-card .av img{width:100%;height:100%;object-fit:cover}
 .footer{text-align:center;color:#999;font-size:12px;padding:30px 10px;line-height:1.8}
 .footer a{color:#999;text-decoration:none;margin:0 6px}
-.footer a:hover{color:var(--blue)}
 @media(max-width:760px){
   .hero{margin:16px auto}
   .hero-left{padding-top:0;text-align:center}
@@ -95,7 +84,6 @@ body{background:var(--bg);min-height:100vh;color:var(--text)}
 </div>
 
 <div class="hero-right">
-<!-- CONNEXION -->
 <div class="card" id="boxLogin">
 <h2>Connexion</h2>
 <p class="sub">Ravi de te revoir 👋</p>
@@ -108,7 +96,6 @@ body{background:var(--bg);min-height:100vh;color:var(--text)}
 <button class="btn-green" onclick="showSignup()">Créer un nouveau compte</button>
 </div>
 
-<!-- INSCRIPTION -->
 <div class="card" id="boxSignup" style="display:none">
 <h2>Inscription</h2>
 <p class="sub">Rejoins JASONBOOK en 30 secondes 🚀</p>
