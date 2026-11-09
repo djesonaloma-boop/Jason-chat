@@ -2,60 +2,62 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>JASONBOOK - Marché</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#f0f2f5}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
-.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
+:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
+body{background:var(--bg);min-height:100vh}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.3px}
+.logo span{width:34px;height:34px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
 .logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
 .icons{display:flex;gap:6px;align-items:center}
-.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
-.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.icons a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .wrap{max-width:1000px;margin:16px auto;padding:0 12px}
 .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px}
-.top h1{font-size:24px}
-.btn-blue{background:#1877F2;color:#fff;border:none;padding:11px 18px;border-radius:10px;font-weight:800;cursor:pointer}
-.btn-grey{background:#e4e6eb;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer}
-.btn-green{background:#42b72a;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer}
-.filters{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px}
-.filters button{border:none;background:#fff;padding:10px 14px;border-radius:20px;font-weight:700;cursor:pointer;white-space:nowrap}
-.filters button.active{background:#1877F2;color:#fff}
-.filters input,.filters select{border:none;background:#fff;padding:10px 14px;border-radius:20px;font-weight:600;outline:none;min-width:110px}
+.top h1{font-size:23px;letter-spacing:-.3px}
+.btn-blue{background:var(--blue);color:#fff;border:none;padding:11px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-size:13.5px}
+.btn-grey{background:#f0f2f5;border:none;padding:9px 14px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13px}
+.btn-green{background:#42b72a;color:#fff;border:none;padding:9px 14px;border-radius:9px;font-weight:700;cursor:pointer}
+.filters{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters button{border:none;background:#fff;padding:10px 14px;border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.filters button.active{background:var(--blue);color:#fff}
+.filters input,.filters select{border:none;background:#fff;padding:10px 14px;border-radius:999px;font-weight:600;outline:none;min-width:110px;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
-.p-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);cursor:pointer}
-.p-card .img{height:170px;background:#eee;position:relative}
+.p-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line);cursor:pointer}
+.p-card .img{height:170px;background:#f0f2f5;position:relative}
 .p-card .img img{width:100%;height:100%;object-fit:cover}
-.p-card .img .prix{position:absolute;bottom:8px;left:8px;background:#1877F2;color:#fff;padding:5px 10px;border-radius:8px;font-weight:800;font-size:14px}
-.p-card .img .etat{position:absolute;top:8px;right:8px;background:#fff;padding:3px 8px;border-radius:8px;font-size:11px;font-weight:700}
+.p-card .img .prix{position:absolute;bottom:8px;left:8px;background:var(--blue);color:#fff;padding:5px 10px;border-radius:9px;font-weight:800;font-size:14px}
+.p-card .img .etat{position:absolute;top:8px;right:8px;background:#fff;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700}
 .p-card .info{padding:12px}
 .p-card .info b{font-size:15px}
-.p-card .info p{font-size:13px;color:#65676b;margin:4px 0}
+.p-card .info p{font-size:13px;color:var(--grey);margin:4px 0;line-height:1.4}
 .p-card .info .actions{display:flex;gap:6px;margin-top:8px}
 .p-card .info .actions button{flex:1}
-.empty{text-align:center;color:#65676b;padding:40px 10px;background:#fff;border-radius:12px}
-.empty .big{font-size:50px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.empty{text-align:center;color:var(--grey);padding:36px 10px;background:#fff;border-radius:12px;border:1px solid var(--line)}
+.empty .big{font-size:44px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
 .modal.open{display:flex}
 .modal-box{background:#fff;width:100%;max-width:480px;border-radius:14px;padding:20px;max-height:90vh;overflow-y:auto}
-.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:12px;border:1.5px solid #ddd;border-radius:10px;margin-top:8px;font-size:14px;outline:none}
+.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:12px;border:1.5px solid #e4e6eb;border-radius:10px;margin-top:8px;font-size:14px;outline:none;background:#f8f9fa}
+.modal-box input:focus,.modal-box textarea:focus,.modal-box select:focus{border-color:var(--blue);background:#fff}
 .modal-box textarea{min-height:70px;resize:vertical}
 .modal-box img{width:100%;border-radius:10px;margin-top:10px;max-height:220px;object-fit:cover}
 .bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
 </style>
-<link rel="stylesheet" href="Assets/theme.css">
-<script src="Assets/theme.js"></script>
 </head>
 <body>
 
 <header>
 <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="Rechercher un produit..." id="searchInput" oninput="rendre()">
+<input class="search" placeholder="🔍 Rechercher un produit..." id="searchInput" oninput="rendre()">
 <div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
 </header>
 
@@ -109,7 +111,6 @@ window.setCat=(c)=>{ cat=c; ['Tout','Téléphones','Vêtements','Maison','Véhic
 window.ouvrirVendre=()=>document.getElementById('modalVendre').classList.add('open');
 window.fermerVendre=()=>document.getElementById('modalVendre').classList.remove('open');
 document.getElementById('pPhoto').addEventListener('change', e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{ photoProd=ev.target.result; document.getElementById('pPreview').src=photoProd; document.getElementById('pPreview').style.display="block"; }; r.readAsDataURL(f); });
-
 function rendre(){
   const q=(document.getElementById('searchInput').value||"").toLowerCase();
   const ville=(document.getElementById('villeFilter').value||"").toLowerCase();
