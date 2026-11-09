@@ -2,61 +2,62 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>JASONBOOK - Groupes</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#f0f2f5}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
-.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
+:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
+body{background:var(--bg);min-height:100vh}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.3px}
+.logo span{width:34px;height:34px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
 .logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
 .icons{display:flex;gap:6px;align-items:center}
-.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
-.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.icons a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .wrap{max-width:1000px;margin:16px auto;padding:0 12px}
 .top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px}
-.top h1{font-size:24px}
-.btn-blue{background:#1877F2;color:#fff;border:none;padding:11px 18px;border-radius:10px;font-weight:800;cursor:pointer}
-.btn-grey{background:#e4e6eb;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer}
-.btn-green{background:#42b72a;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer}
-.tabs{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto}
-.tabs button{border:none;background:#fff;padding:10px 16px;border-radius:20px;font-weight:700;cursor:pointer;white-space:nowrap}
-.tabs button.active{background:#1877F2;color:#fff}
+.top h1{font-size:23px;letter-spacing:-.3px}
+.btn-blue{background:var(--blue);color:#fff;border:none;padding:11px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-size:13.5px}
+.btn-grey{background:#f0f2f5;border:none;padding:9px 14px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13px}
+.btn-green{background:#42b72a;color:#fff;border:none;padding:9px 14px;border-radius:9px;font-weight:700;cursor:pointer}
+.tabs{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{border:none;background:#fff;padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;font-size:13px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tabs button.active{background:var(--blue);color:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-.g-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1)}
-.g-card .cover{height:130px;background:linear-gradient(135deg,#1877F2,#0F2027);display:flex;align-items:center;justify-content:center;font-size:50px;cursor:pointer;overflow:hidden}
+.g-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line);cursor:pointer}
+.g-card .cover{height:130px;background:#e7f0ff;display:flex;align-items:center;justify-content:center;font-size:50px;overflow:hidden}
 .g-card .cover img{width:100%;height:100%;object-fit:cover}
 .g-card .body{padding:12px}
-.g-card h3{font-size:16px;margin-bottom:4px}.g-card p{font-size:13px;color:#65676b;line-height:1.4;min-height:36px}
+.g-card h3{font-size:16px;margin-bottom:4px}.g-card p{font-size:13px;color:var(--grey);line-height:1.4;min-height:36px}
 .g-card small{color:#999;font-size:12px}
 .g-card .btns{display:flex;gap:7px;margin-top:10px}
 .g-card .btns button{flex:1}
-.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line)}
 .post-head{display:flex;gap:10px;align-items:center}
-.post-text{margin:10px 0;font-size:15px;white-space:pre-wrap}
+.post-text{margin:10px 0;font-size:15px;white-space:pre-wrap;line-height:1.5}
 .post img.main{width:100%;border-radius:10px;max-height:420px;object-fit:cover}
-.empty{text-align:center;color:#65676b;padding:40px 10px;background:#fff;border-radius:12px}
-.empty .big{font-size:50px}
-/* MODAL */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.empty{text-align:center;color:var(--grey);padding:36px 10px;background:#fff;border-radius:12px;border:1px solid var(--line)}
+.empty .big{font-size:44px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
 .modal.open{display:flex}
 .modal-box{background:#fff;width:100%;max-width:460px;border-radius:14px;padding:20px;max-height:90vh;overflow-y:auto}
-.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:12px;border:1.5px solid #ddd;border-radius:10px;margin-top:8px;font-size:14px;outline:none}
+.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:12px;border:1.5px solid #e4e6eb;border-radius:10px;margin-top:8px;font-size:14px;outline:none;background:#f8f9fa}
+.modal-box input:focus,.modal-box textarea:focus,.modal-box select:focus{border-color:var(--blue);background:#fff}
 .modal-box textarea{min-height:70px;resize:vertical}
 .bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
 </style>
-<link rel="stylesheet" href="Assets/theme.css">
-<script src="Assets/theme.js"></script>
 </head>
 <body>
 
 <header>
 <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<input class="search" placeholder="🔍 Rechercher" onclick="location.href='recherche.html'" readonly>
 <div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
 </header>
 
@@ -72,18 +73,17 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-ra
 <div id="section-mes" style="display:none"><div class="grid" id="gridMes"></div><div class="empty" id="emptyMes" style="display:none"><div class="big">👨‍👩‍👧</div><p>Tu n'es dans aucun groupe.</p></div></div>
 <div id="section-decouvrir" style="display:none"><div class="grid" id="gridDecouvrir"></div><div class="empty" id="emptyDecouvrir" style="display:none"><div class="big">🌍</div><p>Aucun groupe à découvrir</p></div></div>
 
-<!-- Détail d'un groupe -->
 <div id="detailGroupe" style="display:none">
 <div class="card">
 <button class="btn-grey" onclick="fermerDetail()">← Retour aux groupes</button>
 <div style="display:flex;gap:14px;align-items:center;margin-top:12px;flex-wrap:wrap">
-<div style="width:80px;height:80px;border-radius:16px;background:linear-gradient(135deg,#1877F2,#0F2027);display:flex;align-items:center;justify-content:center;font-size:40px;overflow:hidden" id="detailCover">👨‍👩‍👧</div>
+<div style="width:80px;height:80px;border-radius:16px;background:#e7f0ff;display:flex;align-items:center;justify-content:center;font-size:40px;overflow:hidden" id="detailCover">👨‍👩‍👧</div>
 <div style="flex:1"><h2 id="detailNom"></h2><p id="detailDesc" style="color:#65676b;font-size:14px"></p><small id="detailMeta"></small></div>
 <button class="btn-blue" id="btnRejoindreDetail" onclick="toggleMembreDetail()">Rejoindre</button>
 </div>
 </div>
 <div class="card">
-<div style="display:flex;gap:8px"><input id="postGroupeTexte" placeholder="Publie dans ce groupe..." style="flex:1;padding:12px;border:1.5px solid #ddd;border-radius:20px;outline:none"><button class="btn-blue" onclick="publierDansGroupe()">Publier</button></div>
+<div style="display:flex;gap:8px"><input id="postGroupeTexte" placeholder="Publie dans ce groupe..." style="flex:1;padding:12px;border:1.5px solid #e4e6eb;border-radius:999px;outline:none;background:#f8f9fa"><button class="btn-blue" onclick="publierDansGroupe()">Publier</button></div>
 </div>
 <div id="postsGroupe"></div>
 </div>
@@ -91,7 +91,6 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-ra
 
 <nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="groupes.html">👨‍👩‍👧</a><a href="profil.html">👤</a></nav>
 
-<!-- MODAL CREER -->
 <div class="modal" id="modalCreate"><div class="modal-box">
 <h2>Créer un groupe</h2>
 <input id="gNom" placeholder="Nom du groupe *">
@@ -112,7 +111,6 @@ const monNom = localStorage.getItem('jasonbook_nom')||"";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
 document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
 let tousGroupes=[], mesGroupes=new Set(), groupeOuvert=null, onglet='tous';
-
 window.showTab=(t)=>{
   onglet=t; fermerDetail();
   ['tous','mes','decouvrir'].forEach(x=>{
@@ -123,7 +121,6 @@ window.showTab=(t)=>{
 window.ouvrirCreate=()=>document.getElementById('modalCreate').classList.add('open');
 window.fermerCreate=()=>document.getElementById('modalCreate').classList.remove('open');
 window.fermerDetail=()=>{ document.getElementById('detailGroupe').style.display="none"; groupeOuvert=null; };
-
 function carteGroupe(g){
   const estMembre=mesGroupes.has(g.id);
   const btn = estMembre ? `<button class="btn-grey" onclick="event.stopPropagation();quitterGroupe('${g.id}')">Quitter</button><button class="btn-blue" onclick="event.stopPropagation();ouvrirGroupe('${g.id}')">Voir</button>` : `<button class="btn-blue" onclick="event.stopPropagation();rejoindreGroupe('${g.id}')">Rejoindre</button><button class="btn-grey" onclick="event.stopPropagation();ouvrirGroupe('${g.id}')">Voir</button>`;
@@ -172,7 +169,6 @@ window.ouvrirGroupe=async (gid)=>{
   document.getElementById('detailMeta').innerText=`${g.type||""} • ${g.membresCount||1} membre(s) • Créé par ${g.createurNom||""}`;
   const btn=document.getElementById('btnRejoindreDetail');
   btn.innerText = mesGroupes.has(gid) ? "Quitter" : "Rejoindre";
-  // Posts du groupe
   onValue(ref(db,'jasonbook/postsGroupe/'+gid), (snap)=>{
     const d=snap.val(); const box=document.getElementById('postsGroupe'); box.innerHTML="";
     if(!d){ box.innerHTML='<p style="text-align:center;color:#65676b">Aucune publication dans ce groupe</p>'; return; }
@@ -186,7 +182,6 @@ window.ouvrirGroupe=async (gid)=>{
 window.toggleMembreDetail=async()=>{
   if(!groupeOuvert) return;
   if(mesGroupes.has(groupeOuvert)) await quitterGroupe(groupeOuvert); else await rejoindreGroupe(groupeOuvert);
-  // refresh bouton
   setTimeout(()=>{ const btn=document.getElementById('btnRejoindreDetail'); btn.innerText = mesGroupes.has(groupeOuvert) ? "Quitter" : "Rejoindre"; },500);
 };
 window.publierDansGroupe=async()=>{
@@ -196,7 +191,6 @@ window.publierDansGroupe=async()=>{
   await set(newRef,{ auteurUid:uid, nomAuteur:monNom, photoAuteur:maPhoto||"", texte:txt, photoUrl:"", date:new Date().toLocaleString(), timestamp:Date.now() });
   document.getElementById('postGroupeTexte').value="";
 };
-
 onValue(ref(db,'jasonbook/groupes'), s=>{ const d=s.val(); tousGroupes=d?Object.entries(d).map(([id,g])=>({id,...g})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendre(); });
 onValue(ref(db,'jasonbook/groupesUser/'+uid), s=>{ const d=s.val(); mesGroupes=new Set(d?Object.keys(d):[]); rendre(); });
 </script>
