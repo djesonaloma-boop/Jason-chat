@@ -8,50 +8,60 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
 html,body{width:100%;max-width:100%;overflow-x:hidden !important;touch-action:pan-y;overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
 :root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
-body{background:var(--bg);min-height:100vh;position:relative}
-header{background:#fff;display:flex;align-items:center;gap:8px;padding:10px 12px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06);width:100%;max-width:100%;overflow:hidden}
-.logo{display:flex;align-items:center;gap:6px;font-weight:900;color:var(--blue);font-size:19px;cursor:pointer;letter-spacing:-.3px;flex-shrink:0;white-space:nowrap}
-.logo span{width:32px;height:32px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+body{background:var(--bg);min-height:100vh}
+header{background:#fff;display:flex;align-items:center;gap:8px;padding:10px 12px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06);width:100%;overflow:hidden}
+.logo{display:flex;align-items:center;gap:6px;font-weight:900;color:var(--blue);font-size:19px;cursor:pointer;flex-shrink:0;white-space:nowrap}
+.logo span{width:32px;height:32px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px}
 .logo i{color:#FFD700;font-style:normal}
 header .search{flex:1;min-width:0;background:#f0f2f5;border:none;padding:11px 12px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
 .icons{display:flex;gap:5px;align-items:center;flex-shrink:0}
 .icons a{width:36px;height:36px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:17px;flex-shrink:0}
 .avatar{width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
+.menu-btn{width:38px;height:38px;background:#f0f2f5;border:none;border-radius:50%;cursor:pointer;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90;display:none}
+.overlay.open{display:block}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:290px;max-width:88vw;background:#fff;z-index:100;transform:translateX(100%);transition:.28s;box-shadow:-2px 0 12px rgba(0,0,0,.15);display:flex;flex-direction:column;overflow-y:auto}
+.drawer.open{transform:translateX(0)}
+.drawer-head{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff}
+.drawer-head .info{flex:1;min-width:0}
+.drawer-head b{font-size:16px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drawer-head small{color:var(--grey)}
+.drawer-close{border:none;background:#f0f2f5;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0}
+.drawer a{display:flex;align-items:center;gap:12px;padding:12px 16px;text-decoration:none;color:#111;font-weight:600;font-size:14.5px;border-bottom:1px solid #f8f9fa}
+.drawer a:active{background:#f0f2f5}
+.drawer a span{font-size:19px;width:28px;text-align:center;flex-shrink:0}
+.drawer .titre{padding:12px 16px 4px;font-size:11px;font-weight:800;color:var(--grey);text-transform:uppercase;letter-spacing:.5px;position:sticky;top:81px;background:#fff}
+.drawer .logout{margin:14px 16px;padding:12px;background:#ffeef0;color:#e0245e;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:14px}
 .wrap{max-width:650px;margin:14px auto;padding:0 10px;width:100%;overflow-x:hidden}
-/* STORIES - seul endroit qui peut glisser, mais SEULEMENT à l'intérieur */
-.stories{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;max-width:100%}
+.stories{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none;max-width:100%}
 .stories::-webkit-scrollbar{display:none}
 .s-card{width:110px;height:185px;flex:0 0 110px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:#ddd}
 .s-card img{width:100%;height:100%;object-fit:cover}
-.s-card .overlay{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.75))}
-.s-card .name{position:absolute;bottom:8px;left:7px;right:7px;color:#fff;font-weight:700;font-size:12px;line-height:1.2}
-.s-card .av{position:absolute;top:7px;left:7px;width:34px;height:34px;border-radius:50%;border:3px solid var(--blue);background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;font-size:14px}
+.s-card .overlay2{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.75))}
+.s-card .name{position:absolute;bottom:8px;left:7px;right:7px;color:#fff;font-weight:700;font-size:12px}
+.s-card .av{position:absolute;top:7px;left:7px;width:34px;height:34px;border-radius:50%;border:3px solid var(--blue);background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden}
 .s-card .av img{width:100%;height:100%;object-fit:cover}
 .s-card.add{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1.5px dashed #ccc}
 .s-card.add .plus{width:42px;height:42px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px}
 .s-card.add p{font-size:12px;font-weight:700;color:#555}
-/* CREER POST */
 .create{background:#fff;border-radius:12px;padding:12px;margin:10px 0;border:1px solid var(--line);width:100%}
 .create .top{display:flex;gap:10px;align-items:center}
 .create input{flex:1;min-width:0;background:#f0f2f5;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
 .create .btns{display:flex;gap:6px;margin-top:10px}
 .create .btns button{flex:1;border:none;background:#f0f2f5;padding:9px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13px}
-/* POSTS */
-.post{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line);width:100%;overflow:hidden}
-.post .head{display:flex;gap:10px;align-items:center;width:100%}
+.post{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;border:1px solid var(--line);width:100%;overflow:hidden}
+.post .head{display:flex;gap:10px;align-items:center}
 .post .head .info{flex:1;min-width:0}.post .head small{color:var(--grey)}
-.post .head b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
 .post p{margin:10px 0;white-space:pre-wrap;font-size:15px;line-height:1.5;word-break:break-word}
-.post img.pimg{width:100%;border-radius:10px;max-height:380px;object-fit:cover;margin-top:6px}
+.post img.pimg{width:100%;border-radius:10px;max-height:380px;object-fit:cover}
 .post video{width:100%;border-radius:10px;max-height:420px;background:#000}
 .post .actions{display:flex;justify-content:space-around;border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
 .post .actions button{border:none;background:none;font-weight:700;color:var(--grey);cursor:pointer;padding:8px;font-size:13.5px}
 .post .actions button.liked{color:var(--blue)}
 .empty{text-align:center;color:var(--grey);padding:30px 10px;background:#fff;border-radius:12px;border:1px solid var(--line)}
-.empty .big{font-size:42px}
 .bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30;width:100%;max-width:100%}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
 </style>
 </head>
 <body>
@@ -60,18 +70,70 @@ header .search{flex:1;min-width:0;background:#f0f2f5;border:none;padding:11px 12
 <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
 <input class="search" placeholder="🔍 Rechercher" onclick="location.href='recherche.html'" readonly>
 <div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+<button class="menu-btn" onclick="ouvrirMenu()">☰</button>
 </header>
+
+<!-- MENU ☰ AVEC TOUS LES FICHIERS -->
+<div class="overlay" id="overlay" onclick="fermerMenu()"></div>
+<div class="drawer" id="drawer">
+<div class="drawer-head"><div class="avatar" id="drawerAvatar" style="width:48px;height:48px">?</div><div class="info"><b id="drawerNom">Jason</b><small>Voir ton profil</small></div><button class="drawer-close" onclick="fermerMenu()">✕</button></div>
+
+<div class="titre">Principal</div>
+<a href="feed.html"><span>🏠</span> Fil d'actualité</a>
+<a href="profil.html"><span>👤</span> Mon Profil</a>
+<a href="profil-ami.html"><span>👤</span> Profil Ami</a>
+<a href="amis.html"><span>👥</span> Amis</a>
+<a href="messages.html"><span>💬</span> Messages</a>
+<a href="Message.html"><span>💬</span> Message</a>
+<a href="notifications.html"><span>🔔</span> Notifications</a>
+<a href="recherche.html"><span>🔍</span> Recherche</a>
+
+<div class="titre">Publier & Voir</div>
+<a href="creer-post.html"><span>➕</span> Créer un post</a>
+<a href="Creer-post (1).html"><span>➕</span> Créer un post (1)</a>
+<a href="stories.html"><span>✨</span> Stories</a>
+<a href="Stories (1).html"><span>✨</span> Stories (1)</a>
+<a href="videos.html"><span>🎥</span> Vidéos</a>
+<a href="photos.html"><span>🖼️</span> Photos</a>
+<a href="lives.html"><span>🔴</span> Lives</a>
+<a href="souvenirs.html"><span>🕰️</span> Souvenirs</a>
+
+<div class="titre">Découvrir</div>
+<a href="groupes.html"><span>👨‍👩‍👧</span> Groupes</a>
+<a href="evenements.html"><span>📅</span> Événements</a>
+<a href="anniversaires.html"><span>🎂</span> Anniversaires</a>
+<a href="annonces.html"><span>📢</span> Annonces</a>
+<a href="sondages.html"><span>📊</span> Sondages</a>
+<a href="jeux.html"><span>🎮</span> Jeux</a>
+<a href="musique.html"><span>🎵</span> Musique</a>
+<a href="marche.html"><span>🛒</span> Marché</a>
+<a href="marketplace.html"><span>🏪</span> Marketplace</a>
+<a href="emploi.html"><span>💼</span> Emploi</a>
+<a href="favoris.html"><span>⭐</span> Favoris</a>
+<a href="freed.html"><span>🆓</span> Freed</a>
+
+<div class="titre">Communication</div>
+<a href="appel.html"><span>📞</span> Appel</a>
+
+<div class="titre">Paramètres & Aide</div>
+<a href="parametres.html"><span>⚙️</span> Paramètres</a>
+<a href="aide.html"><span>❓</span> Aide</a>
+<a href="signalements.html"><span>🚨</span> Signalements</a>
+<a href="bloques.html"><span>🚫</span> Bloqués</a>
+<a href="admin.html"><span>🛡️</span> Admin</a>
+<a href="index.html"><span>🚪</span> Connexion / Accueil</a>
+
+<button class="logout" onclick="deconnecter()">🚪 Se déconnecter</button>
+</div>
 
 <div class="wrap">
 <div class="stories" id="storiesRow"></div>
-
 <div class="create">
 <div class="top"><div class="avatar" id="myAvatar2">?</div><input placeholder="Quoi de neuf, Jason ?" onclick="location.href='creer-post.html'" readonly></div>
 <div class="btns"><button onclick="location.href='creer-post.html'">🖼️ Photo</button><button onclick="location.href='creer-post.html'">🎥 Vidéo</button><button onclick="location.href='creer-post.html'">✍️ Publier</button></div>
 </div>
-
 <div id="list"></div>
-<div class="empty" id="emptyBox" style="display:none"><div class="big">📝</div><h3>Aucune publication pour le moment</h3><p>Sois le premier à publier sur JASONBOOK</p></div>
+<div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication pour le moment</h3><p>Sois le premier à publier sur JASONBOOK</p></div>
 </div>
 
 <nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="videos.html">🎥</a><a href="profil.html">👤</a></nav>
@@ -87,8 +149,13 @@ const maPhoto = localStorage.getItem('jasonbook_photo')||"";
 const avHtml = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
 document.getElementById('myAvatar').innerHTML = avHtml;
 document.getElementById('myAvatar2').innerHTML = avHtml;
-let mesLikes=new Set();
-let tousPosts=[];
+document.getElementById('drawerAvatar').innerHTML = avHtml;
+document.getElementById('drawerNom').innerText = monNom;
+document.getElementById('drawerAvatar').onclick=()=>location.href='profil.html';
+window.ouvrirMenu=()=>{ document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); };
+window.fermerMenu=()=>{ document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); };
+window.deconnecter=()=>{ if(!confirm("Tu veux te déconnecter ?")) return; localStorage.removeItem('jasonbook_uid'); localStorage.removeItem('jasonbook_nom'); localStorage.removeItem('jasonbook_photo'); location.href='index.html'; };
+let mesLikes=new Set(); let tousPosts=[];
 function rendrePosts(){
   const box=document.getElementById('list'); box.innerHTML="";
   if(!tousPosts.length){ document.getElementById('emptyBox').style.display='block'; return; }
@@ -96,13 +163,7 @@ function rendrePosts(){
   tousPosts.forEach(p=>{
     const liked=mesLikes.has(p.id);
     const div=document.createElement('div'); div.className='post';
-    div.innerHTML=`
-      <div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${p.auteurUid}'">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div class="info"><b>${p.nomAuteur||""}</b><br><small>${p.date||""}</small></div>${p.auteurUid===uid?`<button style="border:none;background:none;font-size:18px;cursor:pointer" onclick="supprimerPost('${p.id}')">🗑️</button>`:""}</div>
-      <p>${p.texte||""}</p>
-      ${p.photoUrl?`<img class="pimg" src="${p.photoUrl}">`:""}
-      ${p.image?`<img class="pimg" src="${p.image}">`:""}
-      ${p.videoUrl?`<video controls preload="metadata" src="${p.videoUrl}"></video>`:""}
-      <div class="actions"><button class="${liked?'liked':''}" onclick="liker('${p.id}',${p.likesCount||0})">👍 ${p.likesCount||0} J'aime</button><button onclick="location.href='feed.html'">💬 ${p.commentairesCount||0}</button><button>↗️ ${p.partagesCount||0}</button></div>`;
+    div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${p.auteurUid}'">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div class="info"><b>${p.nomAuteur||""}</b><br><small>${p.date||""}</small></div>${p.auteurUid===uid?`<button style="border:none;background:none;font-size:18px;cursor:pointer" onclick="supprimerPost('${p.id}')">🗑️</button>`:""}</div><p>${p.texte||""}</p>${p.photoUrl?`<img class="pimg" src="${p.photoUrl}">`:""}${p.image?`<img class="pimg" src="${p.image}">`:""}${p.videoUrl?`<video controls preload="metadata" src="${p.videoUrl}"></video>`:""}<div class="actions"><button class="${liked?'liked':''}" onclick="liker('${p.id}',${p.likesCount||0})">👍 ${p.likesCount||0} J'aime</button><button>💬 ${p.commentairesCount||0}</button><button>↗️ ${p.partagesCount||0}</button></div>`;
     box.appendChild(div);
   });
 }
@@ -116,7 +177,7 @@ onValue(ref(db,'jasonbook/stories'),s=>{
   if(!d) return;
   const parAuteur={};
   Object.values(d).filter(x=>(x.expire||0)>now).forEach(x=>{ if(!parAuteur[x.auteurUid]) parAuteur[x.auteurUid]=[]; parAuteur[x.auteurUid].push(x); });
-  Object.values(parAuteur).forEach(g=>{ const st=g[0]; const div=document.createElement('div'); div.className='s-card'; div.onclick=()=>location.href='stories.html'; div.innerHTML=`<img src="${st.media}"><div class="overlay"></div><div class="av">${st.photoAuteur?`<img src="${st.photoAuteur}">`:(st.auteurNom||"?").charAt(0)}</div><div class="name">${st.auteurNom||""}</div>`; row.appendChild(div); });
+  Object.values(parAuteur).forEach(g=>{ const st=g[0]; const div=document.createElement('div'); div.className='s-card'; div.onclick=()=>location.href='stories.html'; div.innerHTML=`<img src="${st.media}"><div class="overlay2"></div><div class="av">${st.photoAuteur?`<img src="${st.photoAuteur}">`:(st.auteurNom||"?").charAt(0)}</div><div class="name">${st.auteurNom||""}</div>`; row.appendChild(div); });
 });
 </script>
 </body>
