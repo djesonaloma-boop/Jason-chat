@@ -6,71 +6,82 @@
 <title>JASONBOOK - Messages</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#f0f2f5;height:100vh;overflow:hidden}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;box-shadow:0 1px 6px rgba(0,0,0,.1);z-index:20;position:relative}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
-.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+:root{--blue:#1877F2;--blue2:#0d5fd6;--bg:#eef2f7;--grey:#65676b}
+body{background:var(--bg);height:100vh;overflow:hidden}
+/* HEADER */
+header{background:rgba(255,255,255,.95);backdrop-filter:blur(10px);display:flex;align-items:center;gap:12px;padding:10px 14px;box-shadow:0 1px 10px rgba(0,0,0,.07);z-index:20;position:relative}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.5px}
+.logo span{width:34px;height:34px;background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(24,119,242,.35)}
 .logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
+header .search:focus{background:#fff;box-shadow:0 0 0 3px rgba(24,119,242,.12)}
 .icons{display:flex;gap:6px;align-items:center}
-.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
-.avatar{width:44px;height:44px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;overflow:hidden;flex-shrink:0;cursor:pointer;position:relative}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px;transition:.2s}
+.icons a:hover{background:#e4e6eb}
+.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1877F2,#7a3cff);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;overflow:hidden;flex-shrink:0;cursor:pointer;position:relative}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .avatar.small{width:36px;height:36px;font-size:14px}
 .dot{position:absolute;bottom:0;right:0;width:12px;height:12px;background:#42b72a;border:2px solid #fff;border-radius:50%}
+/* LAYOUT */
 .layout{display:flex;height:calc(100vh - 61px)}
-.list{width:340px;background:#fff;border-right:1px solid #e4e6eb;overflow-y:auto}
-.list h2{padding:14px 14px 6px;font-size:20px}
+.list{width:340px;background:#fff;border-right:1px solid #eef0f3;overflow-y:auto}
+.list h2{padding:14px 14px 6px;font-size:21px;letter-spacing:-.5px}
 .list .search-box{padding:0 14px 10px}
-.list .search-box input{width:100%;padding:10px 14px;background:#f0f2f5;border:none;border-radius:20px;outline:none}
-.conv{display:flex;gap:10px;padding:11px 14px;cursor:pointer;align-items:center}
-.conv:hover,.conv.active{background:#f0f2f5}
+.list .search-box input{width:100%;padding:11px 14px;background:#f0f2f5;border:none;border-radius:999px;outline:none;font-size:14px}
+.list .search-box input:focus{background:#fff;box-shadow:0 0 0 3px rgba(24,119,242,.12)}
+.conv{display:flex;gap:11px;padding:11px 14px;cursor:pointer;align-items:center;transition:.15s;border-radius:0}
+.conv:hover{background:#f8f9fa}
+.conv.active{background:#e7f0ff;border-left:3px solid var(--blue)}
 .conv b{font-size:14px;display:block}
-.conv small{color:#65676b;font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
+.conv small{color:var(--grey);font-size:12.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
 .conv .time{margin-left:auto;font-size:11px;color:#999;white-space:nowrap}
-.unread{background:#1877F2;color:#fff;font-size:11px;font-weight:800;padding:2px 7px;border-radius:10px;margin-left:auto}
+.unread{background:var(--blue);color:#fff;font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;margin-left:auto;box-shadow:0 2px 6px rgba(24,119,242,.3)}
+/* CHAT */
 .chat{flex:1;display:flex;flex-direction:column;background:#fff}
-.chat-head{display:flex;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid #eee}
-.chat-head b{font-size:15px}.chat-head small{color:#42b72a;font-size:12px}
+.chat-head{display:flex;gap:11px;align-items:center;padding:11px 14px;border-bottom:1px solid #eee;background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.03)}
+.chat-head b{font-size:15px}
+.chat-head small{color:#42b72a;font-size:12px;font-weight:600}
 .chat-head .back{display:none;font-size:22px;cursor:pointer}
-.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;background:#f0f2f5}
-.msg{max-width:70%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.4;word-wrap:break-word}
-.msg.mine{background:#1877F2;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.msg.other{background:#fff;align-self:flex-start;border-bottom-left-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
-.msg small{display:block;font-size:10px;opacity:.7;margin-top:4px;text-align:right}
-.msg img{max-width:100%;border-radius:10px;margin-top:4px}
-.msg audio{width:100%;margin-top:4px}
+.chat-head a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
+.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;background:#eef2f7;background-image:radial-gradient(#dbe4f0 1px, transparent 1px);background-size:22px 22px}
+.msg{max-width:72%;padding:11px 14px;border-radius:18px;font-size:15px;line-height:1.45;word-wrap:break-word;animation:pop .2s ease}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.msg.mine{background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;align-self:flex-end;border-bottom-right-radius:5px;box-shadow:0 2px 8px rgba(24,119,242,.25)}
+.msg.other{background:#fff;align-self:flex-start;border-bottom-left-radius:5px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.msg small{display:block;font-size:10.5px;opacity:.75;margin-top:4px;text-align:right}
+.msg img{max-width:100%;border-radius:10px;margin-top:6px}
+.msg audio{width:100%;margin-top:6px}
 .chat-input{display:flex;gap:8px;align-items:center;padding:10px 12px;border-top:1px solid #eee;background:#fff}
-.chat-input button{width:40px;height:40px;border:none;background:#f0f2f5;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0}
-.chat-input button.send{background:#1877F2;color:#fff}
-.chat-input input{flex:1;padding:12px 14px;background:#f0f2f5;border:none;border-radius:20px;outline:none;font-size:15px}
+.chat-input button{width:42px;height:42px;border:none;background:#f0f2f5;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;transition:.2s}
+.chat-input button:hover{background:#e4e6eb}
+.chat-input button.send{background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;box-shadow:0 4px 10px rgba(24,119,242,.3)}
+.chat-input input{flex:1;padding:12px 16px;background:#f0f2f5;border:none;border-radius:999px;outline:none;font-size:15px}
+.chat-input input:focus{background:#fff;box-shadow:0 0 0 3px rgba(24,119,242,.12)}
 .chat-input .rec.on{background:#e0245e;color:#fff;animation:pulse 1s infinite}
 @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
-.empty-chat{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#65676b;gap:10px;text-align:center;padding:20px}
-.empty-chat .big{font-size:60px}
+.empty-chat{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--grey);gap:10px;text-align:center;padding:20px;background:#eef2f7}
+.empty-chat .big{font-size:60px;width:90px;height:90px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.06)}
 .bottom-nav{display:none}
 @media(max-width:800px){
 .list{width:100%;display:block}.list.hide-mob{display:none}
 .chat{display:none}.chat.show-mob{display:flex}
-.chat-head .back{display:block}
+.chat-head .back{display:flex;width:38px;height:38px;background:#f0f2f5;border-radius:50%;align-items:center;justify-content:center}
 }
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.layout{padding-bottom:55px}}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);justify-content:space-around;padding:12px;box-shadow:0 -1px 10px rgba(0,0,0,.08);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.layout{padding-bottom:55px}}
 </style>
-<link rel="stylesheet" href="Assets/theme.css">
-<script src="Assets/theme.js"></script>
 </head>
 <body>
 
 <header>
 <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<input class="search" placeholder="🔍 Rechercher" onclick="location.href='recherche.html'" readonly>
 <div class="icons"><a href="notifications.html">🔔</a><a href="feed.html">🏠</a><div class="avatar small" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
 </header>
 
 <div class="layout">
 <div class="list" id="listPanel">
 <h2>Messages</h2>
-<div class="search-box"><input id="searchUser" placeholder="Rechercher une personne..." oninput="filtrer()"></div>
+<div class="search-box"><input id="searchUser" placeholder="🔍 Rechercher une personne..." oninput="filtrer()"></div>
 <div id="convList"></div>
 <div id="noConv" style="padding:20px;text-align:center;color:#65676b;font-size:13px;display:none">Aucune conversation.<br>Cherche une personne et envoie un message.</div>
 </div>
@@ -83,8 +94,8 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-ra
 <span class="back" onclick="retourListe()">←</span>
 <div class="avatar" id="chatAvatar">?</div>
 <div style="flex:1"><b id="chatNom"></b><br><small id="chatStatut">En ligne</small></div>
-<a href="#" onclick="return false" style="text-decoration:none;font-size:20px">📞</a>
-<a href="#" onclick="return false" style="text-decoration:none;font-size:20px">📹</a>
+<a href="#" onclick="return false">📞</a>
+<a href="#" onclick="return false">📹</a>
 </div>
 <div class="chat-body" id="chatBody"></div>
 <div class="chat-input">
@@ -111,21 +122,17 @@ const maPhoto = localStorage.getItem('jasonbook_photo')||"";
 let tousUsers=[], convActuelle=null, destinataire=null, mediaRecorder=null, audioChunks=[];
 document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
 const params=new URLSearchParams(location.search); const uidCible=params.get('uid');
-
 function avatarHTML(photo, lettre){ return photo ? `<img src="${photo}">` : lettre; }
 window.retourListe=()=>{ document.getElementById('chatPanel').classList.remove('show-mob'); document.getElementById('listPanel').classList.remove('hide-mob'); };
 window.filtrer=()=>{
   const q=document.getElementById('searchUser').value.toLowerCase();
   document.querySelectorAll('.conv').forEach(c=>{ c.style.display = c.dataset.nom.toLowerCase().includes(q) ? 'flex' : 'none'; });
 };
-
-// CHARGER UTILISATEURS + CONVERSATIONS
 onValue(ref(db,'jasonbook/users'), async (snap)=>{
   const data=snap.val(); if(!data) return;
   tousUsers=Object.values(data).filter(u=>u.uid!==uid);
   const box=document.getElementById('convList'); box.innerHTML="";
   if(!tousUsers.length){ document.getElementById('noConv').style.display="block"; return; }
-  // Pour chaque utilisateur, on cherche le dernier message
   for(const u of tousUsers){
     const chatId = [uid, u.uid].sort().join('_');
     const s=await get(ref(db,'jasonbook/messages/'+chatId)); const msgs=s.val();
@@ -141,7 +148,6 @@ onValue(ref(db,'jasonbook/users'), async (snap)=>{
     if(cible) ouvrirChat(cible, [uid, uidCible].sort().join('_'));
   }
 });
-
 window.ouvrirChat=async (u, chatId)=>{
   destinataire=u; convActuelle=chatId;
   document.getElementById('emptyChat').style.display="none";
@@ -151,10 +157,8 @@ window.ouvrirChat=async (u, chatId)=>{
   document.getElementById('chatAvatar').innerHTML=avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0));
   document.getElementById('chatNom').innerText=u.nomComplet||"";
   document.getElementById('chatStatut').innerText="En ligne • "+(u.pays||"");
-  // Marquer comme lu
   const snap=await get(ref(db,'jasonbook/messages/'+chatId)); const msgs=snap.val();
   if(msgs){ for(const [mid,m] of Object.entries(msgs)){ if(m.auteurUid!==uid && !m.lu) await update(ref(db,'jasonbook/messages/'+chatId+'/'+mid),{lu:true}); } }
-  // Écouter messages en direct
   onValue(ref(db,'jasonbook/messages/'+chatId), (s)=>{
     const d=s.val(); const body=document.getElementById('chatBody'); body.innerHTML="";
     if(!d){ body.innerHTML='<p style="text-align:center;color:#999;font-size:13px;margin-top:30px">Aucun message. Dis bonjour ! 👋</p>'; return; }
@@ -170,23 +174,19 @@ window.ouvrirChat=async (u, chatId)=>{
     body.scrollTop=body.scrollHeight;
   });
 };
-
 window.envoyerMsg=async (photoUrl="", audioUrl="")=>{
   const inp=document.getElementById('msgInput'); const txt=inp.value.trim();
   if(!destinataire || (!txt && !photoUrl && !audioUrl)) return;
   const newRef=push(ref(db,'jasonbook/messages/'+convActuelle));
   await set(newRef,{ auteurUid:uid, nomAuteur:monNom, destinataireUid:destinataire.uid, texte:txt, photoUrl:photoUrl||"", audioUrl:audioUrl||"", heure:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}), timestamp:Date.now(), lu:false });
   inp.value="";
-  // Notification pour l'autre
   const nRef=push(ref(db,'jasonbook/notifications/'+destinataire.uid));
   await set(nRef,{ type:"message", texte:monNom+" t'a envoyé un message", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), lu:false });
 };
-
 document.getElementById('fileImg').addEventListener('change', e=>{
   const f=e.target.files[0]; if(!f) return; const r=new FileReader();
   r.onload=ev=>envoyerMsg(ev.target.result,""); r.readAsDataURL(f);
 });
-
 window.toggleRec=async()=>{
   const btn=document.getElementById('btnRec');
   if(mediaRecorder && mediaRecorder.state==="recording"){
