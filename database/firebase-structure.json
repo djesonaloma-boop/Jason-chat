@@ -1,0 +1,25 @@
+{
+  "root": "jasonbook",
+  "collections": [
+    "users",
+    "posts",
+    "comments",
+    "reactions",
+    "friends",
+    "friendRequests",
+    "groups",
+    "groupMembers",
+    "messages",
+    "conversations",
+    "stories",
+    "notifications",
+    "events",
+    "marketplace",
+    "reports",
+    "blockedUsers",
+    "savedPosts",
+    "polls",
+    "liveStreams"
+  ],
+  "note": "Structure indicative; seules les clés réellement utilisées par les pages existantes sont actives."
+}
