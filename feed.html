@@ -19,7 +19,7 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 .nav-top{display:flex;justify-content:space-between;padding:2px 6px 6px}
 .nav-top a{flex:1;text-decoration:none;color:#A1A1AA;display:flex;align-items:center;justify-content:center;padding:8px 2px;position:relative;font-size:24px;border-bottom:3px solid transparent}
 .nav-top a.active{color:var(--or);border-bottom:3px solid var(--or)}
-.nav-top a .badge{position:absolute;top:1px;right:50%;transform:translateX(18px);background:#E0245E;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:999px;min-width:20px;text-align:center;border:2px solid #111}
+.nav-top a .badge{position:absolute;top:1px;right:50%;transform:translateX(18px);background:#E0245E;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:999px;min-width:20px;text-align:center;border:2px solid #111;display:none}
 .nav-top a .badge.or{background:var(--or);color:#111}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:90;display:none}
 .overlay.open{display:block}
@@ -75,13 +75,14 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
     <button class="icon-top" onclick="location.href='recherche.html'">🔍</button>
     <button class="icon-top menu" onclick="ouvrirMenu()">☰</button>
   </div>
+  <!-- ✅ TOUS LES BADGES SONT CACHÉS AU DÉPART -->
   <nav class="nav-top">
-    <a href="feed.html" class="active">🏠<span class="badge or" id="badgeFeed" style="display:none">0</span></a>
-    <a href="amis.html">👥<span class="badge" id="badgeAmis" style="display:none">0</span></a>
-    <a href="messages.html">💬<span class="badge" id="badgeMsg">1</span></a>
-    <a href="videos.html">🎥<span class="badge or" id="badgeVideos" style="display:none">0</span></a>
-    <a href="notifications.html">🔔<span class="badge" id="badgeNotif">1</span></a>
-    <a href="marketplace.html">🛒<span class="badge" id="badgeMarket">3</span></a>
+    <a href="feed.html" class="active">🏠<span class="badge or" id="badgeFeed"></span></a>
+    <a href="amis.html">👥<span class="badge" id="badgeAmis"></span></a>
+    <a href="messages.html">💬<span class="badge" id="badgeMsg"></span></a>
+    <a href="videos.html">🎥<span class="badge or" id="badgeVideos"></span></a>
+    <a href="notifications.html">🔔<span class="badge" id="badgeNotif"></span></a>
+    <a href="marketplace.html">🛒<span class="badge" id="badgeMarket"></span></a>
   </nav>
 </header>
 
@@ -153,7 +154,8 @@ if(elD) elD.onclick=()=>location.href='profil.html';
 window.ouvrirMenu=()=>{ document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); };
 window.fermerMenu=()=>{ document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); };
 window.deconnecter=()=>{ if(!confirm("Tu veux te déconnecter ?")) return; localStorage.clear(); location.href='index.html'; };
-function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
+// ✅ SI 0 = ON CACHE LE BADGE, SI +0 = ON L'AFFICHE
+function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; e.innerText=''; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
 let mesLikes=new Set(); let tousPosts=[];
 function rendrePosts(){
   const box=document.getElementById('list'); if(!box) return; box.innerHTML="";
@@ -172,9 +174,24 @@ window.supprimerPost=async(id)=>{ if(!confirm("Supprimer ?")) return; await remo
 if(uid){
   onValue(ref(db,'jasonbook/likes/'+uid),s=>{ const d=s.val(); mesLikes=new Set(d?Object.keys(d):[]); rendrePosts(); });
   onValue(ref(db,'jasonbook/posts'),s=>{ const d=s.val(); tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendrePosts(); });
+  // ✅ VRAIS BADGES - SEULEMENT SI IL Y A VRAIMENT QUELQUE CHOSE
   onValue(ref(db,'jasonbook/demandes/'+uid),s=>{ const d=s.val(); setBadge('badgeAmis', d?Object.keys(d).length:0); });
   onValue(ref(db,'jasonbook/notifications/'+uid),s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(x=>{ if(!x.lu) n++; }); setBadge('badgeNotif', n); });
-  onValue(ref(db,'jasonbook/messages'),s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(m=>{ if(m.pour===uid && !m.lu) n++; }); setBadge('badgeMsg', n); });
+  onValue(ref(db,'jasonbook/messages'),s=>{
+    const d=s.val(); let n=0;
+    if(d) Object.values(d).forEach(chat=>{
+      if(chat && typeof chat==='object') Object.values(chat).forEach(m=>{
+        if(m && m.destinataireUid===uid && !m.lu) n++;
+        if(m && m.pour===uid && !m.lu) n++;
+      });
+    });
+    setBadge('badgeMsg', n);
+  });
+  // ✅ MARKETPLACE : on ne met pas de badge si il n'y a rien
+  // Si tu veux un badge Marketplace plus tard, on le comptera sur les nouveaux articles, pas en dur
+  setBadge('badgeMarket', 0);
+  setBadge('badgeFeed', 0);
+  setBadge('badgeVideos', 0);
 }
 onValue(ref(db,'jasonbook/stories'),s=>{
   const d=s.val(); const now=Date.now(); const row=document.getElementById('storiesRow'); if(!row) return; row.innerHTML="";
