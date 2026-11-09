@@ -2,37 +2,38 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>JASONBOOK - Lives</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#f0f2f5}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
-.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
+:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
+body{background:var(--bg);min-height:100vh}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.3px}
+.logo span{width:34px;height:34px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
 .logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
 .icons{display:flex;gap:6px;align-items:center}
-.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
-.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.icons a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .wrap{max-width:750px;margin:16px auto;padding:0 12px}
 .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px}
-.top h1{font-size:24px}
-.btn-blue{background:#1877F2;color:#fff;border:none;padding:11px 18px;border-radius:10px;font-weight:800;cursor:pointer}
-.btn-grey{background:#e4e6eb;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer}
-.btn-red{background:#e0245e;color:#fff;border:none;padding:11px 18px;border-radius:10px;font-weight:800;cursor:pointer}
-.live-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.08);cursor:pointer}
+.top h1{font-size:23px;letter-spacing:-.3px}
+.btn-blue{background:var(--blue);color:#fff;border:none;padding:11px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-size:13.5px}
+.btn-grey{background:#f0f2f5;border:none;padding:9px 14px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13px}
+.btn-red{background:#e0245e;color:#fff;border:none;padding:11px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-size:13.5px}
+.live-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line);cursor:pointer}
 .live-card .head{display:flex;gap:10px;align-items:center}
-.live-card .head .info{flex:1}.live-card .head small{color:#65676b}
-.live-badge{background:#e0245e;color:#fff;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:800;animation:blink 1.2s infinite}
+.live-card .head .info{flex:1}.live-card .head small{color:var(--grey);font-size:12.5px}
+.live-badge{background:#e0245e;color:#fff;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:800;animation:blink 1.2s infinite;white-space:nowrap}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
 .live-card .thumb{width:100%;border-radius:10px;margin-top:10px;max-height:320px;object-fit:cover;background:#000}
 .live-card .actions{display:flex;gap:8px;margin-top:10px}
 .live-card .actions button{flex:1}
-.empty{text-align:center;color:#65676b;padding:40px 10px;background:#fff;border-radius:12px}
-.empty .big{font-size:50px}
-/* Salle de live */
+.empty{text-align:center;color:var(--grey);padding:36px 10px;background:#fff;border-radius:12px;border:1px solid var(--line)}
+.empty .big{font-size:44px}
 .live-room{position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column;color:#fff}
 .live-room.open{display:flex}
 .live-room video{flex:1;width:100%;object-fit:cover;background:#111}
@@ -44,25 +45,24 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-ra
 .live-room .chat-msgs p{font-size:13px;margin:4px 0}
 .live-room .chat-msgs b{color:#FFD700}
 .live-room .chat-input{display:flex;gap:8px}
-.live-room .chat-input input{flex:1;padding:11px;border:none;border-radius:20px;outline:none}
-.live-room .chat-input button{border:none;padding:11px 16px;border-radius:20px;background:#1877F2;color:#fff;font-weight:800;cursor:pointer}
+.live-room .chat-input input{flex:1;padding:11px;border:none;border-radius:999px;outline:none;font-size:14px}
+.live-room .chat-input button{border:none;padding:11px 16px;border-radius:999px;background:var(--blue);color:#fff;font-weight:800;cursor:pointer}
 .live-room .reactions{display:flex;gap:8px;margin-bottom:8px}
-.live-room .reactions button{background:rgba(255,255,255,.2);border:none;color:#fff;padding:8px 12px;border-radius:20px;cursor:pointer;font-size:16px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:110;padding:16px}
+.live-room .reactions button{background:rgba(255,255,255,.2);border:none;color:#fff;padding:8px 12px;border-radius:999px;cursor:pointer;font-size:16px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:110;padding:16px}
 .modal.open{display:flex}
 .modal-box{background:#fff;width:100%;max-width:420px;border-radius:14px;padding:20px}
-.modal-box input,.modal-box textarea{width:100%;padding:12px;border:1.5px solid #ddd;border-radius:10px;margin-top:8px;font-size:14px;outline:none}
+.modal-box input,.modal-box textarea{width:100%;padding:12px;border:1.5px solid #e4e6eb;border-radius:10px;margin-top:8px;font-size:14px;outline:none;background:#f8f9fa}
+.modal-box input:focus,.modal-box textarea:focus{border-color:var(--blue);background:#fff}
 .bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
 </style>
-<link rel="stylesheet" href="Assets/theme.css">
-<script src="Assets/theme.js"></script>
 </head>
 <body>
 
 <header>
 <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="Rechercher un live..." id="searchInput" oninput="rendre()">
+<input class="search" placeholder="🔍 Rechercher un live..." id="searchInput" oninput="rendre()">
 <div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
 </header>
 
@@ -98,7 +98,6 @@ const monNom = localStorage.getItem('jasonbook_nom')||"";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
 document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
 let lives=[], liveActuelId=null, stream=null, estAnimateur=false;
-
 window.ouvrirGoLive=()=>document.getElementById('modalLive').classList.add('open');
 window.fermerGoLive=()=>document.getElementById('modalLive').classList.remove('open');
 function rendre(){
@@ -136,14 +135,11 @@ window.rejoindreLive=async (id, animateur=false)=>{
   document.getElementById('roomViewers').innerText="👁️ "+(l.viewers||1)+" spectateur(s)";
   document.getElementById('btnTerminer').style.display=estAnimateur?'block':'none';
   document.getElementById('liveRoom').classList.add('open');
-  // Caméra si animateur
   if(estAnimateur){
     try{ stream=await navigator.mediaDevices.getUserMedia({video:true,audio:true}); document.getElementById('liveVideo').srcObject=stream; }
     catch(e){ document.getElementById('liveVideo').style.display='none'; }
   }
-  // Incrémenter viewers
   await set(ref(db,'jasonbook/lives/'+id+'/viewers'), (l.viewers||0)+1);
-  // Message d'arrivée
   const mRef=push(ref(db,'jasonbook/liveChat/'+id));
   await set(mRef,{ nom:monNom, texte:monNom+" a rejoint le live 👋", timestamp:Date.now() });
   ecouterChat(id);
