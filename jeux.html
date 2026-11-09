@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Jeux</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:700px;margin:16px auto;padding:0 12px}
+.wrap h1{font-size:24px;margin-bottom:6px}
+.wrap .sub{color:#65676b;margin-bottom:14px}
+.score-box{background:linear-gradient(135deg,#1877F2,#42a5f5);color:#fff;border-radius:12px;padding:16px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.score-box b{font-size:28px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.game-card{background:#fff;border-radius:12px;padding:18px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.08);cursor:pointer}
+.game-card .emoji{font-size:40px}
+.game-card b{display:block;margin:8px 0 4px}
+.game-card p{font-size:12px;color:#65676b}
+.game-area{background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:none}
+.game-area.open{display:block}
+.game-area h3{margin-bottom:12px}
+.btn-blue{background:#1877F2;color:#fff;border:none;padding:11px 18px;border-radius:10px;font-weight:800;cursor:pointer}
+.btn-grey{background:#e4e6eb;border:none;padding:11px 18px;border-radius:10px;font-weight:700;cursor:pointer}
+.btn-opt{background:#f0f2f5;border:2px solid #eee;padding:12px;border-radius:10px;cursor:pointer;font-weight:600;width:100%;margin-top:8px;text-align:left}
+.btn-opt.correct{background:#d4edda;border-color:#28a745}
+.btn-opt.wrong{background:#f8d7da;border-color:#e0245e}
+.morpion{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:260px;margin:12px auto}
+.morpion button{aspect-ratio:1;font-size:30px;font-weight:900;border:none;background:#f0f2f5;border-radius:10px;cursor:pointer}
+.memory{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:320px;margin:12px auto}
+.memory button{aspect-ratio:1;font-size:26px;border:none;background:#1877F2;color:#fff;border-radius:10px;cursor:pointer}
+.memory button.flip{background:#fff;color:#000;border:2px solid #ddd}
+.memory button.matched{background:#d4edda;border-color:#28a745}
+.bottom-nav{display:none}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="wrap">
+<h1>🎮 Jeux</h1>
+<p class="sub">Joue, amuse-toi et gagne des points !</p>
+<div class="score-box"><div><small>🏆 Ton score total</small><br><b id="scoreTotal">0 pts</b></div><div style="font-size:36px">🏆</div></div>
+
+<div class="grid">
+<div class="game-card" onclick="ouvrirJeu('quiz')"><div class="emoji">🧠</div><b>Quiz Culture</b><p>Teste tes connaissances</p></div>
+<div class="game-card" onclick="ouvrirJeu('morpion')"><div class="emoji">❌⭕</div><b>Morpion</b><p>Toi vs l'ordi</p></div>
+<div class="game-card" onclick="ouvrirJeu('memory')"><div class="emoji">🃏</div><b>Memory</b><p>Retrouve les paires</p></div>
+<div class="game-card" onclick="ouvrirJeu('nombre')"><div class="emoji">🔢</div><b>Devine le nombre</b><p>Entre 1 et 100</p></div>
+</div>
+
+<div class="game-area" id="area-quiz">
+<h3>🧠 Quiz Culture - Question <span id="quizNum">1</span>/5</h3>
+<p id="quizQuestion" style="font-size:16px;font-weight:600;margin-bottom:10px"></p>
+<div id="quizOptions"></div>
+<p id="quizResult" style="margin-top:10px;font-weight:700"></p>
+<button class="btn-blue" id="btnNextQuiz" style="margin-top:12px;display:none" onclick="nextQuiz()">Question suivante →</button>
+</div>
+
+<div class="game-area" id="area-morpion">
+<h3>❌⭕ Morpion - Tu es X</h3>
+<p id="morpionStatut" style="text-align:center;font-weight:700">À toi de jouer !</p>
+<div class="morpion" id="morpionGrid"></div>
+<button class="btn-grey" onclick="resetMorpion()">🔄 Recommencer</button>
+</div>
+
+<div class="game-area" id="area-memory">
+<h3>🃏 Memory - <span id="memoryScore">0</span> paires trouvées</h3>
+<p style="font-size:13px;color:#65676b">Retourne 2 cartes, trouve les paires identiques.</p>
+<div class="memory" id="memoryGrid"></div>
+<button class="btn-grey" style="margin-top:10px" onclick="initMemory()">🔄 Recommencer</button>
+</div>
+
+<div class="game-area" id="area-nombre">
+<h3>🔢 Devine le nombre (1-100)</h3>
+<p id="nombreIndice" style="margin-bottom:10px">Je pense à un nombre... devine !</p>
+<div style="display:flex;gap:8px"><input id="nombreInput" type="number" min="1" max="100" placeholder="Ton nombre" style="flex:1;padding:12px;border:1.5px solid #ddd;border-radius:10px;outline:none"><button class="btn-blue" onclick="devinerNombre()">Deviner</button></div>
+<p id="nombreEssais" style="margin-top:10px;color:#65676b">Essais : 0</p>
+<button class="btn-grey" style="margin-top:8px" onclick="initNombre()">🔄 Nouvelle partie</button>
+</div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="jeux.html">🎮</a><a href="profil.html">👤</a></nav>
+
+<script>
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+let score = parseInt(localStorage.getItem('jasonbook_score_jeux')||"0");
+function majScore(){ document.getElementById('scoreTotal').innerText=score+" pts"; localStorage.setItem('jasonbook_score_jeux', score); }
+majScore();
+function ajouterPoints(p){ score+=p; majScore(); }
+function ouvrirJeu(nom){
+  ['quiz','morpion','memory','nombre'].forEach(n=>document.getElementById('area-'+n).classList.remove('open'));
+  document.getElementById('area-'+nom).classList.add('open');
+  document.getElementById('area-'+nom).scrollIntoView({behavior:'smooth'});
+  if(nom==='quiz') initQuiz();
+  if(nom==='morpion') resetMorpion();
+  if(nom==='memory') initMemory();
+  if(nom==='nombre') initNombre();
+}
+// --- QUIZ ---
+const QUESTIONS=[
+{q:"Quelle est la capitale de la RDC ?",o:["Kinshasa","Lubumbashi","Goma","Kisangani"],r:0},
+{q:"Combien de joueurs dans une équipe de foot sur le terrain ?",o:["9","10","11","12"],r:2},
+{q:"Quel est le plus grand fleuve d'Afrique ?",o:["Nil","Congo","Niger","Zambeze"],r:0},
+{q:"Quelle couleur obtient-on en mélangeant bleu + jaune ?",o:["Rouge","Violet","Vert","Orange"],r:2},
+{q:"En quelle année le Congo est devenu indépendant ?",o:["1958","1960","1962","1975"],r:1},
+];
+let qi=0, quizScore=0;
+function initQuiz(){ qi=0; quizScore=0; afficherQuiz(); }
+function afficherQuiz(){
+  document.getElementById('quizNum').innerText=qi+1;
+  document.getElementById('quizResult').innerText="";
+  document.getElementById('btnNextQuiz').style.display='none';
+  const q=QUESTIONS[qi];
+  document.getElementById('quizQuestion').innerText=q.q;
+  const box=document.getElementById('quizOptions'); box.innerHTML="";
+  q.o.forEach((opt,i)=>{
+    const b=document.createElement('button'); b.className='btn-opt'; b.innerText=opt;
+    b.onclick=()=>{
+      document.querySelectorAll('#quizOptions .btn-opt').forEach(x=>x.disabled=true);
+      if(i===q.r){ b.classList.add('correct'); document.getElementById('quizResult').innerText="✅ Bravo ! +10 pts"; quizScore++; ajouterPoints(10); }
+      else { b.classList.add('wrong'); document.getElementById('quizOptions').children[q.r].classList.add('correct'); document.getElementById('quizResult').innerText="❌ Raté ! La bonne réponse était : "+q.o[q.r]; }
+      document.getElementById('btnNextQuiz').style.display = qi<QUESTIONS.length-1 ? 'block':'none';
+      if(qi===QUESTIONS.length-1){ document.getElementById('quizResult').innerText += " | Score final : "+quizScore+"/5 🎉"; }
+    };
+    box.appendChild(b);
+  });
+}
+function nextQuiz(){ qi++; afficherQuiz(); }
+// --- MORPION ---
+let grille=["","","","","","","","",""], jeuFini=false;
+function resetMorpion(){ grille=["","","","","","","","",""]; jeuFini=false; document.getElementById('morpionStatut').innerText="À toi de jouer !"; dessinerMorpion(); }
+function dessinerMorpion(){
+  const box=document.getElementById('morpionGrid'); box.innerHTML="";
+  grille.forEach((v,i)=>{
+    const b=document.createElement('button'); b.innerText=v; b.style.color=v==='X'?'#1877F2':'#e0245e';
+    b.onclick=()=>{ if(v||jeuFini) return; grille[i]='X'; if(verifierGagnant('X')){ jeuFini=true; document.getElementById('morpionStatut').innerText="🎉 Tu as gagné ! +20 pts"; ajouterPoints(20); dessinerMorpion(); return; } if(grille.every(x=>x)){ jeuFini=true; document.getElementById('morpionStatut').innerText="🤝 Match nul !"; dessinerMorpion(); return; } tourOrdi(); dessinerMorpion(); };
+    box.appendChild(b);
+  });
+}
+function tourOrdi(){
+  const libres=grille.map((v,i)=>v===""?i:-1).filter(i=>i>=0);
+  if(!libres.length) return;
+  const choix=libres[Math.floor(Math.random()*libres.length)];
+  grille[choix]='O';
+  if(verifierGagnant('O')){ jeuFini=true; document.getElementById('morpionStatut').innerText="😢 L'ordi a gagné..."; return; }
+  if(grille.every(x=>x)){ jeuFini=true; document.getElementById('morpionStatut').innerText="🤝 Match nul !"; }
+}
+function verifierGagnant(j){
+  const lignes=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  return lignes.some(l=>l.every(i=>grille[i]===j));
+}
+// --- MEMORY ---
+let memoryCartes=[], memoryRetournees=[], memoryPaires=0, memoryBloque=false;
+function initMemory(){
+  const emojis=["🍎","🍌","🍇","🍓","🍊","🥭","🍍","🥝"];
+  memoryCartes=[...emojis,...emojis].sort(()=>Math.random()-0.5);
+  memoryRetournees=[]; memoryPaires=0; memoryBloque=false;
+  document.getElementById('memoryScore').innerText="0";
+  dessinerMemory();
+}
+function dessinerMemory(){
+  const box=document.getElementById('memoryGrid'); box.innerHTML="";
+  memoryCartes.forEach((emoji,i)=>{
+    const b=document.createElement('button');
+    const estRetournee=memoryRetournees.includes(i);
+    const estTrouvee=memoryRetournees.includes(i) && memoryRetournees.filter(x=>memoryCartes[x]===emoji).length>=2 && false;
+    b.innerText=estRetournee?emoji:"❓";
+    b.className=estRetournee?'flip':'';
+    b.onclick=()=>{
+      if(memoryBloque||memoryRetournees.includes(i)) return;
+      memoryRetournees.push(i); dessinerMemory();
+      const visibles=memoryRetournees.slice(-2);
+      if(memoryRetournees.length%2===0){
+        const [a,c]=[memoryRetournees[memoryRetournees.length-2],memoryRetournees[memoryRetournees.length-1]];
+        if(memoryCartes[a]===memoryCartes[c]){
+          memoryPaires++; document.getElementById('memoryScore').innerText=memoryPaires;
+          ajouterPoints(5);
+          if(memoryPaires===8){ setTimeout(()=>alert("🎉 Bravo ! Tu as trouvé toutes les paires !"),300); }
+        } else {
+          memoryBloque=true;
+          setTimeout(()=>{ memoryRetournees=memoryRetournees.filter(x=>x!==a && x!==c); memoryBloque=false; dessinerMemory(); },800);
+        }
+      }
+    };
+    box.appendChild(b);
+  });
+}
+// --- DEVINE LE NOMBRE ---
+let nombreSecret=0, nombreEssais=0;
+function initNombre(){ nombreSecret=Math.floor(Math.random()*100)+1; nombreEssais=0; document.getElementById('nombreIndice').innerText="Je pense à un nombre... devine !"; document.getElementById('nombreEssais').innerText="Essais : 0"; document.getElementById('nombreInput').value=""; }
+function devinerNombre(){
+  const val=parseInt(document.getElementById('nombreInput').value);
+  if(!val||val<1||val>100){ alert("Entre un nombre entre 1 et 100"); return; }
+  nombreEssais++; document.getElementById('nombreEssais').innerText="Essais : "+nombreEssais;
+  if(val===nombreSecret){ document.getElementById('nombreIndice').innerText="🎉 Bravo ! C'était "+nombreSecret+" en "+nombreEssais+" essais ! +15 pts"; ajouterPoints(15); }
+  else if(val<nombreSecret){ document.getElementById('nombreIndice').innerText="📈 C'est PLUS que "+val+" !"; }
+  else { document.getElementById('nombreIndice').innerText="📉 C'est MOINS que "+val+" !"; }
+  document.getElementById('nombreInput').value="";
+}
+</script>
+</body>
+</html>

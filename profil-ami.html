@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Profil</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.cover-wrap{background:#fff;max-width:1000px;margin:0 auto;padding-bottom:14px;border-radius:0 0 12px 12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.cover{height:260px;background:linear-gradient(135deg,#1877F2,#0F2027);border-radius:0 0 12px 12px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+.cover img{width:100%;height:100%;object-fit:cover}
+.profile-row{display:flex;gap:16px;align-items:flex-end;padding:0 20px;margin-top:-40px;flex-wrap:wrap}
+.big-avatar{width:140px;height:140px;border-radius:50%;background:#1877F2;color:#fff;border:5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:900;overflow:hidden;flex-shrink:0}
+.big-avatar img{width:100%;height:100%;object-fit:cover}
+.profile-info{flex:1;min-width:220px}
+.profile-info h1{font-size:26px}.profile-info p{color:#65676b;font-size:14px;margin-top:4px}
+.profile-btns{display:flex;gap:8px;flex-wrap:wrap}
+.profile-btns button{padding:10px 18px;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px}
+.btn-blue{background:#1877F2;color:#fff}.btn-grey{background:#e4e6eb}.btn-green{background:#42b72a;color:#fff}
+.layout{display:flex;gap:15px;max-width:1000px;margin:14px auto;padding:0 12px;align-items:flex-start}
+.left{width:340px;position:sticky;top:65px}
+.right{flex:1;min-width:0}
+.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.card h3{margin-bottom:10px}
+.info-row{display:flex;gap:10px;padding:8px 0;font-size:14px;border-bottom:1px solid #f0f2f5}
+.post-head{display:flex;gap:10px;align-items:center}
+.post-text{margin:10px 0;font-size:15px;white-space:pre-wrap}
+.post img.main{width:100%;border-radius:10px;max-height:500px;object-fit:cover}
+.actions{display:flex;justify-content:space-around;border-top:1px solid #eee;padding-top:8px;margin-top:8px}
+.actions button{border:none;background:none;font-weight:700;color:#65676b;cursor:pointer;padding:7px}
+.bottom-nav{display:none}
+@media(max-width:800px){.left{display:none}.cover{height:180px}.big-avatar{width:110px;height:110px;font-size:40px}.profile-row{justify-content:center;text-align:center}.profile-info{text-align:center}.profile-btns{justify-content:center}.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="cover-wrap">
+<div class="cover" id="coverDiv">Chargement...</div>
+<div class="profile-row">
+<div class="big-avatar" id="bigAvatar">?</div>
+<div class="profile-info">
+<h1 id="nomAffiche">Chargement...</h1>
+<p id="bioAffiche"></p>
+<p id="metaAffiche"></p>
+<p id="amisCount"></p>
+</div>
+<div class="profile-btns">
+<button class="btn-blue" id="btnAmi" onclick="actionAmi()">➕ Ajouter</button>
+<button class="btn-grey" id="btnMsg" onclick="allerMessage()">💬 Message</button>
+</div>
+</div>
+</div>
+
+<div class="layout">
+<div class="left">
+<div class="card"><h3>Intro</h3><div id="introList"></div></div>
+<div class="card"><h3>Photos</h3><div id="photosGrid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px"></div><p id="noPhotos" style="color:#65676b;font-size:13px">Aucune photo</p></div>
+</div>
+<div class="right">
+<div class="card"><p style="font-weight:700;font-size:15px">Publications de <span id="nomPost">cette personne</span></p></div>
+<div id="postsList"></div>
+<div id="noPosts" class="card" style="display:none"><p style="text-align:center;color:#65676b">Aucune publication pour le moment</p></div>
+</div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="messages.html">💬</a><a href="profil.html">👤</a></nav>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, set, remove, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+const cibleUid = new URLSearchParams(location.search).get('uid');
+if(!cibleUid) location.href='recherche.html';
+if(cibleUid===uid) location.href='profil.html';
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+
+let profilCible=null, statut="inconnu"; // inconnu, ami, demande_envoyee, demande_recue
+
+function majBouton(){
+  const b=document.getElementById('btnAmi');
+  if(statut==='ami'){ b.innerText="✅ Ami"; b.className="btn-green"; }
+  else if(statut==='demande_envoyee'){ b.innerText="En attente..."; b.className="btn-grey"; }
+  else if(statut==='demande_recue'){ b.innerText="✅ Accepter"; b.className="btn-green"; }
+  else { b.innerText="➕ Ajouter"; b.className="btn-blue"; }
+}
+window.allerMessage=()=> location.href='messages.html?uid='+cibleUid;
+window.actionAmi=async()=>{
+  if(statut==='inconnu'){
+    await set(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid), { deUid:uid, deNom:monNom, date:new Date().toLocaleString() });
+    await set(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid), { versUid:cibleUid, date:new Date().toLocaleString() });
+    const nRef=push(ref(db,'jasonbook/notifications/'+cibleUid));
+    await set(nRef,{ type:"demande", texte:monNom+" t'a envoyé une demande d'ami", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), lu:false });
+    statut='demande_envoyee'; majBouton();
+  } else if(statut==='demande_envoyee'){
+    await remove(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid));
+    await remove(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid));
+    statut='inconnu'; majBouton();
+  } else if(statut==='demande_recue'){
+    await set(ref(db,'jasonbook/amis/'+uid+'/'+cibleUid), true);
+    await set(ref(db,'jasonbook/amis/'+cibleUid+'/'+uid), true);
+    await remove(ref(db,'jasonbook/demandes/'+uid+'/'+cibleUid));
+    await remove(ref(db,'jasonbook/demandesEnvoyees/'+cibleUid+'/'+uid));
+    statut='ami'; majBouton();
+  } else if(statut==='ami'){
+    if(!confirm("Retirer cet ami ?")) return;
+    await remove(ref(db,'jasonbook/amis/'+uid+'/'+cibleUid));
+    await remove(ref(db,'jasonbook/amis/'+cibleUid+'/'+uid));
+    statut='inconnu'; majBouton();
+  }
+};
+
+// CHARGER PROFIL CIBLE
+onValue(ref(db,'jasonbook/users/'+cibleUid), (snap)=>{
+  const u=snap.val(); if(!u){ document.getElementById('nomAffiche').innerText="Profil introuvable"; return; }
+  profilCible=u;
+  const lettre=(u.prenom||"?").charAt(0).toUpperCase();
+  document.getElementById('bigAvatar').innerHTML = u.photoProfil ? `<img src="${u.photoProfil}">` : lettre;
+  document.getElementById('nomAffiche').innerText=u.nomComplet||"";
+  document.getElementById('nomPost').innerText=u.nomComplet||"";
+  document.getElementById('bioAffiche').innerText=u.bio||"";
+  document.getElementById('metaAffiche').innerText=`${u.activite||""} • ${u.ville||""} • ${u.pays||""}`;
+  document.getElementById('introList').innerHTML=`
+    <div class="info-row">💼 ${u.activite||"Non précisée"}</div>
+    <div class="info-row">📍 ${u.ville||""} ${u.pays? "- "+u.pays:""}</div>
+    <div class="info-row">📅 Membre depuis ${u.dateInscription||""}</div>`;
+  document.getElementById('coverDiv').innerHTML = u.photoCouverture ? `<img src="${u.photoCouverture}">` : u.nomComplet;
+});
+
+// STATUT AMI
+onValue(ref(db,'jasonbook/amis/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid]) statut='ami'; else if(statut==='ami') statut='inconnu'; majBouton(); });
+onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_envoyee'; majBouton(); });
+onValue(ref(db,'jasonbook/demandes/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_recue'; majBouton(); });
+onValue(ref(db,'jasonbook/amis/'+cibleUid), s=>{ const d=s.val(); const n=d?Object.keys(d).length:0; document.getElementById('amisCount').innerText=n+" ami"+(n>1?"s":""); });
+
+// SES POSTS
+onValue(ref(db,'jasonbook/posts'), (snap)=>{
+  const data=snap.val(); const box=document.getElementById('postsList'); const grid=document.getElementById('photosGrid'); box.innerHTML=""; grid.innerHTML="";
+  if(!data){ document.getElementById('noPosts').style.display="block"; return; }
+  const siens=Object.entries(data).filter(([id,p])=>p.auteurUid===cibleUid).reverse();
+  if(!siens.length){ document.getElementById('noPosts').style.display="block"; return; }
+  document.getElementById('noPosts').style.display="none";
+  siens.forEach(([id,p])=>{
+    const div=document.createElement('div'); div.className='card';
+    div.innerHTML=`<div class="post-head"><div class="avatar">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div><b>${p.nomAuteur}</b><br><small style="color:#65676b">${p.date||""}</small></div></div><div class="post-text">${p.texte||""}</div>${p.photoUrl?`<img class="main" src="${p.photoUrl}">`:""}${p.videoUrl?`<video controls style="width:100%;border-radius:10px" src="${p.videoUrl}"></video>`:""}<div class="actions"><button>👍 ${p.likesCount||0}</button><button>💬 ${p.commentairesCount||0}</button><button>↗️ ${p.partagesCount||0}</button></div>`;
+    box.appendChild(div);
+    if(p.photoUrl) grid.innerHTML+=`<img src="${p.photoUrl}" style="width:100%;height:80px;object-fit:cover;border-radius:8px">`;
+  });
+  if(!grid.innerHTML) document.getElementById('noPhotos').style.display="block"; else document.getElementById('noPhotos').style.display="none";
+});
+</script>
+</body>
+</html>

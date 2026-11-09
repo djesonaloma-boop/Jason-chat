@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Bloqués</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:650px;margin:16px auto;padding:0 12px}
+.wrap h1{font-size:24px;margin-bottom:6px}
+.wrap .sub{color:#65676b;margin-bottom:14px}
+.search-box{width:100%;padding:12px 16px;border:none;border-radius:20px;outline:none;font-size:14px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.b-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;gap:12px;align-items:center}
+.b-card .info{flex:1}.b-card .info small{color:#65676b}
+.btn-blue{background:#1877F2;color:#fff;border:none;padding:9px 16px;border-radius:8px;font-weight:700;cursor:pointer}
+.btn-grey{background:#e4e6eb;border:none;padding:9px 16px;border-radius:8px;font-weight:700;cursor:pointer}
+.empty{text-align:center;color:#65676b;padding:40px 10px;background:#fff;border-radius:12px}
+.empty .big{font-size:50px}
+.bottom-nav{display:none}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="wrap">
+<h1>🚫 Personnes bloquées</h1>
+<p class="sub">Les personnes bloquées ne peuvent pas voir ton profil, tes posts, ni t'envoyer de messages.</p>
+<input class="search-box" id="searchInput" placeholder="🔍 Rechercher parmi les bloqués..." oninput="rendre()">
+<div id="list"></div>
+<div class="empty" id="emptyBox" style="display:none"><div class="big">✅</div><h3>Aucune personne bloquée</h3><p>Tu n'as bloqué personne pour le moment. C'est bien ! 😊</p></div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="bloques.html">🚫</a><a href="profil.html">👤</a></nav>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, remove, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+let bloques=[], usersMap={};
+
+async function chargerInfos(){
+  const snap=await get(ref(db,'jasonbook/users'));
+  usersMap=snap.val()||{}; rendre();
+}
+function rendre(){
+  const q=(document.getElementById('searchInput').value||"").toLowerCase();
+  const box=document.getElementById('list'); box.innerHTML="";
+  const liste=bloques.filter(b=>{
+    const u=usersMap[b.uidBloque]||{}; const nom=(u.nom||b.nom||"").toLowerCase();
+    return nom.includes(q);
+  });
+  document.getElementById('emptyBox').style.display=liste.length?'none':'block';
+  liste.forEach(b=>{
+    const u=usersMap[b.uidBloque]||{};
+    const nom=u.nom||b.nom||"Utilisateur";
+    const photo=u.photo||b.photo||"";
+    const div=document.createElement('div'); div.className='b-card';
+    div.innerHTML=`
+      <div class="avatar" style="width:48px;height:48px">${photo?`<img src="${photo}">`:nom.charAt(0).toUpperCase()}</div>
+      <div class="info"><b>${nom}</b><br><small>Bloqué(e) le ${b.date||""}</small></div>
+      <button class="btn-blue" onclick="debloquer('${b.uidBloque}','${nom}')">Débloquer</button>`;
+    box.appendChild(div);
+  });
+}
+window.debloquer=async (uidBloque, nom)=>{
+  if(!confirm("Débloquer "+nom+" ? Il/elle pourra à nouveau voir ton profil et t'écrire.")) return;
+  await remove(ref(db,'jasonbook/bloques/'+uid+'/'+uidBloque));
+  alert(nom+" débloqué(e) ✅");
+};
+onValue(ref(db,'jasonbook/bloques/'+uid), s=>{
+  const d=s.val();
+  bloques=d?Object.entries(d).map(([uidBloque,v])=>({uidBloque,...v})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[];
+  chargerInfos();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Sondages</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:700px;margin:16px auto;padding:0 12px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.top h1{font-size:24px}
+.btn-blue{background:#1877F2;color:#fff;border:none;padding:11px 18px;border-radius:10px;font-weight:800;cursor:pointer}
+.btn-grey{background:#e4e6eb;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer}
+.s-card{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.s-head{display:flex;gap:10px;align-items:center}
+.s-head .info{flex:1}.s-head small{color:#65676b}
+.s-card h3{margin:12px 0 10px}
+.opt{border:2px solid #eee;border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer;position:relative;overflow:hidden}
+.opt .bar{position:absolute;top:0;left:0;bottom:0;background:#e7f3ff;z-index:0}
+.opt .inner{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;font-weight:600}
+.opt.selected{border-color:#1877F2}
+.opt .check{color:#1877F2;font-weight:800}
+.opt-votes{font-size:12px;color:#65676b;margin-top:4px}
+.vote-msg{font-size:13px;color:#42b72a;font-weight:700;margin-top:6px}
+.empty{text-align:center;color:#65676b;padding:40px 10px;background:#fff;border-radius:12px}
+.empty .big{font-size:50px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.modal.open{display:flex}
+.modal-box{background:#fff;width:100%;max-width:480px;border-radius:14px;padding:20px;max-height:90vh;overflow-y:auto}
+.modal-box input{width:100%;padding:12px;border:1.5px solid #ddd;border-radius:10px;margin-top:8px;font-size:14px;outline:none}
+.bottom-nav{display:none}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="wrap">
+<div class="top"><h1>📊 Sondages</h1><button class="btn-blue" onclick="ouvrirCreer()">➕ Créer un sondage</button></div>
+<div id="list"></div>
+<div class="empty" id="emptyBox" style="display:none"><div class="big">📊</div><h3>Aucun sondage pour le moment</h3><p>Crée le premier sondage !</p></div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="sondages.html">📊</a><a href="profil.html">👤</a></nav>
+
+<div class="modal" id="modalCreer"><div class="modal-box">
+<h2>Créer un sondage</h2>
+<input id="sQuestion" placeholder="Ta question ? (ex: Quelle musique préférez-vous ?)">
+<input id="sOpt1" placeholder="Option 1">
+<input id="sOpt2" placeholder="Option 2">
+<input id="sOpt3" placeholder="Option 3 (optionnel)">
+<input id="sOpt4" placeholder="Option 4 (optionnel)">
+<button class="btn-blue" style="width:100%;margin-top:14px;padding:13px" onclick="creerSondage()">Publier le sondage</button>
+<button class="btn-grey" style="width:100%;margin-top:8px;padding:12px" onclick="fermerCreer()">Annuler</button>
+</div></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, push, set, get, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+let sondages=[], mesVotes={};
+
+window.ouvrirCreer=()=>document.getElementById('modalCreer').classList.add('open');
+window.fermerCreer=()=>document.getElementById('modalCreer').classList.remove('open');
+window.creerSondage=async()=>{
+  const q=document.getElementById('sQuestion').value.trim();
+  const opts=[document.getElementById('sOpt1').value.trim(),document.getElementById('sOpt2').value.trim(),document.getElementById('sOpt3').value.trim(),document.getElementById('sOpt4').value.trim()].filter(Boolean);
+  if(!q || opts.length<2){ alert("Question + au moins 2 options obligatoires"); return; }
+  const newRef=push(ref(db,'jasonbook/sondages'));
+  const options={}; opts.forEach((o,i)=> options['opt'+i]={ texte:o, votes:0 });
+  await set(newRef,{ id:newRef.key, question:q, options:options, auteurUid:uid, auteurNom:monNom, photoAuteur:maPhoto||"", totalVotes:0, date:new Date().toLocaleString(), timestamp:Date.now() });
+  fermerCreer(); ['sQuestion','sOpt1','sOpt2','sOpt3','sOpt4'].forEach(id=>document.getElementById(id).value="");
+  alert("Sondage publié ! 📊");
+};
+function rendre(){
+  const box=document.getElementById('list'); box.innerHTML="";
+  document.getElementById('emptyBox').style.display=sondages.length?'none':'block';
+  sondages.forEach(s=>{
+    const opts=Object.entries(s.options||{});
+    const total=s.totalVotes||0;
+    const monVote=mesVotes[s.id];
+    const div=document.createElement('div'); div.className='s-card';
+    div.innerHTML=`
+      <div class="s-head">
+        <div class="avatar" onclick="location.href='profil-ami.html?uid=${s.auteurUid}'">${s.photoAuteur?`<img src="${s.photoAuteur}">`:(s.auteurNom||"?").charAt(0)}</div>
+        <div class="info"><b style="cursor:pointer" onclick="location.href='profil-ami.html?uid=${s.auteurUid}'">${s.auteurNom||""}</b><br><small>${s.date||""} • 🗳️ ${total} vote(s)</small></div>
+        ${s.auteurUid===uid?`<button class="btn-grey" onclick="supprimerSondage('${s.id}')">🗑️</button>`:""}
+      </div>
+      <h3>${s.question||""}</h3>
+      ${opts.map(([key,o])=>{
+        const pct=total?Math.round((o.votes||0)/total*100):0;
+        const isMine=monVote===key;
+        return `<div class="opt ${isMine?'selected':''}" onclick="voter('${s.id}','${key}')">
+          <div class="bar" style="width:${pct}%"></div>
+          <div class="inner"><span>${o.texte||""} ${isMine?'<span class="check">✓</span>':''}</span><span>${pct}% • ${o.votes||0}</span></div>
+        </div>`;
+      }).join('')}
+      ${monVote?'<div class="vote-msg">✅ Tu as voté. Clique sur une autre option pour changer ton vote.</div>':''}`;
+    box.appendChild(div);
+  });
+}
+window.voter=async (sondageId, optKey)=>{
+  const ancien=mesVotes[sondageId];
+  if(ancien===optKey) return;
+  // Retirer ancien vote
+  if(ancien){
+    const snap=await get(ref(db,'jasonbook/sondages/'+sondageId+'/options/'+ancien+'/votes'));
+    const v=(snap.val()||0)-1;
+    await set(ref(db,'jasonbook/sondages/'+sondageId+'/options/'+ancien+'/votes'), Math.max(0,v));
+    await set(ref(db,'jasonbook/sondages/'+sondageId+'/totalVotes'), 0); // recalculé ci-dessous
+  }
+  const snap2=await get(ref(db,'jasonbook/sondages/'+sondageId+'/options/'+optKey+'/votes'));
+  await set(ref(db,'jasonbook/sondages/'+sondageId+'/options/'+optKey+'/votes'), (snap2.val()||0)+1);
+  await set(ref(db,'jasonbook/votes/'+uid+'/'+sondageId), optKey);
+  // Recalculer total
+  const snapS=await get(ref(db,'jasonbook/sondages/'+sondageId+'/options'));
+  const opts=snapS.val()||{}; const total=Object.values(opts).reduce((sum,o)=>sum+(o.votes||0),0);
+  await set(ref(db,'jasonbook/sondages/'+sondageId+'/totalVotes'), total);
+};
+window.supprimerSondage=async (id)=>{ if(!confirm("Supprimer ce sondage ?")) return; await remove(ref(db,'jasonbook/sondages/'+id)); await remove(ref(db,'jasonbook/votes/'+uid+'/'+id)); };
+onValue(ref(db,'jasonbook/votes/'+uid), s=>{ mesVotes=s.val()||{}; rendre(); });
+onValue(ref(db,'jasonbook/sondages'), s=>{ const d=s.val(); sondages=d?Object.entries(d).map(([id,x])=>({id,...x})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendre(); });
+</script>
+</body>
+</html>

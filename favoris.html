@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Favoris</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:650px;margin:16px auto;padding:0 12px}
+.wrap h1{font-size:24px;margin-bottom:6px}
+.wrap .sub{color:#65676b;margin-bottom:14px}
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tabs button{border:none;background:#fff;padding:10px 16px;border-radius:20px;font-weight:700;cursor:pointer}
+.tabs button.active{background:#1877F2;color:#fff}
+.post{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.post .head{display:flex;gap:10px;align-items:center}
+.post .head .info{flex:1}.post .head small{color:#65676b}
+.post p{margin:10px 0;white-space:pre-wrap;font-size:15px}
+.post img.pimg{width:100%;border-radius:10px;max-height:380px;object-fit:cover;margin-top:6px}
+.post .actions{display:flex;gap:8px;margin-top:10px}
+.btn-grey{background:#e4e6eb;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer;flex:1}
+.btn-red{background:#ffeded;color:#e0245e;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer;flex:1}
+.empty{text-align:center;color:#65676b;padding:40px 10px;background:#fff;border-radius:12px}
+.empty .big{font-size:50px}
+.bottom-nav{display:none}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="wrap">
+<h1>🔖 Favoris</h1>
+<p class="sub">Tes posts enregistrés, toujours à portée de main.</p>
+<div class="tabs"><button id="tab-tous" class="active" onclick="setTab('tous')">Tous</button><button id="tab-photos" onclick="setTab('photos')">📸 Avec photos</button><button id="tab-texte" onclick="setTab('texte')">📝 Texte seul</button></div>
+<div id="list"></div>
+<div class="empty" id="emptyBox" style="display:none"><div class="big">🔖</div><h3>Aucun favori pour le moment</h3><p>Enregistre des posts depuis le fil d'actualité pour les retrouver ici.</p><button class="btn-grey" style="flex:none;margin-top:12px;padding:11px 20px" onclick="location.href='feed.html'">Découvrir des posts →</button></div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="favoris.html">🔖</a><a href="profil.html">👤</a></nav>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+let favoris=[], postsMap={};
+let tab='tous';
+window.setTab=(t)=>{ tab=t; ['tous','photos','texte'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t)); rendre(); };
+function rendre(){
+  const box=document.getElementById('list'); box.innerHTML="";
+  const liste=favoris.map(f=>postsMap[f.postId]).filter(p=>!!p).filter(p=>{
+    if(tab==='photos') return !!p.image;
+    if(tab==='texte') return !p.image;
+    return true;
+  }).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+  document.getElementById('emptyBox').style.display=liste.length?'none':'block';
+  liste.forEach(p=>{
+    const div=document.createElement('div'); div.className='post';
+    div.innerHTML=`
+      <div class="head">
+        <div class="avatar">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.auteurNom||"?").charAt(0)}</div>
+        <div class="info"><b>${p.auteurNom||""}</b><br><small>${p.date||""}</small></div>
+        <span>🔖</span>
+      </div>
+      <p>${p.texte||""}</p>
+      ${p.image?`<img class="pimg" src="${p.image}">`:""}
+      <div class="actions"><button class="btn-grey" onclick="location.href='feed.html'">💬 Voir les commentaires</button><button class="btn-red" onclick="retirerFavori('${p.id}')">🗑️ Retirer des favoris</button></div>`;
+    box.appendChild(div);
+  });
+}
+window.retirerFavori=async (postId)=>{
+  if(!confirm("Retirer ce post de tes favoris ?")) return;
+  await remove(ref(db,'jasonbook/favoris/'+uid+'/'+postId));
+};
+onValue(ref(db,'jasonbook/posts'), s=>{ const d=s.val(); postsMap=d||{}; rendre(); });
+onValue(ref(db,'jasonbook/favoris/'+uid), s=>{ const d=s.val(); favoris=d?Object.entries(d).map(([postId,v])=>({postId,...v})):[];
+  // Si postsMap pas encore chargé, attendre un peu
+  rendre();
+});
+</script>
+</body>
+</html>

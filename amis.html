@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Amis</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:60px;height:60px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar.small{width:40px;height:40px;font-size:14px}
+.wrap{max-width:1000px;margin:16px auto;padding:0 12px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px}
+.tabs button{border:none;background:#fff;padding:11px 18px;border-radius:20px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.tabs button.active{background:#1877F2;color:#fff}
+.card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.friend-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1);text-align:center;padding-bottom:12px}
+.friend-card .photo{height:160px;background:linear-gradient(135deg,#1877F2,#0F2027);display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:900;color:#fff;cursor:pointer;overflow:hidden}
+.friend-card .photo img{width:100%;height:100%;object-fit:cover}
+.friend-card h3{font-size:15px;margin:10px 8px 2px}
+.friend-card p{font-size:12px;color:#65676b;margin:0 8px 10px}
+.friend-card .btns{padding:0 10px;display:flex;flex-direction:column;gap:7px}
+.btn-blue{background:#1877F2;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer}
+.btn-grey{background:#e4e6eb;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer}
+.btn-green{background:#42b72a;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer}
+.btn-red{background:#ffe6e6;color:#e0245e;border:none;padding:10px;border-radius:8px;font-weight:700;cursor:pointer}
+.search-big{width:100%;padding:13px 15px;border:none;border-radius:20px;font-size:15px;outline:none;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.empty{text-align:center;color:#65676b;padding:40px 10px}
+.empty .big{font-size:50px}
+.bottom-nav{display:none}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar small" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="wrap">
+<h1 style="font-size:24px;margin-bottom:12px">Amis</h1>
+<div class="tabs">
+<button id="tabBtn-demandes" class="active" onclick="showTab('demandes')">Demandes reçues <span id="countDemandes"></span></button>
+<button id="tabBtn-amis" onclick="showTab('amis')">Mes amis <span id="countAmis"></span></button>
+<button id="tabBtn-envoyees" onclick="showTab('envoyees')">Demandes envoyées</button>
+<button id="tabBtn-decouvrir" onclick="showTab('decouvrir')">Découvrir</button>
+</div>
+
+<input class="search-big" id="searchAmis" placeholder="Rechercher parmi les personnes..." oninput="filtrer()">
+
+<div id="section-demandes"><div class="grid" id="gridDemandes"></div><div class="empty" id="emptyDemandes" style="display:none"><div class="big">👥</div><p>Aucune demande d'ami pour le moment</p></div></div>
+<div id="section-amis" style="display:none"><div class="grid" id="gridAmis"></div><div class="empty" id="emptyAmis" style="display:none"><div class="big">👥</div><p>Tu n'as pas encore d'ami.<br>Découvre des personnes et ajoute-les !</p></div></div>
+<div id="section-envoyees" style="display:none"><div class="grid" id="gridEnvoyees"></div><div class="empty" id="emptyEnvoyees" style="display:none"><div class="big">📤</div><p>Aucune demande envoyée</p></div></div>
+<div id="section-decouvrir" style="display:none"><div class="grid" id="gridDecouvrir"></div><div class="empty" id="emptyDecouvrir" style="display:none"><div class="big">🌍</div><p>Aucune personne à découvrir pour le moment</p></div></div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="messages.html">💬</a><a href="profil.html">👤</a></nav>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, set, remove, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+
+let tousUsers=[], mesAmisIds=new Set(), demandesRecues=[], demandesEnvoyeesIds=new Set();
+let onglet='demandes';
+
+window.showTab=(t)=>{
+  onglet=t;
+  ['demandes','amis','envoyees','decouvrir'].forEach(x=>{
+    document.getElementById('section-'+x).style.display = x===t ? 'block' : 'none';
+    document.getElementById('tabBtn-'+x).classList.toggle('active', x===t);
+  });
+};
+window.filtrer=()=>{
+  const q=document.getElementById('searchAmis').value.toLowerCase();
+  document.querySelectorAll('.friend-card').forEach(c=>{ c.style.display = c.dataset.nom.toLowerCase().includes(q) ? 'block' : 'none'; });
+};
+function avatar(photo, lettre){ return photo ? `<img src="${photo}">` : lettre; }
+function carte(u, type){
+  const lettre=(u.prenom||u.nom||"?").charAt(0).toUpperCase();
+  let btns="";
+  if(type==='demande') btns=`<div class="btns"><button class="btn-green" onclick="accepter('${u.uid}')">✅ Accepter</button><button class="btn-red" onclick="refuser('${u.uid}')">❌ Refuser</button></div>`;
+  if(type==='ami') btns=`<div class="btns"><button class="btn-blue" onclick="location.href='messages.html?uid=${u.uid}'">💬 Message</button><button class="btn-grey" onclick="retirerAmi('${u.uid}')">Retirer</button></div>`;
+  if(type==='envoyee') btns=`<div class="btns"><button class="btn-grey" disabled>En attente...</button><button class="btn-red" onclick="annulerDemande('${u.uid}')">Annuler</button></div>`;
+  if(type==='decouvrir') btns=`<div class="btns"><button class="btn-blue" onclick="envoyerDemande('${u.uid}')">➕ Ajouter</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Voir le profil</button></div>`;
+  return `<div class="friend-card" data-nom="${u.nomComplet||""}"><div class="photo" onclick="location.href='profil-ami.html?uid=${u.uid}'">${avatar(u.photoProfil, lettre)}</div><h3>${u.nomComplet||""}</h3><p>${u.activite||""} • ${u.pays||""}</p>${btns}</div>`;
+}
+function rendre(){
+  const gD=document.getElementById('gridDemandes'); gD.innerHTML=""; document.getElementById('emptyDemandes').style.display = demandesRecues.length? 'none':'block';
+  demandesRecues.forEach(u=> gD.innerHTML+=carte(u,'demande'));
+  document.getElementById('countDemandes').innerText = demandesRecues.length? `(${demandesRecues.length})` : "";
+
+  const amis=tousUsers.filter(u=>mesAmisIds.has(u.uid));
+  const gA=document.getElementById('gridAmis'); gA.innerHTML=""; document.getElementById('emptyAmis').style.display = amis.length? 'none':'block';
+  amis.forEach(u=> gA.innerHTML+=carte(u,'ami'));
+  document.getElementById('countAmis').innerText = amis.length? `(${amis.length})` : "";
+
+  const env=tousUsers.filter(u=>demandesEnvoyeesIds.has(u.uid));
+  const gE=document.getElementById('gridEnvoyees'); gE.innerHTML=""; document.getElementById('emptyEnvoyees').style.display = env.length? 'none':'block';
+  env.forEach(u=> gE.innerHTML+=carte(u,'envoyee'));
+
+  const dec=tousUsers.filter(u=>!mesAmisIds.has(u.uid) && !demandesEnvoyeesIds.has(u.uid) && !demandesRecues.some(d=>d.uid===u.uid));
+  const gDec=document.getElementById('gridDecouvrir'); gDec.innerHTML=""; document.getElementById('emptyDecouvrir').style.display = dec.length? 'none':'block';
+  dec.slice(0,30).forEach(u=> gDec.innerHTML+=carte(u,'decouvrir'));
+}
+
+// ÉCOUTER MES AMIS
+onValue(ref(db,'jasonbook/amis/'+uid), (snap)=>{
+  const d=snap.val(); mesAmisIds=new Set(d?Object.keys(d):[]); rendre();
+});
+// ÉCOUTER DEMANDES REÇUES
+onValue(ref(db,'jasonbook/demandes/'+uid), async (snap)=>{
+  const d=snap.val(); demandesRecues=[];
+  if(d){ for(const fromUid of Object.keys(d)){ const s=await get(ref(db,'jasonbook/users/'+fromUid)); if(s.val()) demandesRecues.push(s.val()); } }
+  rendre();
+});
+// ÉCOUTER DEMANDES ENVOYÉES
+onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), (snap)=>{
+  const d=snap.val(); demandesEnvoyeesIds=new Set(d?Object.keys(d):[]); rendre();
+});
+// TOUS LES USERS
+onValue(ref(db,'jasonbook/users'), (snap)=>{
+  const d=snap.val(); if(!d) return; tousUsers=Object.values(d).filter(u=>u.uid!==uid); rendre();
+});
+
+window.envoyerDemande=async (cibleUid)=>{
+  await set(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid), { deUid:uid, deNom:monNom, date:new Date().toLocaleString() });
+  await set(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid), { versUid:cibleUid, date:new Date().toLocaleString() });
+  const nRef=push(ref(db,'jasonbook/notifications/'+cibleUid));
+  await set(nRef,{ type:"demande", texte:monNom+" t'a envoyé une demande d'ami", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), lu:false });
+  alert("Demande envoyée !");
+};
+window.accepter=async (fromUid)=>{
+  await set(ref(db,'jasonbook/amis/'+uid+'/'+fromUid), true);
+  await set(ref(db,'jasonbook/amis/'+fromUid+'/'+uid), true);
+  await remove(ref(db,'jasonbook/demandes/'+uid+'/'+fromUid));
+  await remove(ref(db,'jasonbook/demandesEnvoyees/'+fromUid+'/'+uid));
+  const nRef=push(ref(db,'jasonbook/notifications/'+fromUid));
+  await set(nRef,{ type:"ami", texte:monNom+" a accepté ta demande d'ami", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), lu:false });
+};
+window.refuser=async (fromUid)=>{
+  await remove(ref(db,'jasonbook/demandes/'+uid+'/'+fromUid));
+  await remove(ref(db,'jasonbook/demandesEnvoyees/'+fromUid+'/'+uid));
+};
+window.annulerDemande=async (cibleUid)=>{
+  await remove(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid));
+  await remove(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid));
+};
+window.retirerAmi=async (amiUid)=>{
+  if(!confirm("Retirer cet ami ?")) return;
+  await remove(ref(db,'jasonbook/amis/'+uid+'/'+amiUid));
+  await remove(ref(db,'jasonbook/amis/'+amiUid+'/'+uid));
+};
+</script>
+</body>
+</html>

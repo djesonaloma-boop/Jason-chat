@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Notifications</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:46px;height:46px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar.small{width:40px;height:40px;font-size:14px}
+.wrap{max-width:700px;margin:16px auto;padding:0 12px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.top h1{font-size:24px}
+.top button{border:none;background:#fff;padding:9px 14px;border-radius:20px;font-weight:700;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.tabs{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto}
+.tabs button{border:none;background:#fff;padding:10px 16px;border-radius:20px;font-weight:700;cursor:pointer;white-space:nowrap}
+.tabs button.active{background:#1877F2;color:#fff}
+.notif{background:#fff;border-radius:12px;padding:13px 14px;display:flex;gap:12px;align-items:flex-start;margin-bottom:9px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.06);position:relative}
+.notif.nonlu{background:#e7f3ff}
+.notif .dot{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:10px;height:10px;background:#1877F2;border-radius:50%}
+.notif b{font-size:14px}.notif p{font-size:14px;color:#333;line-height:1.4;margin-top:2px}.notif small{color:#65676b;font-size:12px}
+.notif .icon{width:36px;height:36px;border-radius:50%;background:#f0f2f5;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.notif .actions{margin-top:8px;display:flex;gap:8px}
+.notif .actions button{border:none;padding:8px 14px;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px}
+.btn-blue{background:#1877F2;color:#fff}.btn-grey{background:#e4e6eb}
+.empty{text-align:center;color:#65676b;padding:50px 10px;background:#fff;border-radius:12px}
+.empty .big{font-size:50px}
+.bottom-nav{display:none}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="feed.html">🏠</a><a href="messages.html">💬</a><div class="avatar small" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="wrap">
+<div class="top"><h1>Notifications</h1><button onclick="toutMarquerLu()">Tout marquer comme lu</button></div>
+<div class="tabs">
+<button id="btn-tout" class="active" onclick="filtrer('tout')">Toutes</button>
+<button id="btn-nonlu" onclick="filtrer('nonlu')">Non lues</button>
+<button id="btn-demande" onclick="filtrer('demande')">Demandes d'ami</button>
+<button id="btn-message" onclick="filtrer('message')">Messages</button>
+<button id="btn-like" onclick="filtrer('like')">J'aime</button>
+</div>
+<div id="list"></div>
+<div class="empty" id="emptyBox" style="display:none"><div class="big">🔔</div><h3>Aucune notification</h3><p>Quand quelqu'un aimera, commentera ou t'enverra une demande, tu le verras ici.</p></div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="notifications.html">🔔</a><a href="profil.html">👤</a></nav>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, update, remove, get, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+
+let toutes=[], filtre='tout';
+window.filtrer=(f)=>{
+  filtre=f;
+  ['tout','nonlu','demande','message','like'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active', x===f));
+  rendre();
+};
+function iconPour(type){
+  if(type==='demande') return '👥';
+  if(type==='message') return '💬';
+  if(type==='like') return '👍';
+  if(type==='commentaire') return '💬';
+  if(type==='ami') return '✅';
+  if(type==='partage') return '↗️';
+  return '🔔';
+}
+function rendre(){
+  const box=document.getElementById('list'); box.innerHTML="";
+  let liste=[...toutes].reverse();
+  if(filtre==='nonlu') liste=liste.filter(n=>!n.lu);
+  if(filtre==='demande') liste=liste.filter(n=>n.type==='demande' || n.type==='ami');
+  if(filtre==='message') liste=liste.filter(n=>n.type==='message');
+  if(filtre==='like') liste=liste.filter(n=>n.type==='like' || n.type==='commentaire');
+  if(!liste.length){ document.getElementById('emptyBox').style.display="block"; return; }
+  document.getElementById('emptyBox').style.display="none";
+  liste.forEach(n=>{
+    const div=document.createElement('div'); div.className='notif'+(!n.lu?' nonlu':'');
+    const lettre=(n.deNom||"?").charAt(0).toUpperCase();
+    let btns="";
+    if(n.type==='demande') btns=`<div class="actions"><button class="btn-blue" onclick="event.stopPropagation();accepterDemande('${n.deUid}','${n.id}')">Accepter</button><button class="btn-grey" onclick="event.stopPropagation();refuserDemande('${n.deUid}','${n.id}')">Refuser</button></div>`;
+    div.innerHTML=`<div class="icon">${iconPour(n.type)}</div><div style="flex:1"><b>${n.deNom||""}</b><p>${n.texte||""}</p><small>${n.date||""}</small>${btns}</div>${!n.lu?'<div class="dot"></div>':''}`;
+    div.onclick=()=>cliquerNotif(n);
+    box.appendChild(div);
+  });
+}
+async function cliquerNotif(n){
+  await update(ref(db,'jasonbook/notifications/'+uid+'/'+n.id),{lu:true});
+  if(n.type==='message') location.href='messages.html?uid='+n.deUid;
+  else if(n.type==='demande' || n.type==='ami') location.href='amis.html';
+  else if(n.type==='like' || n.type==='commentaire') location.href='feed.html';
+}
+window.toutMarquerLu=async()=>{
+  for(const n of toutes){ if(!n.lu) await update(ref(db,'jasonbook/notifications/'+uid+'/'+n.id),{lu:true}); }
+};
+window.accepterDemande=async (fromUid, notifId)=>{
+  await set(ref(db,'jasonbook/amis/'+uid+'/'+fromUid), true);
+  await set(ref(db,'jasonbook/amis/'+fromUid+'/'+uid), true);
+  await remove(ref(db,'jasonbook/demandes/'+uid+'/'+fromUid));
+  await remove(ref(db,'jasonbook/demandesEnvoyees/'+fromUid+'/'+uid));
+  await update(ref(db,'jasonbook/notifications/'+uid+'/'+notifId),{lu:true});
+  alert("Ami ajouté !");
+};
+window.refuserDemande=async (fromUid, notifId)=>{
+  await remove(ref(db,'jasonbook/demandes/'+uid+'/'+fromUid));
+  await remove(ref(db,'jasonbook/demandesEnvoyees/'+fromUid+'/'+uid));
+  await update(ref(db,'jasonbook/notifications/'+uid+'/'+notifId),{lu:true});
+};
+
+onValue(ref(db,'jasonbook/notifications/'+uid), (snap)=>{
+  const d=snap.val(); toutes=[];
+  if(d) toutes=Object.entries(d).map(([id,n])=>({id,...n}));
+  rendre();
+});
+</script>
+</body>
+</html>

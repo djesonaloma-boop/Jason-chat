@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Connecte-toi avec le monde</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5;min-height:100vh}
+.topbar{background:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 6px rgba(0,0,0,.08);position:sticky;top:0;z-index:10}
+.logo{font-weight:900;color:#1877F2;font-size:24px;display:flex;align-items:center;gap:8px}
+.logo span{width:38px;height:38px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px}
+.logo i{color:#FFD700;font-style:normal}
+.topbar .links{display:flex;gap:10px}
+.topbar .links button{border:none;padding:10px 18px;border-radius:20px;font-weight:800;cursor:pointer;font-size:14px}
+.btn-login{background:#f0f2f5}.btn-signup{background:#42b72a;color:#fff}
+.hero{display:flex;gap:30px;max-width:1000px;margin:30px auto;padding:0 16px;align-items:center;flex-wrap:wrap;justify-content:center}
+.hero-left{flex:1;min-width:280px;max-width:480px}
+.hero-left h1{font-size:42px;line-height:1.15;color:#1c1e21}
+.hero-left h1 span{color:#1877F2}
+.hero-left p{font-size:18px;color:#606770;margin:16px 0;line-height:1.5}
+.hero-left .stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px}
+.stat{background:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center}
+.stat b{font-size:20px;color:#1877F2;display:block}.stat small{color:#65676b}
+.hero-right{flex:1;min-width:300px;max-width:420px}
+.card{background:#fff;border-radius:14px;padding:22px;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.card h2{text-align:center;margin-bottom:14px;font-size:22px}
+.card input,.card select{width:100%;padding:13px 14px;border:1.5px solid #ddd;border-radius:10px;margin-bottom:10px;font-size:15px;outline:none}
+.card input:focus,.card select:focus{border-color:#1877F2}
+.btn-main{width:100%;padding:13px;border:none;border-radius:10px;background:#1877F2;color:#fff;font-weight:800;font-size:16px;cursor:pointer}
+.btn-main:disabled{opacity:.6}
+.btn-green{width:100%;padding:13px;border:none;border-radius:10px;background:#42b72a;color:#fff;font-weight:800;font-size:16px;cursor:pointer;margin-top:12px}
+.link{color:#1877F2;text-align:center;display:block;margin-top:12px;cursor:pointer;font-size:14px;font-weight:600}
+.msg{text-align:center;font-size:13px;font-weight:700;min-height:18px;margin-top:8px}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;max-width:1000px;margin:24px auto;padding:0 16px}
+.feat{background:#fff;padding:16px;border-radius:12px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.feat .ico{font-size:32px}.feat b{display:block;margin:8px 0 4px}.feat small{color:#65676b;line-height:1.4;display:block}
+.preview{max-width:1000px;margin:24px auto;padding:0 16px}
+.preview h2{text-align:center;margin-bottom:12px}
+.preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.p-card{background:#fff;border-radius:12px;padding:14px;display:flex;gap:10px;align-items:center;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.p-card .av{width:48px;height:48px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;overflow:hidden;flex-shrink:0}
+.p-card .av img{width:100%;height:100%;object-fit:cover}
+.footer{text-align:center;color:#999;font-size:12px;padding:30px 10px;line-height:1.8}
+.footer a{color:#999;text-decoration:none;margin:0 6px}
+@media(max-width:700px){.hero-left h1{font-size:32px}.topbar .links button{padding:8px 12px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+<div class="logo"><span>J</span>JASON<i>BOOK</i></div>
+<div class="links"><button class="btn-login" onclick="showLogin()">Connexion</button><button class="btn-signup" onclick="showSignup()">Créer un compte</button></div>
+</div>
+
+<div class="hero">
+<div class="hero-left">
+<h1>Connecte-toi avec le <span>monde entier</span> sur JASONBOOK 🌍</h1>
+<p>Retrouve tes amis, partage tes photos, discute en messages privés, crée des groupes, regarde des stories. Gratuit, pour toujours.</p>
+<div class="stats">
+<div class="stat"><b id="statUsers">...</b><small>Membres</small></div>
+<div class="stat"><b id="statPosts">...</b><small>Publications</small></div>
+<div class="stat"><b>100% Gratuit</b><small>Pour toujours</small></div>
+</div>
+</div>
+
+<div class="hero-right">
+<!-- CONNEXION -->
+<div class="card" id="boxLogin">
+<h2>Connexion</h2>
+<input id="loginId" placeholder="Téléphone ou Email">
+<input type="password" id="loginPass" placeholder="Mot de passe" onkeydown="if(event.key==='Enter') seConnecter()">
+<button class="btn-main" id="btnLogin" onclick="seConnecter()">Se connecter</button>
+<p class="msg" id="msgLogin"></p>
+<span class="link" onclick="motDePasseOublie()">Mot de passe oublié ?</span>
+<hr style="margin:16px 0;border:none;border-top:1px solid #eee">
+<button class="btn-green" onclick="showSignup()">Créer un nouveau compte</button>
+</div>
+
+<!-- INSCRIPTION -->
+<div class="card" id="boxSignup" style="display:none">
+<h2>Inscription</h2>
+<input id="insPrenom" placeholder="Prénom *">
+<input id="insNom" placeholder="Nom *">
+<input id="insBirth" type="date"  aria-label="Date de naissance" required>
+<input id="insPhone" placeholder="Téléphone (ex: +243...)">
+<input id="insEmail" placeholder="Email (optionnel)">
+<select id="insPays">
+<option value="">Pays *</option><option>Congo</option><option>France</option><option>Belgique</option><option>Suisse</option><option>Canada</option><option>Côte d'Ivoire</option><option>Sénégal</option><option>Cameroun</option><option>USA</option><option>Angleterre</option><option>Maroc</option><option>Algérie</option><option>Tunisie</option><option>Bénin</option><option>Togo</option><option>Gabon</option><option>Mali</option><option>Guinée</option><option>Autre</option>
+</select>
+<input id="insVille" placeholder="Ville *">
+<input id="insActivite" placeholder="Activité (Étudiant, Commerçant...)">
+<input type="password" id="insPass" placeholder="Mot de passe (6+ caractères) *">
+<input type="password" id="insPass2" placeholder="Confirmer le mot de passe *">
+<button class="btn-green" id="btnSignup" onclick="sInscrire()">S'inscrire</button>
+<p class="msg" id="msgSignup"></p>
+<span class="link" onclick="showLogin()">Tu as déjà un compte ? Connecte-toi</span>
+</div>
+</div>
+</div>
+
+<div class="features">
+<div class="feat"><div class="ico">👥</div><b>Amis du monde</b><small>Trouve des amis partout</small></div>
+<div class="feat"><div class="ico">💬</div><b>Messages</b><small>Discute en privé, vocal</small></div>
+<div class="feat"><div class="ico">📖</div><b>Stories</b><small>Partage ton moment</small></div>
+<div class="feat"><div class="ico">👨‍👩‍👧</div><b>Groupes</b><small>Crée ta communauté</small></div>
+<div class="feat"><div class="ico">📷</div><b>Photos & Vidéos</b><small>Publie sans limite</small></div>
+<div class="feat"><div class="ico">🔔</div><b>Notifications</b><small>Reste informé</small></div>
+</div>
+
+<div class="preview">
+<h2>Ils sont déjà sur JASONBOOK 💙</h2>
+<div class="preview-grid" id="previewUsers"></div>
+</div>
+
+<div class="footer">
+<a href="#" onclick="alert('JASONBOOK - Réseau social gratuit pour le monde entier');return false">À propos</a> • <a href="#" onclick="alert('Tes données restent privées.');return false">Confidentialité</a> • <a href="#" onclick="alert('JASONBOOK © 2026 - Tous droits réservés');return false">Conditions</a><br>
+JASONBOOK © 2026 - Créé par Jason<br>
+Made with 💙 à Kinshasa, Congo
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, set, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+
+// Déjà connecté ?
+if(localStorage.getItem('jasonbook_uid')) location.href='feed.html';
+
+window.showLogin=()=>{ document.getElementById('boxLogin').style.display="block"; document.getElementById('boxSignup').style.display="none"; };
+window.showSignup=()=>{ document.getElementById('boxLogin').style.display="none"; document.getElementById('boxSignup').style.display="block"; };
+
+window.sInscrire=async()=>{
+  const prenom=document.getElementById('insPrenom').value.trim();
+  const nom=document.getElementById('insNom').value.trim();
+  const dateNaissance=document.getElementById('insBirth').value;
+  const phone=document.getElementById('insPhone').value.trim();
+  const email=document.getElementById('insEmail').value.trim().toLowerCase();
+  const pays=document.getElementById('insPays').value;
+  const ville=document.getElementById('insVille').value.trim();
+  const activite=document.getElementById('insActivite').value.trim();
+  const pass=document.getElementById('insPass').value;
+  const pass2=document.getElementById('insPass2').value;
+  const msg=document.getElementById('msgSignup');
+  if(!prenom || !nom || !dateNaissance || !pays || !ville){ msg.style.color="red"; msg.innerText="Prénom, nom, date de naissance, pays et ville sont obligatoires"; return; }
+  const limiteAge=new Date(); limiteAge.setFullYear(limiteAge.getFullYear()-13);
+  if(new Date(dateNaissance)>limiteAge){ msg.style.color="red"; msg.innerText="Tu dois avoir au moins 13 ans pour créer un compte"; return; }
+  if(!phone && !email){ msg.style.color="red"; msg.innerText="Téléphone ou Email obligatoire"; return; }
+  if(pass.length<6){ msg.style.color="red"; msg.innerText="Mot de passe : 6 caractères minimum"; return; }
+  if(pass!==pass2){ msg.style.color="red"; msg.innerText="Les mots de passe ne correspondent pas"; return; }
+  document.getElementById('btnSignup').disabled=true; msg.style.color="#65676b"; msg.innerText="Création du compte...";
+  try{
+    // Vérifier doublon
+    const snap=await get(ref(db,'jasonbook/users')); const users=snap.val()||{};
+    for(const u of Object.values(users)){
+      if(phone && u.phone===phone){ msg.style.color="red"; msg.innerText="Ce téléphone est déjà utilisé"; document.getElementById('btnSignup').disabled=false; return; }
+      if(email && u.email===email){ msg.style.color="red"; msg.innerText="Cet email est déjà utilisé"; document.getElementById('btnSignup').disabled=false; return; }
+    }
+    const uid='user_'+Date.now()+'_'+Math.floor(Math.random()*9999);
+    const nomComplet=prenom+" "+nom;
+    await set(ref(db,'jasonbook/users/'+uid),{
+      uid:uid, prenom:prenom, nom:nom, nomComplet:nomComplet, dateNaissance:dateNaissance,
+      phone:phone, email:email, pays:pays, ville:ville, activite:activite||"Membre JASONBOOK",
+      bio:"Salut ! Je suis sur JASONBOOK 🌍", photoProfil:"", photoCouverture:"",
+      password:pass, dateInscription:new Date().toLocaleDateString(), timestamp:Date.now()
+    });
+    localStorage.setItem('jasonbook_uid', uid);
+    localStorage.setItem('jasonbook_nom', nomComplet);
+    localStorage.setItem('jasonbook_photo', "");
+    localStorage.setItem('jasonbook_pays', pays);
+    localStorage.setItem('jasonbook_ville', ville);
+    msg.style.color="green"; msg.innerText="Bienvenue sur JASONBOOK ! 🎉";
+    setTimeout(()=> location.href='feed.html', 800);
+  }catch(e){ msg.style.color="red"; msg.innerText="Erreur : "+e.message; document.getElementById('btnSignup').disabled=false; }
+};
+
+window.seConnecter=async()=>{
+  const ident=document.getElementById('loginId').value.trim().toLowerCase();
+  const pass=document.getElementById('loginPass').value;
+  const msg=document.getElementById('msgLogin');
+  if(!ident || !pass){ msg.style.color="red"; msg.innerText="Remplis identifiant et mot de passe"; return; }
+  document.getElementById('btnLogin').disabled=true; msg.style.color="#65676b"; msg.innerText="Connexion...";
+  try{
+    const snap=await get(ref(db,'jasonbook/users')); const users=snap.val()||{};
+    let trouve=null;
+    for(const u of Object.values(users)){
+      if(((u.phone||"").toLowerCase()===ident || (u.email||"").toLowerCase()===ident) && u.password===pass){ trouve=u; break; }
+    }
+    if(!trouve){ msg.style.color="red"; msg.innerText="Identifiant ou mot de passe incorrect"; document.getElementById('btnLogin').disabled=false; return; }
+    localStorage.setItem('jasonbook_uid', trouve.uid);
+    localStorage.setItem('jasonbook_nom', trouve.nomComplet);
+    localStorage.setItem('jasonbook_photo', trouve.photoProfil||"");
+    localStorage.setItem('jasonbook_pays', trouve.pays||"");
+    localStorage.setItem('jasonbook_ville', trouve.ville||"");
+    msg.style.color="green"; msg.innerText="Bienvenue "+trouve.prenom+" !";
+    setTimeout(()=> location.href='feed.html', 600);
+  }catch(e){ msg.style.color="red"; msg.innerText="Erreur : "+e.message; document.getElementById('btnLogin').disabled=false; }
+};
+
+window.motDePasseOublie=()=>{
+  const ident=prompt("Entre ton téléphone ou email :");
+  if(!ident) return;
+  get(ref(db,'jasonbook/users')).then(snap=>{
+    const users=snap.val()||{}; let trouve=null;
+    for(const u of Object.values(users)){ if((u.phone||"").toLowerCase()===ident.toLowerCase() || (u.email||"").toLowerCase()===ident.toLowerCase()){ trouve=u; break; } }
+    if(trouve) alert("Ton mot de passe est : "+trouve.password+"\n\nNote-le bien !");
+    else alert("Aucun compte trouvé avec cet identifiant");
+  });
+};
+
+// Stats + Aperçu membres
+onValue(ref(db,'jasonbook/users'), s=>{
+  const d=s.val(); const users=d?Object.values(d):[];
+  document.getElementById('statUsers').innerText=users.length||"0";
+  const box=document.getElementById('previewUsers'); box.innerHTML="";
+  users.slice(-8).reverse().forEach(u=>{
+    const lettre=(u.prenom||"?").charAt(0).toUpperCase();
+    box.innerHTML+=`<div class="p-card"><div class="av">${u.photoProfil?`<img src="${u.photoProfil}">`:lettre}</div><div><b style="font-size:14px">${u.nomComplet||""}</b><br><small style="color:#65676b">${u.ville||""} • ${u.pays||""}</small></div></div>`;
+  });
+  if(!users.length) box.innerHTML='<p style="color:#65676b">Sois le premier membre ! Inscris-toi 👆</p>';
+});
+onValue(ref(db,'jasonbook/posts'), s=>{ const d=s.val(); document.getElementById('statPosts').innerText=d?Object.keys(d).length:"0"; });
+</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Paramètres</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:650px;margin:16px auto;padding:0 12px}
+.wrap h1{font-size:24px;margin-bottom:14px}
+.section{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.section h3{margin-bottom:12px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f2f5}
+.row:last-child{border-bottom:none}
+.row .label b{font-size:14px}.row .label p{font-size:12px;color:#65676b}
+.row input,.row select{padding:9px 12px;border:1.5px solid #ddd;border-radius:8px;outline:none;font-size:14px}
+.switch{position:relative;width:48px;height:26px;background:#ccc;border-radius:20px;cursor:pointer;flex-shrink:0}
+.switch::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s}
+.switch.on{background:#1877F2}.switch.on::after{left:25px}
+.btn-blue{background:#1877F2;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:800;cursor:pointer;width:100%}
+.btn-grey{background:#e4e6eb;border:none;padding:12px;border-radius:10px;font-weight:700;cursor:pointer;width:100%}
+.btn-red{background:#e0245e;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:800;cursor:pointer;width:100%}
+.danger{border:2px solid #ffcccc}
+.bottom-nav{display:none}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="wrap">
+<h1>⚙️ Paramètres</h1>
+
+<div class="section">
+<h3>👤 Mon compte</h3>
+<div class="row"><div class="label"><b>Nom complet</b></div><input id="inNom" style="width:180px"></div>
+<div class="row"><div class="label"><b>Ville</b></div><input id="inVille" style="width:180px"></div>
+<div class="row"><div class="label"><b>Bio</b></div><input id="inBio" style="width:180px"></div>
+<button class="btn-blue" style="margin-top:10px" onclick="sauvegarderProfil()">💾 Enregistrer les modifications</button>
+</div>
+
+<div class="section">
+<h3>🔒 Confidentialité</h3>
+<div class="row"><div class="label"><b>Profil public</b><p>Tout le monde peut voir ton profil</p></div><div class="switch on" id="swPublic" onclick="toggleSwitch('swPublic','jasonbook_public')"></div></div>
+<div class="row"><div class="label"><b>Qui peut m'envoyer un message ?</b></div><select id="selMsg"><option value="tous">Tout le monde</option><option value="amis">Amis seulement</option></select></div>
+<div class="row"><div class="label"><b>Afficher mon statut en ligne</b></div><div class="switch on" id="swOnline" onclick="toggleSwitch('swOnline','jasonbook_online')"></div></div>
+<div class="row"><div class="label"><b>Qui peut voir mes amis ?</b></div><select id="selAmis"><option value="tous">Tout le monde</option><option value="amis">Amis seulement</option><option value="moi">Moi seulement</option></select></div>
+<button class="btn-blue" style="margin-top:10px" onclick="sauvegarderConf()">💾 Enregistrer la confidentialité</button>
+</div>
+
+<div class="section">
+<h3>🔔 Notifications</h3>
+<div class="row"><div class="label"><b>Notifications de likes</b></div><div class="switch on" id="swLike" onclick="toggleSwitch('swLike','jasonbook_notif_like')"></div></div>
+<div class="row"><div class="label"><b>Notifications de commentaires</b></div><div class="switch on" id="swCom" onclick="toggleSwitch('swCom','jasonbook_notif_com')"></div></div>
+<div class="row"><div class="label"><b>Notifications d'amis</b></div><div class="switch on" id="swAmi" onclick="toggleSwitch('swAmi','jasonbook_notif_ami')"></div></div>
+<div class="row"><div class="label"><b>Notifications de messages</b></div><div class="switch on" id="swMsg" onclick="toggleSwitch('swMsg','jasonbook_notif_msg')"></div></div>
+</div>
+
+<div class="section">
+<h3>🎨 Apparence</h3>
+<div class="row"><div class="label"><b>Mode sombre</b><p>Thème sombre pour toute l'app</p></div><div class="switch" id="swDark" onclick="toggleDark()"></div></div>
+<div class="row"><div class="label"><b>Langue</b></div><select id="selLangue"><option value="fr">Français</option><option value="en">English</option><option value="ln">Lingala</option></select></div>
+<button class="btn-blue" style="margin-top:10px" onclick="sauvegarderLangue()">💾 Enregistrer la langue</button>
+</div>
+
+<div class="section">
+<h3>ℹ️ À propos</h3>
+<div class="row"><div class="label"><b>Version</b></div><span style="color:#65676b">JASONBOOK 1.0</span></div>
+<div class="row"><div class="label"><b>Développeur</b></div><span style="color:#65676b">Jason Team</span></div>
+<div class="row"><div class="label"><b>Conditions d'utilisation</b></div><button class="btn-grey" style="width:auto;padding:8px 14px" onclick="alert('JASONBOOK - Respecte les autres, pas de harcèlement, pas de contenu haineux. Merci ! ❤️')">Voir</button></div>
+</div>
+
+<div class="section danger">
+<h3>⚠️ Zone dangereuse</h3>
+<button class="btn-grey" style="margin-bottom:8px" onclick="deconnecter()">🚪 Se déconnecter</button>
+<button class="btn-red" onclick="supprimerCompte()">🗑️ Supprimer mon compte définitivement</button>
+</div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="parametres.html">⚙️</a><a href="profil.html">👤</a></nav>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+document.getElementById('inNom').value = monNom;
+document.getElementById('inVille').value = localStorage.getItem('jasonbook_ville')||"";
+document.getElementById('inBio').value = localStorage.getItem('jasonbook_bio')||"";
+document.getElementById('selMsg').value = localStorage.getItem('jasonbook_msg_qui')||"tous";
+document.getElementById('selAmis').value = localStorage.getItem('jasonbook_amis_qui')||"tous";
+document.getElementById('selLangue').value = localStorage.getItem('jasonbook_langue')||"fr";
+// Restaurer switches
+['swPublic','swOnline','swLike','swCom','swAmi','swMsg'].forEach(id=>{
+  const key='jasonbook_'+id; const val=localStorage.getItem(key);
+  if(val==='0') document.getElementById(id).classList.remove('on');
+  if(val==='1') document.getElementById(id).classList.add('on');
+});
+if(localStorage.getItem('jasonbook_dark')==='1'){ document.getElementById('swDark').classList.add('on'); appliquerDark(true); }
+function appliquerDark(on){
+  if(on){ document.body.style.background='#18191a'; document.querySelectorAll('.section').forEach(s=>{ s.style.background='#242526'; s.style.color='#e4e6eb'; }); }
+  else { document.body.style.background='#f0f2f5'; document.querySelectorAll('.section').forEach(s=>{ s.style.background='#fff'; s.style.color='#000'; }); }
+}
+window.toggleSwitch=(id,key)=>{
+  const el=document.getElementById(id); el.classList.toggle('on');
+  localStorage.setItem(key, el.classList.contains('on')?'1':'0');
+  localStorage.setItem('jasonbook_'+id, el.classList.contains('on')?'1':'0');
+};
+window.toggleDark=()=>{
+  const el=document.getElementById('swDark'); el.classList.toggle('on');
+  const on=el.classList.contains('on');
+  localStorage.setItem('jasonbook_dark', on?'1':'0'); appliquerDark(on);
+};
+window.sauvegarderProfil=async()=>{
+  const nom=document.getElementById('inNom').value.trim();
+  if(!nom){ alert("Nom obligatoire"); return; }
+  localStorage.setItem('jasonbook_nom', nom);
+  localStorage.setItem('jasonbook_ville', document.getElementById('inVille').value);
+  localStorage.setItem('jasonbook_bio', document.getElementById('inBio').value);
+  await set(ref(db,'jasonbook/users/'+uid+'/nom'), nom);
+  await set(ref(db,'jasonbook/users/'+uid+'/ville'), document.getElementById('inVille').value);
+  await set(ref(db,'jasonbook/users/'+uid+'/bio'), document.getElementById('inBio').value);
+  alert("Profil mis à jour ! ✅");
+};
+window.sauvegarderConf=()=>{
+  localStorage.setItem('jasonbook_msg_qui', document.getElementById('selMsg').value);
+  localStorage.setItem('jasonbook_amis_qui', document.getElementById('selAmis').value);
+  alert("Confidentialité enregistrée ! 🔒");
+};
+window.sauvegarderLangue=()=>{
+  localStorage.setItem('jasonbook_langue', document.getElementById('selLangue').value);
+  alert("Langue enregistrée ! 🌍");
+};
+window.deconnecter=()=>{
+  if(!confirm("Te déconnecter ?")) return;
+  localStorage.clear(); location.href='index.html';
+};
+window.supprimerCompte=async()=>{
+  if(!confirm("⚠️ SUPPRIMER ton compte définitivement ? Cette action est irréversible !")) return;
+  if(!confirm("Es-tu VRAIMENT sûr ? Tout sera effacé.")) return;
+  await remove(ref(db,'jasonbook/users/'+uid));
+  localStorage.clear(); location.href='index.html';
+};
+</script>
+</body>
+</html>

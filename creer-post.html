@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Créer une publication</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:44px;height:44px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:620px;margin:18px auto;padding:0 12px}
+.card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.card h2{text-align:center;margin-bottom:14px}
+.user-row{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.user-row small{color:#65676b}
+.user-row select{border:none;background:#f0f2f5;padding:6px 10px;border-radius:16px;font-weight:700;font-size:12px;cursor:pointer;outline:none}
+textarea{width:100%;border:none;outline:none;font-size:17px;resize:none;min-height:130px;font-family:inherit}
+textarea::placeholder{color:#999}
+.preview{margin:10px 0;display:none}
+.preview img,.preview video{width:100%;border-radius:12px;max-height:380px;object-fit:cover}
+.remove-btn{border:none;background:#e0245e;color:#fff;padding:8px 14px;border-radius:8px;font-weight:700;cursor:pointer;margin-top:8px}
+.options{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid #eee;padding-top:12px;margin-top:8px}
+.options button{flex:1;min-width:90px;border:none;background:#f0f2f5;padding:11px;border-radius:10px;font-weight:700;cursor:pointer;font-size:13px}
+.btn-publier{width:100%;border:none;background:#1877F2;color:#fff;padding:14px;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer;margin-top:14px}
+.btn-publier:disabled{opacity:.5}
+.msg{text-align:center;font-weight:700;font-size:13px;min-height:18px;margin-top:8px}
+.emoji-box{display:none;flex-wrap:wrap;gap:6px;border-top:1px solid #eee;padding-top:10px;margin-top:10px}
+.emoji-box span{font-size:24px;cursor:pointer}
+.feeling-box{display:none;gap:8px;flex-wrap:wrap;border-top:1px solid #eee;padding-top:10px;margin-top:10px}
+.feeling-box button{border:none;background:#f0f2f5;padding:9px 13px;border-radius:20px;font-weight:700;cursor:pointer}
+.feeling-box button.active{background:#1877F2;color:#fff}
+.bottom-nav{display:none}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="feed.html">🏠</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="wrap">
+<div class="card">
+<h2>Créer une publication</h2>
+<div class="user-row">
+<div class="avatar" id="postAvatar">?</div>
+<div><b id="postNom"></b><br><select id="visibilite"><option value="Public">🌍 Public</option><option value="Amis">👥 Amis</option><option value="Moi uniquement">🔒 Moi uniquement</option></select></div>
+</div>
+
+<textarea id="postText" placeholder="Quoi de neuf, ... ? Partage avec le monde 🌍"></textarea>
+
+<div class="preview" id="previewBox">
+<img id="previewImg" style="display:none">
+<video id="previewVideo" controls style="display:none"></video>
+<button class="remove-btn" onclick="retirerMedia()">✕ Retirer le média</button>
+</div>
+
+<div class="emoji-box" id="emojiBox">
+<span onclick="ajouterEmoji('😀')">😀</span><span onclick="ajouterEmoji('😂')">😂</span><span onclick="ajouterEmoji('❤️')">❤️</span><span onclick="ajouterEmoji('😍')">😍</span><span onclick="ajouterEmoji('🔥')">🔥</span><span onclick="ajouterEmoji('👍')">👍</span><span onclick="ajouterEmoji('🙏')">🙏</span><span onclick="ajouterEmoji('🎉')">🎉</span><span onclick="ajouterEmoji('😭')">😭</span><span onclick="ajouterEmoji('😎')">😎</span><span onclick="ajouterEmoji('🇨🇩')">🇨🇩</span><span onclick="ajouterEmoji('🌍')">🌍</span><span onclick="ajouterEmoji('💪')">💪</span><span onclick="ajouterEmoji('🙌')">🙌</span><span onclick="ajouterEmoji('💙')">💙</span><span onclick="ajouterEmoji('✨')">✨</span>
+</div>
+
+<div class="feeling-box" id="feelingBox">
+<button onclick="choisirFeeling(this,'😊 Heureux')">😊 Heureux</button>
+<button onclick="choisirFeeling(this,'😍 Amoureux')">😍 Amoureux</button>
+<button onclick="choisirFeeling(this,'😎 Cool')">😎 Cool</button>
+<button onclick="choisirFeeling(this,'🙏 Béni')">🙏 Béni</button>
+<button onclick="choisirFeeling(this,'💪 Motivé')">💪 Motivé</button>
+<button onclick="choisirFeeling(this,'🎉 En fête')">🎉 En fête</button>
+<button onclick="choisirFeeling(this,'😴 Fatigué')">😴 Fatigué</button>
+<button onclick="choisirFeeling(this,'🤔 Réfléchi')">🤔 Réfléchi</button>
+</div>
+
+<div class="options">
+<button onclick="document.getElementById('filePhoto').click()">📷 Photo</button>
+<button onclick="document.getElementById('fileVideo').click()">🎥 Vidéo</button>
+<button onclick="toggleEmoji()">😀 Emoji</button>
+<button onclick="toggleFeeling()">💭 Humeur</button>
+</div>
+
+<input type="file" id="filePhoto" accept="image/*" style="display:none">
+<input type="file" id="fileVideo" accept="video/*" style="display:none">
+
+<button class="btn-publier" id="btnPublier" onclick="publier()">Publier</button>
+<p class="msg" id="msg"></p>
+</div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="messages.html">💬</a><a href="profil.html">👤</a></nav>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+const monPays = localStorage.getItem('jasonbook_pays')||"";
+const maVille = localStorage.getItem('jasonbook_ville')||"";
+let photoUrl="", videoUrl="", feeling="";
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+document.getElementById('postAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+document.getElementById('postNom').innerText=monNom;
+document.getElementById('postText').placeholder="Quoi de neuf, "+monNom.split(" ")[0]+" ? Partage avec le monde 🌍";
+
+document.getElementById('filePhoto').addEventListener('change', e=>{
+  const f=e.target.files[0]; if(!f) return; const r=new FileReader();
+  r.onload=ev=>{ photoUrl=ev.target.result; videoUrl=""; document.getElementById('previewBox').style.display="block"; document.getElementById('previewImg').src=photoUrl; document.getElementById('previewImg').style.display="block"; document.getElementById('previewVideo').style.display="none"; };
+  r.readAsDataURL(f);
+});
+document.getElementById('fileVideo').addEventListener('change', e=>{
+  const f=e.target.files[0]; if(!f) return; const r=new FileReader();
+  r.onload=ev=>{ videoUrl=ev.target.result; photoUrl=""; document.getElementById('previewBox').style.display="block"; document.getElementById('previewVideo').src=videoUrl; document.getElementById('previewVideo').style.display="block"; document.getElementById('previewImg').style.display="none"; };
+  r.readAsDataURL(f);
+});
+window.retirerMedia=()=>{ photoUrl=""; videoUrl=""; document.getElementById('previewBox').style.display="none"; document.getElementById('filePhoto').value=""; document.getElementById('fileVideo').value=""; };
+window.ajouterEmoji=(e)=>{ const t=document.getElementById('postText'); t.value+=e; t.focus(); };
+window.toggleEmoji=()=>{ const b=document.getElementById('emojiBox'); b.style.display = b.style.display==='flex' ? 'none' : 'flex'; };
+window.toggleFeeling=()=>{ const b=document.getElementById('feelingBox'); b.style.display = b.style.display==='flex' ? 'none' : 'flex'; };
+window.choisirFeeling=(btn, txt)=>{ document.querySelectorAll('#feelingBox button').forEach(x=>x.classList.remove('active')); btn.classList.add('active'); feeling=txt; };
+
+window.publier=async()=>{
+  const texte=document.getElementById('postText').value.trim();
+  if(!texte && !photoUrl && !videoUrl){ document.getElementById('msg').style.color="red"; document.getElementById('msg').innerText="Écris quelque chose ou ajoute une photo / vidéo"; return; }
+  document.getElementById('btnPublier').disabled=true; document.getElementById('msg').style.color="#65676b"; document.getElementById('msg').innerText="Publication en cours...";
+  try{
+    const newRef=push(ref(db,'jasonbook/posts'));
+    let texteFinal=texte;
+    if(feeling) texteFinal += "\n\n— se sent "+feeling;
+    await set(newRef,{
+      id:newRef.key, auteurUid:uid, nomAuteur:monNom, photoAuteur:maPhoto||"",
+      texte:texteFinal, photoUrl:photoUrl||"", videoUrl:videoUrl||"",
+      visibilite:document.getElementById('visibilite').value,
+      pays:monPays, ville:maVille,
+      likesCount:0, commentairesCount:0, partagesCount:0,
+      date:new Date().toLocaleString(), timestamp:Date.now()
+    });
+    document.getElementById('msg').style.color="green"; document.getElementById('msg').innerText="✅ Publié !";
+    setTimeout(()=> location.href='feed.html', 700);
+  }catch(e){ document.getElementById('msg').style.color="red"; document.getElementById('msg').innerText="Erreur : "+e.message; document.getElementById('btnPublier').disabled=false; }
+};
+</script>
+</body>
+</html>

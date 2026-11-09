@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Messages</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5;height:100vh;overflow:hidden}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;box-shadow:0 1px 6px rgba(0,0,0,.1);z-index:20;position:relative}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:44px;height:44px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;overflow:hidden;flex-shrink:0;cursor:pointer;position:relative}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar.small{width:36px;height:36px;font-size:14px}
+.dot{position:absolute;bottom:0;right:0;width:12px;height:12px;background:#42b72a;border:2px solid #fff;border-radius:50%}
+.layout{display:flex;height:calc(100vh - 61px)}
+.list{width:340px;background:#fff;border-right:1px solid #e4e6eb;overflow-y:auto}
+.list h2{padding:14px 14px 6px;font-size:20px}
+.list .search-box{padding:0 14px 10px}
+.list .search-box input{width:100%;padding:10px 14px;background:#f0f2f5;border:none;border-radius:20px;outline:none}
+.conv{display:flex;gap:10px;padding:11px 14px;cursor:pointer;align-items:center}
+.conv:hover,.conv.active{background:#f0f2f5}
+.conv b{font-size:14px;display:block}
+.conv small{color:#65676b;font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
+.conv .time{margin-left:auto;font-size:11px;color:#999;white-space:nowrap}
+.unread{background:#1877F2;color:#fff;font-size:11px;font-weight:800;padding:2px 7px;border-radius:10px;margin-left:auto}
+.chat{flex:1;display:flex;flex-direction:column;background:#fff}
+.chat-head{display:flex;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid #eee}
+.chat-head b{font-size:15px}.chat-head small{color:#42b72a;font-size:12px}
+.chat-head .back{display:none;font-size:22px;cursor:pointer}
+.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;background:#f0f2f5}
+.msg{max-width:70%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.4;word-wrap:break-word}
+.msg.mine{background:#1877F2;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.msg.other{background:#fff;align-self:flex-start;border-bottom-left-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.msg small{display:block;font-size:10px;opacity:.7;margin-top:4px;text-align:right}
+.msg img{max-width:100%;border-radius:10px;margin-top:4px}
+.msg audio{width:100%;margin-top:4px}
+.chat-input{display:flex;gap:8px;align-items:center;padding:10px 12px;border-top:1px solid #eee;background:#fff}
+.chat-input button{width:40px;height:40px;border:none;background:#f0f2f5;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0}
+.chat-input button.send{background:#1877F2;color:#fff}
+.chat-input input{flex:1;padding:12px 14px;background:#f0f2f5;border:none;border-radius:20px;outline:none;font-size:15px}
+.chat-input .rec.on{background:#e0245e;color:#fff;animation:pulse 1s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+.empty-chat{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#65676b;gap:10px;text-align:center;padding:20px}
+.empty-chat .big{font-size:60px}
+.bottom-nav{display:none}
+@media(max-width:800px){
+.list{width:100%;display:block}.list.hide-mob{display:none}
+.chat{display:none}.chat.show-mob{display:flex}
+.chat-head .back{display:block}
+}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.layout{padding-bottom:55px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="notifications.html">🔔</a><a href="feed.html">🏠</a><div class="avatar small" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="layout">
+<div class="list" id="listPanel">
+<h2>Messages</h2>
+<div class="search-box"><input id="searchUser" placeholder="Rechercher une personne..." oninput="filtrer()"></div>
+<div id="convList"></div>
+<div id="noConv" style="padding:20px;text-align:center;color:#65676b;font-size:13px;display:none">Aucune conversation.<br>Cherche une personne et envoie un message.</div>
+</div>
+
+<div class="chat" id="chatPanel">
+<div class="empty-chat" id="emptyChat"><div class="big">💬</div><h3>Choisis une conversation</h3><p>Sélectionne une personne à gauche pour discuter.<br>Texte, photo et vocal.</p></div>
+
+<div id="chatContent" style="display:none;flex:1;flex-direction:column">
+<div class="chat-head">
+<span class="back" onclick="retourListe()">←</span>
+<div class="avatar" id="chatAvatar">?</div>
+<div style="flex:1"><b id="chatNom"></b><br><small id="chatStatut">En ligne</small></div>
+<a href="#" onclick="return false" style="text-decoration:none;font-size:20px">📞</a>
+<a href="#" onclick="return false" style="text-decoration:none;font-size:20px">📹</a>
+</div>
+<div class="chat-body" id="chatBody"></div>
+<div class="chat-input">
+<button onclick="document.getElementById('fileImg').click()">📷</button>
+<input type="file" id="fileImg" accept="image/*" style="display:none">
+<button id="btnRec" onclick="toggleRec()">🎤</button>
+<input id="msgInput" placeholder="Écris un message..." onkeydown="if(event.key==='Enter') envoyerMsg()">
+<button class="send" onclick="envoyerMsg()">➤</button>
+</div>
+</div>
+</div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="messages.html">💬</a><a href="profil.html">👤</a></nav>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, push, set, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+let tousUsers=[], convActuelle=null, destinataire=null, mediaRecorder=null, audioChunks=[];
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+const params=new URLSearchParams(location.search); const uidCible=params.get('uid');
+
+function avatarHTML(photo, lettre){ return photo ? `<img src="${photo}">` : lettre; }
+window.retourListe=()=>{ document.getElementById('chatPanel').classList.remove('show-mob'); document.getElementById('listPanel').classList.remove('hide-mob'); };
+window.filtrer=()=>{
+  const q=document.getElementById('searchUser').value.toLowerCase();
+  document.querySelectorAll('.conv').forEach(c=>{ c.style.display = c.dataset.nom.toLowerCase().includes(q) ? 'flex' : 'none'; });
+};
+
+// CHARGER UTILISATEURS + CONVERSATIONS
+onValue(ref(db,'jasonbook/users'), async (snap)=>{
+  const data=snap.val(); if(!data) return;
+  tousUsers=Object.values(data).filter(u=>u.uid!==uid);
+  const box=document.getElementById('convList'); box.innerHTML="";
+  if(!tousUsers.length){ document.getElementById('noConv').style.display="block"; return; }
+  // Pour chaque utilisateur, on cherche le dernier message
+  for(const u of tousUsers){
+    const chatId = [uid, u.uid].sort().join('_');
+    const s=await get(ref(db,'jasonbook/messages/'+chatId)); const msgs=s.val();
+    let last="Dis bonjour...", lastTime="", nonLu=0;
+    if(msgs){ const arr=Object.values(msgs); const d=arr[arr.length-1]; last=d.texte|| (d.photoUrl?"📷 Photo": d.audioUrl?"🎤 Vocal":""); lastTime=d.heure||""; nonLu=arr.filter(m=>m.auteurUid!==uid && !m.lu).length; }
+    const div=document.createElement('div'); div.className='conv'; div.dataset.nom=u.nomComplet||"";
+    div.innerHTML=`<div class="avatar">${avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0))}<div class="dot"></div></div><div style="flex:1;min-width:0"><b>${u.nomComplet||""}</b><small>${last}</small></div><span class="time">${lastTime}</span>${nonLu?`<span class="unread">${nonLu}</span>`:""}`;
+    div.onclick=()=>ouvrirChat(u, chatId);
+    box.appendChild(div);
+  }
+  if(uidCible){
+    const cible=tousUsers.find(u=>u.uid===uidCible);
+    if(cible) ouvrirChat(cible, [uid, uidCible].sort().join('_'));
+  }
+});
+
+window.ouvrirChat=async (u, chatId)=>{
+  destinataire=u; convActuelle=chatId;
+  document.getElementById('emptyChat').style.display="none";
+  const cc=document.getElementById('chatContent'); cc.style.display="flex";
+  document.getElementById('chatPanel').classList.add('show-mob');
+  document.getElementById('listPanel').classList.add('hide-mob');
+  document.getElementById('chatAvatar').innerHTML=avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0));
+  document.getElementById('chatNom').innerText=u.nomComplet||"";
+  document.getElementById('chatStatut').innerText="En ligne • "+(u.pays||"");
+  // Marquer comme lu
+  const snap=await get(ref(db,'jasonbook/messages/'+chatId)); const msgs=snap.val();
+  if(msgs){ for(const [mid,m] of Object.entries(msgs)){ if(m.auteurUid!==uid && !m.lu) await update(ref(db,'jasonbook/messages/'+chatId+'/'+mid),{lu:true}); } }
+  // Écouter messages en direct
+  onValue(ref(db,'jasonbook/messages/'+chatId), (s)=>{
+    const d=s.val(); const body=document.getElementById('chatBody'); body.innerHTML="";
+    if(!d){ body.innerHTML='<p style="text-align:center;color:#999;font-size:13px;margin-top:30px">Aucun message. Dis bonjour ! 👋</p>'; return; }
+    Object.values(d).forEach(m=>{
+      const div=document.createElement('div'); div.className='msg '+(m.auteurUid===uid?'mine':'other');
+      let contenu="";
+      if(m.texte) contenu+=m.texte;
+      if(m.photoUrl) contenu+=`<br><img src="${m.photoUrl}">`;
+      if(m.audioUrl) contenu+=`<br><audio controls src="${m.audioUrl}"></audio>`;
+      div.innerHTML=contenu+`<small>${m.heure||""}</small>`;
+      body.appendChild(div);
+    });
+    body.scrollTop=body.scrollHeight;
+  });
+};
+
+window.envoyerMsg=async (photoUrl="", audioUrl="")=>{
+  const inp=document.getElementById('msgInput'); const txt=inp.value.trim();
+  if(!destinataire || (!txt && !photoUrl && !audioUrl)) return;
+  const newRef=push(ref(db,'jasonbook/messages/'+convActuelle));
+  await set(newRef,{ auteurUid:uid, nomAuteur:monNom, destinataireUid:destinataire.uid, texte:txt, photoUrl:photoUrl||"", audioUrl:audioUrl||"", heure:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}), timestamp:Date.now(), lu:false });
+  inp.value="";
+  // Notification pour l'autre
+  const nRef=push(ref(db,'jasonbook/notifications/'+destinataire.uid));
+  await set(nRef,{ type:"message", texte:monNom+" t'a envoyé un message", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), lu:false });
+};
+
+document.getElementById('fileImg').addEventListener('change', e=>{
+  const f=e.target.files[0]; if(!f) return; const r=new FileReader();
+  r.onload=ev=>envoyerMsg(ev.target.result,""); r.readAsDataURL(f);
+});
+
+window.toggleRec=async()=>{
+  const btn=document.getElementById('btnRec');
+  if(mediaRecorder && mediaRecorder.state==="recording"){
+    mediaRecorder.stop(); btn.classList.remove('on'); btn.innerText="🎤"; return;
+  }
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    mediaRecorder=new MediaRecorder(stream); audioChunks=[];
+    mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);
+    mediaRecorder.onstop=async ()=>{
+      const blob=new Blob(audioChunks,{type:'audio/webm'}); const r=new FileReader(); r.onload=ev=>envoyerMsg("",ev.target.result); r.readAsDataURL(blob);
+    };
+    mediaRecorder.start(); btn.classList.add('on'); btn.innerText="⏹️";
+  }catch(e){ alert("Micro non autorisé"); }
+};
+</script>
+</body>
+</html>

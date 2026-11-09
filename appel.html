@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Appels</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:700px;margin:16px auto;padding:0 12px}
+.wrap h1{font-size:24px;margin-bottom:4px}
+.wrap p.sub{color:#65676b;font-size:14px;margin-bottom:14px}
+.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.appel{border-bottom:1px solid #eee;padding:12px 0;display:flex;gap:10px;align-items:center}
+.appel:last-child{border-bottom:none}
+.appel .info{flex:1}.appel small{color:#65676b}
+.appel button{border:none;padding:9px 12px;border-radius:50%;font-size:16px;cursor:pointer;background:#f0f2f5}
+.appel button.green{background:#42b72a;color:#fff}.appel button.blue{background:#1877F2;color:#fff}
+.empty{text-align:center;color:#65676b;padding:40px 10px;background:#fff;border-radius:12px}
+.empty .big{font-size:50px}
+/* Écran d'appel */
+.call-screen{position:fixed;inset:0;background:#0f2027;z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:20px}
+.call-screen.open{display:flex}
+.call-screen .big-av{width:130px;height:130px;border-radius:50%;background:#1877F2;display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:800;overflow:hidden}
+.call-screen .big-av img{width:100%;height:100%;object-fit:cover}
+.call-screen h2{margin-top:16px}.call-screen p{color:#ccc;margin:6px 0}
+.call-screen video{width:100%;max-width:500px;border-radius:14px;background:#000;max-height:60vh;display:none}
+.call-screen video.show{display:block}
+.call-screen .controls{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;justify-content:center}
+.call-screen .controls button{width:56px;height:56px;border-radius:50%;border:none;font-size:22px;cursor:pointer;background:#444;color:#fff}
+.call-screen .controls button.red{background:#e0245e}
+.call-screen .controls button.green{background:#42b72a}
+.call-screen .controls button.active{background:#1877F2}
+.bottom-nav{display:none}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher un ami..." id="searchAmi" oninput="rendreAmis()">
+<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="wrap">
+<h1>📞 Appels</h1>
+<p class="sub">Appelle tes amis en audio ou en vidéo, gratuitement.</p>
+<div class="card">
+<h3 style="margin-bottom:8px">👥 Appeler un ami</h3>
+<div id="listeAmis"></div>
+</div>
+<div class="card">
+<h3 style="margin-bottom:8px">🕐 Historique des appels</h3>
+<div id="historique"></div>
+</div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="appels.html">📞</a><a href="profil.html">👤</a></nav>
+
+<!-- ÉCRAN D'APPEL -->
+<div class="call-screen" id="callScreen">
+<video id="localVideo" autoplay muted playsinline></video>
+<div class="big-av" id="callAvatar">?</div>
+<h2 id="callNom"></h2>
+<p id="callStatus">Appel en cours...</p>
+<p id="callTimer">00:00</p>
+<div class="controls">
+<button id="btnMute" onclick="toggleMute()">🎤</button>
+<button id="btnVideo" onclick="toggleVideo()">🎥</button>
+<button id="btnSpeaker" onclick="toggleSpeaker()">🔊</button>
+<button class="red" onclick="raccrocher()">📞</button>
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, push, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+let amis=[], tousUsers={}, historique=[], stream=null, timerInt=null, secondes=0, mute=false, videoOn=false, speaker=false, appelActuel=null;
+
+window.rendreAmis=()=>{
+  const q=(document.getElementById('searchAmi').value||"").toLowerCase();
+  const box=document.getElementById('listeAmis');
+  const liste=amis.filter(a=> (a.nomComplet||"").toLowerCase().includes(q));
+  if(!liste.length){ box.innerHTML='<p style="color:#999">Aucun ami trouvé. Ajoute des amis pour les appeler.</p>'; return; }
+  box.innerHTML=liste.map(a=>`
+    <div class="appel">
+      <div class="avatar" onclick="location.href='profil-ami.html?uid=${a.uid}'">${a.photoProfil?`<img src="${a.photoProfil}">`:(a.prenom||"?").charAt(0)}</div>
+      <div class="info"><b>${a.nomComplet||""}</b><br><small>${a.ville||""} • ${a.pays||""}</small></div>
+      <button class="green" title="Appel audio" onclick="demarrerAppel('${a.uid}','audio')">📞</button>
+      <button class="blue" title="Appel vidéo" onclick="demarrerAppel('${a.uid}','video')">🎥</button>
+    </div>`).join('');
+};
+function rendreHistorique(){
+  const box=document.getElementById('historique');
+  if(!historique.length){ box.innerHTML='<div class="empty"><div class="big">📞</div><p>Aucun appel pour le moment.</p></div>'; return; }
+  box.innerHTML=historique.map(h=>{
+    const icon=h.type==='video'?'🎥':'📞';
+    const sens=h.appelantUid===uid ? '📤 Sortant' : '📥 Entrant';
+    return `<div class="appel"><div class="avatar">${h.photoAutre?`<img src="${h.photoAutre}">`:(h.nomAutre||"?").charAt(0)}</div><div class="info"><b>${h.nomAutre||""}</b><br><small>${icon} ${sens} • ${h.duree||"00:00"} • ${h.date||""}</small></div><button class="green" onclick="demarrerAppel('${h.autreUid}','${h.type}')">📞</button></div>`;
+  }).join('');
+}
+window.demarrerAppel=async (amiUid, type)=>{
+  const ami=tousUsers[amiUid]; if(!ami){ alert("Utilisateur introuvable"); return; }
+  appelActuel={ amiUid:amiUid, type:type, nom:ami.nomComplet, photo:ami.photoProfil };
+  document.getElementById('callNom').innerText=ami.nomComplet;
+  document.getElementById('callAvatar').innerHTML=ami.photoProfil?`<img src="${ami.photoProfil}">`:ami.nomComplet.charAt(0);
+  document.getElementById('callStatus').innerText = type==='video' ? "Appel vidéo en cours..." : "Appel audio en cours...";
+  document.getElementById('callScreen').classList.add('open');
+  document.getElementById('callAvatar').style.display = type==='video' ? 'none' : 'flex';
+  secondes=0; document.getElementById('callTimer').innerText="00:00";
+  timerInt=setInterval(()=>{ secondes++; const m=String(Math.floor(secondes/60)).padStart(2,'0'); const s=String(secondes%60).padStart(2,'0'); document.getElementById('callTimer').innerText=m+":"+s; },1000);
+  // Demander accès micro / caméra
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({ audio:true, video: type==='video' });
+    if(type==='video'){ const v=document.getElementById('localVideo'); v.srcObject=stream; v.classList.add('show'); videoOn=true; document.getElementById('btnVideo').classList.add('active'); }
+  }catch(e){ document.getElementById('callStatus').innerText="Micro/caméra non autorisé - Appel simulé (micro indisponible)"; }
+};
+window.toggleMute=()=>{
+  mute=!mute; if(stream) stream.getAudioTracks().forEach(t=>t.enabled=!mute);
+  document.getElementById('btnMute').classList.toggle('active',mute);
+  document.getElementById('btnMute').innerText=mute?"🔇":"🎤";
+};
+window.toggleVideo=async ()=>{
+  videoOn=!videoOn;
+  if(videoOn && !stream){ try{ stream=await navigator.mediaDevices.getUserMedia({audio:true,video:true}); }catch(e){ alert("Caméra indisponible"); videoOn=false; return; } }
+  if(stream) stream.getVideoTracks().forEach(t=>t.enabled=videoOn);
+  const v=document.getElementById('localVideo'); v.srcObject=stream; v.classList.toggle('show',videoOn);
+  document.getElementById('callAvatar').style.display = videoOn ? 'none' : 'flex';
+  document.getElementById('btnVideo').classList.toggle('active',videoOn);
+};
+window.toggleSpeaker=()=>{ speaker=!speaker; document.getElementById('btnSpeaker').classList.toggle('active',speaker); };
+window.raccrocher=async ()=>{
+  clearInterval(timerInt);
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  const v=document.getElementById('localVideo'); v.srcObject=null; v.classList.remove('show');
+  document.getElementById('callScreen').classList.remove('open');
+  // Enregistrer dans l'historique
+  if(appelActuel){
+    const duree=document.getElementById('callTimer').innerText;
+    const newRef=push(ref(db,'jasonbook/appels'));
+    await set(newRef,{ appelantUid:uid, appelantNom:monNom, autreUid:appelActuel.amiUid, nomAutre:appelActuel.nom, photoAutre:appelActuel.photo||"", type:appelActuel.type, duree:duree, date:new Date().toLocaleString(), timestamp:Date.now() });
+    // Notif pour l'autre
+    const nRef=push(ref(db,'jasonbook/notifications/'+appelActuel.amiUid));
+    await set(nRef,{ type:'appel', texte:monNom+" t'a appelé ("+(appelActuel.type==='video'?'vidéo':'audio')+")", deUid:uid, deNom:monNom, dePhoto:maPhoto||"", date:new Date().toLocaleString(), timestamp:Date.now(), lu:false });
+  }
+  appelActuel=null; mute=false; videoOn=false; speaker=false;
+  document.getElementById('btnMute').innerText="🎤"; document.getElementById('btnMute').classList.remove('active'); document.getElementById('btnVideo').classList.remove('active'); document.getElementById('btnSpeaker').classList.remove('active');
+};
+
+// Charger amis + users
+onValue(ref(db,'jasonbook/users'), s=>{ const d=s.val()||{}; tousUsers=d; });
+onValue(ref(db,'jasonbook/amis/'+uid), (snap)=>{
+  const data=snap.val(); if(!data){ amis=[]; rendreAmis(); return; }
+  const promises=Object.keys(data).map(async amiUid=>{ const s=await get(ref(db,'jasonbook/users/'+amiUid)); return s.val(); });
+  Promise.all(promises).then(list=>{ amis=list.filter(Boolean); rendreAmis(); });
+});
+onValue(ref(db,'jasonbook/appels'), s=>{
+  const d=s.val(); if(!d){ historique=[]; rendreHistorique(); return; }
+  historique=Object.entries(d).map(([id,h])=>({id,...h})).filter(h=>h.appelantUid===uid || h.autreUid===uid).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+  rendreHistorique();
+});
+</script>
+</body>
+</html>

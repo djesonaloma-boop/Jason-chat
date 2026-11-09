@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Signalements</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:650px;margin:16px auto;padding:0 12px}
+.wrap h1{font-size:24px;margin-bottom:6px}
+.wrap .sub{color:#65676b;margin-bottom:14px}
+.form-box{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.form-box h3{margin-bottom:10px}
+.form-box select,.form-box input,.form-box textarea{width:100%;padding:12px;border:1.5px solid #ddd;border-radius:10px;margin-top:8px;font-size:14px;outline:none}
+.form-box textarea{min-height:80px;resize:vertical}
+.btn-blue{background:#1877F2;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:800;cursor:pointer;width:100%}
+.btn-grey{background:#e4e6eb;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer}
+.raison-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.raison-grid button{border:2px solid #eee;background:#fff;padding:12px;border-radius:10px;cursor:pointer;font-weight:600;font-size:13px}
+.raison-grid button.selected{border-color:#e0245e;background:#fff0f3;color:#e0245e}
+.s-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.s-card p{font-size:14px;color:#333;margin:6px 0;white-space:pre-wrap}
+.badge{padding:4px 10px;border-radius:12px;font-size:11px;font-weight:800}
+.badge-nouveau{background:#fff3cd;color:#856404}.badge-examine{background:#cce5ff;color:#004085}.badge-resolu{background:#d4edda;color:#155724}
+.empty{text-align:center;color:#65676b;padding:30px 10px;background:#fff;border-radius:12px}
+.bottom-nav{display:none}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="wrap">
+<h1>🚨 Signaler un contenu</h1>
+<p class="sub">Tu as vu quelque chose d'inapproprié ? Signale-le, on s'en occupe.</p>
+
+<div class="form-box">
+<h3>Nouveau signalement</h3>
+<input id="sigCible" placeholder="Qui / Quoi signaler ? (nom, lien du post...)">
+<div class="raison-grid" id="raisonGrid">
+<button onclick="choisirRaison(this,'Harcèlement')">😡 Harcèlement</button>
+<button onclick="choisirRaison(this,'Contenu haineux')">🚫 Contenu haineux</button>
+<button onclick="choisirRaison(this,'Spam')">📩 Spam</button>
+<button onclick="choisirRaison(this,'Faux compte')">👤 Faux compte</button>
+<button onclick="choisirRaison(this,'Contenu violent')">⚠️ Contenu violent</button>
+<button onclick="choisirRaison(this,'Autre')">❓ Autre</button>
+</div>
+<textarea id="sigDetails" placeholder="Décris ce qui s'est passé en détail..."></textarea>
+<button class="btn-blue" style="margin-top:12px" onclick="envoyerSignalement()">🚨 Envoyer le signalement</button>
+</div>
+
+<h3 style="margin-bottom:10px">📋 Mes signalements</h3>
+<div id="list"></div>
+<div class="empty" id="emptyBox" style="display:none"><div style="font-size:40px">✅</div><h3>Aucun signalement</h3><p>Tu n'as signalé aucun contenu pour le moment.</p></div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="signalements.html">🚨</a><a href="profil.html">👤</a></nav>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, push, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+let raison="";
+
+window.choisirRaison=(btn,r)=>{ raison=r; document.querySelectorAll('#raisonGrid button').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); };
+window.envoyerSignalement=async()=>{
+  const cible=document.getElementById('sigCible').value.trim();
+  const details=document.getElementById('sigDetails').value.trim();
+  if(!cible){ alert("Dis-nous qui ou quoi tu signales"); return; }
+  if(!raison){ alert("Choisis une raison"); return; }
+  const newRef=push(ref(db,'jasonbook/signalements'));
+  await set(newRef,{ id:newRef.key, cible:cible, raison:raison, details:details, auteurUid:uid, auteurNom:monNom, statut:'nouveau', date:new Date().toLocaleString(), timestamp:Date.now() });
+  document.getElementById('sigCible').value=""; document.getElementById('sigDetails').value=""; raison=""; document.querySelectorAll('#raisonGrid button').forEach(b=>b.classList.remove('selected'));
+  alert("Signalement envoyé ! 🚨 Merci, notre équipe va l'examiner.");
+};
+function badgeStatut(s){
+  if(s==='resolu') return '<span class="badge badge-resolu">✅ Résolu</span>';
+  if(s==='examine') return '<span class="badge badge-examine">👀 En cours d\'examen</span>';
+  return '<span class="badge badge-nouveau">🕐 Nouveau</span>';
+}
+onValue(ref(db,'jasonbook/signalements'), s=>{
+  const d=s.val(); const box=document.getElementById('list'); box.innerHTML="";
+  const liste=d?Object.entries(d).map(([id,x])=>({id,...x})).filter(x=>x.auteurUid===uid).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[];
+  document.getElementById('emptyBox').style.display=liste.length?'none':'block';
+  liste.forEach(x=>{
+    const div=document.createElement('div'); div.className='s-card';
+    div.innerHTML=`<b>🚨 ${x.raison||""}</b> ${badgeStatut(x.statut)}<br><small style="color:#65676b">${x.date||""} • Cible : ${x.cible||""}</small><p>${x.details||"Aucun détail"}</p>`;
+    box.appendChild(div);
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Musique</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:650px;margin:16px auto;padding:0 12px}
+.wrap h1{font-size:24px;margin-bottom:6px}
+.wrap .sub{color:#65676b;margin-bottom:14px}
+.search-music{width:100%;padding:12px 16px;border:none;border-radius:20px;outline:none;font-size:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px}
+.cats button{border:none;background:#fff;padding:9px 14px;border-radius:20px;font-weight:700;cursor:pointer;white-space:nowrap}
+.cats button.active{background:#1877F2;color:#fff}
+.player{background:linear-gradient(135deg,#1877F2,#7b1fa2);color:#fff;border-radius:14px;padding:18px;margin-bottom:14px;text-align:center}
+.player .cover{font-size:60px}
+.player b{font-size:18px;display:block;margin:8px 0 2px}
+.player small{opacity:.85}
+.player .progress{height:6px;background:rgba(255,255,255,.3);border-radius:3px;margin:14px 0 6px;overflow:hidden}
+.player .progress div{height:100%;background:#fff;width:0%;transition:width .3s}
+.player .times{display:flex;justify-content:space-between;font-size:11px;opacity:.85}
+.player .controls{display:flex;justify-content:center;gap:12px;margin-top:12px;align-items:center}
+.player .controls button{border:none;background:rgba(255,255,255,.2);color:#fff;width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer}
+.player .controls button.play{width:60px;height:60px;background:#fff;color:#1877F2;font-size:24px}
+.track{background:#fff;border-radius:12px;padding:12px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;gap:12px;align-items:center;cursor:pointer}
+.track.playing{border:2px solid #1877F2}
+.track .cover{width:48px;height:48px;border-radius:10px;background:#f0f2f5;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.track .info{flex:1}.track .info small{color:#65676b}
+.track .like{font-size:22px;cursor:pointer}
+.empty{text-align:center;color:#65676b;padding:30px 10px;background:#fff;border-radius:12px}
+.bottom-nav{display:none}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="wrap">
+<h1>🎵 Musique</h1>
+<p class="sub">Écoute tes sons préférés, découvre de nouveaux artistes.</p>
+<input class="search-music" id="searchInput" placeholder="🔍 Rechercher un titre, un artiste..." oninput="rendre()">
+
+<div class="cats"><button id="cat-Tout" class="active" onclick="setCat('Tout')">Tout</button><button id="cat-Rumba" onclick="setCat('Rumba')">🎤 Rumba</button><button id="cat-Ndombolo" onclick="setCat('Ndombolo')">💃 Ndombolo</button><button id="cat-Gospel" onclick="setCat('Gospel')">🙏 Gospel</button><button id="cat-Rap" onclick="setCat('Rap')">🎤 Rap</button><button id="cat-Afrobeat" onclick="setCat('Afrobeat')">🌍 Afrobeat</button></div>
+
+<div class="player" id="playerBox">
+<div class="cover" id="playerCover">🎵</div>
+<b id="playerTitre">Choisis un titre</b>
+<small id="playerArtiste">Appuie sur ▶️ pour écouter</small>
+<div class="progress"><div id="playerBar"></div></div>
+<div class="times"><span id="timeActuel">0:00</span><span id="timeTotal">0:00</span></div>
+<div class="controls">
+<button onclick="precedent()">⏮️</button>
+<button class="play" id="btnPlay" onclick="togglePlay()">▶️</button>
+<button onclick="suivant()">⏭️</button>
+<button onclick="toggleLikeActuel()" id="btnLikeActuel">🤍</button>
+</div>
+</div>
+
+<div id="list"></div>
+<div class="empty" id="emptyBox" style="display:none"><h3>Aucun titre trouvé</h3><p>Essaie un autre mot-clé.</p></div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="musique.html">🎵</a><a href="profil.html">👤</a></nav>
+
+<audio id="audioPlayer" preload="metadata"></audio>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+
+// Catalogue de démo - remplace les URLs par tes propres MP3 si tu veux
+const CATALOGUE=[
+{titre:"Mwasi Ya Congo", artiste:"Fally Ipupa", cat:"Rumba", emoji:"🎤", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", duree:"3:42"},
+{titre:"Nzoto", artiste:"Koffi Olomide", cat:"Rumba", emoji:"🎤", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", duree:"4:10"},
+{titre:"Loi", artiste:"Koffi Olomide", cat:"Ndombolo", emoji:"💃", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", duree:"3:55"},
+{titre:"Eloko Oyo", artiste:"Fally Ipupa", cat:"Ndombolo", emoji:"💃", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3", duree:"4:20"},
+{titre:"Nzambe Monene", artiste:"Moïse Mbiye", cat:"Gospel", emoji:"🙏", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3", duree:"5:12"},
+{titre:"Tata Nzambé", artiste:"Mike Kalambay", cat:"Gospel", emoji:"🙏", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3", duree:"4:48"},
+{titre:"Kinshasa Na Biso", artiste:"Innoss'B", cat:"Afrobeat", emoji:"🌍", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3", duree:"3:30"},
+{titre:"Yo Pe", artiste:"Innoss'B", cat:"Afrobeat", emoji:"🌍", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3", duree:"3:15"},
+{titre:"Mokili", artiste:"Gims", cat:"Rap", emoji:"🎤", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3", duree:"3:05"},
+{titre:"Sapés Comme Jamais", artiste:"Gims", cat:"Rap", emoji:"🎤", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3", duree:"3:58"},
+];
+let cat='Tout', indexActuel=-1, likes=new Set();
+const audio=document.getElementById('audioPlayer');
+window.setCat=(c)=>{ cat=c; ['Tout','Rumba','Ndombolo','Gospel','Rap','Afrobeat'].forEach(x=>document.getElementById('cat-'+x).classList.toggle('active',x===c)); rendre(); };
+function fmt(sec){ if(!sec||isNaN(sec)) return "0:00"; const m=Math.floor(sec/60); const s=Math.floor(sec%60); return m+":"+(s<10?"0":"")+s; }
+function rendre(){
+  const q=(document.getElementById('searchInput').value||"").toLowerCase();
+  const box=document.getElementById('list'); box.innerHTML="";
+  const liste=CATALOGUE.map((t,i)=>({...t, idx:i})).filter(t=> (cat==='Tout'||t.cat===cat) && (t.titre+" "+t.artiste).toLowerCase().includes(q));
+  document.getElementById('emptyBox').style.display=liste.length?'none':'block';
+  liste.forEach(t=>{
+    const div=document.createElement('div'); div.className='track'+(t.idx===indexActuel?' playing':'');
+    div.innerHTML=`<div class="cover">${t.emoji}</div><div class="info"><b>${t.titre}</b><br><small>${t.artiste} • ${t.cat} • ${t.duree}</small></div><span class="like" onclick="event.stopPropagation();toggleLike(${t.idx},this)">${likes.has(t.idx)?"❤️":"🤍"}</span><span>${t.idx===indexActuel && !audio.paused?"⏸️":"▶️"}</span>`;
+    div.onclick=()=>jouer(t.idx);
+    box.appendChild(div);
+  });
+  majBoutonLike();
+}
+function majBoutonLike(){ document.getElementById('btnLikeActuel').innerText = (indexActuel>=0 && likes.has(indexActuel)) ? "❤️" : "🤍"; }
+function jouer(idx){
+  indexActuel=idx; const t=CATALOGUE[idx];
+  document.getElementById('playerCover').innerText=t.emoji;
+  document.getElementById('playerTitre').innerText=t.titre;
+  document.getElementById('playerArtiste').innerText=t.artiste+" • "+t.cat;
+  audio.src=t.url; audio.play();
+  document.getElementById('btnPlay').innerText="⏸️";
+  rendre();
+}
+window.togglePlay=()=>{
+  if(indexActuel<0){ jouer(0); return; }
+  if(audio.paused){ audio.play(); document.getElementById('btnPlay').innerText="⏸️"; }
+  else { audio.pause(); document.getElementById('btnPlay').innerText="▶️"; }
+  rendre();
+};
+window.suivant=()=>{ if(indexActuel<0) jouer(0); else jouer((indexActuel+1)%CATALOGUE.length); };
+window.precedent=()=>{ if(indexActuel<0) jouer(0); else jouer((indexActuel-1+CATALOGUE.length)%CATALOGUE.length); };
+window.toggleLike=async (idx, el)=>{
+  if(likes.has(idx)){ likes.delete(idx); await remove(ref(db,'jasonbook/musiqueLikes/'+uid+'/'+idx)); }
+  else { likes.add(idx); await set(ref(db,'jasonbook/musiqueLikes/'+uid+'/'+idx), { titre:CATALOGUE[idx].titre, artiste:CATALOGUE[idx].artiste, timestamp:Date.now() }); }
+  rendre();
+};
+window.toggleLikeActuel=()=>{ if(indexActuel>=0) toggleLike(indexActuel); };
+audio.addEventListener('timeupdate', ()=>{
+  const pct=audio.duration ? (audio.currentTime/audio.duration*100):0;
+  document.getElementById('playerBar').style.width=pct+"%";
+  document.getElementById('timeActuel').innerText=fmt(audio.currentTime);
+  document.getElementById('timeTotal').innerText=fmt(audio.duration);
+});
+audio.addEventListener('ended', ()=>suivant());
+onValue(ref(db,'jasonbook/musiqueLikes/'+uid), s=>{ const d=s.val(); likes=new Set(d?Object.keys(d).map(k=>parseInt(k)):[]); rendre(); });
+rendre();
+</script>
+</body>
+</html>

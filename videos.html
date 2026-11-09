@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASONBOOK - Vidéos</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f0f2f5}
+header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
+.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:#FFD700;font-style:normal}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+.icons{display:flex;gap:6px;align-items:center}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:700px;margin:16px auto;padding:0 12px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.top h1{font-size:24px}
+.btn-blue{background:#1877F2;color:#fff;border:none;padding:11px 18px;border-radius:10px;font-weight:800;cursor:pointer}
+.v-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.v-head{display:flex;gap:10px;align-items:center}
+.v-head .info{flex:1}.v-head small{color:#65676b}
+.v-text{margin:10px 0;font-size:15px;white-space:pre-wrap}
+.v-card video{width:100%;border-radius:10px;max-height:500px;background:#000}
+.v-actions{display:flex;justify-content:space-around;border-top:1px solid #eee;padding-top:8px;margin-top:8px}
+.v-actions button{border:none;background:none;font-weight:700;color:#65676b;cursor:pointer;padding:8px;font-size:14px}
+.v-actions button.liked{color:#1877F2}
+.empty{text-align:center;color:#65676b;padding:40px 10px;background:#fff;border-radius:12px}
+.empty .big{font-size:50px}
+.bottom-nav{display:none}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+</style>
+<link rel="stylesheet" href="Assets/theme.css">
+<script src="Assets/theme.js"></script>
+</head>
+<body>
+
+<header>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+</header>
+
+<div class="wrap">
+<div class="top"><h1>🎥 Vidéos</h1><button class="btn-blue" onclick="location.href='creer-post.html'">➕ Publier une vidéo</button></div>
+<div id="list"></div>
+<div class="empty" id="emptyBox" style="display:none"><div class="big">🎥</div><h3>Aucune vidéo pour le moment</h3><p>Publie la première vidéo !</p></div>
+</div>
+
+<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="videos.html">🎥</a><a href="profil.html">👤</a></nav>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, set, remove, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+let mesLikes=new Set();
+
+function afficherVideos(videos){
+  const box=document.getElementById('list'); box.innerHTML="";
+  if(!videos.length){ document.getElementById('emptyBox').style.display="block"; return; }
+  document.getElementById('emptyBox').style.display="none";
+  videos.forEach(p=>{
+    const div=document.createElement('div'); div.className='v-card';
+    const liked=mesLikes.has(p.id);
+    div.innerHTML=`
+      <div class="v-head">
+        <div class="avatar" onclick="location.href='profil-ami.html?uid=${p.auteurUid}'">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div>
+        <div class="info"><b style="cursor:pointer" onclick="location.href='profil-ami.html?uid=${p.auteurUid}'">${p.nomAuteur||""}</b><br><small>${p.ville||""} • ${p.date||""}</small></div>
+        ${p.auteurUid===uid?`<button style="border:none;background:none;cursor:pointer;font-size:18px" onclick="supprimerVideo('${p.id}')">🗑️</button>`:""}
+      </div>
+      <div class="v-text">${p.texte||""}</div>
+      <video controls preload="metadata" src="${p.videoUrl}"></video>
+      <div class="v-actions">
+        <button class="${liked?'liked':''}" onclick="likerVideo('${p.id}',${p.likesCount||0})">👍 ${p.likesCount||0} J'aime</button>
+        <button onclick="location.href='feed.html'">💬 ${p.commentairesCount||0} Commenter</button>
+        <button onclick="partagerVideo('${p.id}',${p.partagesCount||0})">↗️ ${p.partagesCount||0} Partager</button>
+      </div>`;
+    box.appendChild(div);
+  });
+}
+window.likerVideo=async (id, actuel)=>{
+  if(mesLikes.has(id)){ await remove(ref(db,'jasonbook/likes/'+uid+'/'+id)); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'), Math.max(0,actuel-1)); }
+  else { await set(ref(db,'jasonbook/likes/'+uid+'/'+id), true); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'), actuel+1); }
+};
+window.partagerVideo=async (id, actuel)=>{
+  await set(ref(db,'jasonbook/posts/'+id+'/partagesCount'), actuel+1);
+  alert("Lien copié ! Partage cette vidéo avec tes amis 📤");
+};
+window.supprimerVideo=async (id)=>{ if(!confirm("Supprimer cette vidéo ?")) return; await remove(ref(db,'jasonbook/posts/'+id)); };
+
+onValue(ref(db,'jasonbook/likes/'+uid), s=>{ const d=s.val(); mesLikes=new Set(d?Object.keys(d):[]); });
+onValue(ref(db,'jasonbook/posts'), (snap)=>{
+  const data=snap.val(); if(!data){ afficherVideos([]); return; }
+  const videos=Object.entries(data).map(([id,p])=>({id,...p})).filter(p=>p.videoUrl).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+  afficherVideos(videos);
+});
+</script>
+</body>
+</html>
