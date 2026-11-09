@@ -6,54 +6,68 @@
 <title>JASONBOOK - Créer une publication</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#f0f2f5}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
-.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+:root{--blue:#1877F2;--blue2:#0d5fd6;--green:#42b72a;--bg:#eef2f7;--card:#fff;--text:#1c1e21;--grey:#65676b}
+body{background:var(--bg);color:var(--text);min-height:100vh}
+/* HEADER */
+header{background:rgba(255,255,255,.92);backdrop-filter:blur(10px);display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 10px rgba(0,0,0,.07)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.5px}
+.logo span{width:34px;height:34px;background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(24,119,242,.35)}
 .logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:999px;font-size:14px;outline:none;cursor:pointer;transition:.2s}
+header .search:focus{background:#fff;box-shadow:0 0 0 3px rgba(24,119,242,.12)}
 .icons{display:flex;gap:6px;align-items:center}
-.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
-.avatar{width:44px;height:44px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px;transition:.2s}
+.icons a:hover{background:#e4e6eb}
+.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1877F2,#7a3cff);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer;font-size:18px}
 .avatar img{width:100%;height:100%;object-fit:cover}
+/* WRAP + CARD */
 .wrap{max-width:620px;margin:18px auto;padding:0 12px}
-.card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-.card h2{text-align:center;margin-bottom:14px}
-.user-row{display:flex;gap:10px;align-items:center;margin-bottom:12px}
-.user-row small{color:#65676b}
-.user-row select{border:none;background:#f0f2f5;padding:6px 10px;border-radius:16px;font-weight:700;font-size:12px;cursor:pointer;outline:none}
-textarea{width:100%;border:none;outline:none;font-size:17px;resize:none;min-height:130px;font-family:inherit}
-textarea::placeholder{color:#999}
+.card{background:#fff;border-radius:18px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.08);border:1px solid #eef0f3}
+.card h2{text-align:center;margin-bottom:4px;font-size:21px}
+.card .subtitle{text-align:center;color:var(--grey);font-size:13.5px;margin-bottom:16px}
+.user-row{display:flex;gap:11px;align-items:center;margin-bottom:12px;background:#f8f9fa;padding:10px 12px;border-radius:14px}
+.user-row small{color:var(--grey);font-weight:600}
+.user-row select{border:none;background:#e7f0ff;color:var(--blue);padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer;outline:none;margin-top:3px}
+textarea{width:100%;border:none;outline:none;font-size:17px;resize:none;min-height:130px;font-family:inherit;line-height:1.55;background:transparent}
+textarea::placeholder{color:#a0a3a8}
+/* PREVIEW */
 .preview{margin:10px 0;display:none}
-.preview img,.preview video{width:100%;border-radius:12px;max-height:380px;object-fit:cover}
-.remove-btn{border:none;background:#e0245e;color:#fff;padding:8px 14px;border-radius:8px;font-weight:700;cursor:pointer;margin-top:8px}
+.preview img,.preview video{width:100%;border-radius:14px;max-height:380px;object-fit:cover;border:1px solid #eee}
+.remove-btn{border:none;background:#e0245e;color:#fff;padding:8px 14px;border-radius:999px;font-weight:700;cursor:pointer;margin-top:8px;font-size:13px}
+.remove-btn:hover{opacity:.9}
+/* OPTIONS */
 .options{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid #eee;padding-top:12px;margin-top:8px}
-.options button{flex:1;min-width:90px;border:none;background:#f0f2f5;padding:11px;border-radius:10px;font-weight:700;cursor:pointer;font-size:13px}
-.btn-publier{width:100%;border:none;background:#1877F2;color:#fff;padding:14px;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer;margin-top:14px}
-.btn-publier:disabled{opacity:.5}
+.options button{flex:1;min-width:90px;border:none;background:#f0f2f5;padding:11px;border-radius:12px;font-weight:700;cursor:pointer;font-size:13px;transition:.2s}
+.options button:hover{background:#e7f0ff;color:var(--blue);transform:translateY(-1px)}
+.btn-publier{width:100%;border:none;background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;padding:14px;border-radius:12px;font-weight:800;font-size:16px;cursor:pointer;margin-top:14px;box-shadow:0 6px 16px rgba(24,119,242,.3);transition:.2s}
+.btn-publier:hover{transform:translateY(-1px)}
+.btn-publier:disabled{opacity:.5;transform:none;box-shadow:none}
 .msg{text-align:center;font-weight:700;font-size:13px;min-height:18px;margin-top:8px}
-.emoji-box{display:none;flex-wrap:wrap;gap:6px;border-top:1px solid #eee;padding-top:10px;margin-top:10px}
-.emoji-box span{font-size:24px;cursor:pointer}
-.feeling-box{display:none;gap:8px;flex-wrap:wrap;border-top:1px solid #eee;padding-top:10px;margin-top:10px}
-.feeling-box button{border:none;background:#f0f2f5;padding:9px 13px;border-radius:20px;font-weight:700;cursor:pointer}
-.feeling-box button.active{background:#1877F2;color:#fff}
+/* EMOJI + FEELING */
+.emoji-box{display:none;flex-wrap:wrap;gap:6px;border-top:1px solid #eee;padding-top:12px;margin-top:10px}
+.emoji-box span{font-size:24px;cursor:pointer;width:42px;height:42px;background:#f8f9fa;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.emoji-box span:hover{background:#e7f0ff;transform:scale(1.1)}
+.feeling-box{display:none;gap:8px;flex-wrap:wrap;border-top:1px solid #eee;padding-top:12px;margin-top:10px}
+.feeling-box button{border:none;background:#f0f2f5;padding:9px 13px;border-radius:999px;font-weight:700;cursor:pointer;font-size:13px;transition:.2s}
+.feeling-box button:hover{background:#e7f0ff}
+.feeling-box button.active{background:var(--blue);color:#fff;box-shadow:0 4px 10px rgba(24,119,242,.3)}
+/* BOTTOM NAV */
 .bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);justify-content:space-around;padding:12px;box-shadow:0 -1px 10px rgba(0,0,0,.08);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:76px}}
 </style>
-<link rel="stylesheet" href="Assets/theme.css">
-<script src="Assets/theme.js"></script>
 </head>
 <body>
 
 <header>
 <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<input class="search" placeholder="🔍 Rechercher" onclick="location.href='recherche.html'" readonly>
 <div class="icons"><a href="feed.html">🏠</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
 </header>
 
 <div class="wrap">
 <div class="card">
-<h2>Créer une publication</h2>
+<h2>✍️ Créer une publication</h2>
+<p class="subtitle">Partage ton moment avec le monde 🌍</p>
 <div class="user-row">
 <div class="avatar" id="postAvatar">?</div>
 <div><b id="postNom"></b><br><select id="visibilite"><option value="Public">🌍 Public</option><option value="Amis">👥 Amis</option><option value="Moi uniquement">🔒 Moi uniquement</option></select></div>
@@ -114,7 +128,6 @@ document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}"
 document.getElementById('postAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
 document.getElementById('postNom').innerText=monNom;
 document.getElementById('postText').placeholder="Quoi de neuf, "+monNom.split(" ")[0]+" ? Partage avec le monde 🌍";
-
 document.getElementById('filePhoto').addEventListener('change', e=>{
   const f=e.target.files[0]; if(!f) return; const r=new FileReader();
   r.onload=ev=>{ photoUrl=ev.target.result; videoUrl=""; document.getElementById('previewBox').style.display="block"; document.getElementById('previewImg').src=photoUrl; document.getElementById('previewImg').style.display="block"; document.getElementById('previewVideo').style.display="none"; };
@@ -130,7 +143,6 @@ window.ajouterEmoji=(e)=>{ const t=document.getElementById('postText'); t.value+
 window.toggleEmoji=()=>{ const b=document.getElementById('emojiBox'); b.style.display = b.style.display==='flex' ? 'none' : 'flex'; };
 window.toggleFeeling=()=>{ const b=document.getElementById('feelingBox'); b.style.display = b.style.display==='flex' ? 'none' : 'flex'; };
 window.choisirFeeling=(btn, txt)=>{ document.querySelectorAll('#feelingBox button').forEach(x=>x.classList.remove('active')); btn.classList.add('active'); feeling=txt; };
-
 window.publier=async()=>{
   const texte=document.getElementById('postText').value.trim();
   if(!texte && !photoUrl && !videoUrl){ document.getElementById('msg').style.color="red"; document.getElementById('msg').innerText="Écris quelque chose ou ajoute une photo / vidéo"; return; }
