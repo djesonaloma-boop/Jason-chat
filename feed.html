@@ -65,6 +65,27 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 .post .actions button.liked{color:var(--or)}
 .loading{text-align:center;color:var(--or);padding:20px;font-weight:700}
 .empty{text-align:center;color:var(--gris);padding:30px 10px;background:var(--carte);border-radius:16px;border:1px solid var(--ligne)}
+/* ✅ COMMENTAIRES */
+.comments{border-top:1px solid var(--ligne);margin-top:10px;padding-top:10px;display:none}
+.comments.open{display:block}
+.comment{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start}
+.comment .avatar{width:32px;height:32px;font-size:13px}
+.comment .bubble{background:#2A2A35;padding:8px 12px;border-radius:14px;flex:1}
+.comment .bubble b{font-size:13px;color:#fff}
+.comment .bubble span{font-size:13px;color:#EDEDEF;display:block;margin-top:2px;word-break:break-word}
+.comment .bubble small{font-size:11px;color:var(--gris)}
+.comment-input{display:flex;gap:8px;margin-top:8px}
+.comment-input input{flex:1;background:#2A2A35;border:none;padding:10px 14px;border-radius:999px;color:#fff;outline:none;font-size:14px}
+.comment-input button{background:linear-gradient(135deg,var(--violet),var(--violet2));border:none;color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:16px;flex-shrink:0}
+/* ✅ MODAL PARTAGE */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:200;padding:16px}
+.modal.open{display:flex}
+.modal-box{background:#17171F;width:100%;max-width:420px;border-radius:16px;padding:20px;border:1px solid var(--ligne);color:#fff}
+.modal-box h3{margin-bottom:10px}
+.modal-box textarea{width:100%;background:#2A2A35;border:1px solid var(--ligne);border-radius:12px;color:#fff;padding:12px;font-size:14px;outline:none;min-height:80px;resize:vertical}
+.modal-box button{width:100%;margin-top:10px;padding:12px;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:14px}
+.btn-violet{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}
+.btn-grey{background:#2A2A35;color:#fff}
 </style>
 </head>
 <body>
@@ -75,7 +96,6 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
     <button class="icon-top" onclick="location.href='recherche.html'">🔍</button>
     <button class="icon-top menu" onclick="ouvrirMenu()">☰</button>
   </div>
-  <!-- ✅ TOUS LES BADGES SONT CACHÉS AU DÉPART -->
   <nav class="nav-top">
     <a href="feed.html" class="active">🏠<span class="badge or" id="badgeFeed"></span></a>
     <a href="amis.html">👥<span class="badge" id="badgeAmis"></span></a>
@@ -138,9 +158,18 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 <div style="height:30px"></div>
 </div>
 
+<!-- ✅ MODAL PARTAGE -->
+<div class="modal" id="modalPartage"><div class="modal-box">
+<h3>↗️ Partager ce post</h3>
+<p id="partagePreview" style="color:#A1A1AA;font-size:13px;margin-bottom:8px"></p>
+<textarea id="partageTexte" placeholder="Ajoute un mot (optionnel)..."></textarea>
+<button class="btn-violet" onclick="confirmerPartage()">Partager sur mon fil</button>
+<button class="btn-grey" onclick="fermerPartage()">Annuler</button>
+</div></div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, onValue, set, remove, push, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
@@ -154,9 +183,8 @@ if(elD) elD.onclick=()=>location.href='profil.html';
 window.ouvrirMenu=()=>{ document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); };
 window.fermerMenu=()=>{ document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); };
 window.deconnecter=()=>{ if(!confirm("Tu veux te déconnecter ?")) return; localStorage.clear(); location.href='index.html'; };
-// ✅ SI 0 = ON CACHE LE BADGE, SI +0 = ON L'AFFICHE
 function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; e.innerText=''; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
-let mesLikes=new Set(); let tousPosts=[];
+let mesLikes=new Set(); let tousPosts=[]; let postAPartager=null; let commentairesParPost={};
 function rendrePosts(){
   const box=document.getElementById('list'); if(!box) return; box.innerHTML="";
   const load=document.getElementById('loading'); if(load) load.style.display='none';
@@ -164,17 +192,46 @@ function rendrePosts(){
   document.getElementById('emptyBox').style.display='none';
   tousPosts.forEach(p=>{
     const liked=mesLikes.has(p.id);
+    const coms = commentairesParPost[p.id] || [];
     const div=document.createElement('div'); div.className='post';
-    div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${p.auteurUid}'">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div class="info"><b>${p.nomAuteur||""}</b><br><small>${p.date||""}</small></div>${p.auteurUid===uid?`<button style="border:none;background:none;font-size:18px;cursor:pointer;color:#fff" onclick="supprimerPost('${p.id}')">🗑️</button>`:""}</div><p>${p.texte||""}</p>${p.photoUrl?`<img class="pimg" src="${p.photoUrl}">`:""}${p.image?`<img class="pimg" src="${p.image}">`:""}${p.videoUrl?`<video controls preload="metadata" src="${p.videoUrl}"></video>`:""}<div class="actions"><button class="${liked?'liked':''}" onclick="liker('${p.id}',${p.likesCount||0})">👍 ${p.likesCount||0} J'aime</button><button>💬 ${p.commentairesCount||0}</button><button>↗️ ${p.partagesCount||0}</button></div>`;
+    let comsHtml = coms.map(c=>`<div class="comment"><div class="avatar">${c.photoAuteur?`<img src="${c.photoAuteur}">`:(c.nomAuteur||"?").charAt(0)}</div><div class="bubble"><b>${c.nomAuteur||""}</b><span>${c.texte||""}</span><small>${c.date||""}</small></div></div>`).join('');
+    if(!coms.length) comsHtml = `<p style="color:#A1A1AA;font-size:13px;text-align:center">Aucun commentaire. Sois le premier !</p>`;
+    div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${p.auteurUid}'">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div class="info"><b>${p.nomAuteur||""}</b><br><small>${p.date||""} ${p.partageDe?`• Partagé de ${p.partageDeNom||""}`:""}</small></div>${p.auteurUid===uid?`<button style="border:none;background:none;font-size:18px;cursor:pointer;color:#fff" onclick="supprimerPost('${p.id}')">🗑️</button>`:""}</div><p>${p.texte||""}</p>${p.photoUrl?`<img class="pimg" src="${p.photoUrl}">`:""}${p.image?`<img class="pimg" src="${p.image}">`:""}${p.videoUrl?`<video controls preload="metadata" src="${p.videoUrl}"></video>`:""}<div class="actions"><button class="${liked?'liked':''}" onclick="liker('${p.id}',${p.likesCount||0})">👍 ${p.likesCount||0} J'aime</button><button onclick="toggleCommentaires('${p.id}')">💬 ${p.commentairesCount||0} Commenter</button><button onclick="ouvrirPartage('${p.id}')">↗️ ${p.partagesCount||0} Partager</button></div><div class="comments" id="com-${p.id}"><div id="listeCom-${p.id}">${comsHtml}</div><div class="comment-input"><input id="inputCom-${p.id}" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter') envoyerCommentaire('${p.id}')"><button onclick="envoyerCommentaire('${p.id}')">➤</button></div></div>`;
     box.appendChild(div);
   });
 }
-window.liker=async(id,actuel)=>{ try{ if(mesLikes.has(id)){ await remove(ref(db,'jasonbook/likes/'+uid+'/'+id)); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'),Math.max(0,actuel-1)); } else { await set(ref(db,'jasonbook/likes/'+uid+'/'+id),true); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'),actuel+1); } }catch(e){} };
+window.toggleCommentaires=(id)=>{ const el=document.getElementById('com-'+id); if(el) el.classList.toggle('open'); };
+window.liker=async(id,actuel)=>{ try{ if(mesLikes.has(id)){ await remove(ref(db,'jasonbook/likes/'+uid+'/'+id)); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'),Math.max(0,actuel-1)); } else { await set(ref(db,'jasonbook/likes/'+uid+'/'+id),true); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'),actuel+1); const p=tousPosts.find(x=>x.id===id); if(p && p.auteurUid!==uid){ const nRef=push(ref(db,'jasonbook/notifications/'+p.auteurUid)); await set(nRef,{type:"like",texte:monNom+" a aimé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),lu:false}); } } }catch(e){} };
+window.envoyerCommentaire=async(id)=>{
+  const inp=document.getElementById('inputCom-'+id); if(!inp) return; const txt=inp.value.trim(); if(!txt) return;
+  const p=tousPosts.find(x=>x.id===id);
+  const newRef=push(ref(db,'jasonbook/commentaires/'+id));
+  await set(newRef,{ auteurUid:uid, nomAuteur:monNom, photoAuteur:maPhoto||"", texte:txt, date:new Date().toLocaleString(), timestamp:Date.now() });
+  await set(ref(db,'jasonbook/posts/'+id+'/commentairesCount'), (p?.commentairesCount||0)+1);
+  inp.value="";
+  if(p && p.auteurUid!==uid){ const nRef=push(ref(db,'jasonbook/notifications/'+p.auteurUid)); await set(nRef,{type:"commentaire",texte:monNom+" a commenté ta publication : "+txt,deUid:uid,deNom:monNom,date:new Date().toLocaleString(),lu:false}); }
+};
+// ✅ PARTAGER
+window.ouvrirPartage=(id)=>{ postAPartager=tousPosts.find(x=>x.id===id); if(!postAPartager) return; document.getElementById('partagePreview').innerText = "Post de "+(postAPartager.nomAuteur||"")+" : "+(postAPartager.texte||"").slice(0,80); document.getElementById('partageTexte').value=""; document.getElementById('modalPartage').classList.add('open'); };
+window.fermerPartage=()=>{ document.getElementById('modalPartage').classList.remove('open'); postAPartager=null; };
+window.confirmerPartage=async()=>{
+  if(!postAPartager) return;
+  const monTexte=document.getElementById('partageTexte').value.trim();
+  const newRef=push(ref(db,'jasonbook/posts'));
+  await set(newRef,{ auteurUid:uid, nomAuteur:monNom, photoAuteur:maPhoto||"", texte: monTexte ? monTexte+"\n\n--- Partagé ---\n"+(postAPartager.texte||"") : (postAPartager.texte||""), photoUrl:postAPartager.photoUrl||postAPartager.image||"", videoUrl:postAPartager.videoUrl||"", date:new Date().toLocaleString(), timestamp:Date.now(), likesCount:0, commentairesCount:0, partagesCount:0, partageDe:postAPartager.id, partageDeNom:postAPartager.nomAuteur||"" });
+  await set(ref(db,'jasonbook/posts/'+postAPartager.id+'/partagesCount'), (postAPartager.partagesCount||0)+1);
+  if(postAPartager.auteurUid!==uid){ const nRef=push(ref(db,'jasonbook/notifications/'+postAPartager.auteurUid)); await set(nRef,{type:"partage",texte:monNom+" a partagé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),lu:false}); }
+  fermerPartage(); alert("Partagé ! 🎉");
+};
 window.supprimerPost=async(id)=>{ if(!confirm("Supprimer ?")) return; await remove(ref(db,'jasonbook/posts/'+id)); };
 if(uid){
   onValue(ref(db,'jasonbook/likes/'+uid),s=>{ const d=s.val(); mesLikes=new Set(d?Object.keys(d):[]); rendrePosts(); });
   onValue(ref(db,'jasonbook/posts'),s=>{ const d=s.val(); tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendrePosts(); });
-  // ✅ VRAIS BADGES - SEULEMENT SI IL Y A VRAIMENT QUELQUE CHOSE
+  onValue(ref(db,'jasonbook/commentaires'),s=>{
+    const d=s.val(); commentairesParPost={};
+    if(d) Object.entries(d).forEach(([postId, coms])=>{ commentairesParPost[postId]=Object.values(coms).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0)); });
+    rendrePosts();
+  });
   onValue(ref(db,'jasonbook/demandes/'+uid),s=>{ const d=s.val(); setBadge('badgeAmis', d?Object.keys(d).length:0); });
   onValue(ref(db,'jasonbook/notifications/'+uid),s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(x=>{ if(!x.lu) n++; }); setBadge('badgeNotif', n); });
   onValue(ref(db,'jasonbook/messages'),s=>{
@@ -187,11 +244,7 @@ if(uid){
     });
     setBadge('badgeMsg', n);
   });
-  // ✅ MARKETPLACE : on ne met pas de badge si il n'y a rien
-  // Si tu veux un badge Marketplace plus tard, on le comptera sur les nouveaux articles, pas en dur
-  setBadge('badgeMarket', 0);
-  setBadge('badgeFeed', 0);
-  setBadge('badgeVideos', 0);
+  setBadge('badgeMarket', 0); setBadge('badgeFeed', 0); setBadge('badgeVideos', 0);
 }
 onValue(ref(db,'jasonbook/stories'),s=>{
   const d=s.val(); const now=Date.now(); const row=document.getElementById('storiesRow'); if(!row) return; row.innerHTML="";
