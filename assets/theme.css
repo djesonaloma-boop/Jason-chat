@@ -1,0 +1,5 @@
+html.dark-mode,html.dark-mode body{background:#18191a!important;color:#e4e6eb!important}
+html.dark-mode header,html.dark-mode .topbar,html.dark-mode .card,html.dark-mode .section,html.dark-mode .feat,html.dark-mode .p-card,html.dark-mode .bottom-nav,html.dark-mode .cover-wrap{background:#242526!important;color:#e4e6eb!important}
+html.dark-mode input,html.dark-mode select,html.dark-mode textarea,html.dark-mode .search{background:#3a3b3c!important;color:#e4e6eb!important;border-color:#555!important}
+html.dark-mode p,html.dark-mode small,html.dark-mode .label p{color:#b0b3b8!important}
+html.dark-mode .row,html.dark-mode .info-row{border-color:#3e4042!important}
