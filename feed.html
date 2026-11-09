@@ -6,38 +6,37 @@
 <title>JASONBOOK - Fil</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-html,body{width:100%;max-width:100%;overflow-x:hidden !important;touch-action:pan-y;overscroll-behavior-y:contain;-webkit-text-size-adjust:100%}
-:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--or2:#FFD700;--noir:#111111;--noir2:#1A1A1A;--fond:#0F0F14;--carte:#1C1C24;--texte:#FFFFFF;--gris:#A1A1AA;--ligne:#2A2A35}
+/* ✅ FIX SCROLL : on ne bloque PLUS le scroll vertical */
+html{overflow-x:clip;overflow-y:auto;-webkit-overflow-scrolling:touch}
+body{width:100%;overflow-x:clip;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:auto;overscroll-behavior:auto;position:relative}
+:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--noir:#111111;--fond:#0F0F14;--carte:#1C1C24;--texte:#FFFFFF;--gris:#A1A1AA;--ligne:#2A2A35}
 body{background:var(--fond);min-height:100vh;color:var(--texte)}
-/* HEADER - NOIR + OR */
-header{background:var(--noir);display:flex;align-items:center;gap:8px;padding:10px 12px;position:sticky;top:0;z-index:20;box-shadow:0 2px 15px rgba(0,0,0,.5);width:100%;overflow:hidden;border-bottom:2px solid var(--or)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:19px;cursor:pointer;flex-shrink:0;white-space:nowrap;letter-spacing:.5px}
-.logo span{width:34px;height:34px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 0 12px rgba(255,193,7,.5)}
+header{background:var(--noir);display:flex;align-items:center;gap:8px;padding:10px 12px;position:sticky;top:0;z-index:20;box-shadow:0 2px 15px rgba(0,0,0,.5);width:100%;border-bottom:2px solid var(--or)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:19px;cursor:pointer;flex-shrink:0;white-space:nowrap}
+.logo span{width:34px;height:34px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
 .logo i{color:var(--or);font-style:normal}
 header .search{flex:1;min-width:0;background:#2A2A35;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer;color:#fff}
 header .search::placeholder{color:#888}
 .icons{display:flex;gap:6px;align-items:center;flex-shrink:0}
 .icons a{width:38px;height:38px;background:#2A2A35;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:17px;flex-shrink:0;border:1px solid #3A3A45}
-.menu-btn{width:38px;height:38px;background:linear-gradient(135deg,var(--violet),var(--violet2));border:none;border-radius:50%;cursor:pointer;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;box-shadow:0 0 10px rgba(124,58,237,.5)}
-/* MENU */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:90;display:none}
-.overlay.open{display:block}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:290px;max-width:88vw;background:#17171F;z-index:100;transform:translateX(100%);transition:.28s;box-shadow:-2px 0 15px rgba(0,0,0,.6);display:flex;flex-direction:column;overflow-y:auto;color:#fff}
+.menu-btn{width:38px;height:38px;background:linear-gradient(135deg,var(--violet),var(--violet2));border:none;border-radius:50%;cursor:pointer;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:90;display:none;pointer-events:none}
+.overlay.open{display:block;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:290px;max-width:88vw;background:#17171F;z-index:100;transform:translateX(100%);transition:.28s;display:flex;flex-direction:column;overflow-y:auto;color:#fff}
 .drawer.open{transform:translateX(0)}
-.drawer-head{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--ligne);position:sticky;top:0;background:#17171F}
+.drawer-head{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--ligne);background:#17171F}
 .drawer-head .info{flex:1;min-width:0}
 .drawer-head b{font-size:16px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .drawer-head small{color:var(--gris)}
-.drawer-close{border:none;background:#2A2A35;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;color:#fff}
+.drawer-close{border:none;background:#2A2A35;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;color:#fff}
 .drawer a{display:flex;align-items:center;gap:12px;padding:12px 16px;text-decoration:none;color:#fff;font-weight:600;font-size:14.5px;border-bottom:1px solid #22222D}
-.drawer a:active{background:#2A2A35}
 .drawer a span{font-size:19px;width:28px;text-align:center;flex-shrink:0}
 .drawer .titre{padding:14px 16px 4px;font-size:11px;font-weight:800;color:var(--or);text-transform:uppercase;letter-spacing:1px}
 .drawer .logout{margin:14px 16px;padding:12px;background:#3A0A0A;color:#FF6B6B;border:1px solid #5A1A1A;border-radius:10px;font-weight:800;cursor:pointer;font-size:14px}
 .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
-.wrap{max-width:650px;margin:14px auto;padding:0 10px;width:100%;overflow-x:hidden}
-.stories{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none;max-width:100%}
+.wrap{max-width:650px;margin:14px auto;padding:0 10px 90px;width:100%;min-height:80vh}
+.stories{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 8px;scrollbar-width:none;max-width:100%;touch-action:pan-x}
 .stories::-webkit-scrollbar{display:none}
 .s-card{width:110px;height:185px;flex:0 0 110px;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;background:#222;border:2px solid #2A2A35}
 .s-card img{width:100%;height:100%;object-fit:cover}
@@ -48,14 +47,12 @@ header .search::placeholder{color:#888}
 .s-card.add{background:var(--carte);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--violet)}
 .s-card.add .plus{width:42px;height:42px;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px}
 .s-card.add p{font-size:12px;font-weight:700;color:#fff}
-/* CREER POST */
 .create{background:var(--carte);border-radius:16px;padding:12px;margin:10px 0;border:1px solid var(--ligne);width:100%}
 .create .top{display:flex;gap:10px;align-items:center}
 .create input{flex:1;min-width:0;background:#2A2A35;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer;color:#fff}
 .create input::placeholder{color:#888}
 .create .btns{display:flex;gap:6px;margin-top:10px}
 .create .btns button{flex:1;border:none;background:#2A2A35;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:13px;color:#fff}
-/* POSTS */
 .post{background:var(--carte);border-radius:16px;padding:14px;margin-bottom:12px;border:1px solid var(--ligne);width:100%;overflow:hidden}
 .post .head{display:flex;gap:10px;align-items:center}
 .post .head .info{flex:1;min-width:0}.post .head small{color:var(--gris)}
@@ -65,9 +62,10 @@ header .search::placeholder{color:#888}
 .post .actions{display:flex;justify-content:space-around;border-top:1px solid var(--ligne);padding-top:8px;margin-top:8px}
 .post .actions button{border:none;background:none;font-weight:700;color:var(--gris);cursor:pointer;padding:8px;font-size:13.5px}
 .post .actions button.liked{color:var(--or)}
+.loading{text-align:center;color:var(--or);padding:20px;font-weight:700}
 .empty{text-align:center;color:var(--gris);padding:30px 10px;background:var(--carte);border-radius:16px;border:1px solid var(--ligne)}
 .bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#111;justify-content:space-around;padding:11px;box-shadow:0 -1px 12px rgba(0,0,0,.6);z-index:30;border-top:2px solid var(--or)}.bottom-nav a{text-decoration:none;font-size:22px;filter:grayscale(0)}.wrap{padding-bottom:70px}}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#111;justify-content:space-around;padding:11px;z-index:30;border-top:2px solid var(--or)}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:90px}}
 </style>
 </head>
 <body>
@@ -79,31 +77,24 @@ header .search::placeholder{color:#888}
 <button class="menu-btn" onclick="ouvrirMenu()">☰</button>
 </header>
 
-<!-- MENU ☰ -->
 <div class="overlay" id="overlay" onclick="fermerMenu()"></div>
 <div class="drawer" id="drawer">
 <div class="drawer-head"><div class="avatar" id="drawerAvatar" style="width:48px;height:48px">?</div><div class="info"><b id="drawerNom">Jason</b><small>Voir ton profil</small></div><button class="drawer-close" onclick="fermerMenu()">✕</button></div>
-
 <div class="titre">Principal</div>
 <a href="feed.html"><span>🏠</span> Fil d'actualité</a>
 <a href="profil.html"><span>👤</span> Mon Profil</a>
 <a href="profil-ami.html"><span>👤</span> Profil Ami</a>
 <a href="amis.html"><span>👥</span> Amis</a>
 <a href="messages.html"><span>💬</span> Messages</a>
-<a href="Message.html"><span>💬</span> Message</a>
 <a href="notifications.html"><span>🔔</span> Notifications</a>
 <a href="recherche.html"><span>🔍</span> Recherche</a>
-
 <div class="titre">Publier & Voir</div>
 <a href="creer-post.html"><span>➕</span> Créer un post</a>
-<a href="Creer-post (1).html"><span>➕</span> Créer un post (1)</a>
 <a href="stories.html"><span>✨</span> Stories</a>
-<a href="Stories (1).html"><span>✨</span> Stories (1)</a>
 <a href="videos.html"><span>🎥</span> Vidéos</a>
 <a href="photos.html"><span>🖼️</span> Photos</a>
 <a href="lives.html"><span>🔴</span> Lives</a>
 <a href="souvenirs.html"><span>🕰️</span> Souvenirs</a>
-
 <div class="titre">Découvrir</div>
 <a href="groupes.html"><span>👨‍👩‍👧</span> Groupes</a>
 <a href="evenements.html"><span>📅</span> Événements</a>
@@ -116,11 +107,6 @@ header .search::placeholder{color:#888}
 <a href="marketplace.html"><span>🏪</span> Marketplace</a>
 <a href="emploi.html"><span>💼</span> Emploi</a>
 <a href="favoris.html"><span>⭐</span> Favoris</a>
-<a href="freed.html"><span>🆓</span> Freed</a>
-
-<div class="titre">Communication</div>
-<a href="appel.html"><span>📞</span> Appel</a>
-
 <div class="titre">Paramètres & Aide</div>
 <a href="parametres.html"><span>⚙️</span> Paramètres</a>
 <a href="aide.html"><span>❓</span> Aide</a>
@@ -128,7 +114,6 @@ header .search::placeholder{color:#888}
 <a href="bloques.html"><span>🚫</span> Bloqués</a>
 <a href="admin.html"><span>🛡️</span> Admin</a>
 <a href="index.html"><span>🚪</span> Connexion / Accueil</a>
-
 <button class="logout" onclick="deconnecter()">🚪 Se déconnecter</button>
 </div>
 
@@ -138,8 +123,11 @@ header .search::placeholder{color:#888}
 <div class="top"><div class="avatar" id="myAvatar2">?</div><input placeholder="Quoi de neuf, Jason ?" onclick="location.href='creer-post.html'" readonly></div>
 <div class="btns"><button onclick="location.href='creer-post.html'">🖼️ Photo</button><button onclick="location.href='creer-post.html'">🎥 Vidéo</button><button onclick="location.href='creer-post.html'">✍️ Publier</button></div>
 </div>
+<div class="loading" id="loading">⏳ Chargement...</div>
 <div id="list"></div>
-<div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication pour le moment</h3><p>Sois le premier à publier sur JASONBOOK</p></div>
+<div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication</h3><p>Sois le premier à publier<br><br><button onclick="location.href='creer-post.html'" style="background:linear-gradient(135deg,#7C3AED,#FFC107);border:none;padding:12px 20px;border-radius:999px;color:#fff;font-weight:800;cursor:pointer">➕ Créer le 1er post</button></p></div>
+<!-- Espace en bas pour que le dernier post ne soit pas caché par le menu du bas -->
+<div style="height:60px"></div>
 </div>
 
 <nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="videos.html">🎥</a><a href="profil.html">👤</a></nav>
@@ -153,16 +141,17 @@ const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index
 const monNom = localStorage.getItem('jasonbook_nom')||"Jason";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
 const avHtml = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
-document.getElementById('myAvatar2').innerHTML = avHtml;
-document.getElementById('drawerAvatar').innerHTML = avHtml;
-document.getElementById('drawerNom').innerText = monNom;
-document.getElementById('drawerAvatar').onclick=()=>location.href='profil.html';
+const el2 = document.getElementById('myAvatar2'); if(el2) el2.innerHTML = avHtml;
+const elD = document.getElementById('drawerAvatar'); if(elD) elD.innerHTML = avHtml;
+const elN = document.getElementById('drawerNom'); if(elN) elN.innerText = monNom;
+if(elD) elD.onclick=()=>location.href='profil.html';
 window.ouvrirMenu=()=>{ document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); };
 window.fermerMenu=()=>{ document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); };
-window.deconnecter=()=>{ if(!confirm("Tu veux te déconnecter ?")) return; localStorage.removeItem('jasonbook_uid'); localStorage.removeItem('jasonbook_nom'); localStorage.removeItem('jasonbook_photo'); location.href='index.html'; };
+window.deconnecter=()=>{ if(!confirm("Tu veux te déconnecter ?")) return; localStorage.clear(); location.href='index.html'; };
 let mesLikes=new Set(); let tousPosts=[];
 function rendrePosts(){
-  const box=document.getElementById('list'); box.innerHTML="";
+  const box=document.getElementById('list'); if(!box) return; box.innerHTML="";
+  const load=document.getElementById('loading'); if(load) load.style.display='none';
   if(!tousPosts.length){ document.getElementById('emptyBox').style.display='block'; return; }
   document.getElementById('emptyBox').style.display='none';
   tousPosts.forEach(p=>{
@@ -172,12 +161,14 @@ function rendrePosts(){
     box.appendChild(div);
   });
 }
-window.liker=async(id,actuel)=>{ if(mesLikes.has(id)){ await remove(ref(db,'jasonbook/likes/'+uid+'/'+id)); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'),Math.max(0,actuel-1)); } else { await set(ref(db,'jasonbook/likes/'+uid+'/'+id),true); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'),actuel+1); } };
+window.liker=async(id,actuel)=>{ try{ if(mesLikes.has(id)){ await remove(ref(db,'jasonbook/likes/'+uid+'/'+id)); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'),Math.max(0,actuel-1)); } else { await set(ref(db,'jasonbook/likes/'+uid+'/'+id),true); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'),actuel+1); } }catch(e){} };
 window.supprimerPost=async(id)=>{ if(!confirm("Supprimer ?")) return; await remove(ref(db,'jasonbook/posts/'+id)); };
-onValue(ref(db,'jasonbook/likes/'+uid),s=>{ const d=s.val(); mesLikes=new Set(d?Object.keys(d):[]); rendrePosts(); });
-onValue(ref(db,'jasonbook/posts'),s=>{ const d=s.val(); tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendrePosts(); });
+if(uid){
+  onValue(ref(db,'jasonbook/likes/'+uid),s=>{ const d=s.val(); mesLikes=new Set(d?Object.keys(d):[]); rendrePosts(); });
+  onValue(ref(db,'jasonbook/posts'),s=>{ const d=s.val(); tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendrePosts(); });
+}
 onValue(ref(db,'jasonbook/stories'),s=>{
-  const d=s.val(); const now=Date.now(); const row=document.getElementById('storiesRow'); row.innerHTML="";
+  const d=s.val(); const now=Date.now(); const row=document.getElementById('storiesRow'); if(!row) return; row.innerHTML="";
   const add=document.createElement('div'); add.className='s-card add'; add.onclick=()=>location.href='stories.html'; add.innerHTML=`<div class="plus">+</div><p>Créer une story</p>`; row.appendChild(add);
   if(!d) return;
   const parAuteur={};
