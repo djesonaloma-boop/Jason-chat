@@ -6,67 +6,77 @@
 <title>JASONBOOK - Stories</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#f0f2f5}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px rgba(0,0,0,.1)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#1877F2;font-size:21px;cursor:pointer}
-.logo span{width:34px;height:34px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+:root{--blue:#1877F2;--blue2:#0d5fd6;--bg:#eef2f7;--grey:#65676b}
+body{background:var(--bg);min-height:100vh}
+header{background:rgba(255,255,255,.95);backdrop-filter:blur(10px);display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 10px rgba(0,0,0,.07)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.5px}
+.logo span{width:34px;height:34px;background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(24,119,242,.35)}
 .logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:20px;font-size:14px;outline:none;cursor:pointer}
+header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
+header .search:focus{background:#fff;box-shadow:0 0 0 3px rgba(24,119,242,.12)}
 .icons{display:flex;gap:6px;align-items:center}
-.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px}
-.avatar{width:40px;height:40px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.icons a{width:40px;height:40px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:19px;transition:.2s}
+.icons a:hover{background:#e4e6eb}
+.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1877F2,#7a3cff);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .wrap{max-width:900px;margin:16px auto;padding:0 12px}
-.wrap h1{font-size:24px;margin-bottom:12px}
-.row{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px}
-.s-card{width:120px;flex-shrink:0;height:200px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:#ddd}
-.s-card img{width:100%;height:100%;object-fit:cover}
-.s-card .overlay{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.8))}
-.s-card .name{position:absolute;bottom:10px;left:8px;right:8px;color:#fff;font-weight:700;font-size:13px}
-.s-card .av{position:absolute;top:8px;left:8px;width:36px;height:36px;border-radius:50%;border:3px solid #1877F2;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden}
-.s-card .av img{width:100%;height:100%;object-fit:cover}
-.s-card.add{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed #ccc}
-.s-card.add .plus{width:44px;height:44px;background:#1877F2;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px}
+.wrap h1{font-size:24px;margin-bottom:4px;letter-spacing:-.5px}
+.wrap .sub{color:var(--grey);font-size:14px;margin-bottom:14px}
+.row{display:flex;gap:11px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.s-card{width:124px;flex-shrink:0;height:210px;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;background:#ddd;box-shadow:0 4px 14px rgba(0,0,0,.08);transition:.2s;border:2px solid transparent}
+.s-card:hover{transform:translateY(-3px) scale(1.01);box-shadow:0 8px 22px rgba(0,0,0,.14)}
+.s-card img,.s-card video{width:100%;height:100%;object-fit:cover}
+.s-card .overlay{position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(0,0,0,.85))}
+.s-card .name{position:absolute;bottom:10px;left:9px;right:9px;color:#fff;font-weight:700;font-size:13px;line-height:1.3;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.s-card .av{position:absolute;top:8px;left:8px;width:38px;height:38px;border-radius:50%;border:3px solid #fff;background:linear-gradient(135deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);padding:2px;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.s-card .av span,.s-card .av img{width:100%;height:100%;border-radius:50%;object-fit:cover;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center}
+.s-card.add{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;border:2px dashed #d0d7e3;box-shadow:none}
+.s-card.add:hover{border-color:var(--blue);background:#f0f6ff}
+.s-card.add .plus{width:46px;height:46px;background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 12px rgba(24,119,242,.35)}
 .s-card.add p{font-size:13px;font-weight:700;color:#555}
-.empty{text-align:center;color:#65676b;padding:40px 10px;background:#fff;border-radius:12px;margin-top:14px}
-.empty .big{font-size:50px}
+.empty{text-align:center;color:var(--grey);padding:40px 10px;background:#fff;border-radius:16px;margin-top:14px;border:1px solid #eef0f3}
+.empty .big{font-size:50px;width:80px;height:80px;background:#f0f6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
 /* Viewer */
 .viewer{position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;padding:16px}
 .viewer.open{display:flex}
 .viewer .bars{display:flex;gap:4px;width:100%;max-width:400px;margin-bottom:12px}
-.viewer .bars .bar{flex:1;height:4px;background:rgba(255,255,255,.3);border-radius:4px;overflow:hidden}
+.viewer .bars .bar{flex:1;height:3px;background:rgba(255,255,255,.3);border-radius:999px;overflow:hidden}
 .viewer .bars .bar .fill{height:100%;background:#fff;width:0%}
 .viewer .bars .bar.done .fill{width:100%}
-.viewer img,.viewer video{max-width:100%;max-height:75vh;border-radius:12px;object-fit:contain}
+.viewer img,.viewer video{max-width:100%;max-height:75vh;border-radius:14px;object-fit:contain;box-shadow:0 10px 40px rgba(0,0,0,.5)}
 .viewer .topbar{width:100%;max-width:400px;display:flex;align-items:center;gap:10px;color:#fff;margin-bottom:12px}
 .viewer .topbar .info{flex:1}.viewer .topbar small{color:#ccc}
-.viewer .caption{color:#fff;margin-top:12px;text-align:center;max-width:400px}
-.viewer .close{position:absolute;top:14px;right:16px;color:#fff;font-size:28px;background:none;border:none;cursor:pointer}
-.viewer .nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.2);color:#fff;border:none;width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer}
+.viewer .caption{color:#fff;margin-top:12px;text-align:center;max-width:400px;line-height:1.5}
+.viewer .close{position:absolute;top:14px;right:16px;color:#fff;font-size:26px;background:rgba(255,255,255,.15);border:none;cursor:pointer;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.viewer .nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.2);color:#fff;border:none;width:44px;height:44px;border-radius:50%;font-size:22px;cursor:pointer;backdrop-filter:blur(4px)}
 .viewer .prev{left:10px}.viewer .next{right:10px}
 .viewer .actions{display:flex;gap:10px;margin-top:14px}
-.viewer .actions button{border:none;padding:10px 16px;border-radius:20px;font-weight:700;cursor:pointer}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:110;padding:16px}
+.viewer .actions button{border:none;padding:11px 18px;border-radius:999px;font-weight:700;cursor:pointer;background:#fff;color:#111}
+.viewer .actions button:last-child{background:rgba(255,255,255,.15);color:#fff}
+/* MODAL ADD */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:110;padding:16px}
 .modal.open{display:flex}
-.modal-box{background:#fff;width:100%;max-width:420px;border-radius:14px;padding:20px}
-.modal-box textarea{width:100%;padding:12px;border:1.5px solid #ddd;border-radius:10px;margin-top:8px;font-size:14px;min-height:70px}
-.modal-box img{width:100%;border-radius:10px;margin-top:10px;max-height:240px;object-fit:cover}
+.modal-box{background:#fff;width:100%;max-width:420px;border-radius:18px;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.modal-box h2{text-align:center}
+.modal-box textarea{width:100%;padding:12px;border:1.5px solid #e4e6eb;border-radius:12px;margin-top:10px;font-size:14px;min-height:70px;outline:none;background:#f8f9fa;resize:none}
+.modal-box textarea:focus{border-color:var(--blue);background:#fff}
+.modal-box img{width:100%;border-radius:12px;margin-top:10px;max-height:240px;object-fit:cover}
 .bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;box-shadow:0 -1px 6px rgba(0,0,0,.1);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);justify-content:space-around;padding:12px;box-shadow:0 -1px 10px rgba(0,0,0,.08);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}.s-card{width:112px;height:190px}}
 </style>
-<link rel="stylesheet" href="Assets/theme.css">
-<script src="Assets/theme.js"></script>
 </head>
 <body>
 
 <header>
 <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="Rechercher" onclick="location.href='recherche.html'" readonly>
+<input class="search" placeholder="🔍 Rechercher" onclick="location.href='recherche.html'" readonly>
 <div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
 </header>
 
 <div class="wrap">
 <h1>✨ Stories</h1>
+<p class="sub">Elles disparaissent après 24h — profite-en !</p>
 <div class="row" id="row"></div>
 <div class="empty" id="emptyBox" style="display:none"><div class="big">✨</div><h3>Aucune story pour le moment</h3><p>Sois le premier à publier une story ! Elle disparaît après 24h.</p></div>
 </div>
@@ -85,13 +95,13 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 15px;border-ra
 </div>
 
 <div class="modal" id="modalAdd"><div class="modal-box">
-<h2>Nouvelle story</h2>
-<button style="width:100%;padding:12px;border:2px dashed #ccc;background:#fff;border-radius:10px;cursor:pointer;margin-top:10px" onclick="document.getElementById('storyFile').click()">📷 Choisir photo / vidéo</button>
+<h2>✨ Nouvelle story</h2>
+<button style="width:100%;padding:13px;border:2px dashed #d0d7e3;background:#f8f9fa;border-radius:12px;cursor:pointer;margin-top:14px;font-weight:700" onclick="document.getElementById('storyFile').click()">📷 Choisir photo / vidéo</button>
 <input type="file" id="storyFile" accept="image/*,video/*" style="display:none">
 <img id="storyPreview" style="display:none">
 <textarea id="storyText" placeholder="Ajoute un texte à ta story... (optionnel)"></textarea>
-<button style="width:100%;padding:13px;background:#1877F2;color:#fff;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin-top:10px" onclick="publierStory()">Publier la story</button>
-<button style="width:100%;padding:12px;background:#e4e6eb;border:none;border-radius:10px;font-weight:700;cursor:pointer;margin-top:8px" onclick="fermerAdd()">Annuler</button>
+<button style="width:100%;padding:13px;background:linear-gradient(135deg,#1877F2,#0d5fd6);color:#fff;border:none;border-radius:12px;font-weight:800;cursor:pointer;margin-top:10px;box-shadow:0 6px 16px rgba(24,119,242,.3)" onclick="publierStory()">Publier la story</button>
+<button style="width:100%;padding:12px;background:#e4e6eb;border:none;border-radius:12px;font-weight:700;cursor:pointer;margin-top:8px" onclick="fermerAdd()">Annuler</button>
 </div></div>
 
 <script type="module">
@@ -104,7 +114,6 @@ const monNom = localStorage.getItem('jasonbook_nom')||"";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
 document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
 let stories=[], groupe=[], indexGroupe=0, indexStory=0, mediaTemp="", typeMediaTemp="photo", progressInt=null;
-
 function grouper(){
   const parAuteur={};
   stories.forEach(s=>{ if(!parAuteur[s.auteurUid]) parAuteur[s.auteurUid]=[]; parAuteur[s.auteurUid].push(s); });
@@ -118,7 +127,7 @@ function rendre(){
   groupe.forEach((g,gi)=>{
     const s=g[0]; const div=document.createElement('div'); div.className='s-card'; div.onclick=()=>ouvrirViewer(gi,0);
     const media=s.type==='video' ? `<video src="${s.media}" style="width:100%;height:100%;object-fit:cover"></video>` : `<img src="${s.media}">`;
-    div.innerHTML=`${media}<div class="overlay"></div><div class="av">${s.photoAuteur?`<img src="${s.photoAuteur}">`:(s.auteurNom||"?").charAt(0)}</div><div class="name">${s.auteurNom||""} • ${g.length} story${g.length>1?'s':''}</div>`;
+    div.innerHTML=`${media}<div class="overlay"></div><div class="av"><span>${s.photoAuteur?`<img src="${s.photoAuteur}">`:(s.auteurNom||"?").charAt(0)}</span></div><div class="name">${s.auteurNom||""} • ${g.length} story${g.length>1?'s':''}</div>`;
     row.appendChild(div);
   });
 }
@@ -146,7 +155,6 @@ function afficherStory(){
   const img=document.getElementById('vImg'), vid=document.getElementById('vVideo');
   if(s.type==='video'){ img.style.display='none'; vid.style.display='block'; vid.src=s.media; vid.play(); }
   else { vid.style.display='none'; vid.pause(); img.style.display='block'; img.src=s.media; }
-  // Barre de progression 5 secondes
   clearInterval(progressInt); let w=0;
   progressInt=setInterval(()=>{ w+=2; const b=document.getElementById('bar-'+indexStory); if(b) b.style.width=w+"%"; if(w>=100){ clearInterval(progressInt); storySuiv(); } },100);
 }
@@ -164,7 +172,6 @@ window.storyPrec=()=>{
 };
 window.repondreStory=()=>{ const s=groupe[indexGroupe][indexStory]; location.href='messages.html?uid='+s.auteurUid; };
 window.supprimerStory=async()=>{ const s=groupe[indexGroupe][indexStory]; if(!confirm("Supprimer cette story ?")) return; await remove(ref(db,'jasonbook/stories/'+s.id)); fermerViewer(); };
-
 onValue(ref(db,'jasonbook/stories'), s=>{
   const d=s.val(); const now=Date.now();
   if(!d){ stories=[]; rendre(); return; }
