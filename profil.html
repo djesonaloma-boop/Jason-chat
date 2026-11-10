@@ -6,20 +6,15 @@
 <title>JASONBOOK - Mon Profil</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-/* ✅ BLOQUE LE GLISSEMENT DROITE / GAUCHE DE TOUTE LA PAGE */
 html{overflow-x:clip!important;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch;width:100%;max-width:100vw}
 body{overflow-x:clip!important;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch}
 img,video{max-width:100%}
 :root{--blue:#7C3AED;--blue2:#A855F7;--or:#FFC107;--bg:#0F0F14;--carte:#1C1C24;--grey:#A1A1AA;--line:#2A2A35}
 body{background:var(--bg);color:#fff;min-height:100vh;width:100%;max-width:100vw}
-header{background:#111;display:flex;align-items:center;gap:10px;padding:10px 12px;position:sticky;top:0;z-index:20;border-bottom:2px solid var(--or);width:100%;max-width:100vw;overflow:hidden}
+header{background:#111;display:flex;align-items:center;gap:10px;padding:12px 14px;position:sticky;top:0;z-index:20;border-bottom:2px solid var(--or);width:100%;max-width:100vw;overflow:hidden}
 .logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:20px;cursor:pointer;white-space:nowrap;flex-shrink:0}
 .logo span{width:34px;height:34px;min-width:34px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
 .logo i{color:var(--or);font-style:normal}
-header .search{flex:1;min-width:0;background:#2A2A35;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer;color:#fff}
-header .search::placeholder{color:#888}
-.icons{display:flex;gap:6px;align-items:center;flex-shrink:0}
-.icons a{width:36px;height:36px;min-width:36px;background:#2A2A35;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:17px}
 .avatar-mini{width:36px;height:36px;min-width:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;cursor:pointer;overflow:hidden;flex-shrink:0}
 .avatar-mini img{width:100%;height:100%;object-fit:cover}
 .cover-wrap{background:var(--carte);max-width:1000px;width:calc(100% - 24px);margin:12px auto 0;padding-bottom:14px;border-radius:16px;border:1px solid var(--line);overflow:visible;text-align:center;position:relative}
@@ -33,11 +28,9 @@ header .search::placeholder{color:#888}
 .profile-info{flex:1;min-width:0;padding-bottom:5px;margin-top:10px;text-align:center;width:100%}
 .profile-info h1{font-size:28px;color:#fff;word-break:break-word}
 .profile-info p{color:var(--grey);font-size:14px;margin-top:4px;line-height:1.4;word-break:break-word}
-/* ✅ BOUTONS : ILS RESTENT SUR 2 LIGNES MAX, ILS NE DÉPASSENT PLUS */
 .profile-btns{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:5px;justify-content:center;margin-top:10px;width:100%}
 .profile-btns button{padding:10px 16px;border:none;border-radius:999px;font-weight:800;cursor:pointer;font-size:14px;white-space:nowrap;flex:0 1 auto;max-width:100%}
 .btn-blue{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff}.btn-grey{background:#2A2A35;color:#fff}
-/* ✅ ONGLETS : LES 4 SUR UNE SEULE LIGNE, ÇA GLISSE DEDANS, PAS TOUTE LA PAGE */
 .tabs{display:flex;gap:5px;padding:10px 12px;border-top:1px solid var(--line);margin-top:12px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;justify-content:flex-start;width:100%}
 .tabs::-webkit-scrollbar{display:none}
 .tabs button{border:none;background:none;padding:9px 14px;font-weight:700;cursor:pointer;border-radius:999px;white-space:nowrap;font-size:14px;color:var(--grey);flex:0 0 auto}
@@ -58,16 +51,17 @@ header .search::placeholder{color:#888}
 .post img.main{width:100%;max-width:100%;border-radius:10px;max-height:500px;object-fit:cover;display:block}
 .actions{display:flex;justify-content:space-around;border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
 .actions button{border:none;background:none;font-weight:700;color:var(--grey);cursor:pointer;padding:7px;font-size:13px}
+.ami-row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.ami-row .avatar-mini{width:52px;height:52px;min-width:52px;font-size:20px}
+.ami-row b{font-size:16px;color:#fff}
+.ami-row small{color:var(--grey)}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
 .modal.open{display:flex}
 .modal-box{background:var(--carte);color:#fff;width:100%;max-width:430px;border-radius:14px;padding:20px;border:1px solid var(--line)}
 .modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:10px;margin-top:8px;font-size:14px;outline:none;background:#2A2A35;color:#fff}
 .modal-box input:focus,.modal-box textarea:focus{border-color:var(--blue);background:#2A2A35}
 .modal-box textarea{min-height:70px;resize:vertical}
-.bottom-nav{display:none}
-/* ✅ SUR TÉLÉPHONE : ON CACHE LA RECHERCHE POUR QUE ÇA RENTRE */
 @media(max-width:800px){
-  header .search{display:none}
   .left{display:none}
   .layout{padding:0 8px 30px;flex-direction:column}
   .right{width:100%}
@@ -75,8 +69,6 @@ header .search::placeholder{color:#888}
   .cover-wrap{width:calc(100% - 16px)}
   .big-avatar{width:120px;height:120px;font-size:50px}
   .profile-row{padding:0 12px;margin-top:-55px}
-  .bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#111;justify-content:space-around;padding:11px;border-top:2px solid var(--or);z-index:30}
-  .bottom-nav a{text-decoration:none;font-size:22px;color:#fff}
 }
 </style>
 </head>
@@ -84,8 +76,6 @@ header .search::placeholder{color:#888}
 
 <header>
 <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="🔍 Rechercher" onclick="location.href='recherche.html'" readonly>
-<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar-mini" id="headerAvatar" onclick="location.href='profil.html'">?</div></div>
 </header>
 
 <div class="cover-wrap">
@@ -128,11 +118,10 @@ header .search::placeholder{color:#888}
 </div>
 
 <div class="right" id="tabApropos" style="display:none"><div class="card"><h3>À propos</h3><div id="aproposFull"></div></div></div>
-<div class="right" id="tabAmis" style="display:none"><div class="card"><h3>Mes amis</h3><div id="amisFull"></div></div></div>
+<!-- ✅ AMIS : MAINTENANT TU VOIS TON AMIE -->
+<div class="right" id="tabAmis" style="display:none"><div class="card"><h3>Mes amis (<span id="amisCount2">0</span>)</h3><div id="amisFull"></div><p id="noAmisFull" style="color:#A1A1AA;display:none">Aucun ami pour le moment</p><p id="loadingAmis" style="color:#A1A1AA">Chargement...</p></div></div>
 <div class="right" id="tabPhotos" style="display:none"><div class="card"><h3>Mes photos</h3><div id="photosFull" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div></div></div>
 </div>
-
-<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="notifications.html">🔔</a><a href="profil.html">👤</a></nav>
 
 <div class="modal" id="modalEdit"><div class="modal-box">
 <h2>Modifier le profil</h2>
@@ -153,6 +142,7 @@ const uid = localStorage.getItem('jasonbook_uid');
 if(!uid) location.href='index.html';
 let monProfil = null;
 function avatar(photo, lettre){ return photo ? `<img src="${photo}">` : lettre; }
+// ✅ QUAND TU CLIQUES SUR AMIS, ÇA RECHARGE LES AMIS
 window.showTab=(id,btn)=>{
   ['tabPosts','tabApropos','tabAmis','tabPhotos'].forEach(t=>document.getElementById(t).style.display='none');
   document.getElementById('tab'+id.charAt(0).toUpperCase()+id.slice(1)).style.display='block';
@@ -160,6 +150,7 @@ window.showTab=(id,btn)=>{
   const left=document.getElementById('leftCol');
   if(left) left.style.display = (id==='posts' ? '' : 'none');
   if(window.innerWidth<=800 && left) left.style.display='none';
+  if(id==='amis') chargerAmis();
 };
 window.ouvrirEdit=()=>{ if(!monProfil) return; document.getElementById('editBio').value=monProfil.bio||""; document.getElementById('editActivite').value=monProfil.activite||""; document.getElementById('editVille').value=monProfil.ville||""; document.getElementById('editPays').value=monProfil.pays||""; document.getElementById('modalEdit').classList.add('open'); };
 window.fermerEdit=()=>document.getElementById('modalEdit').classList.remove('open');
@@ -168,12 +159,51 @@ window.sauvegarderProfil=async()=>{
   fermerEdit();
 };
 window.deconnecter=()=>{ localStorage.clear(); location.href='index.html'; };
+// ✅ FONCTION AMIS RÉPARÉE : CHERCHE PAR CLÉ + PAR UID, ET AFFICHE MÊME SI LE NOM MANQUE
+async function chargerAmis(){
+  const box=document.getElementById('amisFull');
+  const boxLeft=document.getElementById('amisList');
+  const loading=document.getElementById('loadingAmis');
+  const noAmis=document.getElementById('noAmisFull');
+  if(loading) loading.style.display="block";
+  if(box) box.innerHTML="";
+  if(boxLeft) boxLeft.innerHTML="";
+  const snap=await get(ref(db,'jasonbook/amis/'+uid));
+  const data=snap.val()||{};
+  const ids=Object.keys(data);
+  document.getElementById('amisCount').innerText=ids.length+" ami"+(ids.length>1?"s":"");
+  const c2=document.getElementById('amisCount2'); if(c2) c2.innerText=ids.length;
+  if(loading) loading.style.display="none";
+  if(!ids.length){ if(noAmis) noAmis.style.display="block"; if(boxLeft) boxLeft.innerHTML='<p style="color:#A1A1AA;font-size:13px">Aucun ami pour le moment</p>'; return; }
+  if(noAmis) noAmis.style.display="none";
+  // On charge tous les users une fois, pour retrouver l'amie même si sa clé est différente
+  const tousSnap=await get(ref(db,'jasonbook/users'));
+  const tous=tousSnap.val()||{};
+  for(const fid of ids){
+    let u = tous[fid];
+    // Si pas trouvé par clé, cherche par champ uid / id
+    if(!u){
+      for(const [k,v] of Object.entries(tous)){
+        if(v && (v.uid===fid || v.id===fid)){ u=v; break; }
+      }
+    }
+    // Si toujours pas trouvé, on affiche quand même l'amie, cliquable
+    const nom = (u && u.nomComplet) ? u.nomComplet : "Ami";
+    const photo = (u && u.photoProfil) ? u.photoProfil : "";
+    const ville = (u && u.ville) ? u.ville : "";
+    const lettre = nom.charAt(0).toUpperCase();
+    const html=`<div class="ami-row" onclick="location.href='profil-ami.html?uid=${fid}'"><div class="avatar-mini">${avatar(photo, lettre)}</div><div style="flex:1"><b>${nom}</b><br><small>${ville} • Appuie pour voir son profil</small></div><div style="font-size:20px">›</div></div>`;
+    if(box) box.innerHTML+=html;
+    if(boxLeft) boxLeft.innerHTML+=`<div style="display:flex;gap:10px;align-items:center;padding:8px 0;cursor:pointer" onclick="location.href='profil-ami.html?uid=${fid}'"><div class="avatar-mini">${avatar(photo, lettre)}</div><div style="font-size:14px;font-weight:600">${nom}</div></div>`;
+  }
+}
+// On charge les amis au départ aussi, pour la colonne de gauche
+chargerAmis();
 onValue(ref(db,'jasonbook/users/'+uid), (snap)=>{
   const u=snap.val(); if(!u) return; monProfil=u;
   const lettre=(u.prenom||u.nom||"?").charAt(0).toUpperCase();
   document.getElementById('bigAvatar').innerHTML = avatar(u.photoProfil, lettre)+'<div class="cam">📷</div>';
-  document.getElementById('headerAvatar').innerHTML = avatar(u.photoProfil, lettre);
-  document.getElementById('createAvatar').innerHTML = avatar(u.photoProfil, lettre);
+  const ca=document.getElementById('createAvatar'); if(ca) ca.innerHTML = avatar(u.photoProfil, lettre);
   document.getElementById('nomAffiche').innerText = u.nomComplet||"";
   document.getElementById('bioAffiche').innerText = u.bio||"";
   document.getElementById('metaAffiche').innerText = `${u.activite||""} • ${u.ville||""} • ${u.pays||""}`;
@@ -205,16 +235,6 @@ onValue(ref(db,'jasonbook/posts'), (snap)=>{
     if(p.photoUrl){ grid.innerHTML+=`<img src="${p.photoUrl}" style="width:100%;height:80px;object-fit:cover;border-radius:8px">`; full.innerHTML+=`<img src="${p.photoUrl}" style="width:100%;border-radius:10px">`; }
   });
   if(!grid.innerHTML) document.getElementById('noPhotos').style.display="block"; else document.getElementById('noPhotos').style.display="none";
-});
-onValue(ref(db,'jasonbook/amis/'+uid), async (snap)=>{
-  const data=snap.val(); const box=document.getElementById('amisList'); const full=document.getElementById('amisFull'); box.innerHTML=""; full.innerHTML="";
-  if(!data){ box.innerHTML='<p style="color:#A1A1AA;font-size:13px">Aucun ami pour le moment</p>'; full.innerHTML=box.innerHTML; document.getElementById('amisCount').innerText="0 ami"; return; }
-  const ids=Object.keys(data); document.getElementById('amisCount').innerText=ids.length+" ami"+(ids.length>1?"s":"");
-  for(const fid of ids){
-    const s=await get(ref(db,'jasonbook/users/'+fid)); const u=s.val(); if(!u) continue;
-    const html=`<div style="display:flex;gap:10px;align-items:center;padding:8px 0;cursor:pointer" onclick="location.href='profil-ami.html?uid=${fid}'"><div class="avatar-mini">${avatar(u.photoProfil,(u.prenom||"?").charAt(0))}</div><div style="font-size:14px;font-weight:600">${u.nomComplet||""}</div></div>`;
-    box.innerHTML+=html; full.innerHTML+=html;
-  }
 });
 </script>
 </body>
