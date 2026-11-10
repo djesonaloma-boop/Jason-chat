@@ -7,59 +7,76 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
 html,body{height:100%;overflow:hidden;background:#000;color:#fff}
-body{overscroll-behavior:none}
-/* HEADER TIKTOK : TOUT PETIT EN HAUT */
-header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:center;gap:20px;padding:12px;background:linear-gradient(to bottom,rgba(0,0,0,.7),transparent);font-weight:800;font-size:15px}
-header span{opacity:.6;cursor:pointer}
-header span.active{opacity:1;border-bottom:2px solid #fff;padding-bottom:3px}
-header .logo{position:absolute;left:12px;top:10px;font-weight:900;font-size:18px;cursor:pointer;opacity:1}
-header .logo i{color:#FFC107;font-style:normal}
-/* CONTAINER SWIPE COMME TIKTOK */
-.feed{height:100dvh;overflow-y:auto;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch}
+header{position:fixed;top:0;left:0;right:0;z-index:60;background:linear-gradient(to bottom,rgba(0,0,0,.9),transparent);padding:10px 12px 12px}
+.topbar{display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:900;font-size:19px;cursor:pointer}
+.logo i{color:#FFC107;font-style:normal}
+.btn-publier{background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;border:none;padding:8px 14px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.cats button{flex-shrink:0;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.45);color:#fff;padding:7px 13px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.cats button.active{background:#fff;color:#000;border-color:#fff}
+.feed{height:100dvh;overflow-y:auto;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch;padding-top:112px}
 .feed::-webkit-scrollbar{display:none}
-/* CHAQUE VIDÉO = PLEIN ÉCRAN */
-.v-card{position:relative;height:100dvh;width:100%;scroll-snap-align:start;scroll-snap-stop:always;background:#000;overflow:hidden;flex-shrink:0}
+.v-card{position:relative;height:calc(100dvh - 112px - 58px);width:100%;scroll-snap-align:start;scroll-snap-stop:always;background:#000;overflow:hidden;flex-shrink:0}
 .v-card video,.v-card iframe{width:100%;height:100%;object-fit:cover;border:none;background:#000;display:block}
-/* GRADIENT EN BAS POUR LIRE LE TEXTE */
-.v-card .shade{position:absolute;left:0;right:0;bottom:0;height:45%;background:linear-gradient(transparent,rgba(0,0,0,.75));pointer-events:none;z-index:2}
-/* INFO EN BAS À GAUCHE COMME TIKTOK */
-.v-info{position:absolute;left:12px;bottom:18px;right:80px;z-index:5}
+.shade{position:absolute;left:0;right:0;bottom:0;height:48%;background:linear-gradient(transparent,rgba(0,0,0,.78));pointer-events:none;z-index:2}
+.badge{position:absolute;top:10px;left:10px;z-index:5;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.3);padding:5px 10px;border-radius:999px;font-size:11px;font-weight:800}
+.badge.ia{background:linear-gradient(135deg,#7C3AED,#FFC107);border:none;color:#fff}
+.badge.dessin{background:linear-gradient(135deg,#FF9800,#FF5722);border:none}
+.badge.cours{background:linear-gradient(135deg,#2196F3,#00BCD4);border:none}
+.v-info{position:absolute;left:12px;bottom:16px;right:82px;z-index:5}
 .v-info b{font-size:16px;display:block}
-.v-info .ville{font-size:12px;opacity:.7}
+.v-info .ville{font-size:12px;opacity:.75}
 .v-info p{font-size:14px;margin-top:6px;line-height:1.4;white-space:pre-wrap;word-break:break-word}
-/* ✅ BOUTONS À DROITE EN BAS - COMME SUR TA CAPTURE */
-.v-actions{position:absolute;right:10px;bottom:70px;z-index:6;display:flex;flex-direction:column;gap:16px;align-items:center}
+.v-actions{position:absolute;right:10px;bottom:68px;z-index:6;display:flex;flex-direction:column;gap:14px;align-items:center}
 .v-actions .act{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;color:#fff;cursor:pointer}
-.v-actions .act .icon{width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:24px;backdrop-filter:blur(4px)}
+.v-actions .act .icon{width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:24px}
 .v-actions .act.liked .icon{color:#FFC107}
 .v-actions .act small{font-size:12px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.8)}
 .v-actions .av{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#FFC107);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;overflow:hidden;border:2px solid #fff}
 .v-actions .av img{width:100%;height:100%;object-fit:cover}
-/* BOUTON SUPPRIMER */
-.del{position:absolute;top:50px;right:12px;z-index:10;background:rgba(0,0,0,.5);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer}
-/* BARRE BAS J'AIME / COMMENTER / PARTAGER - AUSSI EN BAS */
-.bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:60;display:flex;justify-content:space-around;padding:10px 10px calc(10px + env(safe-area-inset-bottom));background:rgba(0,0,0,.85);border-top:1px solid #222;font-size:12px;font-weight:700}
-.bottom-bar button{border:none;background:none;color:#fff;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:12px}
+.del{position:absolute;top:40px;right:12px;z-index:10;background:rgba(0,0,0,.5);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:70;display:flex;justify-content:space-around;padding:10px 10px calc(10px + env(safe-area-inset-bottom));background:rgba(0,0,0,.9);border-top:1px solid #222}
+.bottom-bar button{border:none;background:none;color:#fff;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:11px;font-weight:700}
 .bottom-bar button span{font-size:20px}
-.empty{height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#A1A1AA;text-align:center;padding:20px}
+.empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#A1A1AA;text-align:center;padding:20px}
 .empty h3{color:#fff}
+.count{position:fixed;top:118px;right:12px;z-index:65;background:rgba(0,0,0,.6);padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700}
 </style>
 </head>
 <body>
 
 <header>
-<div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i></div>
-<span>Abonnements</span><span class="active">Pour toi</span><span>🔍</span>
+<div class="topbar">
+<div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> 🎥</div>
+<button class="btn-publier" onclick="location.href='creer-post.html'">➕ Publier Vidéo</button>
+</div>
+<!-- ✅ TOUTES TES CATÉGORIES -->
+<div class="cats" id="cats">
+<button class="active" onclick="filtrer('tout',this)">🎬 Tout</button>
+<button onclick="filtrer('humour',this)">😂 Humour</button>
+<button onclick="filtrer('informatique',this)">💻 Informatique</button>
+<button onclick="filtrer('cours',this)">📖 Cours</button>
+<button onclick="filtrer('dessin',this)">🎨 Dessin Animé</button>
+<button onclick="filtrer('manga',this)">📚 Manga / Anime</button>
+<button onclick="filtrer('musique',this)">🎵 Musique</button>
+<button onclick="filtrer('sport',this)">⚽ Sport</button>
+<button onclick="filtrer('motivation',this)">🙏 Motivation</button>
+<button onclick="filtrer('famille',this)">❤️ Famille</button>
+<button onclick="filtrer('cuisine',this)">🍲 Cuisine</button>
+<button onclick="filtrer('enfant',this)">👶 Enfant</button>
+</div>
 </header>
 
-<!-- ✅ FEED PLEIN ÉCRAN -->
+<div class="count" id="count">20 / 200 vidéos</div>
+
 <div class="feed" id="feed">
-<div class="empty" id="emptyBox" style="display:none"><div style="font-size:50px">🎥</div><h3>Aucune vidéo</h3><p>Publie la première vidéo !</p><button onclick="location.href='creer-post.html'" style="background:#7C3AED;border:none;color:#fff;padding:12px 20px;border-radius:999px;font-weight:800">➕ Publier</button></div>
 <div id="list"></div>
+<div class="empty" id="emptyBox" style="display:none"><div style="font-size:50px">🎥</div><h3>Aucune vidéo dans cette catégorie</h3><p>Publie la première vidéo !</p><button onclick="location.href='creer-post.html'" style="background:#7C3AED;border:none;color:#fff;padding:12px 20px;border-radius:999px;font-weight:800">➕ Publier</button></div>
 </div>
 
-<!-- ✅ BOUTONS EN BAS DE L'ÉCRAN : J'AIME / COMMENTER / PARTAGER -->
-<div class="bottom-bar" id="bottomBar">
+<div class="bottom-bar">
 <button onclick="likeCurrent()"><span>❤️</span><b id="bLike">J'aime</b></button>
 <button onclick="commentCurrent()"><span>💬</span><b id="bCom">Commenter</b></button>
 <button onclick="shareCurrent()"><span>↗️</span><b id="bShare">Partager</b></button>
@@ -68,44 +85,66 @@ header .logo i{color:#FFC107;font-style:normal}
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, onValue, set, remove, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
-const monNom = localStorage.getItem('jasonbook_nom')||"";
-const maPhoto = localStorage.getItem('jasonbook_photo')||"";
-let mesLikes=new Set();
-let videos=[];
-let currentId=null;
+let mesLikes=new Set(); let videosFirebase=[]; let filtreActuel='tout'; let currentId=null;
 
-// Tes 3 TikTok à la une - elles passent en plein écran aussi
-const tiktokUne=[
-{id:"t1",nomAuteur:"@narria_stories",photoAuteur:"",texte:"Regardez ça 🔥",tiktokId:"7701397556701433120",likesCount:118900,commentairesCount:1800,partagesCount:691,date:"TikTok"},
-{id:"t2",nomAuteur:"@wildlols2",photoAuteur:"",texte:"😂 Trop drôle",tiktokId:"7706453589807484182",likesCount:191000,commentairesCount:3000,partagesCount:1600,date:"TikTok"},
-{id:"t3",nomAuteur:"@famille.adams6",photoAuteur:"",texte:"❤️ Famille Adams",tiktokId:"7700655013655366933",likesCount:101500,commentairesCount:868,partagesCount:2400,date:"TikTok"},
+// ✅ 20 VIDÉOS DE BASE - TOUTES SORTES
+let videosBase=[
+{id:"t1",nomAuteur:"@narria_stories",texte:"Regardez ça 🔥",tiktokId:"7701397556701433120",categorie:"humour",likesCount:118900,commentairesCount:1800,partagesCount:691,date:"TikTok"},
+{id:"t2",nomAuteur:"@wildlols2",texte:"😂 Trop drôle",tiktokId:"7706453589807484182",categorie:"humour",likesCount:191000,commentairesCount:3000,partagesCount:1600,date:"TikTok"},
+{id:"t3",nomAuteur:"@famille.adams6",texte:"❤️ Famille Adams",tiktokId:"7700655013655366933",categorie:"famille",likesCount:101500,commentairesCount:868,partagesCount:2400,date:"TikTok"},
+{id:"y1",nomAuteur:"Passoire",texte:"Piyo Piyo 😂",youtubeId:"55ZtjTjbJJg",categorie:"humour",likesCount:110000,commentairesCount:1200,partagesCount:800,date:"YouTube"},
+{id:"y2",nomAuteur:"Nzela",texte:"Mvoula 🇨🇬",youtubeId:"x4W7PNu1ZLs",categorie:"musique",likesCount:5000,commentairesCount:300,partagesCount:200,date:"YouTube"},
+{id:"y3",nomAuteur:"Bru-Kin",texte:"Become Happy",youtubeId:"wIU85SyzWkU",categorie:"musique",likesCount:8000,commentairesCount:400,partagesCount:300,date:"YouTube"},
+{id:"y4",nomAuteur:"Amapiano",texte:"Pure African Rhythm 💃",youtubeId:"xajRXkMexVQ",categorie:"musique",likesCount:15000,commentairesCount:600,partagesCount:500,date:"YouTube"},
+// ✅ DESSIN ANIMÉ / ENFANT - EXEMPLES À REMPLACER PAR TES VIDÉOS
+{id:"d1",nomAuteur:"JASONBOOK Kids",texte:"🎨 Dessin Animé : Kito et son ours apprennent les couleurs ! Rouge, Bleu, Jaune. Pour les petits de Kinshasa",categorie:"dessin",videoUrl:"",isIA:true,typeLabel:"Dessin Animé",likesCount:5200,commentairesCount:340,partagesCount:800,date:"Dessin Animé • Ep 1"},
+{id:"d2",nomAuteur:"JASONBOOK Kids",texte:"👶 Dessin Animé : Kito apprend à compter 1,2,3... avec les mangues du marché !",categorie:"enfant",videoUrl:"",isIA:true,typeLabel:"Dessin Animé",likesCount:4300,commentairesCount:280,partagesCount:650,date:"Dessin Animé • Ep 2"},
+{id:"d3",nomAuteur:"JASONBOOK Kids",texte:"🎨 Masha style : La petite fille et l'ours qui apprennent à dire Bonjour en Lingala",categorie:"dessin",videoUrl:"",isIA:true,typeLabel:"Dessin Animé",likesCount:6100,commentairesCount:410,partagesCount:900,date:"Dessin Animé • Ep 3"},
+// ✅ MANGA / ANIME
+{id:"m1",nomAuteur:"JASONBOOK Manga",texte:"📚 Manga : Le jeune héros de Kinshasa qui devient le plus fort du quartier ! Ep 1",categorie:"manga",videoUrl:"",isIA:true,typeLabel:"Manga",likesCount:7800,commentairesCount:520,partagesCount:1100,date:"Manga • Ep 1"},
+{id:"m2",nomAuteur:"JASONBOOK Manga",texte:"📚 Anime : La fille qui dessine des mangas sur son téléphone et devient célèbre !",categorie:"manga",videoUrl:"",isIA:true,typeLabel:"Manga",likesCount:6500,commentairesCount:430,partagesCount:950,date:"Manga • Ep 2"},
+// ✅ COURS
+{id:"c1",nomAuteur:"JASONBOOK Cours",texte:"📖 Cours : Maths - Comment calculer vite ? Addition facile pour les enfants",categorie:"cours",videoUrl:"",isIA:true,typeLabel:"Cours",likesCount:3200,commentairesCount:180,partagesCount:400,date:"Cours • Maths"},
+{id:"c2",nomAuteur:"JASONBOOK Cours",texte:"📖 Cours : Anglais - 10 mots en anglais pour parler avec les étrangers",categorie:"cours",videoUrl:"",isIA:true,typeLabel:"Cours",likesCount:2900,commentairesCount:150,partagesCount:380,date:"Cours • Anglais"},
+{id:"c3",nomAuteur:"JASONBOOK Cours",texte:"💻 Informatique : C'est quoi un ordinateur ? En 1 minute, Français + Lingala",categorie:"informatique",videoUrl:"",isIA:true,typeLabel:"Cours Info",likesCount:4100,commentairesCount:220,partagesCount:500,date:"Cours • Info 1"},
+{id:"c4",nomAuteur:"JASONBOOK Cours",texte:"💻 Informatique : Comment créer un compte JASONBOOK ? Tuto facile",categorie:"informatique",videoUrl:"",isIA:true,typeLabel:"Cours Info",likesCount:3600,commentairesCount:190,partagesCount:450,date:"Cours • Info 2"},
+// ✅ HUMOUR IA + MOTIVATION
+{id:"h1",nomAuteur:"JASONBOOK IA",texte:"😂 Humour : Le papa qui allume l'ordinateur avec la télécommande !",categorie:"humour",videoUrl:"",isIA:true,typeLabel:"Humour IA",likesCount:8900,commentairesCount:560,partagesCount:1200,date:"Humour IA"},
+{id:"h2",nomAuteur:"JASONBOOK IA",texte:"😂 Humour : L'élève qui dit : Prof, mon ordinateur a mangé mon devoir !",categorie:"humour",videoUrl:"",isIA:true,typeLabel:"Humour IA",likesCount:9200,commentairesCount:610,partagesCount:1300,date:"Humour IA"},
+{id:"mo1",nomAuteur:"JASONBOOK IA",texte:"🙏 Motivation : Ne jamais abandonner, même si ton ordinateur plante !",categorie:"motivation",videoUrl:"",isIA:true,typeLabel:"Motivation",likesCount:6700,commentairesCount:340,partagesCount:900,date:"Motivation"},
+{id:"cu1",nomAuteur:"JASONBOOK Cuisine",texte:"🍲 Cuisine : Comment faire le Pondu comme à Kinshasa ? Recette facile",categorie:"cuisine",videoUrl:"",isIA:true,typeLabel:"Cuisine",likesCount:4800,commentairesCount:260,partagesCount:700,date:"Cuisine"},
 ];
 
 function fmt(n){ if(n>=1000) return (n/1000).toFixed(1).replace('.0','')+'K'; return n||0; }
-
+function getAll(){ let all=[...videosBase,...videosFirebase]; if(filtreActuel!=='tout') all=all.filter(v=>v.categorie===filtreActuel); return all; }
 function afficher(){
   const box=document.getElementById('list'); box.innerHTML="";
-  const all=[...tiktokUne,...videos];
+  const all=getAll();
+  document.getElementById('count').innerText = `${all.length} / 200 vidéos • ${filtreActuel==='tout'?'Tout':filtreActuel}`;
   if(!all.length){ document.getElementById('emptyBox').style.display="flex"; return; }
   document.getElementById('emptyBox').style.display="none";
   all.forEach(p=>{
     const liked=mesLikes.has(p.id);
     const div=document.createElement('div'); div.className='v-card'; div.dataset.id=p.id;
-    let media="";
-    if(p.tiktokId) media=`<iframe src="https://www.tiktok.com/embed/v2/${p.tiktokId}" allowfullscreen scrolling="no" allow="encrypted-media; picture-in-picture; autoplay"></iframe>`;
+    let media=""; let badgeTxt = p.isIA ? `🤖 ${p.typeLabel||'Vidéo IA'}` : p.tiktokId ? "🎵 TikTok" : p.youtubeId ? "▶️ YouTube" : "🎥 Vidéo";
+    let badgeClass = p.isIA ? (p.categorie==='dessin'||p.categorie==='enfant' ? "badge dessin" : p.categorie==='cours'||p.categorie==='informatique' ? "badge cours" : "badge ia") : "badge";
+    if(p.isIA && !p.videoUrl){
+      let emoji = p.categorie==='dessin'?'🎨':p.categorie==='manga'?'📚':p.categorie==='cours'?'📖':p.categorie==='informatique'?'💻':p.categorie==='cuisine'?'🍲':'🤖';
+      media=`<div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#1C1C24,#2A1A4A);text-align:center;padding:20px"><div style="font-size:60px">${emoji}</div><h3 style="margin:10px 0">${p.typeLabel||p.categorie}</h3><p style="opacity:.8;font-size:14px;line-height:1.5">${p.texte}</p><button onclick="location.href='creer-post.html'" style="margin-top:16px;background:#FFC107;border:none;padding:12px 20px;border-radius:999px;font-weight:800">➕ Mettre ma vidéo ici</button></div>`;
+    } else if(p.tiktokId) media=`<iframe src="https://www.tiktok.com/embed/v2/${p.tiktokId}" allowfullscreen scrolling="no" allow="encrypted-media; picture-in-picture"></iframe>`;
+    else if(p.youtubeId) media=`<iframe src="https://www.youtube.com/embed/${p.youtubeId}?mute=1" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
     else if(p.videoUrl) media=`<video src="${p.videoUrl}" autoplay muted loop playsinline preload="metadata"></video>`;
-    else if(p.tiktokUrl) media=`<div style="height:100%;display:flex;align-items:center;justify-content:center"><a href="${p.tiktokUrl}" target="_blank" style="color:#FFC107;font-weight:800">▶️ Voir la vidéo TikTok</a></div>`;
-
+    else media=`<div style="height:100%;display:flex;align-items:center;justify-content:center">🎥</div>`;
     div.innerHTML=`
+      <div class="${badgeClass}">${badgeTxt} • ${p.categorie||''}</div>
       ${p.auteurUid===uid?`<button class="del" onclick="supprimerVideo('${p.id}')">🗑️</button>`:""}
       ${media}
       <div class="shade"></div>
       <div class="v-info"><b>${p.nomAuteur||""}</b><div class="ville">${p.ville||""} • ${p.date||""}</div><p>${p.texte||""}</p></div>
-      <!-- ✅ BOUTONS COMME TIKTOK : À DROITE EN BAS -->
       <div class="v-actions">
         <div class="av" onclick="location.href='profil-ami.html?uid=${p.auteurUid||''}'">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div>
         <button class="act ${liked?'liked':''}" onclick="likerVideo('${p.id}',${p.likesCount||0})"><span class="icon">${liked?'❤️':'🤍'}</span><small>${fmt(p.likesCount||0)}</small></button>
@@ -114,54 +153,28 @@ function afficher(){
       </div>`;
     box.appendChild(div);
   });
-  // Détecter la vidéo visible pour la barre du bas
+  if(all[0]) currentId=all[0].id; majBarreBas();
   const feed=document.getElementById('feed');
   feed.onscroll=()=>{
     let best=null,bestTop=9999;
     document.querySelectorAll('.v-card').forEach(c=>{ const r=c.getBoundingClientRect(); if(Math.abs(r.top)<bestTop){bestTop=Math.abs(r.top); best=c;} });
     if(best) currentId=best.dataset.id;
-    // Play / pause : seule la vidéo visible joue
-    document.querySelectorAll('.v-card video').forEach(v=>{
-      const card=v.closest('.v-card'); const r=card.getBoundingClientRect();
-      if(Math.abs(r.top)<10) v.play().catch(()=>{}); else v.pause();
-    });
+    document.querySelectorAll('.v-card video').forEach(v=>{ const card=v.closest('.v-card'); const r=card.getBoundingClientRect(); if(Math.abs(r.top)<10) v.play().catch(()=>{}); else v.pause(); });
     majBarreBas();
   };
-  // 1ère vidéo
-  if(all[0]) currentId=all[0].id; majBarreBas();
 }
-function majBarreBas(){
-  const p=[...tiktokUne,...videos].find(x=>x.id===currentId); if(!p) return;
-  document.getElementById('bLike').innerText = fmt(p.likesCount||0)+' J\'aime';
-  document.getElementById('bCom').innerText = fmt(p.commentairesCount||0)+' Commenter';
-  document.getElementById('bShare').innerText = fmt(p.partagesCount||0)+' Partager';
-}
-window.likerVideo=async(id,actuel)=>{
-  const p=[...tiktokUne,...videos].find(x=>x.id===id);
-  if(String(id).startsWith('t')){ // vidéo à la une TikTok - like local
-    if(mesLikes.has(id)) mesLikes.delete(id); else mesLikes.add(id);
-    afficher(); return;
-  }
-  if(mesLikes.has(id)){ await remove(ref(db,'jasonbook/likes/'+uid+'/'+id)); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'), Math.max(0,actuel-1)); }
-  else { await set(ref(db,'jasonbook/likes/'+uid+'/'+id), true); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'), actuel+1); }
-};
+function majBarreBas(){ const p=getAll().find(x=>x.id===currentId); if(!p) return; document.getElementById('bLike').innerText = fmt(p.likesCount||0)+' J\'aime'; document.getElementById('bCom').innerText = fmt(p.commentairesCount||0)+' Commenter'; document.getElementById('bShare').innerText = fmt(p.partagesCount||0)+' Partager'; }
+window.filtrer=(cat,btn)=>{ filtreActuel=cat; document.querySelectorAll('.cats button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.getElementById('feed').scrollTop=0; afficher(); };
+window.likerVideo=async(id,actuel)=>{ if(String(id).length<=3 || String(id).startsWith('ia') || String(id).startsWith('d') || String(id).startsWith('m') || String(id).startsWith('c') || String(id).startsWith('h') || String(id).startsWith('y') || String(id).startsWith('t')){ if(mesLikes.has(id)) mesLikes.delete(id); else mesLikes.add(id); afficher(); return; } if(mesLikes.has(id)){ await remove(ref(db,'jasonbook/likes/'+uid+'/'+id)); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'), Math.max(0,actuel-1)); } else { await set(ref(db,'jasonbook/likes/'+uid+'/'+id), true); await set(ref(db,'jasonbook/posts/'+id+'/likesCount'), actuel+1); } };
 window.allerCommenter=(id)=>{ location.href='feed.html#comment-'+id; };
-window.partagerVideo=async(id,actuel)=>{
-  if(String(id).startsWith('t')){ alert("Lien copié ! Partage cette vidéo 📤"); return; }
-  await set(ref(db,'jasonbook/posts/'+id+'/partagesCount'), actuel+1);
-  alert("Partagé ! 🎉");
-};
-window.likeCurrent=()=>{ const p=[...tiktokUne,...videos].find(x=>x.id===currentId); if(p) likerVideo(p.id,p.likesCount||0); };
+window.partagerVideo=async(id,actuel)=>{ if(String(id).length<=3){ alert("Lien copié ! Partage cette vidéo 📤"); return; } await set(ref(db,'jasonbook/posts/'+id+'/partagesCount'), actuel+1); alert("Partagé ! 🎉"); };
+window.likeCurrent=()=>{ const p=getAll().find(x=>x.id===currentId); if(p) likerVideo(p.id,p.likesCount||0); };
 window.commentCurrent=()=>{ if(currentId) allerCommenter(currentId); };
-window.shareCurrent=()=>{ const p=[...tiktokUne,...videos].find(x=>x.id===currentId); if(p) partagerVideo(p.id,p.partagesCount||0); };
+window.shareCurrent=()=>{ const p=getAll().find(x=>x.id===currentId); if(p) partagerVideo(p.id,p.partagesCount||0); };
 window.supprimerVideo=async(id)=>{ if(!confirm("Supprimer cette vidéo ?")) return; await remove(ref(db,'jasonbook/posts/'+id)); };
-
 onValue(ref(db,'jasonbook/likes/'+uid), s=>{ const d=s.val(); mesLikes=new Set(d?Object.keys(d):[]); afficher(); });
-onValue(ref(db,'jasonbook/posts'), snap=>{
-  const data=snap.val();
-  videos=data?Object.entries(data).map(([id,p])=>({id,...p})).filter(p=>p.videoUrl||p.tiktokId||p.tiktokUrl).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[];
-  afficher();
-});
+onValue(ref(db,'jasonbook/posts'), snap=>{ const data=snap.val(); videosFirebase=data?Object.entries(data).map(([id,p])=>({id,...p,categorie:p.categorie||'tout'})).filter(p=>p.videoUrl||p.tiktokId||p.tiktokUrl||p.youtubeId).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; afficher(); });
+afficher();
 </script>
 </body>
 </html>
