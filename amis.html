@@ -39,12 +39,10 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 .wrap{max-width:700px;margin:14px auto;padding:0 10px 40px}
 .wrap h1{font-size:20px;letter-spacing:-.3px}
 .wrap .sub{color:var(--gris);font-size:12px;margin:3px 0 10px}
-/* ✅ ONGLETS EN PETIT */
 .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tabs button{border:none;background:var(--carte);color:#fff;padding:7px 11px;border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;border:1px solid var(--ligne);font-size:11px;flex-shrink:0}
 .tabs button.active{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff;border-color:transparent}
-/* ✅ LISTE EN PETIT - PHOTO EN BOULE À GAUCHE + NOM À CÔTÉ */
 .list{display:flex;flex-direction:column;gap:8px}
 .friend-row{display:flex;gap:10px;align-items:center;background:var(--carte);border:1px solid var(--ligne);border-radius:14px;padding:9px 10px}
 .friend-row .avatar{width:44px;height:44px;font-size:16px}
@@ -55,6 +53,7 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 .friend-row .btns button{border:none;padding:6px 11px;border-radius:999px;font-weight:700;cursor:pointer;font-size:11px;white-space:nowrap}
 .badge-nouveau{background:var(--or);color:#111;font-size:9px;font-weight:900;padding:2px 6px;border-radius:999px;margin-left:5px;vertical-align:middle}
 .badge-statut{background:#2A2A35;color:#A1A1AA;font-size:10px;padding:3px 7px;border-radius:999px;margin-left:5px;vertical-align:middle}
+.badge-demande{background:#E0245E;color:#fff;font-size:10px;padding:3px 7px;border-radius:999px;margin-left:5px;vertical-align:middle}
 .btn-blue{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}
 .btn-grey{background:#2A2A35;color:#fff}
 .btn-green{background:#22C55E;color:#fff}
@@ -64,6 +63,7 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 .search-big::placeholder{color:#888}
 .empty{text-align:center;color:var(--gris);padding:28px 10px;background:var(--carte);border-radius:14px;border:1px solid var(--ligne);font-size:13px}
 .empty .big{font-size:36px;width:60px;height:60px;background:#2A2A35;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.debug{font-size:11px;color:#888;text-align:center;padding:8px}
 </style>
 </head>
 <body>
@@ -127,7 +127,6 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 <div class="wrap">
 <h1>Amis</h1>
 <p class="sub" id="subText">Gère tes demandes, tes amis et découvre du monde</p>
-<!-- ✅ TOUS + LES AUTRES EN PETIT -->
 <div class="tabs">
 <button id="tabBtn-tous" class="active" onclick="showTab('tous')">Tous <span id="countTous"></span></button>
 <button id="tabBtn-demandes" onclick="showTab('demandes')">Demandes reçues <span id="countDemandes"></span></button>
@@ -137,10 +136,11 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 </div>
 <input class="search-big" id="searchAmis" placeholder="🔍 Rechercher parmi TOUTES les personnes..." oninput="filtrer()">
 <div id="section-tous"><div class="list" id="gridTous"></div><div class="empty" id="emptyTous" style="display:none"><div class="big">👥</div><p>Aucune personne pour le moment</p></div></div>
-<div id="section-demandes" style="display:none"><div class="list" id="gridDemandes"></div><div class="empty" id="emptyDemandes" style="display:none"><div class="big">👥</div><p>Aucune demande d'ami pour le moment</p></div></div>
+<div id="section-demandes" style="display:none"><div class="list" id="gridDemandes"></div><div class="empty" id="emptyDemandes" style="display:none"><div class="big">📩</div><p>Aucune demande reçue.<br>Personne ne t'a encore envoyé de demande.<br><br>Si quelqu'un t'envoie, il apparaîtra ICI avec <b>✅ Accepter</b></p></div></div>
 <div id="section-amis" style="display:none"><div class="list" id="gridAmis"></div><div class="empty" id="emptyAmis" style="display:none"><div class="big">👥</div><p>Tu n'as pas encore d'ami.<br>Découvre des personnes et ajoute-les !</p></div></div>
 <div id="section-envoyees" style="display:none"><div class="list" id="gridEnvoyees"></div><div class="empty" id="emptyEnvoyees" style="display:none"><div class="big">📤</div><p>Aucune demande envoyée</p></div></div>
 <div id="section-decouvrir" style="display:none"><div class="list" id="gridDecouvrir"></div><div class="empty" id="emptyDecouvrir" style="display:none"><div class="big">🌍</div><p>Aucune personne à découvrir pour le moment</p></div></div>
+<div class="debug" id="debugText"></div>
 </div>
 
 <script type="module">
@@ -159,7 +159,7 @@ window.ouvrirMenu=()=>{ document.getElementById('drawer').classList.add('open');
 window.fermerMenu=()=>{ document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); };
 window.deconnecter=()=>{ if(!confirm("Tu veux te déconnecter ?")) return; localStorage.clear(); location.href='index.html'; };
 function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; e.innerText=''; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
-let tousUsers=[], mesAmisIds=new Set(), demandesRecues=[], demandesEnvoyeesIds=new Set(), tabActuel='tous';
+let tousUsers=[], mesAmisIds=new Set(), demandesRecuesIds=new Set(), demandesRecuesData={}, demandesEnvoyeesIds=new Set(), tabActuel='tous';
 window.showTab=(t)=>{
   tabActuel=t;
   ['tous','demandes','amis','envoyees','decouvrir'].forEach(x=>{
@@ -176,34 +176,50 @@ function matchRecherche(u){
   return txt.includes(q);
 }
 function avatar(photo, lettre){ return photo ? `<img src="${photo}">` : lettre; }
-// ✅ PETITE LIGNE : BOULE À GAUCHE + NOM À CÔTÉ + PETITS BOUTONS
+// ✅ ON CHERCHE LE PROFIL DANS tousUsers, SINON ON AFFICHE QUAND MÊME AVEC LE NOM DE LA DEMANDE
+function getUserPourUid(targetUid){
+  const trouve = tousUsers.find(u=>u.uid===targetUid);
+  if(trouve) return trouve;
+  const d = demandesRecuesData[targetUid] || {};
+  return { uid:targetUid, nomComplet: d.deNom || "Utilisateur...", prenom:"?", photoProfil:"", pays:"", activite:"Nouveau compte" };
+}
 function carte(u, type){
   const lettre=(u.prenom||u.nom||u.nomComplet||"?").charAt(0).toUpperCase();
   const estNouveau = u.timestamp && (Date.now() - u.timestamp < 7*24*60*60*1000);
   let btns="", statut="";
-  if(type==='demande'){ btns=`<button class="btn-green" onclick="accepter('${u.uid}')">✅ Accepter</button><button class="btn-red" onclick="refuser('${u.uid}')">Refuser</button>`; statut='<span class="badge-statut">Demande reçue</span>'; }
+  if(type==='demande'){ btns=`<button class="btn-green" onclick="accepter('${u.uid}')">✅ Accepter</button><button class="btn-red" onclick="refuser('${u.uid}')">Refuser</button>`; statut='<span class="badge-demande">📩 Demande reçue</span>'; }
   if(type==='ami'){ btns=`<button class="btn-blue" onclick="location.href='messages.html?uid=${u.uid}'">💬 Message</button><button class="btn-grey" onclick="retirerAmi('${u.uid}')">Retirer</button>`; statut='<span class="badge-statut">Ami</span>'; }
   if(type==='envoyee'){ btns=`<button class="btn-grey" disabled>En attente...</button><button class="btn-red" onclick="annulerDemande('${u.uid}')">Annuler</button>`; statut='<span class="badge-statut">Envoyée</span>'; }
   if(type==='decouvrir'){ btns=`<button class="btn-or" onclick="envoyerDemande('${u.uid}')">➕ Ajouter</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Voir le profil</button>`; }
   if(type==='tous'){
-    if(mesAmisIds.has(u.uid)){ btns=`<button class="btn-blue" onclick="location.href='messages.html?uid=${u.uid}'">💬 Message</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Voir le profil</button>`; statut='<span class="badge-statut">Ami</span>'; }
-    else if(demandesRecues.some(d=>d.uid===u.uid)){ btns=`<button class="btn-green" onclick="accepter('${u.uid}')">✅ Accepter</button><button class="btn-red" onclick="refuser('${u.uid}')">Refuser</button>`; statut='<span class="badge-statut">Demande reçue</span>'; }
+    if(demandesRecuesIds.has(u.uid)){ btns=`<button class="btn-green" onclick="accepter('${u.uid}')">✅ Accepter</button><button class="btn-red" onclick="refuser('${u.uid}')">Refuser</button>`; statut='<span class="badge-demande">📩 Demande reçue</span>'; }
+    else if(mesAmisIds.has(u.uid)){ btns=`<button class="btn-blue" onclick="location.href='messages.html?uid=${u.uid}'">💬 Message</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Voir le profil</button>`; statut='<span class="badge-statut">Ami</span>'; }
     else if(demandesEnvoyeesIds.has(u.uid)){ btns=`<button class="btn-grey" disabled>En attente...</button><button class="btn-red" onclick="annulerDemande('${u.uid}')">Annuler</button>`; statut='<span class="badge-statut">Envoyée</span>'; }
     else { btns=`<button class="btn-or" onclick="envoyerDemande('${u.uid}')">➕ Ajouter</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Voir le profil</button>`; }
   }
   return `<div class="friend-row"><div class="avatar" onclick="location.href='profil-ami.html?uid=${u.uid}'">${avatar(u.photoProfil, lettre)}</div><div class="info"><b>${u.nomComplet||u.prenom||"Sans nom"}${estNouveau?'<span class="badge-nouveau">🆕</span>':''}${statut}</b><small>${u.activite||""} • ${u.pays||""}</small><div class="btns">${btns}</div></div></div>`;
 }
 function rendre(){
-  // TOUS
-  const tousFiltre = tousUsers.filter(matchRecherche).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+  // ✅ DEMANDES REÇUES - ON CONSTRUIT À PARTIR DES IDS, MÊME SI LE PROFIL EST VIDE
+  const demList = Array.from(demandesRecuesIds).map(id=>getUserPourUid(id)).filter(matchRecherche);
+  const gD=document.getElementById('gridDemandes'); gD.innerHTML=""; document.getElementById('emptyDemandes').style.display = demList.length? 'none':'block';
+  demList.forEach(u=> gD.innerHTML+=carte(u,'demande'));
+  document.getElementById('countDemandes').innerText = demandesRecuesIds.size? `(${demandesRecuesIds.size})` : "";
+  setBadge('badgeAmis', demandesRecuesIds.size);
+  // TOUS - on inclut aussi les demandeurs qui ne sont pas encore dans tousUsers
+  const tousMap = new Map();
+  tousUsers.forEach(u=>tousMap.set(u.uid, u));
+  demList.forEach(u=>{ if(!tousMap.has(u.uid)) tousMap.set(u.uid, u); });
+  const tousFiltre = Array.from(tousMap.values()).filter(matchRecherche).sort((a,b)=>{
+    // Demandes reçues en premier dans Tous
+    const aDem = demandesRecuesIds.has(a.uid) ? 0 : 1;
+    const bDem = demandesRecuesIds.has(b.uid) ? 0 : 1;
+    if(aDem!==bDem) return aDem-bDem;
+    return (b.timestamp||0)-(a.timestamp||0);
+  });
   const gT=document.getElementById('gridTous'); gT.innerHTML=""; document.getElementById('emptyTous').style.display = tousFiltre.length? 'none':'block';
   tousFiltre.forEach(u=> gT.innerHTML+=carte(u,'tous'));
-  document.getElementById('countTous').innerText = tousUsers.length? `(${tousUsers.length})` : "";
-  const demFiltre = demandesRecues.filter(matchRecherche);
-  const gD=document.getElementById('gridDemandes'); gD.innerHTML=""; document.getElementById('emptyDemandes').style.display = demFiltre.length? 'none':'block';
-  demFiltre.forEach(u=> gD.innerHTML+=carte(u,'demande'));
-  document.getElementById('countDemandes').innerText = demandesRecues.length? `(${demandesRecues.length})` : "";
-  setBadge('badgeAmis', demandesRecues.length);
+  document.getElementById('countTous').innerText = tousMap.size? `(${tousMap.size})` : "";
   const amis=tousUsers.filter(u=>mesAmisIds.has(u.uid) && matchRecherche(u));
   const gA=document.getElementById('gridAmis'); gA.innerHTML=""; document.getElementById('emptyAmis').style.display = amis.length? 'none':'block';
   amis.forEach(u=> gA.innerHTML+=carte(u,'ami'));
@@ -211,17 +227,20 @@ function rendre(){
   const env=tousUsers.filter(u=>demandesEnvoyeesIds.has(u.uid) && matchRecherche(u));
   const gE=document.getElementById('gridEnvoyees'); gE.innerHTML=""; document.getElementById('emptyEnvoyees').style.display = env.length? 'none':'block';
   env.forEach(u=> gE.innerHTML+=carte(u,'envoyee'));
-  const dec=tousUsers.filter(u=>!mesAmisIds.has(u.uid) && !demandesEnvoyeesIds.has(u.uid) && !demandesRecues.some(d=>d.uid===u.uid) && matchRecherche(u)).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+  const dec=tousUsers.filter(u=>!mesAmisIds.has(u.uid) && !demandesEnvoyeesIds.has(u.uid) && !demandesRecuesIds.has(u.uid) && matchRecherche(u)).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
   const gDec=document.getElementById('gridDecouvrir'); gDec.innerHTML=""; document.getElementById('emptyDecouvrir').style.display = dec.length? 'none':'block';
   dec.forEach(u=> gDec.innerHTML+=carte(u,'decouvrir'));
   document.getElementById('countDecouvrir').innerText = dec.length? `(${dec.length})` : "";
   const q=(document.getElementById('searchAmis').value||"").trim();
   document.getElementById('subText').innerText = q ? `Résultats pour "${q}" : ${tousUsers.filter(matchRecherche).length} personne(s)` : `Gère tes demandes, tes amis et découvre du monde`;
+  document.getElementById('debugText').innerText = `Total comptes : ${tousUsers.length} • Demandes reçues : ${demandesRecuesIds.size} • Amis : ${mesAmisIds.size} • Envoyées : ${demandesEnvoyeesIds.size}`;
 }
 onValue(ref(db,'jasonbook/amis/'+uid), (snap)=>{ const d=snap.val(); mesAmisIds=new Set(d?Object.keys(d):[]); rendre(); });
-onValue(ref(db,'jasonbook/demandes/'+uid), async (snap)=>{
-  const d=snap.val(); demandesRecues=[];
-  if(d){ for(const fromUid of Object.keys(d)){ const s=await get(ref(db,'jasonbook/users/'+fromUid)); if(s.val()) demandesRecues.push({uid:fromUid, ...s.val()}); } }
+// ✅ DEMANDES REÇUES : ON NE DÉPEND PLUS DE get() - MÊME SI LE PROFIL MANQUE, ON AFFICHE
+onValue(ref(db,'jasonbook/demandes/'+uid), (snap)=>{
+  const d=snap.val()||{};
+  demandesRecuesIds=new Set(Object.keys(d));
+  demandesRecuesData=d;
   rendre();
 });
 onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), (snap)=>{ const d=snap.val(); demandesEnvoyeesIds=new Set(d?Object.keys(d):[]); rendre(); });
