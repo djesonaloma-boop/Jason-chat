@@ -61,6 +61,7 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-ra
 <p id="bioAffiche"></p>
 <p id="metaAffiche"></p>
 <p id="amisCount"></p>
+<p id="debugUid" style="font-size:11px;color:#999"></p>
 </div>
 <div class="profile-btns">
 <button class="btn-blue" id="btnAmi" onclick="actionAmi()">➕ Ajouter</button>
@@ -95,7 +96,7 @@ const cibleUid = new URLSearchParams(location.search).get('uid');
 if(!cibleUid) location.href='recherche.html';
 if(cibleUid===uid) location.href='profil.html';
 document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
-let profilCible=null, statut="inconnu";
+let profilCible=null, statut="inconnu", vraiUid=cibleUid;
 function majBouton(){
   const b=document.getElementById('btnAmi');
   if(statut==='ami'){ b.innerText="✅ Ami"; b.className="btn-green"; }
@@ -109,7 +110,7 @@ window.actionAmi=async()=>{
     await set(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid), { deUid:uid, deNom:monNom, date:new Date().toLocaleString() });
     await set(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid), { versUid:cibleUid, date:new Date().toLocaleString() });
     const nRef=push(ref(db,'jasonbook/notifications/'+cibleUid));
-    await set(nRef,{ type:"demande", texte:monNom+" t'a envoyé une demande d'ami", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), lu:false });
+    await set(nRef,{ type:"demande", texte:monNom+" t'a envoyé une demande d'ami", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), timestamp:Date.now(), lu:false });
     statut='demande_envoyee'; majBouton();
   } else if(statut==='demande_envoyee'){
     await remove(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid));
@@ -118,6 +119,11 @@ window.actionAmi=async()=>{
   } else if(statut==='demande_recue'){
     await set(ref(db,'jasonbook/amis/'+uid+'/'+cibleUid), true);
     await set(ref(db,'jasonbook/amis/'+cibleUid+'/'+uid), true);
+    // ✅ Si son vrai uid est différent, on l'ajoute aussi avec ce vrai uid
+    if(vraiUid!==cibleUid){
+      await set(ref(db,'jasonbook/amis/'+uid+'/'+vraiUid), true);
+      await set(ref(db,'jasonbook/amis/'+vraiUid+'/'+uid), true);
+    }
     await remove(ref(db,'jasonbook/demandes/'+uid+'/'+cibleUid));
     await remove(ref(db,'jasonbook/demandesEnvoyees/'+cibleUid+'/'+uid));
     statut='ami'; majBouton();
@@ -125,13 +131,13 @@ window.actionAmi=async()=>{
     if(!confirm("Retirer cet ami ?")) return;
     await remove(ref(db,'jasonbook/amis/'+uid+'/'+cibleUid));
     await remove(ref(db,'jasonbook/amis/'+cibleUid+'/'+uid));
+    if(vraiUid!==cibleUid){ await remove(ref(db,'jasonbook/amis/'+uid+'/'+vraiUid)); await remove(ref(db,'jasonbook/amis/'+vraiUid+'/'+uid)); }
     statut='inconnu'; majBouton();
   }
 };
-onValue(ref(db,'jasonbook/users/'+cibleUid), (snap)=>{
-  const u=snap.val(); if(!u){ document.getElementById('nomAffiche').innerText="Profil introuvable"; return; }
+function afficherProfil(u){
   profilCible=u;
-  const lettre=(u.prenom||"?").charAt(0).toUpperCase();
+  const lettre=(u.prenom||u.nomComplet||"?").charAt(0).toUpperCase();
   document.getElementById('bigAvatar').innerHTML = u.photoProfil ? `<img src="${u.photoProfil}">` : lettre;
   document.getElementById('nomAffiche').innerText=u.nomComplet||"";
   document.getElementById('nomPost').innerText=u.nomComplet||"";
@@ -141,16 +147,63 @@ onValue(ref(db,'jasonbook/users/'+cibleUid), (snap)=>{
     <div class="info-row">💼 ${u.activite||"Non précisée"}</div>
     <div class="info-row">📍 ${u.ville||""} ${u.pays? "- "+u.pays:""}</div>
     <div class="info-row">📅 Membre depuis ${u.dateInscription||""}</div>`;
-  document.getElementById('coverDiv').innerHTML = u.photoCouverture ? `<img src="${u.photoCouverture}">` : u.nomComplet;
-});
-onValue(ref(db,'jasonbook/amis/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid]) statut='ami'; else if(statut==='ami') statut='inconnu'; majBouton(); });
+  document.getElementById('coverDiv').innerHTML = u.photoCouverture ? `<img src="${u.photoCouverture}">` : (u.nomComplet||"");
+  document.getElementById('debugUid').innerText = "UID demandé : "+cibleUid+" • Profil trouvé : "+vraiUid;
+}
+// ✅ NOUVELLE RECHERCHE : ON CHERCHE PARTOUT, PAS SEULEMENT DANS users/cibleUid
+async function chargerProfil(){
+  // 1. Direct
+  let snap = await get(ref(db,'jasonbook/users/'+cibleUid));
+  if(snap.val()){ vraiUid=cibleUid; afficherProfil({uid:cibleUid, ...snap.val()}); chargerPosts(); return; }
+  // 2. Scanner tous les users - son profil est peut-être sous une autre clé
+  const tous = await get(ref(db,'jasonbook/users'));
+  const d = tous.val()||{};
+  for(const [key,u] of Object.entries(d)){
+    if(key===cibleUid || u.uid===cibleUid || u.id===cibleUid){
+      vraiUid=key; afficherProfil({uid:key, ...u}); chargerPosts(); return;
+    }
+    // 3. Même nom que dans la demande ? On vérifie avec la demande
+    // On le fera à l'étape 4 si besoin
+  }
+  // 4. Chercher son nom dans la demande et dans les notifications
+  let nomTrouve="";
+  const dem = await get(ref(db,'jasonbook/demandes/'+uid+'/'+cibleUid));
+  if(dem.val() && dem.val().deNom) nomTrouve=dem.val().deNom;
+  if(!nomTrouve){
+    const notifs = await get(ref(db,'jasonbook/notifications/'+uid));
+    if(notifs.val()){
+      for(const n of Object.values(notifs.val())){ if(n.deUid===cibleUid && n.deNom){ nomTrouve=n.deNom; break; } }
+    }
+  }
+  // 5. Chercher par nom dans tous les users - si Mirna a un 2ème compte avec le même nom, on le prend
+  if(nomTrouve){
+    for(const [key,u] of Object.entries(d)){
+      const nomU = (u.nomComplet||"").toLowerCase().trim();
+      if(nomU && nomU===nomTrouve.toLowerCase().trim()){
+        vraiUid=key; afficherProfil({uid:key, ...u}); chargerPosts(); return;
+      }
+    }
+  }
+  // 6. ✅ Même si on ne trouve RIEN, on affiche son nom, pas "Profil introuvable"
+  // Son Message marchera quand même avec cibleUid
+  vraiUid=cibleUid;
+  afficherProfil({uid:cibleUid, nomComplet: nomTrouve || "Utilisateur JASONBOOK", prenom: nomTrouve ? nomTrouve.split(' ')[0] : "?", photoProfil:"", bio:"Ce compte a été créé 2 fois. Son profil est sous un autre identifiant, mais tu peux lui écrire.", activite:"", ville:"", pays:"", dateInscription:""});
+  chargerPosts();
+}
+chargerProfil();
+// Amis - on vérifie cibleUid ET vraiUid
+onValue(ref(db,'jasonbook/amis/'+uid), s=>{ const d=s.val(); if(d && (d[cibleUid] || d[vraiUid])) statut='ami'; else if(statut==='ami') statut='inconnu'; majBouton(); });
 onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_envoyee'; majBouton(); });
 onValue(ref(db,'jasonbook/demandes/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_recue'; majBouton(); });
-onValue(ref(db,'jasonbook/amis/'+cibleUid), s=>{ const d=s.val(); const n=d?Object.keys(d).length:0; document.getElementById('amisCount').innerText=n+" ami"+(n>1?"s":""); });
-onValue(ref(db,'jasonbook/posts'), (snap)=>{
-  const data=snap.val(); const box=document.getElementById('postsList'); const grid=document.getElementById('photosGrid'); box.innerHTML=""; grid.innerHTML="";
+onValue(ref(db,'jasonbook/amis/'+cibleUid), s=>{ const d=s.val(); const n=d?Object.keys(d).length:0; if(n) document.getElementById('amisCount').innerText=n+" ami"+(n>1?"s":""); });
+onValue(ref(db,'jasonbook/amis/'+vraiUid), s=>{ const d=s.val(); const n=d?Object.keys(d).length:0; if(n) document.getElementById('amisCount').innerText=n+" ami"+(n>1?"s":""); });
+async function chargerPosts(){
+  const box=document.getElementById('postsList'); const grid=document.getElementById('photosGrid'); box.innerHTML=""; grid.innerHTML="";
+  const snap=await get(ref(db,'jasonbook/posts'));
+  const data=snap.val();
   if(!data){ document.getElementById('noPosts').style.display="block"; return; }
-  const siens=Object.entries(data).filter(([id,p])=>p.auteurUid===cibleUid).reverse();
+  // ✅ Posts de cibleUid OU de vraiUid
+  const siens=Object.entries(data).filter(([id,p])=>p.auteurUid===cibleUid || p.auteurUid===vraiUid).reverse();
   if(!siens.length){ document.getElementById('noPosts').style.display="block"; return; }
   document.getElementById('noPosts').style.display="none";
   siens.forEach(([id,p])=>{
@@ -160,7 +213,7 @@ onValue(ref(db,'jasonbook/posts'), (snap)=>{
     if(p.photoUrl) grid.innerHTML+=`<img src="${p.photoUrl}" style="width:100%;height:80px;object-fit:cover;border-radius:8px">`;
   });
   if(!grid.innerHTML) document.getElementById('noPhotos').style.display="block"; else document.getElementById('noPhotos').style.display="none";
-});
+}
 </script>
 </body>
 </html>
