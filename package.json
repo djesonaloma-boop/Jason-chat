@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "description": "JASONBOOK - réseau social communautaire",
-  "main": "Backend/server.js",
+  "main": "backend/serveur.js",
   "scripts": {
-    "start": "node Backend/server.js",
-    "dev": "node --watch Backend/server.js"
+    "start": "node backend/serveur.js",
+    "dev": "node --watch backend/serveur.js"
   },
   "engines": {
     "node": ">=20"

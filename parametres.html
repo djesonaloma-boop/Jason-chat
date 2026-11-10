@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>JASONBOOK - Paramètres</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
@@ -37,6 +37,7 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-ra
 .bottom-nav{display:none}
 @media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
 </style>
+<link rel="stylesheet" href="assets/brand.css">
 </head>
 <body>
 
@@ -57,7 +58,12 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-ra
 <button class="btn-blue" style="margin-top:10px" onclick="sauvegarderProfil()">💾 Enregistrer les modifications</button>
 </div>
 
-<div class="section">
+<div class="section"><h3>🔐 Sécurité du compte</h3>
+<div class="row"><div class="label"><b>Ancien mot de passe</b></div><input id="oldPass" type="password" placeholder="Ancien mot de passe"></div>
+<div class="row"><div class="label"><b>Nouveau mot de passe</b></div><input id="newPass" type="password" placeholder="6 caractères minimum"></div>
+<div class="row"><div class="label"><b>Confirmer le nouveau</b></div><input id="confirmPass" type="password" placeholder="Répéter le mot de passe"></div>
+<button class="btn-blue" style="margin-top:10px" onclick="changerMotDePasse()">🔒 Modifier le mot de passe</button><p id="passMsg" style="font-size:12px;margin-top:9px"></p>
+<p style="font-size:11px;color:#A1A1AA;margin-top:10px">Migration Firebase Authentication obligatoire avant mise en production : cette version conserve temporairement l'ancien système de connexion.</p></div><div class="section">
 <h3>🔒 Confidentialité</h3>
 <div class="row"><div class="label"><b>Profil public</b><p>Tout le monde peut voir ton profil</p></div><div class="switch on" id="swPublic" onclick="toggleSwitch('swPublic','jasonbook_public')"></div></div>
 <div class="row"><div class="label"><b>Qui peut m'envoyer un message ?</b></div><select id="selMsg"><option value="tous">Tout le monde</option><option value="amis">Amis seulement</option></select></div>
@@ -99,7 +105,7 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-ra
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, set, remove, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
@@ -143,6 +149,7 @@ window.sauvegarderProfil=async()=>{
   await set(ref(db,'jasonbook/users/'+uid+'/bio'), document.getElementById('inBio').value);
   alert("Profil mis à jour ! ✅");
 };
+window.changerMotDePasse=async()=>{const old=document.getElementById('oldPass').value,nw=document.getElementById('newPass').value,c=document.getElementById('confirmPass').value,msg=document.getElementById('passMsg');msg.style.color='#FF6B6B';if(!old||nw.length<6||nw!==c){msg.textContent='Vérifie les champs : 6 caractères minimum et confirmation identique.';return;}try{const snap=await get(ref(db,'jasonbook/users/'+uid+'/password'));if(!snap.exists()||snap.val()!==old){msg.textContent='Ancien mot de passe incorrect.';return;}await set(ref(db,'jasonbook/users/'+uid+'/password'),nw);['oldPass','newPass','confirmPass'].forEach(id=>document.getElementById(id).value='');msg.style.color='#22C55E';msg.textContent='Mot de passe modifié. Migre vers Firebase Authentication avant production.';}catch(e){msg.textContent='Erreur : '+e.message;}};
 window.sauvegarderConf=()=>{
   localStorage.setItem('jasonbook_msg_qui', document.getElementById('selMsg').value);
   localStorage.setItem('jasonbook_amis_qui', document.getElementById('selAmis').value);

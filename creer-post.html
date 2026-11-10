@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>JASONBOOK - Créer une publication</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
@@ -42,6 +42,7 @@ textarea::placeholder{color:#888}
 .feeling-box button.active{background:var(--blue);color:#fff}
 </style>
 <!-- ✅ SUPPRIMÉ : <link href="Assets/theme.css"> et <script src="Assets/theme.js"> qui remettaient tout en blanc -->
+<link rel="stylesheet" href="assets/brand.css">
 </head>
 <body>
 
@@ -131,6 +132,12 @@ window.toggleFeeling=()=>{ const b=document.getElementById('feelingBox'); b.styl
 window.choisirFeeling=(btn, txt)=>{ document.querySelectorAll('#feelingBox button').forEach(x=>x.classList.remove('active')); btn.classList.add('active'); feeling=txt; };
 window.publier=async()=>{
   const texte=document.getElementById('postText').value.trim();
+  const termesInterdits=['pornographie','porno','nude','nudité','sexe explicite','contenu sexuel explicite'];
+  if(termesInterdits.some(t=>texte.toLowerCase().includes(t))){
+    document.getElementById('msg').style.color='red';
+    document.getElementById('msg').innerText='Publication refusée : contenu sexuel explicite interdit sur JASONBOOK.';
+    return;
+  }
   if(!texte && !photoUrl && !videoUrl){ document.getElementById('msg').style.color="red"; document.getElementById('msg').innerText="Écris quelque chose ou ajoute une photo / vidéo"; return; }
   document.getElementById('btnPublier').disabled=true; document.getElementById('msg').style.color="#A1A1AA"; document.getElementById('msg').innerText="Publication en cours...";
   try{
