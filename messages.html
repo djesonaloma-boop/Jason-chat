@@ -22,6 +22,15 @@ header{background:#111;flex-shrink:0;border-bottom:2px solid var(--or);z-index:3
 .avatar{width:44px;height:44px;min-width:44px;min-height:44px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;overflow:hidden;flex-shrink:0;cursor:pointer;position:relative}
 .avatar img{width:100%;height:100%;object-fit:cover;display:block}
 .dot{position:absolute;bottom:0;right:0;width:12px;height:12px;background:#22C55E;border:2px solid #111;border-radius:50%}
+.dot.off{background:#888}
+/* ✅ BOUTON VERT À CÔTÉ DU PROFIL */
+.avatar-wrap{position:relative;flex-shrink:0}
+.avatar-wrap .online-dot{position:absolute;bottom:0;right:0;width:14px;height:14px;background:#22C55E;border:2px solid #17171F;border-radius:50%;z-index:2}
+.avatar-wrap .online-dot.off{background:#888}
+.online-btn{display:flex;align-items:center;gap:5px;background:#22C55E;color:#fff;font-size:11px;font-weight:800;padding:5px 9px;border-radius:999px;flex-shrink:0;white-space:nowrap}
+.online-btn.off{background:#3A3A44;color:#A1A1AA}
+.online-btn .point{width:8px;height:8px;background:#fff;border-radius:50%;flex-shrink:0}
+.online-btn.off .point{background:#888}
 .layout{flex:1;display:flex;min-height:0;overflow:hidden}
 .list{width:340px;flex-shrink:0;background:#17171F;border-right:1px solid var(--ligne);overflow-y:auto;display:flex;flex-direction:column}
 .list h2{padding:14px 14px 6px;font-size:20px;color:#fff;flex-shrink:0}
@@ -38,18 +47,24 @@ header{background:#111;flex-shrink:0;border-bottom:2px solid var(--or);z-index:3
 .chat-head{display:flex;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--ligne);background:#17171F;flex-shrink:0;z-index:5}
 .chat-head b{font-size:15px;color:#fff;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chat-head small{color:#22C55E;font-size:12px}
+.chat-head small.off{color:#888}
 .chat-head .back{display:none;font-size:22px;cursor:pointer;color:#fff;flex-shrink:0}
 .chat-body{flex:1;overflow-y:auto;overflow-x:hidden;padding:14px 12px;display:flex;flex-direction:column;gap:8px;background:#0F0F14;min-height:0}
 .msg{max-width:82%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.45;word-wrap:break-word;word-break:break-word;white-space:pre-wrap;cursor:pointer;position:relative}
 .msg.mine{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff;align-self:flex-end;border-bottom-right-radius:4px;margin-left:auto}
 .msg.other{background:var(--carte);color:#fff;align-self:flex-start;border-bottom-left-radius:4px;border:1px solid var(--ligne);margin-right:auto}
-.msg small{display:block;font-size:10px;opacity:.7;margin-top:4px;text-align:right}
+.msg .meta{display:flex;align-items:center;gap:5px;justify-content:flex-end;margin-top:4px}
+.msg .meta small{font-size:10px;opacity:.7}
+.ticks{font-size:11px;letter-spacing:-2px;opacity:.8}
+.ticks.lu{color:#53BDEB;opacity:1}
+.ticks.delivre{color:#EDEDEF}
+.ticks.envoye{color:rgba(255,255,255,.6)}
+.lu-text{font-size:10px;color:#53BDEB;font-weight:700}
 .msg img{max-width:100%;border-radius:10px;margin-top:4px;display:block}
 .msg.retire{opacity:.6;font-style:italic}
 .msg .reaction{position:absolute;bottom:-12px;left:8px;background:#2A2A35;border:1px solid var(--ligne);border-radius:999px;padding:2px 8px;font-size:14px;z-index:2}
 .msg .reply-quote{background:rgba(0,0,0,.25);border-left:3px solid var(--or);padding:6px 10px;border-radius:8px;font-size:13px;margin-bottom:6px;color:#EDEDEF}
 .msg .reply-quote b{font-size:12px;color:var(--or)}
-/* ✅ VOCAL STYLE WHATSAPP - PLUS DE PILULE BLANCHE */
 .vocal{display:flex;align-items:center;gap:10px;width:230px;max-width:100%;margin-top:2px}
 .vocal .play-btn{width:38px;height:38px;min-width:38px;border:none;border-radius:50%;background:rgba(255,255,255,.95);color:#7C3AED;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .msg.other .vocal .play-btn{background:var(--or);color:#111}
@@ -123,12 +138,12 @@ header{background:#111;flex-shrink:0;border-bottom:2px solid var(--or);z-index:3
 <div class="chat" id="chatPanel">
 <div class="empty-chat" id="emptyChat"><div class="big">💬</div><h3>Choisis une conversation</h3><p>Sélectionne une personne à gauche pour discuter.<br>Texte, photo et vocal.</p></div>
 <div id="chatContent" style="display:none;flex:1;flex-direction:column;min-height:0">
+<!-- ✅ TÊTE SANS APPEL / APPEL VIDÉO - AVEC BOUTON VERT -->
 <div class="chat-head">
 <span class="back" onclick="retourListe()">←</span>
-<div class="avatar" id="chatAvatar">?</div>
+<div class="avatar-wrap"><div class="avatar" id="chatAvatar">?</div><div class="online-dot" id="onlineDot"></div></div>
 <div style="flex:1;min-width:0"><b id="chatNom"></b><br><small id="chatStatut">En ligne</small></div>
-<a href="appel.html" style="text-decoration:none;font-size:20px;flex-shrink:0">📞</a>
-<a href="#" onclick="return false" style="text-decoration:none;font-size:20px;flex-shrink:0">📹</a>
+<div class="online-btn" id="onlineBtn"><span class="point"></span><span id="onlineBtnText">En ligne</span></div>
 </div>
 <div class="chat-body" id="chatBody"></div>
 <div class="reply-bar" id="replyBar"><div class="txt"><b id="replyNom"></b><span id="replyTexte"></span></div><button onclick="annulerReponse()">✕</button></div>
@@ -160,21 +175,101 @@ header{background:#111;flex-shrink:0;border-bottom:2px solid var(--or);z-index:3
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, onValue, get, push, set, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, onValue, get, push, set, update, onDisconnect } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
 const monNom = localStorage.getItem('jasonbook_nom')||"";
-let tousUsers=[], convActuelle=null, destinataire=null, mediaRecorder=null, audioChunks=[], msgSelectionne=null, reponseA=null, recStart=0, recInterval=null, audioEnCours=null, audioIdEnCours=null, audioTimer=null;
+let tousUsers=[], convActuelle=null, destinataire=null, mediaRecorder=null, audioChunks=[], msgSelectionne=null, reponseA=null, recStart=0, recInterval=null, audioEnCours=null, audioIdEnCours=null, destinataireEnLigne=false, presenceParUid={}, monEnLigneDepuis=Date.now();
 function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; e.innerText=''; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
 const params=new URLSearchParams(location.search); const uidCible=params.get('uid');
 function avatarHTML(photo, lettre){ return photo ? `<img src="${photo}">` : lettre; }
+// ✅ "En ligne depuis ..." - on calcule depuis quand il est connecté
+function texteDepuis(ts){
+  if(!ts) return "En ligne";
+  const diff = Date.now() - ts;
+  const min = Math.floor(diff/60000);
+  if(min < 1) return "En ligne depuis à l'instant";
+  if(min < 60) return `En ligne depuis ${min} min`;
+  const heure = new Date(ts).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  return `En ligne depuis ${heure}`;
+}
+function majStatutDestinataire(){
+  if(!destinataire) return;
+  const p = presenceParUid[destinataire.uid];
+  destinataireEnLigne = !!(p && p.enLigne);
+  const st=document.getElementById('chatStatut');
+  const dot=document.getElementById('onlineDot');
+  const btn=document.getElementById('onlineBtn');
+  const btnTxt=document.getElementById('onlineBtnText');
+  if(destinataireEnLigne){
+    if(st){ st.innerText = texteDepuis(p.enLigneDepuis) + " • " + (destinataire.pays||""); st.className=""; }
+    if(dot) dot.className="online-dot";
+    if(btn){ btn.className="online-btn"; if(btnTxt) btnTxt.innerText="En ligne"; }
+  } else {
+    const last = p?.derniereVue ? new Date(p.derniereVue).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) : "";
+    if(st){ st.innerText = last ? "Vu à "+last+" • "+(destinataire.pays||"") : "Hors ligne • "+(destinataire.pays||""); st.className="off"; }
+    if(dot) dot.className="online-dot off";
+    if(btn){ btn.className="online-btn off"; if(btnTxt) btnTxt.innerText="Hors ligne"; }
+  }
+  if(convActuelle) rendreMessagesActuels();
+}
+// ✅ MOI EN LIGNE - je garde mon heure de connexion
+async function mettreEnLigne(){
+  monEnLigneDepuis = Date.now();
+  await set(ref(db,'jasonbook/presence/'+uid),{enLigne:true, enLigneDepuis:monEnLigneDepuis, derniereVue:Date.now(), nom:monNom});
+  onDisconnect(ref(db,'jasonbook/presence/'+uid)).set({enLigne:false, derniereVue:Date.now(), nom:monNom});
+}
+mettreEnLigne();
+// Heartbeat : on ne change PAS enLigneDepuis, juste derniereVue pour rester "en ligne"
+setInterval(()=>{ update(ref(db,'jasonbook/presence/'+uid),{enLigne:true, derniereVue:Date.now()}); }, 30000);
+// Mettre à jour le "depuis ..." chaque minute
+setInterval(()=>{ majStatutDestinataire(); }, 60000);
+window.addEventListener('beforeunload', ()=>{ set(ref(db,'jasonbook/presence/'+uid),{enLigne:false, derniereVue:Date.now(), nom:monNom}); });
+onValue(ref(db,'jasonbook/presence'), s=>{
+  const d=s.val()||{}; presenceParUid=d;
+  majStatutDestinataire();
+  document.querySelectorAll('.conv').forEach(c=>{
+    const dot=c.querySelector('.dot'); if(!dot) return;
+    const uId=c.dataset.uid; if(!uId) return;
+    dot.className = 'dot ' + (presenceParUid[uId]?.enLigne ? '' : 'off');
+  });
+});
+let messagesActuels={};
+function rendreMessagesActuels(){
+  const body=document.getElementById('chatBody'); if(!body || !convActuelle) return;
+  body.innerHTML="";
+  const entries=Object.entries(messagesActuels);
+  if(!entries.length){ body.innerHTML='<p style="text-align:center;color:#888;font-size:13px;margin-top:30px">Aucun message. Dis bonjour ! 👋</p>'; return; }
+  entries.forEach(([mid,m])=>{
+    if(m.supprimePour && m.supprimePour[uid]) return;
+    const div=document.createElement('div'); div.className='msg '+(m.auteurUid===uid?'mine':'other')+(m.retire?' retire':'');
+    let contenu="";
+    if(m.reponseA) contenu+=`<div class="reply-quote"><b>${m.reponseA.nom||""}</b>${m.reponseA.texte||""}</div>`;
+    if(m.retire) contenu+=`🚫 Message retiré`;
+    else {
+      if(m.texte) contenu+=m.texte;
+      if(m.photoUrl) contenu+=`<br><img src="${m.photoUrl}">`;
+      if(m.audioUrl) contenu+=`<div class="vocal" onclick="event.stopPropagation();toggleVocal('${mid}','${m.audioUrl}')"><button class="play-btn" id="play-${mid}" onclick="event.stopPropagation();toggleVocal('${mid}','${m.audioUrl}')">▶</button><div class="wave" id="wave-${mid}">${waveHTML()}</div><span class="dur" id="dur-${mid}">--:--</span></div>`;
+    }
+    let meta=`<div class="meta"><small>${m.heure||""}</small>`;
+    if(m.auteurUid===uid && !m.retire){
+      if(m.lu){ meta+=`<span class="ticks lu">✓✓</span><span class="lu-text">Lu</span>`; }
+      else if(destinataireEnLigne){ meta+=`<span class="ticks delivre">✓✓</span>`; }
+      else { meta+=`<span class="ticks envoye">✓</span>`; }
+    }
+    meta+=`</div>`;
+    div.innerHTML=contenu+meta+`${m.reaction?`<span class="reaction">${m.reaction}</span>`:""}`;
+    div.onclick=()=>ouvrirSheet(mid,m);
+    body.appendChild(div);
+  });
+  body.scrollTop=body.scrollHeight;
+}
 window.retourListe=()=>{ document.getElementById('chatPanel').classList.remove('show-mob'); document.getElementById('listPanel').classList.remove('hide-mob'); };
 window.filtrer=()=>{
   const q=document.getElementById('searchUser').value.toLowerCase();
   document.querySelectorAll('.conv').forEach(c=>{ c.style.display = c.dataset.nom.toLowerCase().includes(q) ? 'flex' : 'none'; });
 };
-// ✅ ONDES DU VOCAL - COMME WHATSAPP
 function waveHTML(){
   const hauteurs=[10,18,26,14,22,30,16,24,12,28,18,22,10,26,14,20,28,12,18,24,10,16,28,14,22,12,26,18,10,22];
   return hauteurs.map(h=>`<i style="height:${h}px"></i>`).join('');
@@ -208,10 +303,17 @@ onValue(ref(db,'jasonbook/users'), async (snap)=>{
   for(const u of tousUsers){
     const chatId = [uid, u.uid].sort().join('_');
     const s=await get(ref(db,'jasonbook/messages/'+chatId)); const msgs=s.val();
-    let last="Dis bonjour...", lastTime="", nonLu=0;
-    if(msgs){ const arr=Object.entries(msgs).filter(([_,m])=>!(m.supprimePour && m.supprimePour[uid])).map(([_,m])=>m); if(arr.length){ const d=arr[arr.length-1]; last=d.retire?"🚫 Message retiré": d.texte|| (d.photoUrl?"📷 Photo": d.audioUrl?"🎤 Vocal":""); lastTime=d.heure||""; nonLu=arr.filter(m=>m.auteurUid!==uid && !m.lu).length; } }
-    const div=document.createElement('div'); div.className='conv'; div.dataset.nom=u.nomComplet||"";
-    div.innerHTML=`<div class="avatar">${avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0))}<div class="dot"></div></div><div style="flex:1;min-width:0"><b>${u.nomComplet||""}</b><small>${last}</small></div><span class="time">${lastTime}</span>${nonLu?`<span class="unread">${nonLu}</span>`:""}`;
+    let last="Dis bonjour...", lastTime="", nonLu=0, lastTick="";
+    if(msgs){
+      const arr=Object.entries(msgs).filter(([_,m])=>!(m.supprimePour && m.supprimePour[uid])).map(([_,m])=>m);
+      if(arr.length){
+        const d=arr[arr.length-1]; last=d.retire?"🚫 Message retiré": d.texte|| (d.photoUrl?"📷 Photo": d.audioUrl?"🎤 Vocal":""); lastTime=d.heure||""; nonLu=arr.filter(m=>m.auteurUid!==uid && !m.lu).length;
+        if(d.auteurUid===uid){ if(d.lu) lastTick='<span class="ticks lu">✓✓</span> '; else if(presenceParUid[u.uid]?.enLigne) lastTick='<span class="ticks delivre">✓✓</span> '; else lastTick='<span class="ticks envoye">✓</span> '; }
+      }
+    }
+    const div=document.createElement('div'); div.className='conv'; div.dataset.nom=u.nomComplet||""; div.dataset.uid=u.uid;
+    const enLigne = presenceParUid[u.uid]?.enLigne;
+    div.innerHTML=`<div class="avatar">${avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0))}<div class="dot ${enLigne?'':'off'}"></div></div><div style="flex:1;min-width:0"><b>${u.nomComplet||""}</b><small>${lastTick}${last}</small></div><span class="time">${lastTime}</span>${nonLu?`<span class="unread">${nonLu}</span>`:""}`;
     div.onclick=()=>ouvrirChat(u, chatId);
     box.appendChild(div);
   }
@@ -238,29 +340,13 @@ window.ouvrirChat=async (u, chatId)=>{
   document.getElementById('listPanel').classList.add('hide-mob');
   document.getElementById('chatAvatar').innerHTML=avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0));
   document.getElementById('chatNom').innerText=u.nomComplet||"";
-  document.getElementById('chatStatut').innerText="En ligne • "+(u.pays||"");
+  majStatutDestinataire();
   const snap=await get(ref(db,'jasonbook/messages/'+chatId)); const msgs=snap.val();
   if(msgs){ for(const [mid,m] of Object.entries(msgs)){ if(m.auteurUid!==uid && !m.lu) await update(ref(db,'jasonbook/messages/'+chatId+'/'+mid),{lu:true}); } }
   onValue(ref(db,'jasonbook/messages/'+chatId), (s)=>{
-    const d=s.val(); const body=document.getElementById('chatBody'); body.innerHTML="";
-    if(!d){ body.innerHTML='<p style="text-align:center;color:#888;font-size:13px;margin-top:30px">Aucun message. Dis bonjour ! 👋</p>'; return; }
-    Object.entries(d).forEach(([mid,m])=>{
-      if(m.supprimePour && m.supprimePour[uid]) return;
-      const div=document.createElement('div'); div.className='msg '+(m.auteurUid===uid?'mine':'other')+(m.retire?' retire':'');
-      let contenu="";
-      if(m.reponseA) contenu+=`<div class="reply-quote"><b>${m.reponseA.nom||""}</b>${m.reponseA.texte||""}</div>`;
-      if(m.retire) contenu+=`🚫 Message retiré`;
-      else {
-        if(m.texte) contenu+=m.texte;
-        if(m.photoUrl) contenu+=`<br><img src="${m.photoUrl}">`;
-        // ✅ PLUS DE <audio controls> - LECTEUR MAISON
-        if(m.audioUrl) contenu+=`<div class="vocal" onclick="event.stopPropagation();toggleVocal('${mid}','${m.audioUrl}')"><button class="play-btn" id="play-${mid}" onclick="event.stopPropagation();toggleVocal('${mid}','${m.audioUrl}')">▶</button><div class="wave" id="wave-${mid}">${waveHTML()}</div><span class="dur" id="dur-${mid}">--:--</span></div>`;
-      }
-      div.innerHTML=contenu+`<small>${m.heure||""}</small>${m.reaction?`<span class="reaction">${m.reaction}</span>`:""}`;
-      div.onclick=()=>ouvrirSheet(mid,m);
-      body.appendChild(div);
-    });
-    body.scrollTop=body.scrollHeight;
+    const d=s.val()||{}; messagesActuels=d;
+    Object.entries(d).forEach(([mid,m])=>{ if(m.auteurUid!==uid && !m.lu) update(ref(db,'jasonbook/messages/'+chatId+'/'+mid),{lu:true}); });
+    rendreMessagesActuels();
   });
 };
 window.ouvrirSheet=(mid,m)=>{
