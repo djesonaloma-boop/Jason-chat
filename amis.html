@@ -3,144 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JASONBOOK - Amis</title>
+<title>JASONBOOK - Profil Ami</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-html{overflow-x:clip;overflow-y:auto;-webkit-overflow-scrolling:touch}
-body{width:100%;overflow-x:clip;background:#0F0F14;min-height:100vh;color:#fff}
-:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--noir:#111;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35}
-header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid var(--or);box-shadow:0 2px 15px rgba(0,0,0,.5)}
-.top-bar{display:flex;align-items:center;gap:10px;padding:10px 12px 6px}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:22px;cursor:pointer;flex:1;white-space:nowrap}
-.logo span{width:36px;height:36px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 12px rgba(255,193,7,.5)}
-.logo i{color:var(--or);font-style:normal}
-.icon-top{width:40px;height:40px;background:#2A2A35;border:none;border-radius:50%;cursor:pointer;font-size:19px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
-.icon-top.menu{background:linear-gradient(135deg,var(--violet),var(--violet2));box-shadow:0 0 10px rgba(124,58,237,.5);font-weight:900}
-.nav-top{display:flex;justify-content:space-between;padding:2px 6px 6px}
-.nav-top a{flex:1;text-decoration:none;color:#A1A1AA;display:flex;align-items:center;justify-content:center;padding:8px 2px;position:relative;font-size:24px;border-bottom:3px solid transparent}
-.nav-top a.active{color:var(--or);border-bottom:3px solid var(--or)}
-.nav-top a .badge{position:absolute;top:1px;right:50%;transform:translateX(18px);background:#E0245E;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:999px;min-width:20px;text-align:center;border:2px solid #111;display:none}
-.nav-top a .badge.or{background:var(--or);color:#111}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:90;display:none}
-.overlay.open{display:block}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:290px;max-width:88vw;background:#17171F;z-index:100;transform:translateX(100%);transition:.28s;display:flex;flex-direction:column;overflow-y:auto;color:#fff}
-.drawer.open{transform:translateX(0)}
-.drawer-head{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--ligne);background:#17171F}
-.drawer-head .info{flex:1;min-width:0}
-.drawer-head b{font-size:16px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.drawer-head small{color:var(--gris)}
-.drawer-close{border:none;background:#2A2A35;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;color:#fff}
-.drawer a{display:flex;align-items:center;gap:12px;padding:12px 16px;text-decoration:none;color:#fff;font-weight:600;font-size:14.5px;border-bottom:1px solid #22222D}
-.drawer a span{font-size:19px;width:28px;text-align:center;flex-shrink:0}
-.drawer .titre{padding:14px 16px 4px;font-size:11px;font-weight:800;color:var(--or);text-transform:uppercase;letter-spacing:1px}
-.drawer .logout{margin:14px 16px;padding:12px;background:#3A0A0A;color:#FF6B6B;border:1px solid #5A1A1A;border-radius:10px;font-weight:800;cursor:pointer;font-size:14px}
-.avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;overflow:hidden;flex-shrink:0;cursor:pointer}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.wrap{max-width:700px;margin:14px auto;padding:0 10px 40px}
-.wrap h1{font-size:20px;letter-spacing:-.3px}
-.wrap .sub{color:var(--gris);font-size:12px;margin:3px 0 10px}
-.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tabs button{border:none;background:var(--carte);color:#fff;padding:7px 11px;border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;border:1px solid var(--ligne);font-size:11px;flex-shrink:0}
-.tabs button.active{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff;border-color:transparent}
-.list{display:flex;flex-direction:column;gap:8px}
-.friend-row{display:flex;gap:10px;align-items:center;background:var(--carte);border:1px solid var(--ligne);border-radius:14px;padding:9px 10px}
-.friend-row .avatar{width:44px;height:44px;font-size:16px}
-.friend-row .info{flex:1;min-width:0}
-.friend-row .info b{font-size:13.5px;color:#fff;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.friend-row .info small{font-size:11px;color:var(--gris);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:2px 0 6px}
-.friend-row .btns{display:flex;gap:6px;flex-wrap:wrap}
-.friend-row .btns button{border:none;padding:6px 11px;border-radius:999px;font-weight:700;cursor:pointer;font-size:11px;white-space:nowrap}
-.badge-nouveau{background:var(--or);color:#111;font-size:9px;font-weight:900;padding:2px 6px;border-radius:999px;margin-left:5px;vertical-align:middle}
-.badge-statut{background:#2A2A35;color:#A1A1AA;font-size:10px;padding:3px 7px;border-radius:999px;margin-left:5px;vertical-align:middle}
-.badge-demande{background:#E0245E;color:#fff;font-size:10px;padding:3px 7px;border-radius:999px;margin-left:5px;vertical-align:middle}
-.btn-blue{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}
-.btn-grey{background:#2A2A35;color:#fff}
-.btn-green{background:#22C55E;color:#fff}
-.btn-red{background:#3A0A0A;color:#FF6B6B;border:1px solid #5A1A1A}
-.btn-or{background:linear-gradient(135deg,var(--or),#FF9800);color:#111}
-.search-big{width:100%;padding:10px 14px;border:none;border-radius:999px;font-size:12.5px;outline:none;margin-bottom:12px;background:#2A2A35;color:#fff}
-.search-big::placeholder{color:#888}
-.empty{text-align:center;color:var(--gris);padding:28px 10px;background:var(--carte);border-radius:14px;border:1px solid var(--ligne);font-size:13px}
-.empty .big{font-size:36px;width:60px;height:60px;background:#2A2A35;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+body{background:#E9EBEE;color:#111;min-height:100vh;padding-bottom:40px}
+:root{--violet:#7C3AED;--or:#FFC107;--carte:#fff}
+header{background:#fff;position:sticky;top:0;z-index:30;border-bottom:1px solid #DDD;display:flex;align-items:center;gap:10px;padding:10px 12px}
+header .logo{font-weight:900;font-size:22px;flex:1}
+header .logo span{width:34px;height:34px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:inline-flex;align-items:center;justify-content:center}
+header .logo i{color:var(--or);font-style:normal}
+header input{flex:1;max-width:220px;padding:9px 12px;border:none;background:#EEE;border-radius:999px;outline:none;font-size:13px}
+.cover{background:#1877F2;height:180px;position:relative}
+.cover img{width:100%;height:100%;object-fit:cover}
+.avatar-wrap{width:140px;height:140px;border-radius:50%;background:#1877F2;border:5px solid #fff;position:absolute;left:50%;transform:translateX(-50%);bottom:-70px;display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:800;color:#fff;overflow:hidden}
+.avatar-wrap img{width:100%;height:100%;object-fit:cover}
+.card{background:#fff;margin:90px 12px 0;border-radius:12px;padding:14px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.card h1{font-size:26px;margin-top:4px}
+.card .sub{color:#666;font-size:13px;margin:4px 0 12px}
+.btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.btns button{border:none;padding:11px 18px;border-radius:8px;font-weight:800;cursor:pointer;font-size:14px}
+.btn-ami{background:#22C55E;color:#fff}
+.btn-msg{background:#EEE;color:#111}
+.btn-ajouter{background:#1877F2;color:#fff}
+.btn-bloquer{background:#FEE;color:#C00}
+.section{background:#fff;margin:12px;border-radius:12px;padding:14px}
+.section h3{font-size:16px;margin-bottom:8px}
+.post{background:#fff;margin:12px;border-radius:12px;padding:12px}
+.post b{font-size:14px}
+.post p{font-size:14px;line-height:1.5;margin:6px 0}
+.post img{width:100%;border-radius:10px;margin-top:8px}
 .debug{font-size:11px;color:#888;text-align:center;padding:8px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #DDD;display:flex;justify-content:space-around;padding:10px 0;z-index:30}
+.bottom-nav a{font-size:26px;text-decoration:none}
 </style>
 </head>
 <body>
-
-<header>
-  <div class="top-bar">
-    <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-    <button class="icon-top" onclick="location.href='recherche.html'">🔍</button>
-    <button class="icon-top menu" onclick="ouvrirMenu()">☰</button>
-  </div>
-  <nav class="nav-top">
-    <a href="feed.html">🏠<span class="badge or" id="badgeFeed"></span></a>
-    <a href="amis.html" class="active">👥<span class="badge" id="badgeAmis"></span></a>
-    <a href="messages.html">💬<span class="badge" id="badgeMsg"></span></a>
-    <a href="videos.html">🎥<span class="badge or" id="badgeVideos"></span></a>
-    <a href="notifications.html">🔔<span class="badge" id="badgeNotif"></span></a>
-    <a href="marketplace.html">🛒<span class="badge" id="badgeMarket"></span></a>
-  </nav>
-</header>
-
-<div class="overlay" id="overlay" onclick="fermerMenu()"></div>
-<div class="drawer" id="drawer">
-<div class="drawer-head"><div class="avatar" id="drawerAvatar" style="width:48px;height:48px">?</div><div class="info"><b id="drawerNom">Jason</b><small>Voir ton profil</small></div><button class="drawer-close" onclick="fermerMenu()">✕</button></div>
-<div class="titre">Principal</div>
-<a href="feed.html"><span>🏠</span> Fil d'actualité</a>
-<a href="profil.html"><span>👤</span> Mon Profil</a>
-<a href="profil-ami.html"><span>👤</span> Profil Ami</a>
-<a href="amis.html"><span>👥</span> Amis</a>
-<a href="messages.html"><span>💬</span> Messages</a>
-<a href="notifications.html"><span>🔔</span> Notifications</a>
-<a href="recherche.html"><span>🔍</span> Recherche</a>
-<div class="titre">Publier & Voir</div>
-<a href="creer-post.html"><span>➕</span> Créer un post</a>
-<a href="stories.html"><span>✨</span> Stories</a>
-<a href="videos.html"><span>🎥</span> Vidéos</a>
-<a href="photos.html"><span>🖼️</span> Photos</a>
-<a href="lives.html"><span>🔴</span> Lives</a>
-<a href="souvenirs.html"><span>🕰️</span> Souvenirs</a>
-<div class="titre">Découvrir</div>
-<a href="groupes.html"><span>👨‍👩‍👧</span> Groupes</a>
-<a href="evenements.html"><span>📅</span> Événements</a>
-<a href="anniversaires.html"><span>🎂</span> Anniversaires</a>
-<a href="annonces.html"><span>📢</span> Annonces</a>
-<a href="sondages.html"><span>📊</span> Sondages</a>
-<a href="jeux.html"><span>🎮</span> Jeux</a>
-<a href="musique.html"><span>🎵</span> Musique</a>
-<a href="marche.html"><span>🛒</span> Marché</a>
-<a href="marketplace.html"><span>🏪</span> Marketplace</a>
-<a href="emploi.html"><span>💼</span> Emploi</a>
-<a href="favoris.html"><span>⭐</span> Favoris</a>
-<div class="titre">Paramètres & Aide</div>
-<a href="parametres.html"><span>⚙️</span> Paramètres</a>
-<a href="aide.html"><span>❓</span> Aide</a>
-<a href="signalements.html"><span>🚨</span> Signalements</a>
-<a href="bloques.html"><span>🚫</span> Bloqués</a>
-<a href="admin.html"><span>🛡️</span> Admin</a>
-<a href="index.html"><span>🚪</span> Connexion / Accueil</a>
-<button class="logout" onclick="deconnecter()">🚪 Se déconnecter</button>
+<header><div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON <i>BOOK</i></div><input placeholder="🔍 Rechercher" onclick="location.href='recherche.html'"></header>
+<div class="cover" id="cover"><div class="avatar-wrap" id="avatar">?</div></div>
+<div class="card">
+<h1 id="nom">Chargement...</h1>
+<p class="sub" id="infos">...</p>
+<p class="sub" id="nbAmis"></p>
+<div class="btns" id="btns">
+<button class="btn-ajouter" id="btnAction" onclick="actionAmi()">➕ Ajouter</button>
+<button class="btn-msg" onclick="ecrireMessage()">💬 Message</button>
+<button class="btn-bloquer" onclick="bloquer()">🚫 Bloquer</button>
 </div>
-
-<div class="wrap">
-<h1>Amis</h1>
-<p class="sub" id="subText">Gère tes demandes, tes amis et découvre du monde</p>
-<div class="tabs">
-<button id="tabBtn-tous" class="active" onclick="showTab('tous')">Tous <span id="countTous"></span></button>
-<button id="tabBtn-demandes" onclick="showTab('demandes')">Demandes reçues <span id="countDemandes"></span></button>
-<button id="tabBtn-amis" onclick="showTab('amis')">Mes amis <span id="countAmis"></span></button>
-<button id="tabBtn-envoyees" onclick="showTab('envoyees')">Demandes envoyées</button>
-<button id="tabBtn-decouvrir" onclick="showTab('decouvrir')">Découvrir <span id="countDecouvrir"></span></button>
 </div>
-<input class="search-big" id="searchAmis" placeholder="🔍 Rechercher parmi TOUTES les personnes..." oninput="filtrer()">
-<div id="section-tous"><div class="list" id="gridTous"></div><div class="empty" id="emptyTous" style="display:none"><div class="big">👥</div><p>Aucune personne pour le moment</p></div></div>
-<div id="section-demandes" style="display:none"><div class="list" id="gridDemandes"></div><div class="empty" id="emptyDemandes" style="display:none"><div class="big">📩</div><p>Aucune demande reçue.<br>Personne ne t'a encore envoyé de demande.<br><br>Si quelqu'un t'envoie, il apparaîtra ICI avec <b>✅ Accepter</b></p></div></div>
-<div id="section-amis" style="display:none"><div class="list" id="gridAmis"></div><div class="empty" id="emptyAmis" style="display:none"><div class="big">👥</div><p>Tu n'as pas encore d'ami.<br>Découvre des personnes et ajoute-les !</p></div></div>
-<div id="section-envoyees" style="display:none"><div class="list" id="gridEnvoyees"></div><div class="empty" id="emptyEnvoyees" style="display:none"><div class="big">📤</div><p>Aucune demande envoyée</p></div></div>
-<div id="section-decouvrir" style="display:none"><div class="list" id="gridDecouvrir"></div><div class="empty" id="emptyDecouvrir" style="display:none"><div class="big">🌍</div><p>Aucune personne à découvrir pour le moment</p></div></div>
-<div class="debug" id="debugText"></div>
+<div class="section"><h3>À propos</h3><p id="apropos" style="font-size:14px;color:#333;line-height:1.5">...</p></div>
+<div class="section"><h3>Publications de cette personne</h3><div id="posts"></div></div>
+<div class="debug" id="debug"></div>
+
+<div class="bottom-nav">
+<a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="messages.html">💬</a><a href="profil.html">👤</a>
 </div>
 
 <script type="module">
@@ -149,146 +64,116 @@ import { getDatabase, ref, onValue, get, set, remove, push } from "https://www.g
 const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+const params = new URLSearchParams(location.search);
+let targetUid = params.get('uid');
 const monNom = localStorage.getItem('jasonbook_nom')||"";
-const maPhoto = localStorage.getItem('jasonbook_photo')||"";
-const avHtml = maPhoto ? `<img src="${maPhoto}">` : (monNom.charAt(0).toUpperCase()||"?");
-const elD = document.getElementById('drawerAvatar'); if(elD) elD.innerHTML = avHtml;
-const elN = document.getElementById('drawerNom'); if(elN) elN.innerText = monNom||"Jason";
-if(elD) elD.onclick=()=>location.href='profil.html';
-window.ouvrirMenu=()=>{ document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); };
-window.fermerMenu=()=>{ document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); };
-window.deconnecter=()=>{ if(!confirm("Tu veux te déconnecter ?")) return; localStorage.clear(); location.href='index.html'; };
-function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; e.innerText=''; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
-let tousUsers=[], mesAmisIds=new Set(), demandesRecuesIds=new Set(), demandesRecuesData={}, demandesEnvoyeesIds=new Set(), tabActuel='tous';
-window.showTab=(t)=>{
-  tabActuel=t;
-  ['tous','demandes','amis','envoyees','decouvrir'].forEach(x=>{
-    document.getElementById('section-'+x).style.display = x===t ? 'block' : 'none';
-    document.getElementById('tabBtn-'+x).classList.toggle('active', x===t);
-  });
-  rendre();
-};
-window.filtrer=()=>{ rendre(); };
-function matchRecherche(u){
-  const q=(document.getElementById('searchAmis').value||"").toLowerCase().trim();
-  if(!q) return true;
-  const txt=((u.nomComplet||"")+" "+(u.prenom||"")+" "+(u.nom||"")+" "+(u.pays||"")+" "+(u.activite||"")+" "+(u.email||"")).toLowerCase();
-  return txt.includes(q);
-}
-function avatar(photo, lettre){ return photo ? `<img src="${photo}">` : lettre; }
-// ✅ ON CHERCHE LE PROFIL DANS tousUsers, SINON ON AFFICHE QUAND MÊME AVEC LE NOM DE LA DEMANDE
-function getUserPourUid(targetUid){
-  const trouve = tousUsers.find(u=>u.uid===targetUid);
-  if(trouve) return trouve;
-  const d = demandesRecuesData[targetUid] || {};
-  return { uid:targetUid, nomComplet: d.deNom || "Utilisateur...", prenom:"?", photoProfil:"", pays:"", activite:"Nouveau compte" };
-}
-function carte(u, type){
-  const lettre=(u.prenom||u.nom||u.nomComplet||"?").charAt(0).toUpperCase();
-  const estNouveau = u.timestamp && (Date.now() - u.timestamp < 7*24*60*60*1000);
-  let btns="", statut="";
-  if(type==='demande'){ btns=`<button class="btn-green" onclick="accepter('${u.uid}')">✅ Accepter</button><button class="btn-red" onclick="refuser('${u.uid}')">Refuser</button>`; statut='<span class="badge-demande">📩 Demande reçue</span>'; }
-  if(type==='ami'){ btns=`<button class="btn-blue" onclick="location.href='messages.html?uid=${u.uid}'">💬 Message</button><button class="btn-grey" onclick="retirerAmi('${u.uid}')">Retirer</button>`; statut='<span class="badge-statut">Ami</span>'; }
-  if(type==='envoyee'){ btns=`<button class="btn-grey" disabled>En attente...</button><button class="btn-red" onclick="annulerDemande('${u.uid}')">Annuler</button>`; statut='<span class="badge-statut">Envoyée</span>'; }
-  if(type==='decouvrir'){ btns=`<button class="btn-or" onclick="envoyerDemande('${u.uid}')">➕ Ajouter</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Voir le profil</button>`; }
-  if(type==='tous'){
-    if(demandesRecuesIds.has(u.uid)){ btns=`<button class="btn-green" onclick="accepter('${u.uid}')">✅ Accepter</button><button class="btn-red" onclick="refuser('${u.uid}')">Refuser</button>`; statut='<span class="badge-demande">📩 Demande reçue</span>'; }
-    else if(mesAmisIds.has(u.uid)){ btns=`<button class="btn-blue" onclick="location.href='messages.html?uid=${u.uid}'">💬 Message</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Voir le profil</button>`; statut='<span class="badge-statut">Ami</span>'; }
-    else if(demandesEnvoyeesIds.has(u.uid)){ btns=`<button class="btn-grey" disabled>En attente...</button><button class="btn-red" onclick="annulerDemande('${u.uid}')">Annuler</button>`; statut='<span class="badge-statut">Envoyée</span>'; }
-    else { btns=`<button class="btn-or" onclick="envoyerDemande('${u.uid}')">➕ Ajouter</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Voir le profil</button>`; }
+let userData=null, vraiUid=null, estAmi=false, demandeEnvoyee=false;
+
+if(!targetUid){ document.getElementById('nom').innerText="Aucun profil choisi"; }
+
+async function charger(){
+  if(!targetUid) return;
+  // 1. Essayer directement users / targetUid
+  let snap = await get(ref(db,'jasonbook/users/'+targetUid));
+  if(snap.val()){ userData={uid:targetUid, ...snap.val()}; vraiUid=targetUid; }
+  else {
+    // 2. Scanner TOUS les users - peut-être que son profil est sous une autre clé
+    const tous = await get(ref(db,'jasonbook/users'));
+    const d = tous.val()||{};
+    for(const [key,u] of Object.entries(d)){
+      if(key===targetUid || u.uid===targetUid || u.id===targetUid){ userData={uid:key, ...u}; vraiUid=key; break; }
+    }
+    // 3. Si toujours rien, chercher son nom dans la demande / notification
+    if(!userData){
+      const dem = await get(ref(db,'jasonbook/demandes/'+uid+'/'+targetUid));
+      const dem2 = await get(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+targetUid));
+      const notifs = await get(ref(db,'jasonbook/notifications/'+uid));
+      let nomTrouve="";
+      if(dem.val() && dem.val().deNom) nomTrouve=dem.val().deNom;
+      if(!nomTrouve && notifs.val()){
+        for(const n of Object.values(notifs.val())){ if(n.deUid===targetUid && n.deNom){ nomTrouve=n.deNom; break; } }
+      }
+      // ✅ On affiche quand même son nom, pas "Profil introuvable"
+      userData={uid:targetUid, nomComplet: nomTrouve || "Utilisateur JASONBOOK", prenom: nomTrouve ? nomTrouve.split(' ')[0] : "?", photoProfil:"", pays:"", activite:"", bio:"Ce compte a été créé 2 fois, son profil est sous un autre identifiant. Mais tu peux lui écrire."};
+      vraiUid=targetUid;
+    }
   }
-  return `<div class="friend-row"><div class="avatar" onclick="location.href='profil-ami.html?uid=${u.uid}'">${avatar(u.photoProfil, lettre)}</div><div class="info"><b>${u.nomComplet||u.prenom||"Sans nom"}${estNouveau?'<span class="badge-nouveau">🆕</span>':''}${statut}</b><small>${u.activite||""} • ${u.pays||""}</small><div class="btns">${btns}</div></div></div>`;
+  afficher();
+  // Amis ?
+  const amisSnap = await get(ref(db,'jasonbook/amis/'+uid+'/'+targetUid));
+  const amisSnap2 = vraiUid!==targetUid ? await get(ref(db,'jasonbook/amis/'+uid+'/'+vraiUid)) : null;
+  estAmi = !!(amisSnap.val() || (amisSnap2 && amisSnap2.val()));
+  const envSnap = await get(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+targetUid));
+  demandeEnvoyee = !!envSnap.val();
+  majBouton();
+  // Nombre d'amis de cette personne - on essaie les 2 uids
+  let nb=0;
+  const a1 = await get(ref(db,'jasonbook/amis/'+targetUid));
+  if(a1.val()) nb=Object.keys(a1.val()).length;
+  if(!nb && vraiUid!==targetUid){ const a2=await get(ref(db,'jasonbook/amis/'+vraiUid)); if(a2.val()) nb=Object.keys(a2.val()).length; }
+  document.getElementById('nbAmis').innerText = nb ? nb+" ami(s)" : "1 ami";
+  // Posts - on essaie les 2 uids
+  chargerPosts();
 }
-function rendre(){
-  // ✅ DEMANDES REÇUES - ON CONSTRUIT À PARTIR DES IDS, MÊME SI LE PROFIL EST VIDE
-  const demList = Array.from(demandesRecuesIds).map(id=>getUserPourUid(id)).filter(matchRecherche);
-  const gD=document.getElementById('gridDemandes'); gD.innerHTML=""; document.getElementById('emptyDemandes').style.display = demList.length? 'none':'block';
-  demList.forEach(u=> gD.innerHTML+=carte(u,'demande'));
-  document.getElementById('countDemandes').innerText = demandesRecuesIds.size? `(${demandesRecuesIds.size})` : "";
-  setBadge('badgeAmis', demandesRecuesIds.size);
-  // TOUS - on inclut aussi les demandeurs qui ne sont pas encore dans tousUsers
-  const tousMap = new Map();
-  tousUsers.forEach(u=>tousMap.set(u.uid, u));
-  demList.forEach(u=>{ if(!tousMap.has(u.uid)) tousMap.set(u.uid, u); });
-  const tousFiltre = Array.from(tousMap.values()).filter(matchRecherche).sort((a,b)=>{
-    // Demandes reçues en premier dans Tous
-    const aDem = demandesRecuesIds.has(a.uid) ? 0 : 1;
-    const bDem = demandesRecuesIds.has(b.uid) ? 0 : 1;
-    if(aDem!==bDem) return aDem-bDem;
-    return (b.timestamp||0)-(a.timestamp||0);
-  });
-  const gT=document.getElementById('gridTous'); gT.innerHTML=""; document.getElementById('emptyTous').style.display = tousFiltre.length? 'none':'block';
-  tousFiltre.forEach(u=> gT.innerHTML+=carte(u,'tous'));
-  document.getElementById('countTous').innerText = tousMap.size? `(${tousMap.size})` : "";
-  const amis=tousUsers.filter(u=>mesAmisIds.has(u.uid) && matchRecherche(u));
-  const gA=document.getElementById('gridAmis'); gA.innerHTML=""; document.getElementById('emptyAmis').style.display = amis.length? 'none':'block';
-  amis.forEach(u=> gA.innerHTML+=carte(u,'ami'));
-  document.getElementById('countAmis').innerText = mesAmisIds.size? `(${mesAmisIds.size})` : "";
-  const env=tousUsers.filter(u=>demandesEnvoyeesIds.has(u.uid) && matchRecherche(u));
-  const gE=document.getElementById('gridEnvoyees'); gE.innerHTML=""; document.getElementById('emptyEnvoyees').style.display = env.length? 'none':'block';
-  env.forEach(u=> gE.innerHTML+=carte(u,'envoyee'));
-  const dec=tousUsers.filter(u=>!mesAmisIds.has(u.uid) && !demandesEnvoyeesIds.has(u.uid) && !demandesRecuesIds.has(u.uid) && matchRecherche(u)).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
-  const gDec=document.getElementById('gridDecouvrir'); gDec.innerHTML=""; document.getElementById('emptyDecouvrir').style.display = dec.length? 'none':'block';
-  dec.forEach(u=> gDec.innerHTML+=carte(u,'decouvrir'));
-  document.getElementById('countDecouvrir').innerText = dec.length? `(${dec.length})` : "";
-  const q=(document.getElementById('searchAmis').value||"").trim();
-  document.getElementById('subText').innerText = q ? `Résultats pour "${q}" : ${tousUsers.filter(matchRecherche).length} personne(s)` : `Gère tes demandes, tes amis et découvre du monde`;
-  document.getElementById('debugText').innerText = `Total comptes : ${tousUsers.length} • Demandes reçues : ${demandesRecuesIds.size} • Amis : ${mesAmisIds.size} • Envoyées : ${demandesEnvoyeesIds.size}`;
+function afficher(){
+  if(!userData) return;
+  const nom = userData.nomComplet || userData.prenom || "Utilisateur";
+  document.getElementById('nom').innerText = nom;
+  document.getElementById('infos').innerText = (userData.activite||"") + (userData.pays ? " • "+userData.pays : "");
+  document.getElementById('apropos').innerText = userData.bio || userData.aPropos || "Aucune info.";
+  const av=document.getElementById('avatar');
+  if(userData.photoProfil) av.innerHTML=`<img src="${userData.photoProfil}">`;
+  else av.innerText=(userData.prenom||"?").charAt(0).toUpperCase();
+  if(userData.photoCouverture) document.getElementById('cover').innerHTML=`<img src="${userData.photoCouverture}"><div class="avatar-wrap">${av.innerHTML}</div>`;
+  document.getElementById('debug').innerText = "UID demandé : "+targetUid+" • Profil trouvé sous : "+vraiUid;
 }
-onValue(ref(db,'jasonbook/amis/'+uid), (snap)=>{ const d=snap.val(); mesAmisIds=new Set(d?Object.keys(d):[]); rendre(); });
-// ✅ DEMANDES REÇUES : ON NE DÉPEND PLUS DE get() - MÊME SI LE PROFIL MANQUE, ON AFFICHE
-onValue(ref(db,'jasonbook/demandes/'+uid), (snap)=>{
-  const d=snap.val()||{};
-  demandesRecuesIds=new Set(Object.keys(d));
-  demandesRecuesData=d;
-  rendre();
-});
-onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), (snap)=>{ const d=snap.val(); demandesEnvoyeesIds=new Set(d?Object.keys(d):[]); rendre(); });
-onValue(ref(db,'jasonbook/users'), (snap)=>{
-  const d=snap.val(); if(!d) return;
-  tousUsers=Object.entries(d).map(([key,u])=>({uid:key, ...u})).filter(u=>u.uid!==uid);
-  rendre();
-});
-onValue(ref(db,'jasonbook/notifications/'+uid),s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(x=>{ if(!x.lu) n++; }); setBadge('badgeNotif', n); });
-onValue(ref(db,'jasonbook/messages'),s=>{
-  const d=s.val(); let n=0;
-  if(d) Object.values(d).forEach(chat=>{
-    if(chat && typeof chat==='object') Object.values(chat).forEach(m=>{
-      if(m && m.destinataireUid===uid && !m.lu) n++;
-      if(m && m.pour===uid && !m.lu) n++;
-    });
+function majBouton(){
+  const b=document.getElementById('btnAction');
+  if(estAmi){ b.innerText="✅ Ami"; b.className="btn-ami"; b.onclick=()=>{ if(confirm("Retirer cet ami ?")) retirerAmi(); }; }
+  else if(demandeEnvoyee){ b.innerText="En attente..."; b.className="btn-msg"; b.onclick=()=>annulerDemande(); }
+  else { b.innerText="➕ Ajouter"; b.className="btn-ajouter"; b.onclick=()=>envoyerDemande(); }
+}
+window.actionAmi=()=>{};
+async function envoyerDemande(){
+  await set(ref(db,'jasonbook/demandes/'+targetUid+'/'+uid),{deUid:uid, deNom:monNom, date:new Date().toLocaleString()});
+  await set(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+targetUid),{versUid:targetUid, date:new Date().toLocaleString()});
+  alert("Demande envoyée !"); majBouton(); demandeEnvoyee=true; majBouton();
+}
+async function annulerDemande(){
+  await remove(ref(db,'jasonbook/demandes/'+targetUid+'/'+uid));
+  await remove(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+targetUid));
+  demandeEnvoyee=false; majBouton();
+}
+async function retirerAmi(){
+  await remove(ref(db,'jasonbook/amis/'+uid+'/'+targetUid));
+  await remove(ref(db,'jasonbook/amis/'+targetUid+'/'+uid));
+  if(vraiUid!==targetUid){ await remove(ref(db,'jasonbook/amis/'+uid+'/'+vraiUid)); await remove(ref(db,'jasonbook/amis/'+vraiUid+'/'+uid)); }
+  estAmi=false; majBouton();
+}
+window.ecrireMessage=()=>{
+  if(!targetUid){ alert("Impossible, pas d'identifiant."); return; }
+  // ✅ Message marche même si profil introuvable, car on utilise l'uid
+  location.href='messages.html?uid='+targetUid;
+};
+window.bloquer=async ()=>{
+  if(!confirm("Bloquer cette personne ?")) return;
+  await set(ref(db,'jasonbook/bloques/'+uid+'/'+targetUid),{uid:targetUid, nom:document.getElementById('nom').innerText, date:new Date().toLocaleString()});
+  alert("Bloqué 🚫");
+};
+async function chargerPosts(){
+  const box=document.getElementById('posts'); box.innerHTML="<p style='color:#888;font-size:13px'>Chargement...</p>";
+  const s=await get(ref(db,'jasonbook/posts'));
+  const d=s.val()||{};
+  const list=Object.entries(d).map(([id,p])=>({id,...p})).filter(p=>p.auteurUid===targetUid || p.auteurUid===vraiUid).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+  if(!list.length){ box.innerHTML="<p style='color:#888;font-size:13px'>Aucune publication pour le moment.</p>"; return; }
+  box.innerHTML="";
+  list.forEach(p=>{
+    const div=document.createElement('div'); div.className='post';
+    div.innerHTML=`<b>${p.nomAuteur||""}</b><p>${p.texte||""}</p>${p.photoUrl?`<img src="${p.photoUrl}">`:""}`;
+    box.appendChild(div);
   });
-  setBadge('badgeMsg', n);
-});
-setBadge('badgeMarket', 0); setBadge('badgeFeed', 0); setBadge('badgeVideos', 0);
-window.envoyerDemande=async (cibleUid)=>{
-  await set(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid), { deUid:uid, deNom:monNom, date:new Date().toLocaleString() });
-  await set(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid), { versUid:cibleUid, date:new Date().toLocaleString() });
-  const nRef=push(ref(db,'jasonbook/notifications/'+cibleUid));
-  await set(nRef,{ type:"demande", texte:monNom+" t'a envoyé une demande d'ami", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), lu:false });
-  alert("Demande envoyée !");
-};
-window.accepter=async (fromUid)=>{
-  await set(ref(db,'jasonbook/amis/'+uid+'/'+fromUid), true);
-  await set(ref(db,'jasonbook/amis/'+fromUid+'/'+uid), true);
-  await remove(ref(db,'jasonbook/demandes/'+uid+'/'+fromUid));
-  await remove(ref(db,'jasonbook/demandesEnvoyees/'+fromUid+'/'+uid));
-  const nRef=push(ref(db,'jasonbook/notifications/'+fromUid));
-  await set(nRef,{ type:"ami", texte:monNom+" a accepté ta demande d'ami", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), lu:false });
-};
-window.refuser=async (fromUid)=>{
-  await remove(ref(db,'jasonbook/demandes/'+uid+'/'+fromUid));
-  await remove(ref(db,'jasonbook/demandesEnvoyees/'+fromUid+'/'+uid));
-};
-window.annulerDemande=async (cibleUid)=>{
-  await remove(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid));
-  await remove(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid));
-};
-window.retirerAmi=async (amiUid)=>{
-  if(!confirm("Retirer cet ami ?")) return;
-  await remove(ref(db,'jasonbook/amis/'+uid+'/'+amiUid));
-  await remove(ref(db,'jasonbook/amis/'+amiUid+'/'+uid));
-};
+}
+charger();
 </script>
 </body>
 </html>
