@@ -9,21 +9,20 @@
 html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%;overflow-x:hidden!important;width:100%;max-width:100vw}
 :root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--nuit:#0F0F14;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35}
 body{background:var(--nuit);color:#fff;min-height:100vh;overflow-x:hidden}
-/* HEADER SIMPLE - JUSTE LE LOGO AU CENTRE */
-header{background:#111;display:flex;align-items:center;justify-content:center;padding:12px;border-bottom:2px solid var(--or);width:100%}
+/* ✅ 1. JASONBOOK À GAUCHE COMME AVANT, PAS AU MILIEU */
+header{background:#111;display:flex;align-items:center;justify-content:flex-start;padding:12px 14px;border-bottom:2px solid var(--or);width:100%}
 .logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:22px;cursor:pointer;white-space:nowrap}
 .logo span{width:36px;height:36px;min-width:36px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
 .logo i{color:var(--or);font-style:normal}
 .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
-/* ✅ COVER + PROFIL CENTRÉ COMME TA PHOTO */
-.cover-wrap{background:var(--carte);max-width:1000px;width:calc(100% - 24px);margin:12px auto 0;padding-bottom:18px;border-radius:16px;border:1px solid var(--ligne);overflow:hidden;text-align:center}
-.cover{height:200px;background:linear-gradient(135deg,var(--violet),var(--violet2),var(--or));overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;cursor:pointer;position:relative;padding:0 12px;text-align:center}
+/* ✅ 2. PLUS DE overflow:hidden QUI COUPE LA PHOTO */
+.cover-wrap{background:var(--carte);max-width:1000px;width:calc(100% - 24px);margin:12px auto 0;padding-bottom:18px;border-radius:16px;border:1px solid var(--ligne);overflow:visible;text-align:center;position:relative}
+.cover{height:200px;background:linear-gradient(135deg,var(--violet),var(--violet2),var(--or));overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;cursor:pointer;position:relative;padding:0 12px;text-align:center;border-radius:16px 16px 0 0}
 .cover img{width:100%;height:100%;object-fit:cover}
 .cover .hint{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.6);padding:5px 10px;border-radius:999px;font-size:11px}
-/* ✅ TOUT AU CENTRE */
-.profile-row{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 20px;margin-top:-60px;width:100%}
-.big-avatar{width:130px;height:130px;min-width:130px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;border:5px solid #111;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:900;overflow:hidden;flex-shrink:0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.profile-row{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 20px;margin-top:-60px;width:100%;position:relative;z-index:5}
+.big-avatar{width:130px;height:130px;min-width:130px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;border:5px solid #111;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:900;overflow:hidden;flex-shrink:0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.4);position:relative;z-index:5}
 .big-avatar img{width:100%;height:100%;object-fit:cover}
 .profile-info{width:100%;word-break:break-word;margin-top:10px;text-align:center}
 .profile-info h1{font-size:28px;color:#fff;word-break:break-word;line-height:1.2;text-align:center}
@@ -79,7 +78,6 @@ header{background:#111;display:flex;align-items:center;justify-content:center;pa
 <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
 </header>
 
-<!-- ✅ COMME TA PHOTO : COVER, M AU MILIEU, NOM AU MILIEU, BOUTONS AU MILIEU -->
 <div class="cover-wrap">
 <div class="cover" id="coverDiv" onclick="ouvrirPhoto('cover')">Chargement...</div>
 <div class="profile-row">
