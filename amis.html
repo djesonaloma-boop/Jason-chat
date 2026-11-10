@@ -44,12 +44,13 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 .tabs button{border:none;background:var(--carte);color:#fff;padding:11px 16px;border-radius:999px;font-weight:700;cursor:pointer;white-space:nowrap;border:1px solid var(--ligne);font-size:13.5px}
 .tabs button.active{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff;border-color:transparent}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
-.friend-card{background:var(--carte);border-radius:16px;overflow:hidden;border:1px solid var(--ligne);text-align:center;padding-bottom:12px}
+.friend-card{background:var(--carte);border-radius:16px;overflow:hidden;border:1px solid var(--ligne);text-align:center;padding-bottom:12px;position:relative}
 .friend-card .photo{height:168px;background:#2A2A35;display:flex;align-items:center;justify-content:center;font-size:56px;font-weight:900;color:var(--or);cursor:pointer;overflow:hidden}
 .friend-card .photo img{width:100%;height:100%;object-fit:cover}
 .friend-card h3{font-size:15px;margin:11px 8px 2px;line-height:1.3;color:#fff}
 .friend-card p{font-size:12.5px;color:var(--gris);margin:0 8px 11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .friend-card .btns{padding:0 11px;display:flex;flex-direction:column;gap:7px}
+.badge-nouveau{position:absolute;top:10px;left:10px;background:var(--or);color:#111;font-size:11px;font-weight:900;padding:4px 8px;border-radius:999px;z-index:2}
 .btn-blue{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
 .btn-grey{background:#2A2A35;color:#fff;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
 .btn-green{background:#22C55E;color:#fff;border:none;padding:10px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13.5px}
@@ -71,7 +72,6 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
     <button class="icon-top" onclick="location.href='recherche.html'">🔍</button>
     <button class="icon-top menu" onclick="ouvrirMenu()">☰</button>
   </div>
-  <!-- ✅ TOUS LES BADGES CACHÉS AU DÉPART -->
   <nav class="nav-top">
     <a href="feed.html">🏠<span class="badge or" id="badgeFeed"></span></a>
     <a href="amis.html" class="active">👥<span class="badge" id="badgeAmis"></span></a>
@@ -124,16 +124,14 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 
 <div class="wrap">
 <h1>Amis</h1>
-<p class="sub">Gère tes demandes, tes amis et découvre du monde</p>
+<p class="sub" id="subText">Gère tes demandes, tes amis et découvre du monde</p>
 <div class="tabs">
 <button id="tabBtn-demandes" class="active" onclick="showTab('demandes')">Demandes reçues <span id="countDemandes"></span></button>
 <button id="tabBtn-amis" onclick="showTab('amis')">Mes amis <span id="countAmis"></span></button>
 <button id="tabBtn-envoyees" onclick="showTab('envoyees')">Demandes envoyées</button>
-<button id="tabBtn-decouvrir" onclick="showTab('decouvrir')">Découvrir</button>
+<button id="tabBtn-decouvrir" onclick="showTab('decouvrir')">Découvrir <span id="countDecouvrir"></span></button>
 </div>
-
-<input class="search-big" id="searchAmis" placeholder="🔍 Rechercher parmi les personnes..." oninput="filtrer()">
-
+<input class="search-big" id="searchAmis" placeholder="🔍 Rechercher parmi TOUTES les personnes..." oninput="filtrer()">
 <div id="section-demandes"><div class="grid" id="gridDemandes"></div><div class="empty" id="emptyDemandes" style="display:none"><div class="big">👥</div><p>Aucune demande d'ami pour le moment</p></div></div>
 <div id="section-amis" style="display:none"><div class="grid" id="gridAmis"></div><div class="empty" id="emptyAmis" style="display:none"><div class="big">👥</div><p>Tu n'as pas encore d'ami.<br>Découvre des personnes et ajoute-les !</p></div></div>
 <div id="section-envoyees" style="display:none"><div class="grid" id="gridEnvoyees"></div><div class="empty" id="emptyEnvoyees" style="display:none"><div class="big">📤</div><p>Aucune demande envoyée</p></div></div>
@@ -155,61 +153,74 @@ if(elD) elD.onclick=()=>location.href='profil.html';
 window.ouvrirMenu=()=>{ document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); };
 window.fermerMenu=()=>{ document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); };
 window.deconnecter=()=>{ if(!confirm("Tu veux te déconnecter ?")) return; localStorage.clear(); location.href='index.html'; };
-// ✅ SI 0 = ON CACHE, SI +0 = ON AFFICHE
 function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; e.innerText=''; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
-let tousUsers=[], mesAmisIds=new Set(), demandesRecues=[], demandesEnvoyeesIds=new Set();
+let tousUsers=[], mesAmisIds=new Set(), demandesRecues=[], demandesEnvoyeesIds=new Set(), tabActuel='demandes';
 window.showTab=(t)=>{
+  tabActuel=t;
   ['demandes','amis','envoyees','decouvrir'].forEach(x=>{
     document.getElementById('section-'+x).style.display = x===t ? 'block' : 'none';
     document.getElementById('tabBtn-'+x).classList.toggle('active', x===t);
   });
+  rendre();
 };
-window.filtrer=()=>{
-  const q=document.getElementById('searchAmis').value.toLowerCase();
-  document.querySelectorAll('.friend-card').forEach(c=>{ c.style.display = c.dataset.nom.toLowerCase().includes(q) ? 'block' : 'none'; });
-};
+// ✅ RECHERCHE VRAIE : cherche dans TOUTE la base, pas juste les cartes affichées
+window.filtrer=()=>{ rendre(); };
+function matchRecherche(u){
+  const q=(document.getElementById('searchAmis').value||"").toLowerCase().trim();
+  if(!q) return true;
+  const txt=((u.nomComplet||"")+" "+(u.prenom||"")+" "+(u.nom||"")+" "+(u.pays||"")+" "+(u.activite||"")+" "+(u.email||"")).toLowerCase();
+  return txt.includes(q);
+}
 function avatar(photo, lettre){ return photo ? `<img src="${photo}">` : lettre; }
 function carte(u, type){
-  const lettre=(u.prenom||u.nom||"?").charAt(0).toUpperCase();
+  const lettre=(u.prenom||u.nom||u.nomComplet||"?").charAt(0).toUpperCase();
+  const estNouveau = u.timestamp && (Date.now() - u.timestamp < 7*24*60*60*1000);
   let btns="";
   if(type==='demande') btns=`<div class="btns"><button class="btn-green" onclick="accepter('${u.uid}')">✅ Accepter</button><button class="btn-red" onclick="refuser('${u.uid}')">❌ Refuser</button></div>`;
   if(type==='ami') btns=`<div class="btns"><button class="btn-blue" onclick="location.href='messages.html?uid=${u.uid}'">💬 Message</button><button class="btn-grey" onclick="retirerAmi('${u.uid}')">Retirer</button></div>`;
   if(type==='envoyee') btns=`<div class="btns"><button class="btn-grey" disabled>En attente...</button><button class="btn-red" onclick="annulerDemande('${u.uid}')">Annuler</button></div>`;
   if(type==='decouvrir') btns=`<div class="btns"><button class="btn-or" onclick="envoyerDemande('${u.uid}')">➕ Ajouter</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Voir le profil</button></div>`;
-  return `<div class="friend-card" data-nom="${u.nomComplet||""}"><div class="photo" onclick="location.href='profil-ami.html?uid=${u.uid}'">${avatar(u.photoProfil, lettre)}</div><h3>${u.nomComplet||""}</h3><p>${u.activite||""} • ${u.pays||""}</p>${btns}</div>`;
+  return `<div class="friend-card" data-nom="${u.nomComplet||""}">${estNouveau?'<span class="badge-nouveau">🆕 Nouveau</span>':''}<div class="photo" onclick="location.href='profil-ami.html?uid=${u.uid}'">${avatar(u.photoProfil, lettre)}</div><h3>${u.nomComplet||u.prenom||"Sans nom"}</h3><p>${u.activite||""} • ${u.pays||""}</p>${btns}</div>`;
 }
 function rendre(){
-  const gD=document.getElementById('gridDemandes'); gD.innerHTML=""; document.getElementById('emptyDemandes').style.display = demandesRecues.length? 'none':'block';
-  demandesRecues.forEach(u=> gD.innerHTML+=carte(u,'demande'));
-  // ✅ Le (3) dans l'onglet aussi : seulement si il y a vraiment des demandes
+  const gD=document.getElementById('gridDemandes'); gD.innerHTML="";
+  const demFiltre = demandesRecues.filter(matchRecherche);
+  document.getElementById('emptyDemandes').style.display = demFiltre.length? 'none':'block';
+  demFiltre.forEach(u=> gD.innerHTML+=carte(u,'demande'));
   document.getElementById('countDemandes').innerText = demandesRecues.length? `(${demandesRecues.length})` : "";
   setBadge('badgeAmis', demandesRecues.length);
-  const amis=tousUsers.filter(u=>mesAmisIds.has(u.uid));
+  const amis=tousUsers.filter(u=>mesAmisIds.has(u.uid) && matchRecherche(u));
   const gA=document.getElementById('gridAmis'); gA.innerHTML=""; document.getElementById('emptyAmis').style.display = amis.length? 'none':'block';
   amis.forEach(u=> gA.innerHTML+=carte(u,'ami'));
-  document.getElementById('countAmis').innerText = amis.length? `(${amis.length})` : "";
-  const env=tousUsers.filter(u=>demandesEnvoyeesIds.has(u.uid));
+  document.getElementById('countAmis').innerText = mesAmisIds.size? `(${mesAmisIds.size})` : "";
+  const env=tousUsers.filter(u=>demandesEnvoyeesIds.has(u.uid) && matchRecherche(u));
   const gE=document.getElementById('gridEnvoyees'); gE.innerHTML=""; document.getElementById('emptyEnvoyees').style.display = env.length? 'none':'block';
   env.forEach(u=> gE.innerHTML+=carte(u,'envoyee'));
-  const dec=tousUsers.filter(u=>!mesAmisIds.has(u.uid) && !demandesEnvoyeesIds.has(u.uid) && !demandesRecues.some(d=>d.uid===u.uid));
+  // ✅ PLUS DE slice(0,30) - ON MONTRE TOUT LE MONDE, LES NOUVEAUX EN PREMIER
+  const dec=tousUsers.filter(u=>!mesAmisIds.has(u.uid) && !demandesEnvoyeesIds.has(u.uid) && !demandesRecues.some(d=>d.uid===u.uid) && matchRecherche(u)).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
   const gDec=document.getElementById('gridDecouvrir'); gDec.innerHTML=""; document.getElementById('emptyDecouvrir').style.display = dec.length? 'none':'block';
-  dec.slice(0,30).forEach(u=> gDec.innerHTML+=carte(u,'decouvrir'));
+  dec.forEach(u=> gDec.innerHTML+=carte(u,'decouvrir'));
+  document.getElementById('countDecouvrir').innerText = dec.length? `(${dec.length})` : "";
+  const q=(document.getElementById('searchAmis').value||"").trim();
+  document.getElementById('subText').innerText = q ? `Résultats pour "${q}" : ${tousUsers.filter(matchRecherche).length} personne(s) trouvée(s)` : `Gère tes demandes, tes amis et découvre du monde`;
 }
 onValue(ref(db,'jasonbook/amis/'+uid), (snap)=>{
   const d=snap.val(); mesAmisIds=new Set(d?Object.keys(d):[]); rendre();
 });
 onValue(ref(db,'jasonbook/demandes/'+uid), async (snap)=>{
   const d=snap.val(); demandesRecues=[];
-  if(d){ for(const fromUid of Object.keys(d)){ const s=await get(ref(db,'jasonbook/users/'+fromUid)); if(s.val()) demandesRecues.push(s.val()); } }
+  if(d){ for(const fromUid of Object.keys(d)){ const s=await get(ref(db,'jasonbook/users/'+fromUid)); if(s.val()) demandesRecues.push({uid:fromUid, ...s.val()}); } }
   rendre();
 });
 onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), (snap)=>{
   const d=snap.val(); demandesEnvoyeesIds=new Set(d?Object.keys(d):[]); rendre();
 });
 onValue(ref(db,'jasonbook/users'), (snap)=>{
-  const d=snap.val(); if(!d) return; tousUsers=Object.values(d).filter(u=>u.uid!==uid); rendre();
+  const d=snap.val(); if(!d) return;
+  // ✅ On prend la CLÉ comme uid si l'objet n'a pas de uid - c'est ça qui faisait disparaître ton ami
+  tousUsers=Object.entries(d).map(([key,u])=>({uid:key, ...u})).filter(u=>u.uid!==uid);
+  rendre();
 });
-// ✅ VRAIS BADGES SEULEMENT
 onValue(ref(db,'jasonbook/notifications/'+uid),s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(x=>{ if(!x.lu) n++; }); setBadge('badgeNotif', n); });
 onValue(ref(db,'jasonbook/messages'),s=>{
   const d=s.val(); let n=0;
@@ -221,9 +232,7 @@ onValue(ref(db,'jasonbook/messages'),s=>{
   });
   setBadge('badgeMsg', n);
 });
-setBadge('badgeMarket', 0);
-setBadge('badgeFeed', 0);
-setBadge('badgeVideos', 0);
+setBadge('badgeMarket', 0); setBadge('badgeFeed', 0); setBadge('badgeVideos', 0);
 window.envoyerDemande=async (cibleUid)=>{
   await set(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid), { deUid:uid, deNom:monNom, date:new Date().toLocaleString() });
   await set(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid), { versUid:cibleUid, date:new Date().toLocaleString() });
