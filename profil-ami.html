@@ -7,41 +7,43 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
 html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
-:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
-body{background:var(--bg);min-height:100vh}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.3px}
-.logo span{width:34px;height:34px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
+/* ✅ BLEU DE NUIT + VIOLET + OR - COMME MESSAGES */
+:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--nuit:#0F0F14;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35}
+body{background:var(--nuit);color:#fff;min-height:100vh}
+header{background:#111;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;border-bottom:2px solid var(--or)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:21px;cursor:pointer;letter-spacing:-.3px}
+.logo span{width:34px;height:34px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:var(--or);font-style:normal}
+header .search{flex:1;background:#2A2A35;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer;color:#fff}
+header .search::placeholder{color:#888}
 .icons{display:flex;gap:6px;align-items:center}
-.icons a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
-.avatar{width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.icons a{width:38px;height:38px;background:#2A2A35;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
+.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
-.cover-wrap{background:#fff;max-width:1000px;margin:0 auto;padding-bottom:14px;border-radius:0 0 12px 12px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line);border-top:none}
-.cover{height:260px;background:var(--blue);border-radius:0 0 12px 12px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px}
+.cover-wrap{background:var(--carte);max-width:1000px;margin:12px auto 0;padding-bottom:14px;border-radius:16px;border:1px solid var(--ligne)}
+.cover{height:260px;background:linear-gradient(135deg,var(--violet),var(--violet2),var(--or));border-radius:16px 16px 0 0;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px}
 .cover img{width:100%;height:100%;object-fit:cover}
 .profile-row{display:flex;gap:16px;align-items:flex-end;padding:0 20px;margin-top:-40px;flex-wrap:wrap}
-.big-avatar{width:140px;height:140px;border-radius:50%;background:var(--blue);color:#fff;border:5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:900;overflow:hidden;flex-shrink:0}
+.big-avatar{width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;border:5px solid #111;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:900;overflow:hidden;flex-shrink:0}
 .big-avatar img{width:100%;height:100%;object-fit:cover}
 .profile-info{flex:1;min-width:220px}
-.profile-info h1{font-size:26px}.profile-info p{color:var(--grey);font-size:14px;margin-top:4px}
+.profile-info h1{font-size:26px;color:#fff}.profile-info p{color:var(--gris);font-size:14px;margin-top:4px}
 .profile-btns{display:flex;gap:8px;flex-wrap:wrap}
-.profile-btns button{padding:10px 18px;border:none;border-radius:9px;font-weight:700;cursor:pointer;font-size:14px}
-.btn-blue{background:var(--blue);color:#fff}.btn-grey{background:#f0f2f5}.btn-green{background:#42b72a;color:#fff}
+.profile-btns button{padding:10px 18px;border:none;border-radius:999px;font-weight:800;cursor:pointer;font-size:14px}
+.btn-blue{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}.btn-grey{background:#2A2A35;color:#fff}.btn-green{background:#22C55E;color:#fff}
 .layout{display:flex;gap:15px;max-width:1000px;margin:14px auto;padding:0 12px;align-items:flex-start}
 .left{width:340px;position:sticky;top:65px}
 .right{flex:1;min-width:0}
-.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line)}
-.card h3{margin-bottom:10px}
-.info-row{display:flex;gap:10px;padding:8px 0;font-size:14px;border-bottom:1px solid #f0f2f5}
+.card{background:var(--carte);border-radius:16px;padding:14px;margin-bottom:12px;border:1px solid var(--ligne)}
+.card h3{margin-bottom:10px;color:#fff}
+.info-row{display:flex;gap:10px;padding:8px 0;font-size:14px;border-bottom:1px solid var(--ligne);color:#EDEDEF}
 .post-head{display:flex;gap:10px;align-items:center}
-.post-text{margin:10px 0;font-size:15px;white-space:pre-wrap;line-height:1.5}
+.post-text{margin:10px 0;font-size:15px;white-space:pre-wrap;line-height:1.5;color:#fff}
 .post img.main{width:100%;border-radius:10px;max-height:500px;object-fit:cover}
-.actions{display:flex;justify-content:space-around;border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
-.actions button{border:none;background:none;font-weight:700;color:var(--grey);cursor:pointer;padding:7px;font-size:13px}
+.actions{display:flex;justify-content:space-around;border-top:1px solid var(--ligne);padding-top:8px;margin-top:8px}
+.actions button{border:none;background:none;font-weight:700;color:var(--gris);cursor:pointer;padding:7px;font-size:13px}
 .bottom-nav{display:none}
-@media(max-width:800px){.left{display:none}.cover{height:180px}.big-avatar{width:110px;height:110px;font-size:40px}.profile-row{justify-content:center;text-align:center}.profile-info{text-align:center}.profile-btns{justify-content:center}.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}}
+@media(max-width:800px){.left{display:none}.cover{height:180px}.big-avatar{width:110px;height:110px;font-size:40px}.profile-row{justify-content:center;text-align:center}.profile-info{text-align:center}.profile-btns{justify-content:center}.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#111;justify-content:space-around;padding:11px;border-top:2px solid var(--or);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}}
 </style>
 </head>
 <body>
@@ -61,7 +63,7 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-ra
 <p id="bioAffiche"></p>
 <p id="metaAffiche"></p>
 <p id="amisCount"></p>
-<p id="debugUid" style="font-size:11px;color:#999"></p>
+<p id="debugUid" style="font-size:11px;color:#666"></p>
 </div>
 <div class="profile-btns">
 <button class="btn-blue" id="btnAmi" onclick="actionAmi()">➕ Ajouter</button>
@@ -73,12 +75,12 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-ra
 <div class="layout">
 <div class="left">
 <div class="card"><h3>Intro</h3><div id="introList"></div></div>
-<div class="card"><h3>Photos</h3><div id="photosGrid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px"></div><p id="noPhotos" style="color:#65676b;font-size:13px">Aucune photo</p></div>
+<div class="card"><h3>Photos</h3><div id="photosGrid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px"></div><p id="noPhotos" style="color:#A1A1AA;font-size:13px">Aucune photo</p></div>
 </div>
 <div class="right">
 <div class="card"><p style="font-weight:700;font-size:15px">Publications de <span id="nomPost">cette personne</span></p></div>
 <div id="postsList"></div>
-<div id="noPosts" class="card" style="display:none"><p style="text-align:center;color:#65676b">Aucune publication pour le moment</p></div>
+<div id="noPosts" class="card" style="display:none"><p style="text-align:center;color:#A1A1AA">Aucune publication pour le moment</p></div>
 </div>
 </div>
 
@@ -119,7 +121,6 @@ window.actionAmi=async()=>{
   } else if(statut==='demande_recue'){
     await set(ref(db,'jasonbook/amis/'+uid+'/'+cibleUid), true);
     await set(ref(db,'jasonbook/amis/'+cibleUid+'/'+uid), true);
-    // ✅ Si son vrai uid est différent, on l'ajoute aussi avec ce vrai uid
     if(vraiUid!==cibleUid){
       await set(ref(db,'jasonbook/amis/'+uid+'/'+vraiUid), true);
       await set(ref(db,'jasonbook/amis/'+vraiUid+'/'+uid), true);
@@ -150,22 +151,16 @@ function afficherProfil(u){
   document.getElementById('coverDiv').innerHTML = u.photoCouverture ? `<img src="${u.photoCouverture}">` : (u.nomComplet||"");
   document.getElementById('debugUid').innerText = "UID demandé : "+cibleUid+" • Profil trouvé : "+vraiUid;
 }
-// ✅ NOUVELLE RECHERCHE : ON CHERCHE PARTOUT, PAS SEULEMENT DANS users/cibleUid
 async function chargerProfil(){
-  // 1. Direct
   let snap = await get(ref(db,'jasonbook/users/'+cibleUid));
   if(snap.val()){ vraiUid=cibleUid; afficherProfil({uid:cibleUid, ...snap.val()}); chargerPosts(); return; }
-  // 2. Scanner tous les users - son profil est peut-être sous une autre clé
   const tous = await get(ref(db,'jasonbook/users'));
   const d = tous.val()||{};
   for(const [key,u] of Object.entries(d)){
     if(key===cibleUid || u.uid===cibleUid || u.id===cibleUid){
       vraiUid=key; afficherProfil({uid:key, ...u}); chargerPosts(); return;
     }
-    // 3. Même nom que dans la demande ? On vérifie avec la demande
-    // On le fera à l'étape 4 si besoin
   }
-  // 4. Chercher son nom dans la demande et dans les notifications
   let nomTrouve="";
   const dem = await get(ref(db,'jasonbook/demandes/'+uid+'/'+cibleUid));
   if(dem.val() && dem.val().deNom) nomTrouve=dem.val().deNom;
@@ -175,7 +170,6 @@ async function chargerProfil(){
       for(const n of Object.values(notifs.val())){ if(n.deUid===cibleUid && n.deNom){ nomTrouve=n.deNom; break; } }
     }
   }
-  // 5. Chercher par nom dans tous les users - si Mirna a un 2ème compte avec le même nom, on le prend
   if(nomTrouve){
     for(const [key,u] of Object.entries(d)){
       const nomU = (u.nomComplet||"").toLowerCase().trim();
@@ -184,14 +178,11 @@ async function chargerProfil(){
       }
     }
   }
-  // 6. ✅ Même si on ne trouve RIEN, on affiche son nom, pas "Profil introuvable"
-  // Son Message marchera quand même avec cibleUid
   vraiUid=cibleUid;
   afficherProfil({uid:cibleUid, nomComplet: nomTrouve || "Utilisateur JASONBOOK", prenom: nomTrouve ? nomTrouve.split(' ')[0] : "?", photoProfil:"", bio:"Ce compte a été créé 2 fois. Son profil est sous un autre identifiant, mais tu peux lui écrire.", activite:"", ville:"", pays:"", dateInscription:""});
   chargerPosts();
 }
 chargerProfil();
-// Amis - on vérifie cibleUid ET vraiUid
 onValue(ref(db,'jasonbook/amis/'+uid), s=>{ const d=s.val(); if(d && (d[cibleUid] || d[vraiUid])) statut='ami'; else if(statut==='ami') statut='inconnu'; majBouton(); });
 onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_envoyee'; majBouton(); });
 onValue(ref(db,'jasonbook/demandes/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_recue'; majBouton(); });
@@ -202,13 +193,12 @@ async function chargerPosts(){
   const snap=await get(ref(db,'jasonbook/posts'));
   const data=snap.val();
   if(!data){ document.getElementById('noPosts').style.display="block"; return; }
-  // ✅ Posts de cibleUid OU de vraiUid
   const siens=Object.entries(data).filter(([id,p])=>p.auteurUid===cibleUid || p.auteurUid===vraiUid).reverse();
   if(!siens.length){ document.getElementById('noPosts').style.display="block"; return; }
   document.getElementById('noPosts').style.display="none";
   siens.forEach(([id,p])=>{
     const div=document.createElement('div'); div.className='card';
-    div.innerHTML=`<div class="post-head"><div class="avatar">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div><b>${p.nomAuteur}</b><br><small style="color:#65676b">${p.date||""}</small></div></div><div class="post-text">${p.texte||""}</div>${p.photoUrl?`<img class="main" src="${p.photoUrl}">`:""}${p.videoUrl?`<video controls style="width:100%;border-radius:10px" src="${p.videoUrl}"></video>`:""}<div class="actions"><button>👍 ${p.likesCount||0}</button><button>💬 ${p.commentairesCount||0}</button><button>↗️ ${p.partagesCount||0}</button></div>`;
+    div.innerHTML=`<div class="post-head"><div class="avatar">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div><b>${p.nomAuteur}</b><br><small style="color:#A1A1AA">${p.date||""}</small></div></div><div class="post-text">${p.texte||""}</div>${p.photoUrl?`<img class="main" src="${p.photoUrl}">`:""}${p.videoUrl?`<video controls style="width:100%;border-radius:10px" src="${p.videoUrl}"></video>`:""}<div class="actions"><button>👍 ${p.likesCount||0}</button><button>💬 ${p.commentairesCount||0}</button><button>↗️ ${p.partagesCount||0}</button></div>`;
     box.appendChild(div);
     if(p.photoUrl) grid.innerHTML+=`<img src="${p.photoUrl}" style="width:100%;height:80px;object-fit:cover;border-radius:8px">`;
   });
