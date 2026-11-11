@@ -3,69 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>JASONBOOK - Lives</title>
+<meta name="theme-color" content="#0A0A0F">
+<title>JASONBOOK ✨ - Lives</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
 html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
-:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
-body{background:var(--bg);min-height:100vh}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.3px}
-.logo span{width:34px;height:34px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
-.icons{display:flex;gap:6px;align-items:center}
-.icons a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
-.avatar{width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.wrap{max-width:750px;margin:16px auto;padding:0 12px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px}
-.top h1{font-size:23px;letter-spacing:-.3px}
-.btn-blue{background:var(--blue);color:#fff;border:none;padding:11px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-size:13.5px}
-.btn-grey{background:#f0f2f5;border:none;padding:9px 14px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13px}
-.btn-red{background:#e0245e;color:#fff;border:none;padding:11px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-size:13.5px}
-.live-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line);cursor:pointer}
+:root{--blue:#7C3AED;--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--grey:#A1A1AA;--line:#26262F;--gold:#FFC107}
+body{background:var(--bg);color:#fff;min-height:100vh}
+/* HEADER COMME FEED */
+.topbar{background:#111;display:flex;align-items:center;gap:8px;padding:10px 12px;position:sticky;top:0;z-index:20;border-bottom:2px solid var(--gold)}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:20px;cursor:pointer;flex:1}
+.logo span{width:34px;height:34px;background:linear-gradient(135deg,var(--gold),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo i{color:var(--gold);font-style:normal}
+.logo small{display:block;font-size:8px;color:var(--grey);letter-spacing:1.2px}
+.search-top{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:#fff;outline:none;font-size:12px}
+.btn-notif,.btn-menu{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
+.btn-notif .dot{position:absolute;top:-5px;right:-5px;background:#E0245E;color:#fff;font-size:10px;font-weight:900;min-width:18px;height:18px;border-radius:999px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid #0A0A0F}
+/* MENU PETIT PRO */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:none}
+.overlay.open{display:block}
+.menu{position:fixed;top:0;right:0;bottom:0;width:264px;max-width:82vw;background:#121218;z-index:101;transform:translateX(100%);transition:.22s ease;overflow-y:auto;border-left:1px solid var(--line);padding:0 0 14px}
+.menu.open{transform:translateX(0)}
+.menu-top{display:flex;align-items:center;gap:10px;padding:14px;border-bottom:1px solid var(--line)}
+.menu-top .m-ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--gold));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;overflow:hidden}
+.menu-top .m-ava img{width:100%;height:100%;object-fit:cover}
+.menu-top b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu-top small{color:var(--grey);font-size:11px}
+.menu-top button{margin-left:auto;background:var(--card2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;font-size:14px;cursor:pointer}
+.menu-sec{padding:14px 14px 4px;font-size:10px;color:var(--grey);letter-spacing:1px;font-weight:800}
+.menu-item{display:flex;align-items:center;gap:10px;width:100%;background:none;border:none;color:#EDEDEF;text-align:left;padding:8px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600}
+.menu-item .ico{width:30px;height:30px;min-width:30px;background:var(--card2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.menu-item .fleche{margin-left:auto;color:var(--grey);font-size:12px}
+.menu-item.profil{background:#1E1A0A;border:1px solid rgba(255,193,7,.35)}
+.menu-item.profil .ico{background:var(--gold);color:#111}
+.menu-item.booster{background:#1A1526;border:1px solid rgba(124,58,237,.4)}
+.menu-item.booster .ico{background:var(--blue)}
+.menu-item.live .ico{background:#E0245E}
+.menu-item.danger{color:#FF8A9A}.menu-item.danger .ico{background:#E0245E}
+.hr{height:1px;background:var(--line);margin:12px 14px}
+.wrap{max-width:750px;margin:14px auto;padding:0 12px 80px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px;flex-wrap:wrap}
+.top h1{font-size:22px}
+.btn-red{background:#E0245E;color:#fff;border:none;padding:11px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-size:13px}
+.btn-blue{background:var(--blue);color:#fff;border:none;padding:11px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-size:13px}
+.btn-grey{background:var(--card2);color:#fff;border:none;padding:9px 14px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13px}
+.live-card{background:var(--card);border-radius:16px;padding:14px;margin-bottom:12px;border:1px solid var(--line);cursor:pointer}
 .live-card .head{display:flex;gap:10px;align-items:center}
-.live-card .head .info{flex:1}.live-card .head small{color:var(--grey);font-size:12.5px}
-.live-badge{background:#e0245e;color:#fff;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:800;animation:blink 1.2s infinite;white-space:nowrap}
+.live-card .head .info{flex:1}.live-card .head small{color:var(--grey);font-size:12px}
+.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--gold));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.live-badge{background:#E0245E;color:#fff;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:800;animation:blink 1.2s infinite;white-space:nowrap}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
-.live-card .thumb{width:100%;border-radius:10px;margin-top:10px;max-height:320px;object-fit:cover;background:#000}
+.stats-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.stats-row span{background:var(--card2);padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700}
 .live-card .actions{display:flex;gap:8px;margin-top:10px}
 .live-card .actions button{flex:1}
-.empty{text-align:center;color:var(--grey);padding:36px 10px;background:#fff;border-radius:12px;border:1px solid var(--line)}
+.empty{text-align:center;color:var(--grey);padding:36px 10px;background:var(--card);border-radius:16px;border:1px solid var(--line)}
 .empty .big{font-size:44px}
+/* ROOM */
 .live-room{position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column;color:#fff}
 .live-room.open{display:flex}
 .live-room video{flex:1;width:100%;object-fit:cover;background:#111}
 .live-room .room-top{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:10px;padding:12px;background:linear-gradient(rgba(0,0,0,.7),transparent)}
 .live-room .room-top .info{flex:1}
 .live-room .room-top button{background:rgba(0,0,0,.5);color:#fff;border:none;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer}
-.live-room .chat{position:absolute;bottom:0;left:0;right:0;padding:12px;background:linear-gradient(transparent,rgba(0,0,0,.85));max-height:45%}
-.live-room .chat-msgs{max-height:140px;overflow-y:auto;margin-bottom:8px}
-.live-room .chat-msgs p{font-size:13px;margin:4px 0}
-.live-room .chat-msgs b{color:#FFD700}
+.live-room .room-top .share-btn{background:var(--gold);color:#111;width:auto;padding:0 12px;border-radius:999px;font-size:12px;font-weight:800;height:32px}
+/* ✅ COEURS QUI MONTENT QUAND ON TAPOTE */
+.hearts{position:absolute;right:16px;bottom:170px;pointer-events:none;z-index:5}
+.hearts span{position:absolute;bottom:0;right:0;font-size:28px;animation:monter 1.2s ease-out forwards;opacity:1}
+@keyframes monter{0%{transform:translateY(0) scale(.6);opacity:1}100%{transform:translateY(-140px) scale(1.4) translateX(20px);opacity:0}}
+.live-room .chat{position:absolute;bottom:0;left:0;right:0;padding:12px;background:linear-gradient(transparent,rgba(0,0,0,.88));max-height:52%}
+.live-room .chat-msgs{max-height:120px;overflow-y:auto;margin-bottom:8px}
+.live-room .chat-msgs p{font-size:13px;margin:4px 0;background:rgba(0,0,0,.4);padding:6px 10px;border-radius:12px;display:inline-block;max-width:90%}
+.live-room .chat-msgs b{color:var(--gold)}
 .live-room .chat-input{display:flex;gap:8px}
-.live-room .chat-input input{flex:1;padding:11px;border:none;border-radius:999px;outline:none;font-size:14px}
-.live-room .chat-input button{border:none;padding:11px 16px;border-radius:999px;background:var(--blue);color:#fff;font-weight:800;cursor:pointer}
-.live-room .reactions{display:flex;gap:8px;margin-bottom:8px}
+.live-room .chat-input input{flex:1;padding:11px;border:none;border-radius:999px;outline:none;font-size:14px;background:#fff;color:#111}
+.live-room .chat-input button{border:none;padding:11px 14px;border-radius:999px;background:var(--blue);color:#fff;font-weight:800;cursor:pointer}
+.live-room .reactions{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
 .live-room .reactions button{background:rgba(255,255,255,.2);border:none;color:#fff;padding:8px 12px;border-radius:999px;cursor:pointer;font-size:16px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:110;padding:16px}
+/* ✅ BOUTON TAPOTER GROS */
+.btn-tap{position:absolute;right:16px;bottom:190px;width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,#E0245E,#FF2D55);border:3px solid #fff;color:#fff;font-size:32px;cursor:pointer;z-index:6;box-shadow:0 4px 20px rgba(224,36,94,.6);display:flex;align-items:center;justify-content:center}
+.btn-tap:active{transform:scale(.92)}
+.tap-count{position:absolute;right:16px;bottom:262px;background:rgba(0,0,0,.6);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;text-align:center;z-index:6}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:110;padding:16px}
 .modal.open{display:flex}
-.modal-box{background:#fff;width:100%;max-width:420px;border-radius:14px;padding:20px}
-.modal-box input,.modal-box textarea{width:100%;padding:12px;border:1.5px solid #e4e6eb;border-radius:10px;margin-top:8px;font-size:14px;outline:none;background:#f8f9fa}
-.modal-box input:focus,.modal-box textarea:focus{border-color:var(--blue);background:#fff}
-.bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+.modal-box{background:#16161F;width:100%;max-width:420px;border-radius:18px;padding:20px;border:1px solid var(--line)}
+.modal-box input,.modal-box textarea{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:10px;margin-top:8px;font-size:14px;outline:none;background:var(--card2);color:#fff}
+.modal-box input:focus,.modal-box textarea:focus{border-color:var(--blue);background:#1F1F2E}
+.fin-box{text-align:center}
+.fin-box .big{font-size:48px}
+.fin-box h2{margin:8px 0}
+.fin-box .ligne{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.fin-box .ligne b{color:var(--gold)}
+.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#111;justify-content:space-around;padding:11px calc(11px + env(safe-area-inset-bottom));border-top:1px solid var(--line);z-index:30}
+.bottom-nav button,.bottom-nav a{background:none;border:none;color:#888;text-decoration:none;font-size:22px;display:flex;flex-direction:column;align-items:center;font-size:10px;font-weight:700;gap:2px;cursor:pointer}
+.bottom-nav .active{color:var(--gold)}
 </style>
-<link rel="stylesheet" href="assets/brand.css">
 </head>
 <body>
 
-<header>
-<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="🔍 Rechercher un live..." id="searchInput" oninput="rendre()">
-<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
+<header class="topbar">
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i><small>MADE IN KINSHASA</small></div>
+<input class="search-top" placeholder="🔍 Rechercher un live..." id="searchInput" oninput="rendre()">
+<button class="btn-notif" onclick="location.href='notifications.html'">🔔<span class="dot" id="dotNotifTop">0</span></button>
+<button class="btn-menu" onclick="ouvrirMenu()">☰</button>
 </header>
+
+<!-- MENU -->
+<div class="overlay" id="overlay" onclick="fermerMenu()"></div>
+<aside class="menu" id="menu">
+  <div class="menu-top"><div class="m-ava" id="menuAvatar" onclick="location.href='profil.html'">?</div><div style="flex:1;min-width:0"><b id="menuNom">...</b><small id="menuVille"></small></div><button onclick="fermerMenu()">✕</button></div>
+  <div class="menu-sec">MON COMPTE</div>
+  <button class="menu-item profil" onclick="location.href='profil.html'"><span class="ico">👤</span> Mon Profil <span class="fleche">›</span></button>
+  <button class="menu-item" onclick="location.href='profil.html?edit=1'"><span class="ico">✏️</span> Modifier mon profil</button>
+  <div class="menu-sec">JASONBOOK</div>
+  <button class="menu-item" onclick="location.href='feed.html'"><span class="ico">📰</span> Fil <span class="fleche">›</span></button>
+  <button class="menu-item" onclick="location.href='favoris.html'"><span class="ico">⭐</span> Favoris <span class="fleche">›</span></button>
+  <button class="menu-item booster" onclick="location.href='booster.html'"><span class="ico">🚀</span> Booster <span class="fleche">›</span></button>
+  <button class="menu-item live" onclick="location.href='lives.html'"><span class="ico">🔴</span> Aller en Live <span class="fleche">›</span></button>
+  <button class="menu-item" onclick="location.href='recherche.html'"><span class="ico">🔍</span> Recherche</button>
+  <button class="menu-item" onclick="location.href='boutique.html'"><span class="ico">🛒</span> Boutique</button>
+  <button class="menu-item" onclick="location.href='anniversaires.html'"><span class="ico">🎂</span> Anniversaires</button>
+  <div class="menu-sec">RÉGLAGES</div>
+  <button class="menu-item" onclick="location.href='parametres.html'"><span class="ico">⚙️</span> Paramètres</button>
+  <button class="menu-item" onclick="location.href='bloques.html'"><span class="ico">🚫</span> Personnes bloquées</button>
+  <button class="menu-item" onclick="location.href='aide.html'"><span class="ico">❓</span> Aide</button>
+  <div class="hr"></div>
+  <button class="menu-item" onclick="changerCompte()"><span class="ico">🔄</span> Changer de compte</button>
+  <button class="menu-item danger" onclick="seDeconnecter()"><span class="ico">🚪</span> Se déconnecter</button>
+</aside>
 
 <div class="wrap">
 <div class="top"><h1>🔴 Lives</h1><button class="btn-red" onclick="ouvrirGoLive()">🔴 Lancer un Live</button></div>
@@ -73,8 +139,9 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-ra
 <div class="empty" id="emptyBox" style="display:none"><div class="big">🔴</div><h3>Aucun live pour le moment</h3><p>Sois le premier à lancer un live !</p></div>
 </div>
 
-<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="lives.html">🔴</a><a href="profil.html">👤</a></nav>
+<nav class="bottom-nav"><a href="feed.html">🏠<span>Accueil</span></a><a href="amis.html">👥<span>Amis</span></a><a href="creer-post.html">➕<span>Publier</span></a><a href="lives.html" class="active">🔴<span>Lives</span></a><a href="profil.html">👤<span>Moi</span></a></nav>
 
+<!-- MODAL LANCER -->
 <div class="modal" id="modalLive"><div class="modal-box">
 <h2>🔴 Lancer un Live</h2>
 <input id="liveTitre" placeholder="Titre du live * (ex: Concert en direct)">
@@ -83,22 +150,63 @@ header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-ra
 <button class="btn-grey" style="width:100%;margin-top:8px;padding:12px" onclick="fermerGoLive()">Annuler</button>
 </div></div>
 
+<!-- MODAL PARTAGE -->
+<div class="modal" id="modalPartage"><div class="modal-box">
+<h2>↗️ Partager ce live</h2>
+<p style="color:#A1A1AA;font-size:13px;margin-top:6px">Envoie le lien à tes amis, ils pourront regarder en direct.</p>
+<input id="lienLive" readonly style="font-size:12px">
+<button class="btn-blue" style="width:100%;margin-top:12px" onclick="copierLien()">📋 Copier le lien</button>
+<button class="btn-grey" style="width:100%;margin-top:8px;background:#25D366;color:#fff" onclick="partagerWhatsApp()">💬 Partager sur WhatsApp</button>
+<button class="btn-grey" style="width:100%;margin-top:8px" onclick="fermerPartage()">Fermer</button>
+</div></div>
+
+<!-- MODAL FIN DU LIVE -->
+<div class="modal" id="modalFin"><div class="modal-box fin-box">
+<div class="big">🏁</div>
+<h2 id="finTitre">Live terminé</h2>
+<p id="finSous" style="color:#A1A1AA;font-size:13px">Merci d'avoir regardé / participé !</p>
+<div style="margin-top:14px;text-align:left">
+<div class="ligne"><span>👁️ Personnes qui ont regardé</span><b id="finViewers">0</b></div>
+<div class="ligne"><span>👋 Tapotages</span><b id="finTaps">0</b></div>
+<div class="ligne"><span>💬 Commentaires</span><b id="finComs">0</b></div>
+<div class="ligne"><span>⏱️ Durée du live</span><b id="finDuree">0 min</b></div>
+<div class="ligne"><span>⭐ Points gagnés</span><b id="finPoints">0 pts</b></div>
+<div class="ligne"><span>❤️ Cœurs reçus</span><b id="finCoeurs">0</b></div>
+</div>
+<button class="btn-blue" style="width:100%;margin-top:14px" onclick="fermerFin()">OK, j'ai compris</button>
+</div></div>
+
+<!-- ROOM LIVE -->
 <div class="live-room" id="liveRoom">
 <video id="liveVideo" autoplay playsinline muted></video>
-<div class="room-top"><div class="avatar" id="roomAv">?</div><div class="info"><b id="roomNom"></b><br><small><span class="live-badge">● LIVE</span> <span id="roomViewers">👁️ 1 spectateur</span></small></div><button onclick="quitterLive()">✕</button></div>
-<div class="chat"><div class="reactions"><button onclick="envoyerReaction('❤️')">❤️</button><button onclick="envoyerReaction('🔥')">🔥</button><button onclick="envoyerReaction('👏')">👏</button><button onclick="envoyerReaction('😂')">😂</button><button onclick="envoyerReaction('😮')">😮</button></div><div class="chat-msgs" id="chatMsgs"></div><div class="chat-input"><input id="chatInput" placeholder="Dis quelque chose..."><button onclick="envoyerChat()">Envoyer</button></div><button id="btnTerminer" class="btn-red" style="width:100%;margin-top:8px;padding:11px;display:none" onclick="terminerLive()">⏹️ Terminer le live</button></div>
+<div class="room-top"><div class="avatar" id="roomAv">?</div><div class="info"><b id="roomNom"></b><br><small><span class="live-badge">● LIVE</span> <span id="roomViewers">👁️ 1</span> • <span id="roomTaps">👋 0 tapotages</span></small></div><button class="share-btn" onclick="partagerLiveActuel()">↗️ Partager</button><button onclick="quitterLive()">✕</button></div>
+<div class="hearts" id="heartsBox"></div>
+<!-- ✅ BOUTON TAPOTER -->
+<button class="btn-tap" onclick="tapoter()">❤️</button>
+<div class="tap-count" id="tapCountLabel">👋 0</div>
+<div class="chat">
+<div class="reactions"><button onclick="envoyerReaction('❤️')">❤️</button><button onclick="envoyerReaction('🔥')">🔥</button><button onclick="envoyerReaction('👏')">👏</button><button onclick="envoyerReaction('😂')">😂</button><button onclick="envoyerReaction('😮')">😮</button><button onclick="partagerLiveActuel()">↗️ Partager</button></div>
+<div class="chat-msgs" id="chatMsgs"></div>
+<div class="chat-input"><input id="chatInput" placeholder="Dis quelque chose..."><button onclick="envoyerChat()">Envoyer</button></div>
+<button id="btnTerminer" class="btn-red" style="width:100%;margin-top:8px;padding:11px;display:none" onclick="terminerLive()">⏹️ Terminer le live</button>
+</div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, onValue, push, set, remove, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, onValue, push, set, remove, get, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
 const monNom = localStorage.getItem('jasonbook_nom')||"";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
-document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
-let lives=[], liveActuelId=null, stream=null, estAnimateur=false;
+document.getElementById('menuNom').innerText=monNom; document.getElementById('menuAvatar').innerHTML=maPhoto?`<img src="${maPhoto}">`:monNom.charAt(0).toUpperCase();
+get(ref(db,'jasonbook/users/'+uid)).then(s=>{const u=s.val()||{}; document.getElementById('menuVille').innerText=(u.ville||"")+" "+(u.pays?"• "+u.pays:"");});
+window.ouvrirMenu=()=>{document.getElementById('menu').classList.add('open');document.getElementById('overlay').classList.add('open');};
+window.fermerMenu=()=>{document.getElementById('menu').classList.remove('open');document.getElementById('overlay').classList.remove('open');};
+window.changerCompte=()=>{if(!confirm("Changer de compte ?"))return; localStorage.removeItem('jasonbook_uid');localStorage.removeItem('jasonbook_nom');localStorage.removeItem('jasonbook_photo'); location.href='index.html?changer=1';};
+window.seDeconnecter=()=>{if(!confirm("Se déconnecter ?"))return; localStorage.clear(); location.href='index.html';};
+let lives=[], liveActuelId=null, stream=null, estAnimateur=false, liveDebut=0, unsubLive=null, aDejaVuFin=false;
 window.ouvrirGoLive=()=>document.getElementById('modalLive').classList.add('open');
 window.fermerGoLive=()=>document.getElementById('modalLive').classList.remove('open');
 function rendre(){
@@ -108,32 +216,60 @@ function rendre(){
   document.getElementById('emptyBox').style.display=liste.length?'none':'block';
   liste.forEach(l=>{
     const div=document.createElement('div'); div.className='live-card'; div.onclick=()=>rejoindreLive(l.id);
+    const points=Math.floor((l.tapCount||0)/10)+(l.viewers||0)*2;
     div.innerHTML=`
       <div class="head">
         <div class="avatar">${l.photoAuteur?`<img src="${l.photoAuteur}">`:(l.auteurNom||"?").charAt(0)}</div>
-        <div class="info"><b>${l.auteurNom||""}</b><br><small>${l.date||""} • 👁️ ${l.viewers||1} spectateur(s)</small></div>
+        <div class="info"><b>${l.auteurNom||""}</b><br><small>${l.date||""}</small></div>
         <span class="live-badge">● LIVE</span>
       </div>
       <b style="display:block;margin-top:10px">${l.titre||""}</b>
-      <p style="font-size:13px;color:#555;margin-top:4px">${l.description||""}</p>
-      <div class="actions"><button class="btn-red" onclick="event.stopPropagation();rejoindreLive('${l.id}')">▶️ Regarder</button>${l.auteurUid===uid?`<button class="btn-grey" onclick="event.stopPropagation();terminerLiveParId('${l.id}')">⏹️ Terminer</button>`:""}</div>`;
+      <p style="font-size:13px;color:#A1A1AA;margin-top:4px">${l.description||""}</p>
+      <div class="stats-row"><span>👁️ ${l.viewers||1} personnes</span><span>👋 ${l.tapCount||0} tapotages</span><span>💬 ${l.commentCount||0} commentaires</span><span>⭐ ${points} pts</span></div>
+      <div class="actions"><button class="btn-red" onclick="event.stopPropagation();rejoindreLive('${l.id}')">▶️ Regarder</button><button class="btn-grey" onclick="event.stopPropagation();ouvrirPartage('${l.id}')">↗️ Partager</button>${l.auteurUid===uid?`<button class="btn-grey" onclick="event.stopPropagation();terminerLiveParId('${l.id}')">⏹️ Terminer</button>`:""}</div>`;
     box.appendChild(div);
   });
 }
+// ✅ PARTAGER LE LIEN
+window.ouvrirPartage=(id)=>{
+  const l=lives.find(x=>x.id===id) || {id, titre:"Live JASONBOOK"};
+  const lien=location.origin+location.pathname+"?live="+id;
+  document.getElementById('lienLive').value=lien;
+  document.getElementById('modalPartage').classList.add('open');
+  window._lienPartage=lien; window._titrePartage=l.titre;
+};
+window.fermerPartage=()=>document.getElementById('modalPartage').classList.remove('open');
+window.copierLien=async()=>{ try{ await navigator.clipboard.writeText(window._lienPartage); alert("Lien copié ✅ Envoie-le à tes amis !"); }catch(e){ const i=document.getElementById('lienLive'); i.select(); document.execCommand('copy'); alert("Lien copié ✅"); } };
+window.partagerWhatsApp=()=>{ const txt=encodeURIComponent("🔴 Regarde ce live en direct sur JASONBOOK : "+(window._titrePartage||"")+" "+window._lienPartage); window.open("https://wa.me/?text="+txt,"_blank"); };
+window.partagerLiveActuel=()=>{ if(liveActuelId) ouvrirPartage(liveActuelId); };
+// ✅ FIN DU LIVE - AFFICHE STATS
+window.afficherFin=(stats, titre)=>{
+  document.getElementById('finTitre').innerText=titre||"Live terminé";
+  document.getElementById('finViewers').innerText=stats.viewers||0;
+  document.getElementById('finTaps').innerText=stats.tapCount||0;
+  document.getElementById('finComs').innerText=stats.commentCount||0;
+  document.getElementById('finDuree').innerText=stats.duree||"0 min";
+  document.getElementById('finPoints').innerText=(stats.points||0)+" pts";
+  document.getElementById('finCoeurs').innerText=stats.tapCount||0;
+  document.getElementById('modalFin').classList.add('open');
+};
+window.fermerFin=()=>{ document.getElementById('modalFin').classList.remove('open'); location.href='lives.html'; };
 window.lancerLive=async()=>{
   const titre=document.getElementById('liveTitre').value.trim();
   if(!titre){ alert("Titre obligatoire"); return; }
   const newRef=push(ref(db,'jasonbook/lives'));
-  await set(newRef,{ id:newRef.key, titre:titre, description:document.getElementById('liveDesc').value, auteurUid:uid, auteurNom:monNom, photoAuteur:maPhoto||"", viewers:1, date:new Date().toLocaleString(), timestamp:Date.now() });
+  await set(newRef,{ id:newRef.key, titre:titre, description:document.getElementById('liveDesc').value, auteurUid:uid, auteurNom:monNom, photoAuteur:maPhoto||"", viewers:1, tapCount:0, commentCount:0, date:new Date().toLocaleString(), timestamp:Date.now() });
   fermerGoLive(); document.getElementById('liveTitre').value=""; document.getElementById('liveDesc').value="";
   rejoindreLive(newRef.key, true);
 };
 window.rejoindreLive=async (id, animateur=false)=>{
   const l=lives.find(x=>x.id===id); if(!l) return;
-  liveActuelId=id; estAnimateur=animateur || l.auteurUid===uid;
+  liveActuelId=id; estAnimateur=animateur || l.auteurUid===uid; liveDebut=Date.now(); aDejaVuFin=false;
   document.getElementById('roomAv').innerHTML=l.photoAuteur?`<img src="${l.photoAuteur}">`:(l.auteurNom||"?").charAt(0);
   document.getElementById('roomNom').innerText=l.titre||"";
-  document.getElementById('roomViewers').innerText="👁️ "+(l.viewers||1)+" spectateur(s)";
+  document.getElementById('roomViewers').innerText="👁️ "+(l.viewers||1);
+  document.getElementById('roomTaps').innerText="👋 "+(l.tapCount||0)+" tapotages";
+  document.getElementById('tapCountLabel').innerText="👋 "+(l.tapCount||0);
   document.getElementById('btnTerminer').style.display=estAnimateur?'block':'none';
   document.getElementById('liveRoom').classList.add('open');
   if(estAnimateur){
@@ -144,6 +280,24 @@ window.rejoindreLive=async (id, animateur=false)=>{
   const mRef=push(ref(db,'jasonbook/liveChat/'+id));
   await set(mRef,{ nom:monNom, texte:monNom+" a rejoint le live 👋", timestamp:Date.now() });
   ecouterChat(id);
+  // ✅ SURVEILLE SI LE LIVE EST TERMINÉ
+  if(unsubLive) unsubLive();
+  unsubLive=onValue(ref(db,'jasonbook/lives/'+id), snap=>{
+    if(!snap.exists() && liveActuelId===id && !aDejaVuFin){
+      aDejaVuFin=true;
+      const dureeMin=Math.max(1, Math.round((Date.now()-liveDebut)/60000));
+      const stats={viewers:l.viewers||1, tapCount:l.tapCount||0, commentCount:l.commentCount||0, duree:dureeMin+" min", points:Math.floor((l.tapCount||0)/10)+(l.viewers||0)*2};
+      quitterLiveSansFin();
+      afficherFin(stats, "🔴 Live terminé");
+    } else if(snap.exists()){
+      const v=snap.val()||{};
+      document.getElementById('roomViewers').innerText="👁️ "+(v.viewers||1);
+      document.getElementById('roomTaps').innerText="👋 "+(v.tapCount||0)+" tapotages";
+      document.getElementById('tapCountLabel').innerText="👋 "+(v.tapCount||0);
+      // garde les dernières valeurs pour la fin
+      l.viewers=v.viewers; l.tapCount=v.tapCount; l.commentCount=v.commentCount;
+    }
+  });
 };
 function ecouterChat(id){
   onValue(ref(db,'jasonbook/liveChat/'+id), s=>{
@@ -158,23 +312,61 @@ window.envoyerChat=async()=>{
   const input=document.getElementById('chatInput'); const txt=input.value.trim(); if(!txt || !liveActuelId) return;
   const mRef=push(ref(db,'jasonbook/liveChat/'+liveActuelId));
   await set(mRef,{ nom:monNom, texte:txt, timestamp:Date.now() });
+  // ✅ +1 commentaire
+  const snap=await get(ref(db,'jasonbook/lives/'+liveActuelId)); const v=snap.val()||{};
+  await update(ref(db,'jasonbook/lives/'+liveActuelId),{commentCount:(v.commentCount||0)+1});
   input.value="";
 };
 document.getElementById('chatInput').addEventListener('keydown', e=>{ if(e.key==='Enter') envoyerChat(); });
+// ✅ TAPOTER
+window.tapoter=async()=>{
+  if(!liveActuelId) return;
+  // Coeur qui monte
+  const box=document.getElementById('heartsBox');
+  const emojis=['❤️','🔥','❤️','💖','👏'];
+  const s=document.createElement('span'); s.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+  box.appendChild(s); setTimeout(()=>s.remove(),1200);
+  // +1 tapotage dans Firebase
+  try{
+    const snap=await get(ref(db,'jasonbook/lives/'+liveActuelId)); const v=snap.val()||{};
+    await update(ref(db,'jasonbook/lives/'+liveActuelId),{tapCount:(v.tapCount||0)+1});
+  }catch(e){}
+};
 window.envoyerReaction=async (emoji)=>{
   if(!liveActuelId) return;
   const mRef=push(ref(db,'jasonbook/liveChat/'+liveActuelId));
   await set(mRef,{ nom:monNom, texte:emoji+" a réagi "+emoji, timestamp:Date.now() });
 };
+async function quitterLiveSansFin(){
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  document.getElementById('liveRoom').classList.remove('open');
+  document.getElementById('liveVideo').srcObject=null; document.getElementById('liveVideo').style.display='block';
+  liveActuelId=null; estAnimateur=false;
+}
 window.quitterLive=async()=>{
   if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
   document.getElementById('liveRoom').classList.remove('open');
   document.getElementById('liveVideo').srcObject=null; document.getElementById('liveVideo').style.display='block';
   liveActuelId=null; estAnimateur=false;
 };
-window.terminerLive=async()=>{ if(!liveActuelId) return; await remove(ref(db,'jasonbook/lives/'+liveActuelId)); await remove(ref(db,'jasonbook/liveChat/'+liveActuelId)); quitterLive(); };
+// ✅ TERMINER - SAUVEGARDE STATS POUR AFFICHER FIN
+window.terminerLive=async()=>{
+  if(!liveActuelId) return;
+  const id=liveActuelId;
+  const snap=await get(ref(db,'jasonbook/lives/'+id)); const v=snap.val()||{};
+  const dureeMin=Math.max(1, Math.round((Date.now()-liveDebut)/60000));
+  const points=Math.floor((v.tapCount||0)/10)+(v.viewers||0)*2;
+  const stats={viewers:v.viewers||1, tapCount:v.tapCount||0, commentCount:v.commentCount||0, duree:dureeMin+" min", points};
+  await remove(ref(db,'jasonbook/lives/'+id)); await remove(ref(db,'jasonbook/liveChat/'+id));
+  await quitterLiveSansFin();
+  afficherFin(stats, "🏁 Ton live est terminé !");
+};
 window.terminerLiveParId=async (id)=>{ if(!confirm("Terminer ce live ?")) return; await remove(ref(db,'jasonbook/lives/'+id)); await remove(ref(db,'jasonbook/liveChat/'+id)); };
-onValue(ref(db,'jasonbook/lives'), s=>{ const d=s.val(); lives=d?Object.entries(d).map(([id,l])=>({id,...l})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendre(); });
+// ✅ SI ON OUVRE AVEC ?live=ID -> rejoint direct
+const params=new URLSearchParams(location.search);
+const liveParam=params.get('live');
+onValue(ref(db,'jasonbook/lives'), s=>{ const d=s.val(); lives=d?Object.entries(d).map(([id,l])=>({id,...l})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendre(); if(liveParam && !window._aRejoint){ const l=lives.find(x=>x.id===liveParam); if(l){ window._aRejoint=true; rejoindreLive(liveParam); } } });
+onValue(ref(db,"jasonbook/notifications/"+uid), s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(x=>{if(!x.lu)n++;}); const dot=document.getElementById('dotNotifTop'); if(dot){ if(n>0){dot.style.display="flex";dot.innerText=n>99?"99+":n;} else dot.style.display="none"; } });
 </script>
 </body>
 </html>
