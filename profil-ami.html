@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>JASONBOOK - Profil</title>
+<meta name="theme-color" content="#0A0A0F">
+<title>JASONBOOK ✨ - Profil</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-/* ✅ SCROLL RÉPARÉ - NE PAS REMETTRE overflow-x:hidden SUR html,body */
 html{overflow-x:clip;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch}
 body{overflow-x:clip;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch}
 :root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--nuit:#0F0F14;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35}
@@ -15,6 +15,7 @@ header{background:#111;display:flex;align-items:center;justify-content:flex-star
 .logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:22px;cursor:pointer;white-space:nowrap}
 .logo span{width:36px;height:36px;min-width:36px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
 .logo i{color:var(--or);font-style:normal}
+.logo small{display:block;font-size:8px;color:var(--gris);letter-spacing:1.2px}
 .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .cover-wrap{background:var(--carte);max-width:1000px;width:calc(100% - 24px);margin:12px auto 0;padding-bottom:18px;border-radius:16px;border:1px solid var(--ligne);overflow:visible;text-align:center;position:relative}
@@ -30,7 +31,6 @@ header{background:#111;display:flex;align-items:center;justify-content:flex-star
 .profile-btns{display:flex;gap:10px;justify-content:center;align-items:center;width:100%;margin-top:14px;flex-wrap:wrap}
 .profile-btns button{padding:12px 22px;border:none;border-radius:999px;font-weight:800;cursor:pointer;font-size:14px;white-space:nowrap;min-width:130px}
 .btn-blue{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}.btn-grey{background:#2A2A35;color:#fff}.btn-green{background:#22C55E;color:#fff}
-/* ✅ LAYOUT NE BLOQUE PLUS LE SCROLL */
 .layout{display:flex;gap:15px;max-width:1000px;width:100%;margin:14px auto;padding:0 12px 30px;align-items:flex-start}
 .left{width:340px;flex-shrink:0}
 .right{flex:1;min-width:0}
@@ -72,12 +72,11 @@ header{background:#111;display:flex;align-items:center;justify-content:flex-star
   .right{width:100%}
 }
 </style>
-<link rel="stylesheet" href="assets/brand.css">
 </head>
 <body>
 
 <header>
-<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i><small>MADE IN KINSHASA</small></div>
 </header>
 
 <div class="cover-wrap">
@@ -105,7 +104,7 @@ header{background:#111;display:flex;align-items:center;justify-content:flex-star
 <div class="right">
 <div class="card"><p style="font-weight:700;font-size:15px">Publications de <span id="nomPost">cette personne</span></p></div>
 <div id="postsList"></div>
-<div id="noPosts" class="card" style="display:none"><p style="text-align:center;color:#A1A1AA">Aucune publication pour le moment</p></div>
+<div class="card" id="noPosts" style="display:none"><p style="text-align:center;color:#A1A1AA">Aucune publication pour le moment</p></div>
 </div>
 </div>
 
@@ -130,9 +129,17 @@ const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index
 const monNom = localStorage.getItem('jasonbook_nom')||"";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
 const cibleUid = new URLSearchParams(location.search).get('uid');
-if(!cibleUid) location.href='recherche.html';
+if(!cibleUid) location.href='feed.html';
 if(cibleUid===uid) location.href='profil.html';
 let profilCible=null, statut="inconnu", vraiUid=cibleUid, photoTypeActuel='profil', photoData={profil:{likes:{},comments:{},partages:0},cover:{likes:{},comments:{},partages:0}};
+// ✅ ENVOYER UNE NOTIFICATION - ne notifie jamais soi-même
+async function envoyerNotif(destUid, type, texte, extra={}){
+  if(!destUid || destUid===uid) return;
+  try{
+    const nRef=push(ref(db,'jasonbook/notifications/'+destUid));
+    await set(nRef,{type, texte, deUid:uid, deNom:monNom, dePhoto:maPhoto||"", date:new Date().toLocaleString(), timestamp:Date.now(), lu:false, ...extra});
+  }catch(e){}
+}
 function majBouton(){
   const b=document.getElementById('btnAmi');
   if(statut==='ami'){ b.innerText="✅ Ami"; b.className="btn-green"; }
@@ -145,8 +152,7 @@ window.actionAmi=async()=>{
   if(statut==='inconnu'){
     await set(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid), { deUid:uid, deNom:monNom, date:new Date().toLocaleString() });
     await set(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid), { versUid:cibleUid, date:new Date().toLocaleString() });
-    const nRef=push(ref(db,'jasonbook/notifications/'+cibleUid));
-    await set(nRef,{ type:"demande", texte:monNom+" t'a envoyé une demande d'ami", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), timestamp:Date.now(), lu:false });
+    await envoyerNotif(cibleUid, "demande", monNom+" t'a envoyé une demande d'ami");
     statut='demande_envoyee'; majBouton();
   } else if(statut==='demande_envoyee'){
     await remove(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid));
@@ -213,6 +219,7 @@ onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), s=>{ const d=s.val(); if(d &&
 onValue(ref(db,'jasonbook/demandes/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_recue'; majBouton(); });
 onValue(ref(db,'jasonbook/amis/'+cibleUid), s=>{ const d=s.val(); const n=d?Object.keys(d).length:0; if(n) document.getElementById('amisCount').innerText=n+" ami"+(n>1?"s":""); });
 function photoPath(type){ return 'jasonbook/photos/'+cibleUid+'_'+type; }
+// ✅ BUG CORRIGÉ ICI - avant c'était onValue(ref(...)), s=>...
 function ecouterPhotoStats(){
   ['profil','cover'].forEach(type=>{
     onValue(ref(db, photoPath(type)), s=>{
@@ -251,12 +258,16 @@ window.aimerPhotoViewer=async ()=>{
   const p=photoPath(photoTypeActuel);
   const snap=await get(ref(db,p+'/likes/'+uid));
   if(snap.val()){ await remove(ref(db,p+'/likes/'+uid)); }
-  else { await set(ref(db,p+'/likes/'+uid), {nom:monNom, date:new Date().toLocaleString()}); }
+  else {
+    await set(ref(db,p+'/likes/'+uid), {nom:monNom, date:new Date().toLocaleString()});
+    await envoyerNotif(vraiUid, "like", monNom+" a aimé ta photo de "+(photoTypeActuel==='profil'?"profil":"couverture")+" ❤️");
+  }
 };
 window.commenterPhotoViewer=async ()=>{
   const inp=document.getElementById('viewerInput'); const txt=inp.value.trim(); if(!txt) return;
   const r=push(ref(db, photoPath(photoTypeActuel)+'/comments'));
   await set(r, {auteurUid:uid, nom:monNom, texte:txt, date:new Date().toLocaleString()});
+  await envoyerNotif(vraiUid, "commentaire", monNom+" a commenté ta photo 💬", {commentaireTexte:txt});
   inp.value="";
 };
 window.partagerPhotoViewer=async ()=>{
@@ -266,6 +277,7 @@ window.partagerPhotoViewer=async ()=>{
   const img = photoTypeActuel==='profil' ? profilCible?.photoProfil : profilCible?.photoCouverture;
   const r=push(ref(db,'jasonbook/posts'));
   await set(r, {auteurUid:uid, nomAuteur:monNom, photoAuteur:maPhoto, texte: monNom+" a partagé la photo de "+(profilCible?.nomComplet||""), photoUrl:img, date:new Date().toLocaleString(), timestamp:Date.now(), likesCount:0, commentairesCount:0, partagesCount:0});
+  await envoyerNotif(vraiUid, "partage", monNom+" a partagé ta photo ↗️", {postId:r.key});
   alert("Partagé ✅ Ça s'affiche aussi dans son profil / feed");
   chargerPosts();
 };
@@ -280,7 +292,7 @@ async function chargerPosts(){
   siens.forEach(([id,p])=>{
     const div=document.createElement('div'); div.className='card';
     const dejaLike = p.likes && p.likes[uid];
-    div.innerHTML=`<div class="post-head"><div class="avatar">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div><b>${p.nomAuteur}</b><br><small style="color:#A1A1AA">${p.date||""}</small></div></div><div class="post-text">${p.texte||""}</div>${p.photoUrl?`<img class="main" src="${p.photoUrl}" onclick="ouvrirPostPhoto('${p.photoUrl}')">`:""}${p.videoUrl?`<video controls style="width:100%;border-radius:10px" src="${p.videoUrl}"></video>`:""}<div class="actions"><button class="${dejaLike?'actif':''}" onclick="aimerPost('${id}', this)">👍 ${p.likesCount||0}</button><button onclick="toggleComPost(this)">💬 ${p.commentairesCount||0}</button><button onclick="partagerPost('${id}')">↗️ ${p.partagesCount||0}</button></div><div class="comment-box"><input placeholder="Écris un commentaire..."><button onclick="envoyerComPost('${id}', this)">➤</button></div><div class="comments-list"></div>`;
+    div.innerHTML=`<div class="post-head"><div class="avatar">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div><b>${p.nomAuteur}</b><br><small style="color:#A1A1AA">${p.date||""}</small></div></div><div class="post-text">${p.texte||""}</div>${p.photoUrl?`<img class="main" src="${p.photoUrl}" onclick="ouvrirPostPhoto('${p.photoUrl}')">`:""}${p.videoUrl?`<video controls style="width:100%;border-radius:10px" src="${p.videoUrl}"></video>`:""}<div class="actions"><button class="${dejaLike?'actif':''}" onclick="aimerPost('${id}', this)">❤️ ${p.likesCount||0}</button><button onclick="toggleComPost(this)">💬 ${p.commentairesCount||0}</button><button onclick="partagerPost('${id}')">↗️ ${p.partagesCount||0}</button></div><div class="comment-box"><input placeholder="Écris un commentaire..."><button onclick="envoyerComPost('${id}', this)">➤</button></div><div class="comments-list"></div>`;
     box.appendChild(div);
     if(p.photoUrl) grid.innerHTML+=`<img src="${p.photoUrl}" style="width:100%;height:80px;object-fit:cover;border-radius:8px" onclick="ouvrirPostPhoto('${p.photoUrl}')">`;
   });
@@ -295,10 +307,12 @@ window.ouvrirPostPhoto=(url)=>{
 window.aimerPost=async (postId, btn)=>{
   const snap=await get(ref(db,'jasonbook/posts/'+postId));
   const p=snap.val()||{}; const likes=p.likes||{};
-  if(likes[uid]){ delete likes[uid]; } else { likes[uid]={nom:monNom}; }
+  const deja=!!likes[uid];
+  if(deja){ delete likes[uid]; } else { likes[uid]={nom:monNom}; }
   await update(ref(db,'jasonbook/posts/'+postId), {likes:likes, likesCount:Object.keys(likes).length});
-  btn.classList.toggle('actif', !!likes[uid]);
-  btn.innerText="👍 "+Object.keys(likes).length;
+  btn.classList.toggle('actif', !likes[uid]);
+  btn.innerText="❤️ "+Object.keys(likes).length;
+  if(!deja) await envoyerNotif(p.auteurUid, "like", monNom+" a aimé ta publication ❤️", {postId});
 };
 window.toggleComPost=(btn)=>{
   const card=btn.closest('.card'); const box=card.querySelector('.comment-box'); box.classList.toggle('show'); box.querySelector('input').focus();
@@ -308,7 +322,9 @@ window.envoyerComPost=async (postId, btn)=>{
   const r=push(ref(db,'jasonbook/posts/'+postId+'/commentaires'));
   await set(r,{auteurUid:uid,nom:monNom,texte:txt,date:new Date().toLocaleString()});
   const snap=await get(ref(db,'jasonbook/posts/'+postId));
-  await update(ref(db,'jasonbook/posts/'+postId),{commentairesCount:(snap.val().commentairesCount||0)+1});
+  const p=snap.val()||{};
+  await update(ref(db,'jasonbook/posts/'+postId),{commentairesCount:(p.commentairesCount||0)+1});
+  await envoyerNotif(p.auteurUid, "commentaire", monNom+" a commenté ta publication 💬", {postId, commentaireTexte:txt});
   inp.value=""; alert("Commentaire ajouté ✅");
   chargerPosts();
 };
@@ -317,6 +333,7 @@ window.partagerPost=async (postId)=>{
   await update(ref(db,'jasonbook/posts/'+postId),{partagesCount:(p.partagesCount||0)+1});
   const r=push(ref(db,'jasonbook/posts'));
   await set(r,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:monNom+" a partagé : "+(p.texte||""),photoUrl:p.photoUrl||"",videoUrl:p.videoUrl||"",date:new Date().toLocaleString(),timestamp:Date.now(),likesCount:0,commentairesCount:0,partagesCount:0});
+  await envoyerNotif(p.auteurUid, "partage", monNom+" a partagé ta publication ↗️", {postId});
   alert("Partagé ✅");
   chargerPosts();
 };
