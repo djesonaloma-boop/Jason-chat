@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>JASONBOOK - Anniversaires</title>
+<meta name="theme-color" content="#0A0A0F">
+<title>JASONBOOK ✨ - Anniversaires</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-/* ✅ MÊME SCROLL QUE LE PROFIL */
 html{overflow-x:clip!important;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch;width:100%;max-width:100vw}
 body{overflow-x:clip!important;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch}
 img,video{max-width:100%}
-/* ✅ MÊMES COULEURS QUE LE PROFIL */
 :root{--blue:#7C3AED;--blue2:#A855F7;--or:#FFC107;--bg:#0F0F14;--card:#1C1C24;--grey:#A1A1AA;--line:#2A2A35}
 body{background:var(--bg);color:#fff;min-height:100vh}
 header{background:#111;display:flex;align-items:center;gap:12px;padding:12px 14px;position:sticky;top:0;z-index:20;border-bottom:2px solid var(--or)}
@@ -22,8 +21,16 @@ header{background:#111;display:flex;align-items:center;gap:12px;padding:12px 14p
 .wrap{max-width:650px;margin:16px auto;padding:0 12px 30px}
 .wrap h1{font-size:23px;letter-spacing:-.3px;color:#fff}
 .wrap .sub{color:var(--grey);margin:4px 0 14px;font-size:14px}
+/* ✅ BANNIERE ANNIVERSAIRE DU JOUR - EN HAUT */
+.banner-anniv{background:linear-gradient(135deg,#FF4081,#FF9800,#FFC107);border-radius:16px;padding:14px;margin-bottom:14px;display:none;align-items:center;gap:12px;color:#fff;box-shadow:0 8px 25px rgba(255,64,129,.35)}
+.banner-anniv.show{display:flex}
+.banner-anniv .big{font-size:38px;flex-shrink:0}
+.banner-anniv b{font-size:16px;line-height:1.3;display:block}
+.banner-anniv p{font-size:13px;opacity:.95;margin-top:2px}
+.banner-anniv button{margin-top:8px;background:#fff;color:#111;border:0;padding:9px 14px;border-radius:999px;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap}
 .section-title{background:var(--card);color:#fff;padding:12px 14px;border-radius:10px;margin:14px 0 10px;font-weight:800;font-size:14px;border:1px solid var(--line)}
 .b-card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid var(--line);display:flex;gap:12px;align-items:center}
+.b-card.today{border:2px solid var(--or);background:linear-gradient(135deg,#1C1C24,#2A1A10)}
 .b-card .info{flex:1;min-width:0}.b-card .info b{color:#fff}.b-card .info small{color:var(--grey);font-size:12.5px}
 .btn-blue{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border:none;padding:9px 14px;border-radius:999px;font-weight:700;cursor:pointer;font-size:13px;white-space:nowrap}
 .btn-pink{background:linear-gradient(135deg,#FF4081,#FF6B9D);color:#fff;border:none;padding:9px 14px;border-radius:999px;font-weight:700;cursor:pointer;font-size:13px;white-space:nowrap}
@@ -37,29 +44,42 @@ header{background:#111;display:flex;align-items:center;gap:12px;padding:12px 14p
 .modal-box textarea{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:10px;margin-top:10px;min-height:80px;outline:none;resize:vertical;background:#2A2A35;color:#fff;font-size:14px}
 .modal-box textarea::placeholder{color:#888}
 .modal-box textarea:focus{border-color:var(--blue);background:#2A2A35}
+.preview{background:#111;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;font-size:13px;line-height:1.5}
+.preview b{color:var(--or)}
 </style>
 <link rel="stylesheet" href="assets/brand.css">
 </head>
 <body>
 
-<!-- ✅ HEADER : JUSTE JASONBOOK, PLUS DE 🔍 🔔 💬 👤 -->
 <header>
 <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
 </header>
 
 <div class="wrap">
-<h1>Anniversaires</h1>
+<h1>🎂 Anniversaires</h1>
 <p class="sub">N'oublie plus jamais l'anniversaire de tes amis !</p>
+
+<!-- ✅ BANNIERE : AUJOURD'HUI C'EST L'ANNIVERSAIRE DE ... -->
+<div class="banner-anniv" id="bannerAnniv">
+<div class="big">🎂</div>
+<div style="flex:1">
+<b id="bannerTexte">Aujourd'hui c'est l'anniversaire de ...</b>
+<p id="bannerSous">Souhaite-lui joyeux anniversaire, ça va se publier dans ton compte !</p>
+<button id="bannerBtn" onclick="ouvrirSouhaitDepuisBanner()">🎉 Souhaiter joyeux anniversaire</button>
+</div>
+</div>
+
 <div id="list"></div>
 <div class="empty" id="emptyBox" style="display:none"><h3>Aucun anniversaire à venir</h3><p>Tes amis n'ont pas encore renseigné leur date de naissance.</p></div>
 </div>
 
-<!-- ✅ PLUS DE BARRE EN BAS : SUPPRIMÉ 🏠 👥 ➕ 🎂 👤 -->
-
 <div class="modal" id="modalSouhait"><div class="modal-box">
 <h2 id="souhaitTitre">🎂 Souhaiter joyeux anniversaire</h2>
 <textarea id="souhaitTexte" placeholder="Écris ton message..."></textarea>
-<button class="btn-blue" style="width:100%;margin-top:12px;padding:12px" onclick="envoyerSouhait()">🎉 Envoyer le souhait</button>
+<!-- ✅ APERÇU : CE QUE LES GENS VONT VOIR DANS LE FIL -->
+<div class="preview" id="previewSouhait"></div>
+<p style="font-size:11px;color:#A1A1AA;margin-top:8px">✅ Ça va se publier directement dans ton compte + dans le fil, et <span id="previewNom">ton ami</span> va recevoir une notification.</p>
+<button class="btn-blue" id="btnPublier" style="width:100%;margin-top:12px;padding:12px" onclick="envoyerSouhait()">🎉 Publier dans mon compte</button>
 <button class="btn-grey" style="margin-top:8px" onclick="fermerSouhait()">Annuler</button>
 </div></div>
 
@@ -71,9 +91,12 @@ const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
 const monNom = localStorage.getItem('jasonbook_nom')||"";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
-const myAv=document.getElementById('myAvatar');
-if(myAv) myAv.innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
-let users=[], cibleSouhait=null, cibleNom="";
+let users=[], cibleSouhait=null, cibleNom="", ciblePrenom="", annivAujourdhui=[];
+function prenomDe(nomComplet){
+  if(!nomComplet) return "Ami";
+  // "Jason Aloma" -> "Jason" | "Marie Claire" -> "Marie"
+  return nomComplet.trim().split(" ")[0];
+}
 function joursRestants(dateNaissance){
   if(!dateNaissance) return 999;
   let jour, mois;
@@ -97,6 +120,25 @@ function rendre(){
   const cetteSemaine=avecDate.filter(u=>u.jours>0 && u.jours<=7);
   const ceMois=avecDate.filter(u=>u.jours>7 && u.jours<=30);
   document.getElementById('emptyBox').style.display=avecDate.length?'none':'block';
+  // ✅ BANNIERE DU JOUR
+  annivAujourdhui=aujourdHui;
+  const banner=document.getElementById('bannerAnniv');
+  if(aujourdHui.length){
+    banner.classList.add('show');
+    if(aujourdHui.length===1){
+      const prenom=prenomDe(aujourdHui[0].nom||aujourdHui[0].nomComplet||"");
+      document.getElementById('bannerTexte').textContent="🎉 Aujourd'hui c'est l'anniversaire de "+prenom+" !";
+      document.getElementById('bannerSous').textContent="Souhaite joyeux anniversaire à "+prenom+" !";
+      document.getElementById('bannerBtn').textContent="🎉 Souhaiter à "+prenom;
+    } else {
+      const prenoms=aujourdHui.map(u=>prenomDe(u.nom||u.nomComplet||"")).join(", ");
+      document.getElementById('bannerTexte').textContent="🎉 Aujourd'hui c'est l'anniversaire de "+prenoms+" !";
+      document.getElementById('bannerSous').textContent="Il y a "+aujourdHui.length+" anniversaires aujourd'hui !";
+      document.getElementById('bannerBtn').textContent="🎉 Voir les anniversaires";
+    }
+  } else {
+    banner.classList.remove('show');
+  }
   if(aujourdHui.length) ajouterSection(box, "🎂 Aujourd'hui !", aujourdHui, true);
   if(cetteSemaine.length) ajouterSection(box, "📅 Cette semaine", cetteSemaine, false);
   if(ceMois.length) ajouterSection(box, "🗓️ Ce mois-ci", ceMois, false);
@@ -104,33 +146,88 @@ function rendre(){
 function ajouterSection(box, titre, liste, isToday){
   const t=document.createElement('div'); t.className='section-title'; t.innerText=titre; box.appendChild(t);
   liste.forEach(u=>{
-    const div=document.createElement('div'); div.className='b-card';
+    const div=document.createElement('div'); div.className='b-card'+(isToday?' today':'');
     const age=ageFutur(u.dateNaissance);
+    const nomComplet=u.nomComplet||u.nom||"";
+    const prenom=prenomDe(nomComplet);
+    const photo=u.photoProfil||u.photo||"";
     div.innerHTML=`
-      <div class="avatar" style="width:50px;height:50px;font-size:20px">${u.photo?`<img src="${u.photo}">`:(u.nom||"?").charAt(0).toUpperCase()}</div>
-      <div class="info"><b>${u.nom||""} ${isToday?"🎉":""}</b><br><small>${isToday?"C'est son anniversaire aujourd'hui !":`Dans ${u.jours} jour${u.jours>1?'s':''} • ${u.dateNaissance}`} ${age?`• Va avoir ${age} ans`:""}</small></div>
-      <button class="${isToday?'btn-pink':'btn-blue'}" onclick="ouvrirSouhait('${u.uid}','${(u.nom||"").replace(/'/g,"")}')">${isToday?"🎂 Souhaiter":"💌 Préparer"}</button>`;
+      <div class="avatar" style="width:50px;height:50px;font-size:20px">${photo?`<img src="${photo}">`:(nomComplet||"?").charAt(0).toUpperCase()}</div>
+      <div class="info"><b>${nomComplet} ${isToday?"🎉":""}</b><br><small>${isToday?"C'est son anniversaire aujourd'hui !":`Dans ${u.jours} jour${u.jours>1?'s':''} • ${u.dateNaissance}`} ${age?`• Va avoir ${age} ans`:""}</small></div>
+      <button class="${isToday?'btn-pink':'btn-blue'}" onclick="ouvrirSouhait('${u.uid}','${nomComplet.replace(/'/g,"")}')">${isToday?"🎂 Souhaiter":"💌 Préparer"}</button>`;
     box.appendChild(div);
   });
 }
+function mettreAJourPreview(){
+  const texte=document.getElementById('souhaitTexte').value;
+  const prenom=ciblePrenom||"";
+  document.getElementById('previewSouhait').innerHTML=`<b>${monNom}</b> <span style="color:#A1A1AA">• à l'instant • 🎂 Anniversaire de ${prenom}</span><br><br>${texte.replace(/\n/g,"<br>")}`;
+  document.getElementById('previewNom').textContent=prenom;
+}
+document.getElementById('souhaitTexte').addEventListener('input', mettreAJourPreview);
+window.ouvrirSouhaitDepuisBanner=()=>{
+  if(annivAujourdhui.length===1){
+    const u=annivAujourdhui[0];
+    ouvrirSouhait(u.uid, u.nomComplet||u.nom||"");
+  } else if(annivAujourdhui.length>1){
+    document.getElementById('bannerAnniv').scrollIntoView({behavior:'smooth'});
+    // On ouvre le premier, l'utilisateur peut changer après
+    const u=annivAujourdhui[0];
+    ouvrirSouhait(u.uid, u.nomComplet||u.nom||"");
+  }
+};
 window.ouvrirSouhait=(uidCible, nom)=>{
-  cibleSouhait=uidCible; cibleNom=nom;
-  document.getElementById('souhaitTitre').innerText="🎂 Souhaiter joyeux anniversaire à "+nom;
-  document.getElementById('souhaitTexte').value="Joyeux anniversaire "+nom+" ! 🎂🎉 Que cette année t'apporte bonheur, santé et réussite ! ❤️";
+  cibleSouhait=uidCible; cibleNom=nom; ciblePrenom=prenomDe(nom);
+  document.getElementById('souhaitTitre').innerText="🎂 Souhaiter joyeux anniversaire à "+ciblePrenom;
+  // ✅ MESSAGE AVEC SON PRENOM - COMME TU AS DEMANDÉ
+  document.getElementById('souhaitTexte').value="Joyeux anniversaire "+ciblePrenom+" ! 🎂🎉 Que cette année t'apporte bonheur, santé et réussite ! ❤️";
   document.getElementById('modalSouhait').classList.add('open');
+  mettreAJourPreview();
 };
 window.fermerSouhait=()=>document.getElementById('modalSouhait').classList.remove('open');
 window.envoyerSouhait=async()=>{
   const texte=document.getElementById('souhaitTexte').value.trim();
   if(!texte){ alert("Écris ton message"); return; }
-  const newRef=push(ref(db,'jasonbook/posts'));
-  await set(newRef,{ id:newRef.key, texte:texte, auteurUid:uid, auteurNom:monNom, photoAuteur:maPhoto||"", date:new Date().toLocaleString(), timestamp:Date.now(), type:'anniversaire', pourUid:cibleSouhait, pourNom:cibleNom });
-  const nRef=push(ref(db,'jasonbook/notifications/'+cibleSouhait));
-  await set(nRef,{ type:'anniversaire', deUid:uid, deNom:monNom, dePhoto:maPhoto||"", texte:monNom+" t'a souhaité joyeux anniversaire ! 🎂", date:new Date().toLocaleString(), timestamp:Date.now(), lu:false });
-  fermerSouhait(); alert("Souhait envoyé ! 🎉❤️");
+  const btn=document.getElementById('btnPublier'); btn.disabled=true; btn.textContent="Publication...";
+  try{
+    // ✅ 1. CA SE PUBLIE DANS SON COMPTE / DANS LE FIL - COMME UN POST NORMAL
+    const newRef=push(ref(db,'jasonbook/posts'));
+    await set(newRef,{
+      texte: texte,
+      auteurUid: uid,
+      nomAuteur: monNom,
+      photoAuteur: maPhoto||"",
+      date: new Date().toLocaleString(),
+      timestamp: Date.now(),
+      type: 'anniversaire',
+      pourUid: cibleSouhait,
+      pourNom: cibleNom,
+      pourPrenom: ciblePrenom,
+      likesCount: 0,
+      commentairesCount: 0,
+      partagesCount: 0
+    });
+    // ✅ 2. L'AMI VOIT DANS LA NOTIFICATION : "Jason t'a souhaité joyeux anniversaire !"
+    const nRef=push(ref(db,'jasonbook/notifications/'+cibleSouhait));
+    await set(nRef,{
+      type:'anniversaire',
+      deUid:uid,
+      deNom:monNom,
+      dePhoto:maPhoto||"",
+      texte: monNom+" t'a souhaité joyeux anniversaire ! 🎂",
+      message: texte,
+      pourPrenom: ciblePrenom,
+      date:new Date().toLocaleString(),
+      timestamp:Date.now(),
+      lu:false
+    });
+    fermerSouhait();
+    alert("🎉 Publié dans ton compte ! "+ciblePrenom+" a reçu ta notification ❤️");
+  }catch(e){ alert("Erreur : "+e.message); }
+  finally{ btn.disabled=false; btn.textContent="🎉 Publier dans mon compte"; }
 };
 onValue(ref(db,'jasonbook/users'), s=>{
-  const d=s.val(); users=d?Object.entries(d).map(([uid,u])=>({uid,...u})).filter(u=>u.uid!==uid):[];
+  const d=s.val(); users=d?Object.entries(d).map(([uid,u])=>({uid,...u, nom: u.nomComplet||u.nom||""})).filter(u=>u.uid!==uid):[];
   rendre();
 });
 </script>
