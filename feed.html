@@ -3,43 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>JASONBOOK - Fil</title>
+<title>JASONBOOK ✨ - Fil</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
 html{overflow-x:clip;overflow-y:auto;-webkit-overflow-scrolling:touch}
-body{width:100%;overflow-x:clip;background:#0F0F14;min-height:100vh;color:#fff}
-:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--noir:#111;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35}
-header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid var(--or);box-shadow:0 2px 15px rgba(0,0,0,.5)}
+body{width:100%;overflow-x:clip;background:#0A0A0F;min-height:100vh;color:#fff}
+:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--or2:#FF9800;--carte:#16161F;--gris:#A1A1AA;--ligne:#26262F}
+header{background:rgba(10,10,15,.95);position:sticky;top:0;z-index:30;border-bottom:1px solid var(--ligne)}
 .top-bar{display:flex;align-items:center;gap:10px;padding:10px 12px 6px}
 .logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:22px;cursor:pointer;flex:1;white-space:nowrap}
-.logo span{width:36px;height:36px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 12px rgba(255,193,7,.5)}
+.logo span{width:38px;height:38px;background:linear-gradient(135deg,var(--or),var(--or2));color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:0 4px 16px rgba(255,193,7,.4)}
 .logo i{color:var(--or);font-style:normal}
-.icon-top{width:40px;height:40px;background:#2A2A35;border:none;border-radius:50%;cursor:pointer;font-size:19px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
-.icon-top.menu{background:linear-gradient(135deg,var(--violet),var(--violet2));box-shadow:0 0 10px rgba(124,58,237,.5);font-weight:900}
+.logo small{display:block;font-size:8px;color:var(--gris);letter-spacing:1.2px}
+.icon-top{width:40px;height:40px;background:#1F1F2E;border:1px solid var(--ligne);border-radius:50%;cursor:pointer;font-size:19px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.icon-top.menu{background:linear-gradient(135deg,var(--violet),var(--violet2));border:none;box-shadow:0 0 10px rgba(124,58,237,.5);font-weight:900}
 .nav-top{display:flex;justify-content:space-between;padding:2px 6px 6px}
-.nav-top a{flex:1;text-decoration:none;color:#A1A1AA;display:flex;align-items:center;justify-content:center;padding:8px 2px;position:relative;font-size:24px;border-bottom:3px solid transparent}
+.nav-top a{flex:1;text-decoration:none;color:#A1A1AA;display:flex;align-items:center;justify-content:center;padding:8px 2px;position:relative;font-size:22px;border-bottom:3px solid transparent}
 .nav-top a.active{color:var(--or);border-bottom:3px solid var(--or)}
-.nav-top a .badge{position:absolute;top:1px;right:50%;transform:translateX(18px);background:#E0245E;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:999px;min-width:20px;text-align:center;border:2px solid #111;display:none}
-.nav-top a .badge.or{background:var(--or);color:#111}
+.nav-top a .badge{position:absolute;top:1px;right:50%;transform:translateX(18px);background:#E0245E;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:999px;min-width:20px;text-align:center;border:2px solid #0A0A0F;display:none}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:90;display:none}
 .overlay.open{display:block}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:290px;max-width:88vw;background:#17171F;z-index:100;transform:translateX(100%);transition:.28s;display:flex;flex-direction:column;overflow-y:auto;color:#fff}
 .drawer.open{transform:translateX(0)}
-.drawer-head{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--ligne);background:#17171F}
+.drawer-head{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--ligne)}
 .drawer-head .info{flex:1;min-width:0}
 .drawer-head b{font-size:16px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .drawer-head small{color:var(--gris)}
 .drawer-close{border:none;background:#2A2A35;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;color:#fff}
-.drawer a{display:flex;align-items:center;gap:12px;padding:12px 16px;text-decoration:none;color:#fff;font-weight:600;font-size:14.5px;border-bottom:1px solid #22222D}
+.drawer a{display:flex;align-items:center;gap:12px;padding:13px 16px;text-decoration:none;color:#fff;font-weight:600;font-size:14.5px;border-bottom:1px solid #22222D}
 .drawer a span{font-size:19px;width:28px;text-align:center;flex-shrink:0}
 .drawer .titre{padding:14px 16px 4px;font-size:11px;font-weight:800;color:var(--or);text-transform:uppercase;letter-spacing:1px}
-.drawer .logout{margin:14px 16px;padding:12px;background:#3A0A0A;color:#FF6B6B;border:1px solid #5A1A1A;border-radius:10px;font-weight:800;cursor:pointer;font-size:14px}
+.drawer .logout{margin:14px 16px;padding:12px;background:#3A0A0A;color:#FF6B6B;border:1px solid #5A1A1A;border-radius:12px;font-weight:800;cursor:pointer;font-size:14px}
 .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .wrap{max-width:650px;margin:12px auto;padding:0 10px 40px;width:100%}
 .stories{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 8px;scrollbar-width:none;max-width:100%}
 .stories::-webkit-scrollbar{display:none}
-.s-card{width:110px;height:185px;flex:0 0 110px;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;background:#222;border:2px solid var(--ligne)}
+.s-card{width:110px;height:185px;flex:0 0 110px;border-radius:18px;overflow:hidden;position:relative;cursor:pointer;background:#222;border:2px solid var(--ligne)}
 .s-card img{width:100%;height:100%;object-fit:cover}
 .s-card .overlay2{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.8))}
 .s-card .name{position:absolute;bottom:8px;left:7px;right:7px;color:#fff;font-weight:700;font-size:12px}
@@ -48,23 +48,23 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 .s-card.add{background:var(--carte);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--violet)}
 .s-card.add .plus{width:42px;height:42px;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px}
 .s-card.add p{font-size:12px;font-weight:700;color:#fff}
-.create{background:var(--carte);border-radius:16px;padding:12px;margin:10px 0;border:1px solid var(--ligne);width:100%}
+.create{background:var(--carte);border-radius:20px;padding:12px;margin:10px 0;border:1px solid var(--ligne);width:100%}
 .create .top{display:flex;gap:10px;align-items:center}
 .create input{flex:1;min-width:0;background:#2A2A35;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer;color:#fff}
 .create input::placeholder{color:#888}
 .create .btns{display:flex;gap:6px;margin-top:10px}
-.create .btns button{flex:1;border:none;background:#2A2A35;padding:10px;border-radius:10px;font-weight:700;cursor:pointer;font-size:13px;color:#fff}
-.post{background:var(--carte);border-radius:16px;padding:14px;margin-bottom:12px;border:1px solid var(--ligne);width:100%;overflow:hidden}
+.create .btns button{flex:1;border:none;background:#2A2A35;padding:10px;border-radius:12px;font-weight:700;cursor:pointer;font-size:13px;color:#fff}
+.post{background:var(--carte);border-radius:20px;padding:14px;margin-bottom:12px;border:1px solid var(--ligne);width:100%;overflow:hidden}
 .post .head{display:flex;gap:10px;align-items:center}
 .post .head .info{flex:1;min-width:0}.post .head small{color:var(--gris)}
 .post p{margin:10px 0;white-space:pre-wrap;font-size:15px;line-height:1.5;word-break:break-word;color:#EDEDEF}
-.post img.pimg{width:100%;border-radius:12px;max-height:380px;object-fit:cover}
-.post video{width:100%;border-radius:12px;max-height:420px;background:#000}
+.post img.pimg{width:100%;border-radius:14px;max-height:380px;object-fit:cover}
+.post video{width:100%;border-radius:14px;max-height:420px;background:#000}
 .post .actions{display:flex;justify-content:space-around;border-top:1px solid var(--ligne);padding-top:8px;margin-top:8px}
 .post .actions button{border:none;background:none;font-weight:700;color:var(--gris);cursor:pointer;padding:8px;font-size:13.5px}
 .post .actions button.liked{color:var(--or)}
 .loading{text-align:center;color:var(--or);padding:20px;font-weight:700}
-.empty{text-align:center;color:var(--gris);padding:30px 10px;background:var(--carte);border-radius:16px;border:1px solid var(--ligne)}
+.empty{text-align:center;color:var(--gris);padding:30px 10px;background:var(--carte);border-radius:20px;border:1px solid var(--ligne)}
 .comments{border-top:1px solid var(--ligne);margin-top:10px;padding-top:10px;display:none}
 .comments.open{display:block}
 .comment{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start}
@@ -78,30 +78,28 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 .comment-input button{background:linear-gradient(135deg,var(--violet),var(--violet2));border:none;color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:16px;flex-shrink:0}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:200;padding:16px}
 .modal.open{display:flex}
-.modal-box{background:#17171F;width:100%;max-width:420px;border-radius:16px;padding:20px;border:1px solid var(--ligne);color:#fff}
+.modal-box{background:#17171F;width:100%;max-width:420px;border-radius:18px;padding:20px;border:1px solid var(--ligne);color:#fff}
 .modal-box h3{margin-bottom:10px}
 .modal-box textarea{width:100%;background:#2A2A35;border:1px solid var(--ligne);border-radius:12px;color:#fff;padding:12px;font-size:14px;outline:none;min-height:80px;resize:vertical}
-.modal-box button{width:100%;margin-top:10px;padding:12px;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:14px}
+.modal-box button{width:100%;margin-top:10px;padding:12px;border:none;border-radius:12px;font-weight:800;cursor:pointer;font-size:14px}
 .btn-violet{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}
 .btn-grey{background:#2A2A35;color:#fff}
 </style>
-<link rel="stylesheet" href="assets/brand.css">
 </head>
 <body>
 
 <header>
   <div class="top-bar">
-    <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+    <div class="logo" onclick="location.href='feed.html'"><span>J</span><div>JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div></div>
     <button class="icon-top" onclick="location.href='recherche.html'">🔍</button>
     <button class="icon-top menu" onclick="ouvrirMenu()">☰</button>
   </div>
   <nav class="nav-top">
-    <a href="feed.html" class="active">🏠<span class="badge or" id="badgeFeed"></span></a>
+    <a href="feed.html" class="active">🏠<span class="badge" id="badgeFeed"></span></a>
     <a href="amis.html">👥<span class="badge" id="badgeAmis"></span></a>
     <a href="messages.html">💬<span class="badge" id="badgeMsg"></span></a>
-    <a href="videos.html">🎥<span class="badge or" id="badgeVideos"></span></a>
+    <a href="videos.html">🎥<span class="badge" id="badgeVideos"></span></a>
     <a href="notifications.html">🔔<span class="badge" id="badgeNotif"></span></a>
-    <a href="marketplace.html">🛒<span class="badge" id="badgeMarket"></span></a>
   </nav>
 </header>
 
@@ -111,7 +109,6 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 <div class="titre">Principal</div>
 <a href="feed.html"><span>🏠</span> Fil d'actualité</a>
 <a href="profil.html"><span>👤</span> Mon Profil</a>
-<a href="profil-ami.html"><span>👤</span> Profil Ami</a>
 <a href="amis.html"><span>👥</span> Amis</a>
 <a href="messages.html"><span>💬</span> Messages</a>
 <a href="notifications.html"><span>🔔</span> Notifications</a>
@@ -121,26 +118,8 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 <a href="stories.html"><span>✨</span> Stories</a>
 <a href="videos.html"><span>🎥</span> Vidéos</a>
 <a href="photos.html"><span>🖼️</span> Photos</a>
-<a href="lives.html"><span>🔴</span> Lives</a>
-<a href="souvenirs.html"><span>🕰️</span> Souvenirs</a>
-<div class="titre">Découvrir</div>
-<a href="groupes.html"><span>👨‍👩‍👧</span> Groupes</a>
-<a href="evenements.html"><span>📅</span> Événements</a>
-<a href="anniversaires.html"><span>🎂</span> Anniversaires</a>
-<a href="annonces.html"><span>📢</span> Annonces</a>
-<a href="sondages.html"><span>📊</span> Sondages</a>
-<a href="jeux.html"><span>🎮</span> Jeux</a>
-<a href="musique.html"><span>🎵</span> Musique</a>
-<a href="marche.html"><span>🛒</span> Marché</a>
-<a href="marketplace.html"><span>🏪</span> Marketplace</a>
-<a href="emploi.html"><span>💼</span> Emploi</a>
-<a href="favoris.html"><span>⭐</span> Favoris</a>
-<div class="titre">Paramètres & Aide</div>
 <a href="parametres.html"><span>⚙️</span> Paramètres</a>
-<a href="aide.html"><span>❓</span> Aide</a>
-<a href="signalements.html"><span>🚨</span> Signalements</a>
-<a href="bloques.html"><span>🚫</span> Bloqués</a>
-<!-- ✅ BOUTON ADMIN SUPPRIMÉ -->
+<!-- ✅ SUPPRIMÉ : Groupes, Événements, Anniversaires, Annonces, Sondages, Jeux, Musique, Marché, Marketplace, Emploi, Favoris, Aide, Signalements, Bloqués, Lives, Souvenirs, Profil Ami -->
 <a href="index.html"><span>🚪</span> Connexion / Accueil</a>
 <button class="logout" onclick="deconnecter()">🚪 Se déconnecter</button>
 </div>
@@ -241,7 +220,7 @@ if(uid){
     });
     setBadge('badgeMsg', n);
   });
-  setBadge('badgeMarket', 0); setBadge('badgeFeed', 0); setBadge('badgeVideos', 0);
+  setBadge('badgeFeed', 0); setBadge('badgeVideos', 0);
 }
 onValue(ref(db,'jasonbook/stories'),s=>{
   const d=s.val(); const now=Date.now(); const row=document.getElementById('storiesRow'); if(!row) return; row.innerHTML="";
