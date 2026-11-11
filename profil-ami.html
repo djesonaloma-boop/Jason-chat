@@ -28,6 +28,12 @@ header{background:#111;display:flex;align-items:center;justify-content:flex-star
 .profile-info{width:100%;word-break:break-word;margin-top:10px;text-align:center}
 .profile-info h1{font-size:28px;color:#fff;word-break:break-word;line-height:1.2;text-align:center}
 .profile-info p{color:var(--gris);font-size:14px;margin-top:6px;word-break:break-word;line-height:1.4;text-align:center}
+/* ✅ STATS - AMIS / J'AIME / PUBLICATIONS */
+.stats{display:flex;gap:0;background:#2A2A35;border:1px solid var(--ligne);border-radius:16px;overflow:hidden;margin:14px auto 0;max-width:420px;width:100%}
+.stats div{flex:1;text-align:center;padding:12px 4px}
+.stats div+div{border-left:1px solid var(--ligne)}
+.stats b{display:block;font-size:19px;color:var(--or);line-height:1.2}
+.stats span{font-size:11px;color:var(--gris)}
 .profile-btns{display:flex;gap:10px;justify-content:center;align-items:center;width:100%;margin-top:14px;flex-wrap:wrap}
 .profile-btns button{padding:12px 22px;border:none;border-radius:999px;font-weight:800;cursor:pointer;font-size:14px;white-space:nowrap;min-width:130px}
 .btn-blue{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}.btn-grey{background:#2A2A35;color:#fff}.btn-green{background:#22C55E;color:#fff}
@@ -89,6 +95,14 @@ header{background:#111;display:flex;align-items:center;justify-content:flex-star
 <p id="metaAffiche"></p>
 <p id="amisCount"></p>
 </div>
+
+<!-- ✅ NOMBRE D'AMIS / J'AIME / PUBLICATIONS DE CETTE PERSONNE -->
+<div class="stats">
+  <div><b id="nbAmis">0</b><span>👥 Amis</span></div>
+  <div><b id="nbLikes">0</b><span>❤️ J'aime</span></div>
+  <div><b id="nbPubs">0</b><span>📝 Publications</span></div>
+</div>
+
 <div class="profile-btns">
 <button class="btn-blue" id="btnAmi" onclick="actionAmi()">➕ Ajouter</button>
 <button class="btn-grey" id="btnMsg" onclick="allerMessage()">💬 Message</button>
@@ -132,7 +146,6 @@ const cibleUid = new URLSearchParams(location.search).get('uid');
 if(!cibleUid) location.href='feed.html';
 if(cibleUid===uid) location.href='profil.html';
 let profilCible=null, statut="inconnu", vraiUid=cibleUid, photoTypeActuel='profil', photoData={profil:{likes:{},comments:{},partages:0},cover:{likes:{},comments:{},partages:0}};
-// ✅ ENVOYER UNE NOTIFICATION - ne notifie jamais soi-même
 async function envoyerNotif(destUid, type, texte, extra={}){
   if(!destUid || destUid===uid) return;
   try{
@@ -217,9 +230,9 @@ chargerProfil();
 onValue(ref(db,'jasonbook/amis/'+uid), s=>{ const d=s.val(); if(d && (d[cibleUid] || d[vraiUid])) statut='ami'; else if(statut==='ami') statut='inconnu'; majBouton(); });
 onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_envoyee'; majBouton(); });
 onValue(ref(db,'jasonbook/demandes/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_recue'; majBouton(); });
-onValue(ref(db,'jasonbook/amis/'+cibleUid), s=>{ const d=s.val(); const n=d?Object.keys(d).length:0; if(n) document.getElementById('amisCount').innerText=n+" ami"+(n>1?"s":""); });
+// ✅ NOMBRE D'AMIS DE CETTE PERSONNE
+onValue(ref(db,'jasonbook/amis/'+cibleUid), s=>{ const d=s.val(); const n=d?Object.keys(d).length:0; document.getElementById('nbAmis').innerText=n; if(n) document.getElementById('amisCount').innerText=n+" ami"+(n>1?"s":""); });
 function photoPath(type){ return 'jasonbook/photos/'+cibleUid+'_'+type; }
-// ✅ BUG CORRIGÉ ICI - avant c'était onValue(ref(...)), s=>...
 function ecouterPhotoStats(){
   ['profil','cover'].forEach(type=>{
     onValue(ref(db, photoPath(type)), s=>{
@@ -285,8 +298,12 @@ async function chargerPosts(){
   const box=document.getElementById('postsList'); const grid=document.getElementById('photosGrid'); box.innerHTML=""; grid.innerHTML="";
   const snap=await get(ref(db,'jasonbook/posts'));
   const data=snap.val();
-  if(!data){ document.getElementById('noPosts').style.display="block"; return; }
+  if(!data){ document.getElementById('noPosts').style.display="block"; document.getElementById('nbPubs').innerText="0"; document.getElementById('nbLikes').innerText="0"; return; }
   const siens=Object.entries(data).filter(([id,p])=>p.auteurUid===cibleUid || p.auteurUid===vraiUid).reverse();
+  // ✅ NOMBRE DE PUBLICATIONS + TOTAL J'AIME DE CETTE PERSONNE
+  document.getElementById('nbPubs').innerText=siens.length;
+  const totalLikes=siens.reduce((s,[id,p])=>s+Number(p.likesCount||p.likes||0),0);
+  document.getElementById('nbLikes').innerText=totalLikes;
   if(!siens.length){ document.getElementById('noPosts').style.display="block"; return; }
   document.getElementById('noPosts').style.display="none";
   siens.forEach(([id,p])=>{
