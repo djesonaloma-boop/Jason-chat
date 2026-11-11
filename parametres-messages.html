@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>JASONBOOK ✨ - Paramètres de messages</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:#0A0A0F;color:#fff;min-height:100vh;padding-bottom:92px}
+:root{--violet:#7C3AED;--or:#FFC107;--ligne:#26262F;--gris:#A1A1AA}
+.header{position:fixed;top:0;left:0;right:0;z-index:99;background:#0A0A0F;border-bottom:1px solid var(--ligne);display:flex;align-items:center;gap:10px;padding:12px}
+.header button{width:40px;height:40px;border-radius:50%;background:#1F1F2E;border:1px solid var(--ligne);color:#fff;font-size:20px;cursor:pointer}
+.header b{font-size:17px}
+.wrap{max-width:650px;margin:0 auto;padding:72px 12px 12px}
+.sec{font-size:11px;color:var(--gris);letter-spacing:1px;font-weight:800;padding:16px 4px 6px}
+.card{background:#16161F;border:1px solid var(--ligne);border-radius:18px;overflow:hidden}
+.row{display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--ligne);cursor:pointer}
+.row:last-child{border-bottom:0}
+.row:active{background:#1F1F2E}
+.row .ico{width:40px;height:40px;min-width:40px;border-radius:12px;background:#1F1F2E;display:flex;align-items:center;justify-content:center;font-size:19px}
+.row .info{flex:1;min-width:0}
+.row .info b{font-size:14px;display:block}
+.row .info small{color:var(--gris);font-size:12px;display:block}
+.row .fleche{color:var(--gris)}
+.switch{width:50px;height:28px;min-width:50px;background:#333;border-radius:999px;position:relative;cursor:pointer;flex-shrink:0;border:0}
+.switch.on{background:var(--or)}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;background:#fff;border-radius:50%;transition:.2s}
+.switch.on::after{left:25px}
+.bloque{display:flex;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--ligne)}
+.bloque:last-child{border-bottom:0}
+.bloque .ava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden}
+.bloque .ava img{width:100%;height:100%;object-fit:cover}
+.bloque b{font-size:14px;display:block}
+.bloque small{color:var(--gris);font-size:12px}
+.bloque button{margin-left:auto;background:var(--or);border:0;color:#000;padding:8px 12px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer}
+.btn-danger{width:100%;background:#E0245E;border:0;color:#fff;padding:14px;border-radius:14px;font-weight:800;font-size:14px;cursor:pointer;margin-top:6px}
+.btn-grey{width:100%;background:#1F1F2E;border:1px solid var(--ligne);color:#fff;padding:14px;border-radius:14px;font-weight:800;font-size:14px;cursor:pointer;margin-top:8px}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,10,15,.96);display:flex;justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--ligne)}
+.bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:10px;font-weight:700}
+.bottom button.active{color:var(--or)}
+.bottom button span{font-size:22px}
+.bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
+</style>
+</head>
+<body>
+
+<div class="header">
+<button onclick="location.href='messages.html'">←</button>
+<b>⚙️ Paramètres de messages</b>
+</div>
+
+<main class="wrap">
+<div class="sec">NOTIFICATIONS</div>
+<div class="card">
+  <div class="row" onclick="toggleOpt('notifMessages')">
+    <div class="ico">🔔</div><div class="info"><b>Notifications de messages</b><small>Recevoir une notif quand on m'envoie un message</small></div><button class="switch on" id="sw-notifMessages"></button>
+  </div>
+  <div class="row" onclick="toggleOpt('sonMessages')">
+    <div class="ico">🔊</div><div class="info"><b>Son de message</b><small>Jouer un son à la réception</small></div><button class="switch on" id="sw-sonMessages"></button>
+  </div>
+  <div class="row" onclick="toggleOpt('vibration')">
+    <div class="ico">📳</div><div class="info"><b>Vibration</b><small>Vibrer quand un message arrive</small></div><button class="switch" id="sw-vibration"></button>
+  </div>
+</div>
+
+<div class="sec">MESSAGES</div>
+<div class="card">
+  <div class="row" onclick="toggleOpt('accuseLecture')">
+    <div class="ico">✓✓</div><div class="info"><b>Accusés de lecture</b><small>Les autres voient quand tu as lu (✓✓ Lu)</small></div><button class="switch on" id="sw-accuseLecture"></button>
+  </div>
+  <div class="row" onclick="toggleOpt('disparitionDefaut')">
+    <div class="ico">⏰</div><div class="info"><b>Messages éphémères 24h par défaut</b><small>Les nouvelles conversations disparaissent après 24h</small></div><button class="switch" id="sw-disparitionDefaut"></button>
+  </div>
+  <div class="row" onclick="toggleOpt('entreeAuto')">
+    <div class="ico">⌨️</div><div class="info"><b>Entrée = Envoyer</b><small>La touche Entrée envoie le message</small></div><button class="switch on" id="sw-entreeAuto"></button>
+  </div>
+  <div class="row" onclick="changerQuiPeut()">
+    <div class="ico">🔒</div><div class="info"><b>Qui peut m'envoyer un message ?</b><small id="txtQuiPeut">Tout le monde</small></div><span class="fleche">›</span>
+  </div>
+</div>
+
+<div class="sec">CONFIDENTIALITÉ</div>
+<div class="card">
+  <div class="row" onclick="location.href='bloques.html'">
+    <div class="ico">🚫</div><div class="info"><b>Personnes bloquées</b><small id="txtNbBloques">Chargement...</small></div><span class="fleche">›</span>
+  </div>
+  <div id="listeBloques"></div>
+</div>
+
+<div class="sec">STOCKAGE</div>
+<div class="card" style="padding:14px">
+  <p style="font-size:13px;color:var(--gris);line-height:1.5">Tes messages sont dans ton Firebase. Tu peux les effacer que pour toi, les autres les verront toujours, sauf si tu utilises <b style="color:#fff">Retirer le message</b> dans la conversation.</p>
+  <button class="btn-grey" onclick="effacerTout()">🗑️ Effacer toutes mes conversations (pour moi)</button>
+  <button class="btn-danger" onclick="reinitialiser()">⚠️ Réinitialiser mes paramètres</button>
+</div>
+</main>
+
+<div class="bottom">
+<button onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
+<button onclick="location.href='amis.html'"><span>👥</span>Amis</button>
+<button onclick="location.href='creer-post.html'"><span class="centre">+</span></button>
+<button class="active" onclick="location.href='messages.html'"><span>💬</span>Messages</button>
+<button onclick="location.href='profil.html'"><span>👤</span>Moi</button>
+</div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {getDatabase,ref,get,set,remove,update} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
+const app=initializeApp(firebaseConfig); const db=getDatabase(app);
+const uid=localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+let opts={notifMessages:true,sonMessages:true,vibration:false,accuseLecture:true,disparitionDefaut:false,entreeAuto:true,quiPeut:"Tout le monde"};
+function appliquer(){
+  for(const k of Object.keys(opts)){ const el=document.getElementById('sw-'+k); if(el) el.classList.toggle('on', !!opts[k]); }
+  document.getElementById('txtQuiPeut').innerText=opts.quiPeut;
+}
+async function charger(){
+  const snap=await get(ref(db,'jasonbook/parametres_messages/'+uid));
+  if(snap.exists()) opts={...opts,...snap.val()};
+  appliquer(); chargerBloques();
+}
+async function sauvegarder(){ await set(ref(db,'jasonbook/parametres_messages/'+uid), opts); }
+window.toggleOpt=async (k)=>{ opts[k]=!opts[k]; appliquer(); await sauvegarder(); };
+window.changerQuiPeut=async ()=>{
+  opts.quiPeut = opts.quiPeut==="Tout le monde" ? "Amis seulement" : "Tout le monde";
+  appliquer(); await sauvegarder(); alert("Maintenant : "+opts.quiPeut);
+};
+async function chargerBloques(){
+  const snap=await get(ref(db,'jasonbook/bloques/'+uid));
+  const d=snap.val()||{};
+  const ids=Object.keys(d);
+  document.getElementById('txtNbBloques').innerText = ids.length ? ids.length+" personne(s) bloquée(s)" : "Aucune personne bloquée";
+  const box=document.getElementById('listeBloques'); box.innerHTML="";
+  ids.forEach(id=>{
+    const u=d[id];
+    const div=document.createElement('div'); div.className='bloque';
+    div.innerHTML=`<div class="ava">${u.photo?`<img src="${u.photo}">`:(u.nom||"?").charAt(0)}</div><div style="flex:1"><b>${u.nom||"Utilisateur"}</b><small>Bloqué le ${u.date||""}</small></div><button onclick="debloquer('${id}')">Débloquer</button>`;
+    box.appendChild(div);
+  });
+}
+window.debloquer=async (id)=>{ if(!confirm("Débloquer cette personne ?")) return; await remove(ref(db,'jasonbook/bloques/'+uid+'/'+id)); chargerBloques(); };
+window.effacerTout=async ()=>{
+  if(!confirm("Effacer TOUTES tes conversations pour toi ? Les autres les verront toujours.")) return;
+  const snap=await get(ref(db,'jasonbook/messages')); const d=snap.val()||{};
+  for(const [chatId,msgs] of Object.entries(d)){
+    if(!chatId.includes(uid)) continue;
+    for(const mid of Object.keys(msgs||{})){ await update(ref(db,'jasonbook/messages/'+chatId+'/'+mid),{['deletedFor_'+uid]:true}); }
+  }
+  alert("Tout effacé pour toi ✅");
+};
+window.reinitialiser=async ()=>{ if(!confirm("Remettre les paramètres par défaut ?")) return; await remove(ref(db,'jasonbook/parametres_messages/'+uid)); location.reload(); };
+charger();
+</script>
+</body>
+</html>
