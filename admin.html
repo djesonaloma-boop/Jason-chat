@@ -1,31 +1,34 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><title>JASONBOOK • Admin</title><link rel="stylesheet" href="assets/brand.css"><style>
-*{box-sizing:border-box}html{overflow-x:clip!important;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch;width:100%;max-width:100vw}body{margin:0;background:#0F0F14;color:#fff;font-family:Arial;overflow-x:clip!important;overflow-y:auto}img,video{max-width:100%}.top{padding:15px;background:#111;border-bottom:2px solid #FFC107;display:flex;justify-content:space-between;align-items:center}.top b{white-space:nowrap}.wrap{max-width:1100px;margin:auto;padding:16px}.muted{color:#A1A1AA;font-size:13px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}.card{background:#1C1C24;border:1px solid #2A2A35;border-radius:14px;padding:14px;margin:10px 0}.stat b{font-size:25px;color:#FFC107;display:block}.tabs{display:flex;gap:7px;overflow:auto;margin:14px 0}.tabs button,.btn{border:0;border-radius:999px;padding:10px 13px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:white;font-weight:700;white-space:nowrap;cursor:pointer}.tabs button.active{background:#FFC107;color:#111}.danger{background:#9f1239!important}.ok{background:#16834b!important}input{background:#2A2A35;color:white;border:1px solid #444;padding:11px;border-radius:999px;max-width:100%;outline:none}input:focus{border-color:#7C3AED}.item{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;border-bottom:1px solid #333;padding:12px 0}.info{flex:1;min-width:150px}.item small{color:#A1A1AA;display:block}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button{font-size:11px;padding:8px}.hidden{display:none!important}.notice{padding:12px;border:1px solid #8a6b16;background:#30270d;border-radius:10px;color:#ffe08a;font-size:12px;line-height:1.5}h2{font-size:17px}a{color:#FFC107;text-decoration:none}
-</style></head><body><header class="top"><b>JASONBOOK • ADMIN</b><a href="feed.html">Retour au site</a></header><div class="wrap">
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#0A0A0F"><title>JASONBOOK ✨ • Admin</title><style>
+*{box-sizing:border-box}html{overflow-x:clip!important;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch;width:100%;max-width:100vw}body{margin:0;background:#0F0F14;color:#fff;font-family:Arial;overflow-x:clip!important;overflow-y:auto}img,video{max-width:100%}.top{padding:15px;background:#111;border-bottom:2px solid #FFC107;display:flex;justify-content:space-between;align-items:center}.top b{white-space:nowrap}.wrap{max-width:1100px;margin:auto;padding:16px}.muted{color:#A1A1AA;font-size:13px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}.card{background:#1C1C24;border:1px solid #2A2A35;border-radius:14px;padding:14px;margin:10px 0}.stat b{font-size:25px;color:#FFC107;display:block}.tabs{display:flex;gap:7px;overflow:auto;margin:14px 0}.tabs button,.btn{border:0;border-radius:999px;padding:10px 13px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:white;font-weight:700;white-space:nowrap;cursor:pointer}.tabs button.active{background:#FFC107;color:#111}.danger{background:#9f1239!important}.ok{background:#16834b!important}.gold{background:#FFC107!important;color:#111!important}input{background:#2A2A35;color:white;border:1px solid #444;padding:11px;border-radius:999px;max-width:100%;outline:none}input:focus{border-color:#7C3AED}.item{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;border-bottom:1px solid #333;padding:12px 0}.info{flex:1;min-width:150px}.item small{color:#A1A1AA;display:block}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button{font-size:11px;padding:8px}.hidden{display:none!important}.notice{padding:12px;border:1px solid #8a6b16;background:#30270d;border-radius:10px;color:#ffe08a;font-size:12px;line-height:1.5}h2{font-size:17px}a{color:#FFC107;text-decoration:none}
+.badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:800;margin-top:4px}
+.badge.pending{background:#FFC107;color:#000}.badge.confirmed{background:#22C55E;color:#fff}.badge.boosting{background:#7C3AED;color:#fff}.badge.done{background:#22C55E;color:#fff}.badge.rejected,.badge.approved{background:#E0245E;color:#fff}
+.boost-check{background:#0A2A15;border:1px solid #25D366;border-radius:10px;padding:10px;margin-top:8px;font-size:12px;line-height:1.6}
+.boost-check b{color:#FFC107}
+</style></head><body><header class="top"><b>JASONBOOK ✨ • ADMIN</b><a href="feed.html">Retour au site</a></header><div class="wrap">
 <div id="loginBox" class="card"><h2>🔐 Accès administrateur</h2><p class="muted">Tape ton UID autorisé OU ton code secret admin.</p><input id="adminUid" placeholder="UID ou code secret" style="width:100%"><button class="btn" style="width:100%;margin-top:10px" onclick="verifierAdmin()">Vérifier l'accès</button><p id="loginMsg" class="muted"></p></div>
 <div id="panel" class="hidden"><div class="notice">L'administrateur ne peut pas lire les mots de passe. La liste blanche côté navigateur n'est pas une sécurité serveur : protège les opérations avec Firebase Admin SDK et des règles Firebase avant production.</div>
-<div class="grid"><div class="card stat"><b id="nUsers">0</b>Utilisateurs</div><div class="card stat"><b id="nPosts">0</b>Publications</div><div class="card stat"><b id="nLives">0</b>Lives</div><div class="card stat"><b id="nReports">0</b>Signalements</div></div>
-<div class="tabs"><button class="active" onclick="showTab('users',this)">Utilisateurs</button><button onclick="showTab('posts',this)">Publications</button><button onclick="showTab('lives',this)">Lives</button><button onclick="showTab('reports',this)">Signalements</button><button onclick="showTab('boosts',this)">Boosts</button></div>
-<section id="users" class="card"><h2>Utilisateurs</h2><input id="searchUsers" placeholder="Rechercher" oninput="renderUsers()" style="width:100%"><div id="usersList"></div></section><section id="posts" class="card hidden"><h2>Publications</h2><div id="postsList"></div></section><section id="lives" class="card hidden"><h2>Lives</h2><div id="livesList"></div></section><section id="reports" class="card hidden"><h2>Signalements</h2><div id="reportsList"></div></section><section id="boosts" class="card hidden"><h2>Commandes Booster</h2><div id="boostsList"></div></section></div></div>
+<div class="grid"><div class="card stat"><b id="nUsers">0</b>Utilisateurs</div><div class="card stat"><b id="nPosts">0</b>Publications</div><div class="card stat"><b id="nLives">0</b>Lives</div><div class="card stat"><b id="nReports">0</b>Signalements</div><div class="card stat"><b id="nBoosts">0</b>Boosts</div><div class="card stat"><b id="nBoostsPending">0</b>Boosts en attente</div></div>
+<div class="tabs"><button class="active" onclick="showTab('users',this)">Utilisateurs</button><button onclick="showTab('posts',this)">Publications</button><button onclick="showTab('lives',this)">Lives</button><button onclick="showTab('reports',this)">Signalements</button><button onclick="showTab('boosts',this)">🚀 Boosts</button></div>
+<section id="users" class="card"><h2>Utilisateurs</h2><input id="searchUsers" placeholder="Rechercher" oninput="renderUsers()" style="width:100%"><div id="usersList"></div></section><section id="posts" class="card hidden"><h2>Publications</h2><div id="postsList"></div></section><section id="lives" class="card hidden"><h2>Lives</h2><div id="livesList"></div></section><section id="reports" class="card hidden"><h2>Signalements</h2><div id="reportsList"></div></section>
+<section id="boosts" class="card hidden"><h2>🚀 Commandes Booster - Vérification dépôt</h2><p class="muted">Vérifie dans ton <b>Orange Money / Airtel Money / M-Pesa +243847500590</b> si le montant + ID transaction sont vraiment arrivés avant de confirmer.</p>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0"><button class="btn gold" onclick="filtrerBoosts('pending')">⏳ En attente</button><button class="btn" onclick="filtrerBoosts('confirmed')">✅ Confirmés</button><button class="btn" onclick="filtrerBoosts('all')">📦 Toutes</button></div>
+<div id="boostsList"></div></section></div></div>
 <script src="admin-config.js"></script><script type="module">
-import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';import{getDatabase,ref,get,update,remove}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
-const cfg={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};const db=getDatabase(initializeApp(cfg));let users={},posts={},lives={},reports={},boosts={};
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';import{getDatabase,ref,get,update,remove,push,set}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+const cfg={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};const db=getDatabase(initializeApp(cfg));let users={},posts={},lives={},reports={},boosts={};let filtreBoost='pending';
 // ✅ CODE SECRET ADMIN - change-le après tes tests, ne le partage pas
 const CODE_SECRET_ADMIN = "1009200700";
 window.verifierAdmin=async()=>{
   let entree=document.getElementById('adminUid').value.trim();
-  // 1) Si c'est le code secret -> on accepte direct, on prend l'UID déjà connecté si il y en a un
   if(entree===CODE_SECRET_ADMIN){
-    let uidConnecte = localStorage.getItem('jasonbook_uid')||"";
-    // On garde un marqueur que c'est l'admin par code
     sessionStorage.setItem('jasonbook_admin_par_code','oui');
     document.getElementById('loginBox').classList.add('hidden');document.getElementById('panel').classList.remove('hidden');await loadAll();return;
   }
-  // 2) Sinon, ancien système : UID dans admin-config.js
   let uid=entree;
   if(!(window.JASONBOOK_ADMIN_UIDS||[]).includes(uid)||uid==='REMPLACE_PAR_TON_UID_ADMIN'){document.getElementById('loginMsg').textContent='UID ou code non autorisé. Vérifie admin-config.js ou ton code.';return}
   if(!(await get(ref(db,'jasonbook/users/'+uid))).exists()){document.getElementById('loginMsg').textContent='Compte introuvable';return}
   document.getElementById('loginBox').classList.add('hidden');document.getElementById('panel').classList.remove('hidden');await loadAll()};
-async function read(p){return(await get(ref(db,p))).val()||{}}async function loadAll(){[users,posts,lives,reports,boosts]=await Promise.all(['users','posts','liveStreams','reports','boostOrders'].map(x=>read('jasonbook/'+x)));for(let [id,v] of Object.entries({nUsers:users,nPosts:posts,nLives:lives,nReports:reports}))document.getElementById(id).textContent=Object.keys(v).length;renderUsers();renderPosts();renderLives();renderReports();renderBoosts()}
+async function read(p){return(await get(ref(db,p))).val()||{}}async function loadAll(){[users,posts,lives,reports,boosts]=await Promise.all(['users','posts','liveStreams','reports','boostOrders'].map(x=>read('jasonbook/'+x)));for(let [id,v] of Object.entries({nUsers:users,nPosts:posts,nLives:lives,nReports:reports,nBoosts:boosts}))document.getElementById(id).textContent=Object.keys(v).length;document.getElementById('nBoostsPending').textContent=Object.values(boosts).filter(b=>b.status==='pending').length;renderUsers();renderPosts();renderLives();renderReports();renderBoosts()}
 window.showTab=(id,b)=>{document.querySelectorAll('#panel section').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active')};
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 window.renderUsers=()=>{let q=(document.getElementById('searchUsers').value||'').toLowerCase();document.getElementById('usersList').innerHTML=Object.entries(users).filter(([id,u])=>([id,u.nomComplet,u.nom,u.phone,u.email].join(' ').toLowerCase().includes(q))).map(([id,u])=>`<div class="item"><div class="info"><b>${esc(u.nomComplet||u.nom||'Membre')}</b><small>${esc(id)} • ${esc(u.phone||u.email||'')}</small><small>Statut : ${esc(u.status||'actif')}</small></div><div class="actions"><button class="btn" onclick="toggleUser('${esc(id)}','${u.status==='suspended'?'active':'suspended'}')">${u.status==='suspended'?'Réactiver':'Suspendre'}</button><button class="btn danger" onclick="deleteUser('${esc(id)}')">Supprimer</button></div></div>`).join('')||'<p class="muted">Aucun utilisateur.</p>'};
@@ -33,5 +36,51 @@ window.toggleUser=async(id,status)=>{if(!confirm('Confirmer ?'))return;await upd
 function renderPosts(){document.getElementById('postsList').innerHTML=Object.entries(posts).map(([id,p])=>`<div class="item"><div class="info"><b>${esc(p.nomAuteur||p.auteurUid||'Publication')}</b><small>${esc((p.texte||'').slice(0,160))}</small></div><button class="btn danger" onclick="deletePost('${esc(id)}')">Supprimer</button></div>`).join('')||'<p class="muted">Aucune publication.</p>'}window.deletePost=async id=>{if(confirm('Supprimer ?')){await remove(ref(db,'jasonbook/posts/'+id));delete posts[id];renderPosts()}};
 function renderLives(){document.getElementById('livesList').innerHTML=Object.entries(lives).map(([id,l])=>`<div class="item"><div class="info"><b>${esc(l.title||l.nom||'Live')}</b><small>${esc(l.auteurUid||l.uid||id)} • ${esc(l.status||'')}</small></div><button class="btn danger" onclick="endLive('${esc(id)}')">Terminer</button></div>`).join('')||'<p class="muted">Aucun live</p>'}window.endLive=async id=>{await update(ref(db,'jasonbook/liveStreams/'+id),{status:'ended',endedByAdmin:true,endedAt:Date.now()});lives[id].status='ended';renderLives()};
 function renderReports(){document.getElementById('reportsList').innerHTML=Object.entries(reports).map(([id,r])=>`<div class="item"><div class="info"><b>${esc(r.type||'Signalement')}</b><small>${esc(r.reason||r.motif||'')} • ${esc(r.targetId||r.postId||r.userId||'')}</small></div><button class="btn ok" onclick="closeReport('${esc(id)}')">Traité</button></div>`).join('')||'<p class="muted">Aucun signalement</p>'}window.closeReport=async id=>{await update(ref(db,'jasonbook/reports/'+id),{status:'closed',closedAt:Date.now()});reports[id].status='closed';renderReports()};
-function renderBoosts(){document.getElementById('boostsList').innerHTML=Object.entries(boosts).map(([id,b])=>`<div class="item"><div class="info"><b>${esc(b.type||'Boost')}</b><small>${esc(b.uid||'')} • ${esc(b.status||'pending')} • ${esc(b.amount||'')} FC</small></div><button class="btn ok" onclick="approveBoost('${esc(id)}')">Valider</button><button class="btn danger" onclick="rejectBoost('${esc(id)}')">Refuser</button></div>`).join('')||'<p class="muted">Aucune demande'+'</p>'}window.approveBoost=async id=>{await update(ref(db,'jasonbook/boostOrders/'+id),{status:'approved',validatedAt:Date.now()});boosts[id].status='approved';renderBoosts()};window.rejectBoost=async id=>{await update(ref(db,'jasonbook/boostOrders/'+id),{status:'rejected',validatedAt:Date.now()});boosts[id].status='rejected';renderBoosts()};
+window.filtrerBoosts=(f)=>{filtreBoost=f;renderBoosts()};
+function renderBoosts(){
+  let list=Object.entries(boosts).sort((a,b)=>(b[1].createdAt||0)-(a[1].createdAt||0));
+  if(filtreBoost==='pending') list=list.filter(([id,b])=>b.status==='pending');
+  if(filtreBoost==='confirmed') list=list.filter(([id,b])=>b.status==='confirmed'||b.status==='boosting'||b.status==='approved');
+  document.getElementById('boostsList').innerHTML=list.map(([id,b])=>{
+    const statut=b.status||'pending';
+    let badgeCls='pending', badgeTxt='⏳ En attente';
+    if(statut==='confirmed'||statut==='approved'){badgeCls='confirmed';badgeTxt='✅ Confirmé';}
+    if(statut==='boosting'){badgeCls='boosting';badgeTxt='🚀 En cours';}
+    if(statut==='done'){badgeCls='done';badgeTxt='🎉 Terminé';}
+    if(statut==='rejected'){badgeCls='rejected';badgeTxt='❌ Refusé';}
+    return `<div class="item"><div class="info"><b>${esc(b.nom||b.uid||'Client')} - ${esc(b.typeLabel||b.type||'Boost')} x ${esc(b.quantite||'')}</b><span class="badge ${badgeCls}">${badgeTxt}</span>
+    <small>📅 ${esc(b.date||'')} • 👤 UID : ${esc(b.uid||'')}</small>
+    <div class="boost-check">💰 Montant à vérifier : <b>${esc(b.amount||'')} FC</b> vers <b>+243847500590</b><br>📱 Numéro client : <b>${esc(b.phone||'')}</b><br>🧾 ID Transaction : <b>${esc(b.transId||b.transactionId||'Aucun')}</b><br>📝 Publication : ${esc(b.target||'')}</div>
+    ${b.adminNote?`<small style="color:#ffe08a">Note : ${esc(b.adminNote)}</small>`:''}
+    </div><div class="actions">
+    <button class="btn ok" onclick="approveBoost('${esc(id)}')">✅ J'ai reçu - Confirmer</button>
+    <button class="btn danger" onclick="rejectBoost('${esc(id)}')">❌ Pas reçu - Refuser</button>
+    <button class="btn" onclick="statutBoost('${esc(id)}','boosting')">🚀 En cours</button>
+    <button class="btn gold" onclick="statutBoost('${esc(id)}','done')">🎉 Terminé</button>
+    </div></div>`;
+  }).join('')||'<p class="muted">Aucune demande de boost dans ce filtre.</p>'}
+async function notifierClient(clientUid, texte){
+  if(!clientUid) return;
+  try{ const nRef=push(ref(db,'jasonbook/notifications/'+clientUid)); await set(nRef,{type:'boost',deNom:'JASONBOOK',texte,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false}); }catch(e){}
+}
+window.approveBoost=async id=>{
+  if(!confirm("Tu confirmes que tu as VRAIMENT reçu le dépôt sur +243847500590 ? Vérifie ton Mobile Money.")) return;
+  const b=boosts[id];
+  await update(ref(db,'jasonbook/boostOrders/'+id),{status:'confirmed',adminNote:'Dépôt confirmé par Jason Aloma',confirmedAt:Date.now(),validatedAt:Date.now()});
+  boosts[id].status='confirmed';
+  await notifierClient(b?.uid, '✅ Ton Boost est confirmé ! Jason a vérifié ton dépôt. Ton boost démarre.');
+  renderBoosts();
+};
+window.rejectBoost=async id=>{
+  const raison=prompt("Pourquoi refuser ? (ex: Dépôt non trouvé)"); if(raison===null) return;
+  const b=boosts[id];
+  await update(ref(db,'jasonbook/boostOrders/'+id),{status:'rejected',adminNote:raison,validatedAt:Date.now()});
+  boosts[id].status='rejected';
+  await notifierClient(b?.uid, '❌ Ton Boost a été refusé : '+raison+'. Contacte Jason sur WhatsApp +243847500590');
+  renderBoosts();
+};
+window.statutBoost=async(id,statut)=>{
+  await update(ref(db,'jasonbook/boostOrders/'+id),{status:statut});
+  boosts[id].status=statut; renderBoosts();
+};
 </script></body></html>
