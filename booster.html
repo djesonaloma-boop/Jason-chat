@@ -10,8 +10,10 @@ body{background:#0A0A0F;color:#fff;min-height:100vh;padding-bottom:20px}
 .logo{font-size:21px;font-weight:900;flex:1;cursor:pointer}
 .logo i{color:#FFC107;font-style:normal}
 .logo small{display:block;font-size:8px;color:#A1A1AA;letter-spacing:1.2px}
-.avatar-top{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FFC107,#7C3AED);display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;cursor:pointer}
+.avatar-top{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FFC107,#7C3AED);display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;cursor:pointer;flex-shrink:0}
 .avatar-top img{width:100%;height:100%;object-fit:cover}
+.solde-top{background:#1E1A0A;border:1px solid #FFC107;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:900;white-space:nowrap;color:#FFC107}
+.solde-top span{color:#fff}
 .wrap{max-width:650px;margin:14px auto;padding:0 12px}
 .card{background:#16161F;border:1px solid #26262F;border-radius:20px;padding:18px;margin-bottom:12px}
 .card h2{font-size:20px}
@@ -25,15 +27,14 @@ button:disabled{opacity:.6}
 .btn-green{background:#25D366;color:#fff}
 .btn-grey{background:#1F1F2E;color:#fff;border:1px solid #26262F}
 .btn-red{background:#E0245E;color:#fff}
+.btn-orange{background:#FF6B00;color:#fff}
 .notice{font-size:12px;color:#ffe08a;line-height:1.5;background:#2A220A;border:1px solid #FFC107;border-radius:12px;padding:12px;margin-top:12px}
-/* CHOIX BOOST */
 .boost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
 .boost-opt{background:#1F1F2E;border:2px solid #26262F;border-radius:14px;padding:12px 6px;text-align:center;cursor:pointer}
 .boost-opt.active{border-color:#FFC107;background:#2A220A}
 .boost-opt .emoji{font-size:26px}
 .boost-opt b{display:block;font-size:12px;margin-top:4px}
 .boost-opt small{font-size:10px;color:#A1A1AA}
-/* PACKS */
 .pack{background:#1F1F2E;border:2px solid #26262F;border-radius:14px;padding:13px;margin-top:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .pack.active{border-color:#7C3AED;background:#221A35}
 .pack b{font-size:14px}
@@ -42,11 +43,12 @@ button:disabled{opacity:.6}
 .total-box{background:linear-gradient(135deg,#1C1C24,#2A1A4A);border:1px solid #7C3AED;border-radius:14px;padding:14px;margin-top:14px;display:flex;justify-content:space-between;align-items:center}
 .total-box b{font-size:16px}
 .total-box span{color:#FFC107;font-size:20px;font-weight:900}
-/* DEPOT */
 .depot-box{background:#0A2A15;border:1px solid #25D366;border-radius:14px;padding:14px;margin-top:12px;text-align:center}
 .depot-box .num{font-size:22px;font-weight:900;color:#25D366;letter-spacing:1px}
 .depot-box p{font-size:12px;color:#A1A1AA;margin-top:4px}
-/* COMMANDES */
+.solde-box{background:linear-gradient(135deg,#1E1A0A,#2A220A);border:1px solid #FFC107;border-radius:14px;padding:14px;display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.solde-box b{font-size:13px}
+.solde-box span{color:#FFC107;font-size:20px;font-weight:900}
 .order{background:#1F1F2E;border:1px solid #26262F;border-radius:14px;padding:13px;margin-top:10px}
 .order b{font-size:14px}
 .order p{font-size:12px;color:#A1A1AA;margin-top:4px;line-height:1.5}
@@ -66,14 +68,17 @@ button:disabled{opacity:.6}
 
 <div class="top">
 <div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
+<!-- ✅ SOLDE EN HAUT -->
+<div class="solde-top">💰 Solde : <span id="soldeTop">0 FC</span></div>
 <div class="avatar-top" id="myAvatar" onclick="location.href='profil.html'">?</div>
 </div>
 
 <main class="wrap">
+<!-- ✅ SANS ADMIN - 3 BOUTONS : BOOSTER / MES COMMANDES / DÉPÔT -->
 <div class="tabs" id="tabsTop">
 <button id="btnTabClient" class="active" onclick="showTab('client')">🚀 Booster</button>
 <button id="btnTabMesCommandes" onclick="showTab('mescommandes')">📦 Mes commandes</button>
-<button id="btnTabAdmin" style="display:none" onclick="showTab('admin')">🛡️ Admin</button>
+<button id="btnTabDepot" onclick="showTab('depot')">💰 Dépôt</button>
 </div>
 
 <!-- ============ CLIENT ============ -->
@@ -81,6 +86,9 @@ button:disabled{opacity:.6}
 <div class="card">
 <h2>🚀 Booster sur JASONBOOK</h2>
 <p class="muted">Boost tes likes, commentaires et partages. <b style="color:#FFC107">Minimum 2000 FC.</b> Paiement par dépôt Mobile Money, validation par Jason Aloma.</p>
+
+<!-- ✅ SOLDE DU CLIENT -->
+<div class="solde-box"><div><b>💰 Ton Solde</b><br><small style="color:#A1A1AA">Disponible pour booster</small></div><span id="soldeClient">0 FC</span></div>
 
 <label>1. Qu'est-ce que tu veux booster ?</label>
 <div class="boost-grid">
@@ -112,14 +120,15 @@ button:disabled{opacity:.6}
 <p class="muted" style="margin-top:6px">⚠️ Sans ID de transaction, ta commande ne sera pas confirmée.</p>
 
 <button onclick="commander()" id="btnCommander">🚀 Envoyer ma demande de Boost</button>
+<button onclick="payerAvecSolde()" id="btnSolde" class="btn-gold">💰 Payer avec mon solde (<span id="soldeBtn">0 FC</span>)</button>
 <p id="msg" class="muted"></p>
 
 <div class="notice">✅ <b>Comment ça marche ?</b><br>
 1. Tu choisis Like / Commentaire / Partage.<br>
 2. Tu envoies le dépôt à <b>+243847500590</b>.<br>
 3. Tu mets ton ID de transaction.<br>
-4. <b>Jason Aloma confirme depuis l'espace Admin</b> si tu as vraiment payé.<br>
-5. Ton boost démarre. Aucun paiement automatique, tout est vérifié à la main.</div>
+4. <b>Jason Aloma confirme</b> si tu as vraiment payé → ton <b>Solde augmente</b>.<br>
+5. Tu peux payer ton Boost avec ton Solde. Aucun paiement automatique, tout est vérifié à la main.</div>
 </div>
 </div>
 
@@ -128,9 +137,49 @@ button:disabled{opacity:.6}
 <div class="card"><h2>📦 Mes commandes de Boost</h2><p class="muted">Suis l'état de tes boosts. En attente = Jason n'a pas encore vérifié ton dépôt.</p><div id="mesCommandesList"></div></div>
 </div>
 
-<!-- ============ ADMIN - JASON SEUL ============ -->
+<!-- ============ DÉPÔT ============ -->
+<div id="tabDepot" style="display:none">
+<div class="card">
+<h2>💰 Dépôt Orange Money</h2>
+<p class="muted">Envoie d'abord l'argent, puis colle ton ID et ton montant, ça part directement chez Jason.</p>
+
+<!-- ✅ SOLDE DANS DÉPÔT AUSSI -->
+<div class="solde-box"><div><b>💰 Ton Solde actuel</b><br><small style="color:#A1A1AA">Après confirmation, ton dépôt s'ajoute ici</small></div><span id="soldeDepot">0 FC</span></div>
+
+<div class="depot-box">
+<div style="font-size:13px">📱 Numéro Orange Money de Jason Aloma :</div>
+<div class="num">243847500590</div>
+<p>Orange Money / Airtel Money / M-Pesa<br>Motif : <b style="color:#fff">BOOST JASONBOOK</b></p>
+<button class="btn-green" onclick="copierNumeroOM()" style="margin-top:10px">📋 Copier le numéro 243847500590</button>
+</div>
+
+<label>1. Colle ton ID de publication / commande *</label>
+<input id="depotId" placeholder="Colle l'ID ici... Ex: -O123abc ou lien du post">
+
+<label>2. Montant que tu as envoyé (FC) *</label>
+<input id="depotMontantInput" type="number" inputmode="numeric" placeholder="Ex: 2000">
+
+<label>3. Ton numéro qui a envoyé l'argent *</label>
+<input id="depotPhone" placeholder="Ex: +243 8XX XXX XXX">
+
+<label>4. ID de transaction / Code SMS reçu *</label>
+<input id="depotTransId" placeholder="Ex: OM123456...">
+
+<button class="btn-orange" onclick="envoyerDepotDirect()" id="btnDepotDirect">✅ J'ai envoyé - Envoyer le dépôt directement</button>
+<p id="msgDepot" class="muted"></p>
+
+<div class="notice">💡 <b>Comment faire ?</b><br>
+1. Copie le numéro <b>243847500590</b>.<br>
+2. Envoie le montant sur Orange Money.<br>
+3. Colle ici ton ID + montant + ID de transaction.<br>
+4. Clique sur Envoyer → ça s'enregistre ET ça ouvre le WhatsApp de Jason avec tout déjà écrit.<br>
+5. Quand Jason confirme, ton <b>Solde augmente</b> de ce montant.</div>
+</div>
+</div>
+
+<!-- ============ ADMIN CACHÉ - VIA ?admin=1 ============ -->
 <div id="tabAdmin" style="display:none">
-<div class="card"><h2>🛡️ Espace Admin - Jason Aloma</h2><p class="muted">Tu es le seul à voir ça. Vérifie si le client a vraiment fait le dépôt à <b>+243847500590</b> avant de confirmer.</p>
+<div class="card"><h2>🛡️ Espace Admin - Jason Aloma</h2><p class="muted">Tu es le seul à voir ça. Vérifie si le client a vraiment fait le dépôt à <b>+243847500590</b> avant de confirmer. Quand tu confirmes, le <b>Solde</b> du client augmente.</p>
 <div style="display:flex;gap:8px;margin-top:10px">
 <button class="btn-grey" style="margin:0" onclick="chargerAdmin('pending')">⏳ En attente</button>
 <button class="btn-grey" style="margin:0" onclick="chargerAdmin('confirmed')">✅ Confirmées</button>
@@ -153,25 +202,80 @@ const monNom=localStorage.getItem('jasonbook_nom')||"";
 const maPhoto=localStorage.getItem('jasonbook_photo')||"";
 document.getElementById('myAvatar').innerHTML=maPhoto?`<img src="${maPhoto}">`:monNom.charAt(0).toUpperCase();
 
-// ✅ ADMIN = JASON ALOMA SEUL - Tu peux changer ton nom ici si besoin
-const EST_ADMIN = monNom.toLowerCase().includes('jason aloma') || monNom.toLowerCase().includes('jason') && monNom.toLowerCase().includes('aloma');
-if(EST_ADMIN) document.getElementById('btnTabAdmin').style.display='block';
+// ✅ ADMIN CACHÉ
+const EST_ADMIN = monNom.toLowerCase().includes('jason aloma') || (monNom.toLowerCase().includes('jason') && monNom.toLowerCase().includes('aloma'));
+const paramsAdmin = new URLSearchParams(location.search).get('admin');
+const ADMIN_OUVERT = EST_ADMIN && paramsAdmin === '1';
+if(ADMIN_OUVERT){ setTimeout(()=>showTab('admin'),300); }
+
+// ✅ SOLDE - On écoute en temps réel
+let monSolde = 0;
+function afficherSolde(){
+  const txt = monSolde.toLocaleString() + " FC";
+  const ids = ["soldeTop","soldeClient","soldeDepot","soldeBtn"];
+  ids.forEach(id=>{ const el=document.getElementById(id); if(el) el.textContent = txt; });
+}
+onValue(ref(db,'jasonbook/users/'+uid+'/solde'), s=>{
+  monSolde = Number(s.val()||0);
+  afficherSolde();
+});
+onValue(ref(db,'jasonbook/soldes/'+uid), s=>{
+  if(s.exists()){ monSolde = Number(s.val()||0); afficherSolde(); }
+});
 
 let typeBoost='like';
 const PRIX={like:20, commentaire:50, partage:50};
 const NOMS={like:'Likes ❤️', commentaire:'Commentaires 💬', partage:'Partages ↗️'};
+const NUMERO_OM="243847500590";
 
 function showTab(t){
   document.getElementById('tabClient').style.display=t==='client'?'block':'none';
   document.getElementById('tabMesCommandes').style.display=t==='mescommandes'?'block':'none';
+  document.getElementById('tabDepot').style.display=t==='depot'?'block':'none';
   document.getElementById('tabAdmin').style.display=t==='admin'?'block':'none';
   document.getElementById('btnTabClient').classList.toggle('active',t==='client');
   document.getElementById('btnTabMesCommandes').classList.toggle('active',t==='mescommandes');
-  document.getElementById('btnTabAdmin').classList.toggle('active',t==='admin');
+  document.getElementById('btnTabDepot').classList.toggle('active',t==='depot');
   if(t==='mescommandes') chargerMesCommandes();
   if(t==='admin') chargerAdmin('pending');
+  if(t==='depot'){
+    const idBooster = localStorage.getItem("jasonbook_post_a_booster") || new URLSearchParams(location.search).get('post') || "";
+    const inputDepot = document.getElementById('depotId');
+    if(idBooster && inputDepot && !inputDepot.value) inputDepot.value = idBooster;
+    const m = document.getElementById('depotMontantInput');
+    if(packChoisi && m && !m.value) m.value = packChoisi.p;
+  }
 }
 window.showTab=showTab;
+
+window.copierNumeroOM=async()=>{
+  try{ await navigator.clipboard.writeText(NUMERO_OM); alert("Numéro copié ✅ : "+NUMERO_OM); }
+  catch(e){ prompt("Copie ce numéro Orange Money :", NUMERO_OM); }
+};
+
+// ✅ DÉPÔT DIRECT : ID + MONTANT → Firebase + WhatsApp
+window.envoyerDepotDirect=async()=>{
+  const id=document.getElementById('depotId').value.trim();
+  const montant=document.getElementById('depotMontantInput').value.trim();
+  const phone=document.getElementById('depotPhone').value.trim();
+  const transId=document.getElementById('depotTransId').value.trim();
+  const msg=document.getElementById('msgDepot');
+  if(!id){ msg.textContent='❌ Colle d\'abord ton ID de publication.'; return; }
+  if(!montant || Number(montant)<100){ msg.textContent='❌ Mets le montant envoyé, minimum 100 FC.'; return; }
+  if(!phone){ msg.textContent='❌ Mets ton numéro qui a envoyé l\'argent.'; return; }
+  if(!transId){ msg.textContent='❌ Mets ton ID de transaction / Code SMS.'; return; }
+  const btn=document.getElementById('btnDepotDirect'); btn.disabled=true; btn.textContent='Envoi...';
+  try{
+    const r=push(ref(db,'jasonbook/boostOrders'));
+    await set(r,{id:r.key,uid, nom:monNom, photo:maPhoto, type:typeBoost, typeLabel:NOMS[typeBoost], quantite:packChoisi?packChoisi.q:0, target:id, phone, transId, amount:Number(montant), currency:'FC', depotNumero:'+243847500590', status:'pending', createdAt:Date.now(), date:new Date().toLocaleString()});
+    const texte=`💰 NOUVEAU DÉPÔT JASONBOOK\n\n👤 Nom : ${monNom}\n🆔 ID : ${id}\n💵 Montant : ${montant} FC\n📱 Numéro envoyeur : ${phone}\n🧾 Transaction : ${transId}\n📱 Orange Money : ${NUMERO_OM}\n\nJ'ai déjà envoyé l'argent. Merci de valider mon Boost.`;
+    window.open("https://wa.me/"+NUMERO_OM+"?text="+encodeURIComponent(texte),"_blank");
+    msg.textContent='✅ Envoyé ! Quand Jason confirme, ton Solde va augmenter de '+Number(montant).toLocaleString()+' FC.';
+    msg.style.color='#22C55E';
+    setTimeout(()=>{ showTab('mescommandes'); }, 800);
+  }catch(e){ msg.textContent='Erreur : '+e.message; }
+  finally{ btn.disabled=false; btn.textContent="✅ J'ai envoyé - Envoyer le dépôt directement"; }
+};
 
 let packChoisi=null;
 function rendrePacks(){
@@ -204,7 +308,6 @@ window.choisirBoost=(t)=>{
 };
 rendrePacks();
 
-// Charger mes posts
 async function chargerMesPosts(){
   try{
     const snap=await get(ref(db,'jasonbook/posts'));
@@ -231,14 +334,35 @@ window.commander=async()=>{
   try{
     const r=push(ref(db,'jasonbook/boostOrders'));
     await set(r,{id:r.key,uid, nom:monNom, photo:maPhoto, type:typeBoost, typeLabel:NOMS[typeBoost], quantite:packChoisi.q, target, phone, transId, amount:packChoisi.p, currency:'FC', depotNumero:'+243847500590', status:'pending', createdAt:Date.now(), date:new Date().toLocaleString()});
-    // Notif pour Jason Admin
-    const nRef=push(ref(db,'jasonbook/notifications/'+uid)); // on ne notifie pas le client, on crée une notif admin via boostOrders
     msg.textContent='✅ Demande envoyée ! Jason va vérifier ton dépôt de '+packChoisi.p.toLocaleString()+' FC sur +243847500590. Tu seras notifié quand il confirme.';
     msg.style.color='#22C55E';
     document.getElementById('transId').value='';
     showTab('mescommandes');
   }catch(e){ msg.textContent='Erreur : '+e.message; }
   finally{ btn.disabled=false; btn.textContent='🚀 Envoyer ma demande de Boost'; }
+};
+
+// ✅ PAYER AVEC SON SOLDE
+window.payerAvecSolde=async()=>{
+  const selPost=document.getElementById('mesPosts').value;
+  const target=document.getElementById('target').value.trim()||selPost;
+  const msg=document.getElementById('msg');
+  if(!target){ msg.textContent='❌ Choisis d\'abord une publication.'; return; }
+  if(!packChoisi){ msg.textContent='❌ Choisis un pack.'; return; }
+  if(monSolde < packChoisi.p){ msg.textContent='❌ Solde insuffisant. Ton solde : '+monSolde.toLocaleString()+' FC. Il te faut '+packChoisi.p.toLocaleString()+' FC. Fais d\'abord un Dépôt.'; msg.style.color='#E0245E'; return; }
+  if(!confirm("Payer "+packChoisi.p.toLocaleString()+" FC avec ton solde ? Ton solde va passer à "+(monSolde-packChoisi.p).toLocaleString()+" FC.")) return;
+  const btn=document.getElementById('btnSolde'); btn.disabled=true; btn.textContent='Paiement...';
+  try{
+    const nouveauSolde = monSolde - packChoisi.p;
+    await set(ref(db,'jasonbook/users/'+uid+'/solde'), nouveauSolde);
+    await set(ref(db,'jasonbook/soldes/'+uid), nouveauSolde);
+    const r=push(ref(db,'jasonbook/boostOrders'));
+    await set(r,{id:r.key,uid, nom:monNom, photo:maPhoto, type:typeBoost, typeLabel:NOMS[typeBoost], quantite:packChoisi.q, target, phone:'PAYÉ AVEC SOLDE', transId:'SOLDE-'+Date.now(), amount:packChoisi.p, currency:'FC', depotNumero:'SOLDE', status:'confirmed', payeAvecSolde:true, createdAt:Date.now(), date:new Date().toLocaleString()});
+    msg.textContent='✅ Payé avec ton solde ! Boost confirmé. Nouveau solde : '+nouveauSolde.toLocaleString()+' FC.';
+    msg.style.color='#22C55E';
+    showTab('mescommandes');
+  }catch(e){ msg.textContent='Erreur : '+e.message; }
+  finally{ btn.disabled=false; }
 };
 
 async function chargerMesCommandes(){
@@ -280,9 +404,9 @@ async function chargerAdmin(filtre='pending'){
         📝 Post : ${o.target}<br>
         📅 ${o.date||''}<br>
         👤 UID : ${o.uid}</p>
-        <p style="color:#ffe08a">👉 Vérifie dans ton Orange Money / Airtel Money / M-Pesa si <b>${o.amount} FC</b> de <b>${o.phone}</b> avec ID <b>${o.transId}</b> est vraiment arrivé.</p>
+        <p style="color:#ffe08a">👉 Vérifie dans ton Orange Money si <b>${o.amount} FC</b> de <b>${o.phone}</b> avec ID <b>${o.transId}</b> est vraiment arrivé. Si tu confirmes, son Solde augmente de ${o.amount} FC.</p>
         <div class="admin-row">
-          <button class="btn-green" style="background:#22C55E" onclick="adminConfirmer('${id}','${o.uid}')">✅ J'ai reçu le dépôt - Confirmer</button>
+          <button class="btn-green" style="background:#22C55E" onclick="adminConfirmer('${id}','${o.uid}',${o.amount||0})">✅ J'ai reçu le dépôt - Confirmer + Ajouter au Solde</button>
           <button class="btn-red" onclick="adminRefuser('${id}','${o.uid}')">❌ Pas reçu - Refuser</button>
         </div>
         <div class="admin-row">
@@ -293,12 +417,20 @@ async function chargerAdmin(filtre='pending'){
   }catch(e){ box.innerHTML='Erreur : '+e.message; }
 }
 window.chargerAdmin=chargerAdmin;
-window.adminConfirmer=async(id, clientUid)=>{
-  if(!confirm("Tu confirmes que tu as VRAIMENT reçu le dépôt ? Vérifie ton Mobile Money.")) return;
-  await update(ref(db,'jasonbook/boostOrders/'+id),{status:'confirmed', adminNote:'Dépôt confirmé par Jason Aloma', confirmedAt:Date.now()});
+window.adminConfirmer=async(id, clientUid, montant)=>{
+  if(!confirm("Tu confirmes que tu as VRAIMENT reçu "+montant+" FC ? Vérifie ton Mobile Money. Son Solde va augmenter de "+montant+" FC.")) return;
+  // ✅ On ajoute le montant au Solde du client
+  try{
+    const snapSolde = await get(ref(db,'jasonbook/users/'+clientUid+'/solde'));
+    const ancien = Number(snapSolde.val()||0);
+    const nouveau = ancien + Number(montant||0);
+    await set(ref(db,'jasonbook/users/'+clientUid+'/solde'), nouveau);
+    await set(ref(db,'jasonbook/soldes/'+clientUid), nouveau);
+  }catch(e){ console.log("Erreur solde", e); }
+  await update(ref(db,'jasonbook/boostOrders/'+id),{status:'confirmed', adminNote:'Dépôt confirmé par Jason Aloma - Solde crédité', confirmedAt:Date.now()});
   const nRef=push(ref(db,'jasonbook/notifications/'+clientUid));
-  await set(nRef,{type:'boost', deNom:'JASONBOOK', texte:'✅ Ton Boost est confirmé ! Jason a vérifié ton dépôt. Ton boost démarre.', date:new Date().toLocaleString(), timestamp:Date.now(), lu:false});
-  alert("✅ Confirmé ! Le client est notifié.");
+  await set(nRef,{type:'boost', deNom:'JASONBOOK', texte:'✅ Ton Boost est confirmé ! Ton Solde a augmenté de '+Number(montant||0).toLocaleString()+' FC. Tu peux booster maintenant.', date:new Date().toLocaleString(), timestamp:Date.now(), lu:false});
+  alert("✅ Confirmé ! Solde du client crédité de "+montant+" FC.");
   chargerAdmin('pending');
 };
 window.adminRefuser=async(id, clientUid)=>{
