@@ -4,19 +4,20 @@
 .badge.pending{background:#FFC107;color:#000}.badge.confirmed{background:#22C55E;color:#fff}.badge.boosting{background:#7C3AED;color:#fff}.badge.done{background:#22C55E;color:#fff}.badge.rejected,.badge.approved{background:#E0245E;color:#fff}
 .boost-check{background:#0A2A15;border:1px solid #25D366;border-radius:10px;padding:10px;margin-top:8px;font-size:12px;line-height:1.6}
 .boost-check b{color:#FFC107}
+.solde-badge{display:inline-block;background:#1E1A0A;border:1px solid #FFC107;color:#FFC107;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:900;margin-top:4px}
+.solde-badge span{color:#fff}
 </style></head><body><header class="top"><b>JASONBOOK ✨ • ADMIN</b><a href="feed.html">Retour au site</a></header><div class="wrap">
 <div id="loginBox" class="card"><h2>🔐 Accès administrateur</h2><p class="muted">Tape ton UID autorisé OU ton code secret admin.</p><input id="adminUid" placeholder="UID ou code secret" style="width:100%"><button class="btn" style="width:100%;margin-top:10px" onclick="verifierAdmin()">Vérifier l'accès</button><p id="loginMsg" class="muted"></p></div>
 <div id="panel" class="hidden"><div class="notice">L'administrateur ne peut pas lire les mots de passe. La liste blanche côté navigateur n'est pas une sécurité serveur : protège les opérations avec Firebase Admin SDK et des règles Firebase avant production.</div>
-<div class="grid"><div class="card stat"><b id="nUsers">0</b>Utilisateurs</div><div class="card stat"><b id="nPosts">0</b>Publications</div><div class="card stat"><b id="nLives">0</b>Lives</div><div class="card stat"><b id="nReports">0</b>Signalements</div><div class="card stat"><b id="nBoosts">0</b>Boosts</div><div class="card stat"><b id="nBoostsPending">0</b>Boosts en attente</div></div>
+<div class="grid"><div class="card stat"><b id="nUsers">0</b>Utilisateurs</div><div class="card stat"><b id="nPosts">0</b>Publications</div><div class="card stat"><b id="nLives">0</b>Lives</div><div class="card stat"><b id="nReports">0</b>Signalements</div><div class="card stat"><b id="nBoosts">0</b>Boosts</div><div class="card stat"><b id="nBoostsPending">0</b>Boosts en attente</div><div class="card stat" style="border-color:#FFC107"><b id="totalSolde">0 FC</b>💰 Solde Total</div></div>
 <div class="tabs"><button class="active" onclick="showTab('users',this)">Utilisateurs</button><button onclick="showTab('posts',this)">Publications</button><button onclick="showTab('lives',this)">Lives</button><button onclick="showTab('reports',this)">Signalements</button><button onclick="showTab('boosts',this)">🚀 Boosts</button></div>
 <section id="users" class="card"><h2>Utilisateurs</h2><input id="searchUsers" placeholder="Rechercher" oninput="renderUsers()" style="width:100%"><div id="usersList"></div></section><section id="posts" class="card hidden"><h2>Publications</h2><div id="postsList"></div></section><section id="lives" class="card hidden"><h2>Lives</h2><div id="livesList"></div></section><section id="reports" class="card hidden"><h2>Signalements</h2><div id="reportsList"></div></section>
-<section id="boosts" class="card hidden"><h2>🚀 Commandes Booster - Vérification dépôt</h2><p class="muted">Vérifie dans ton <b>Orange Money / Airtel Money / M-Pesa +243847500590</b> si le montant + ID transaction sont vraiment arrivés avant de confirmer.</p>
+<section id="boosts" class="card hidden"><h2>🚀 Commandes Booster - Vérification dépôt</h2><p class="muted">Vérifie dans ton <b>Orange Money / Airtel Money / M-Pesa +243847500590</b> si le montant + ID transaction sont vraiment arrivés avant de confirmer. Quand tu confirmes, le <b>Solde</b> du client augmente automatiquement.</p>
 <div style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0"><button class="btn gold" onclick="filtrerBoosts('pending')">⏳ En attente</button><button class="btn" onclick="filtrerBoosts('confirmed')">✅ Confirmés</button><button class="btn" onclick="filtrerBoosts('all')">📦 Toutes</button></div>
 <div id="boostsList"></div></section></div></div>
 <script src="admin-config.js"></script><script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';import{getDatabase,ref,get,update,remove,push,set}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 const cfg={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};const db=getDatabase(initializeApp(cfg));let users={},posts={},lives={},reports={},boosts={};let filtreBoost='pending';
-// ✅ CODE SECRET ADMIN - change-le après tes tests, ne le partage pas
 const CODE_SECRET_ADMIN = "1009200700";
 window.verifierAdmin=async()=>{
   let entree=document.getElementById('adminUid').value.trim();
@@ -28,10 +29,56 @@ window.verifierAdmin=async()=>{
   if(!(window.JASONBOOK_ADMIN_UIDS||[]).includes(uid)||uid==='REMPLACE_PAR_TON_UID_ADMIN'){document.getElementById('loginMsg').textContent='UID ou code non autorisé. Vérifie admin-config.js ou ton code.';return}
   if(!(await get(ref(db,'jasonbook/users/'+uid))).exists()){document.getElementById('loginMsg').textContent='Compte introuvable';return}
   document.getElementById('loginBox').classList.add('hidden');document.getElementById('panel').classList.remove('hidden');await loadAll()};
-async function read(p){return(await get(ref(db,p))).val()||{}}async function loadAll(){[users,posts,lives,reports,boosts]=await Promise.all(['users','posts','liveStreams','reports','boostOrders'].map(x=>read('jasonbook/'+x)));for(let [id,v] of Object.entries({nUsers:users,nPosts:posts,nLives:lives,nReports:reports,nBoosts:boosts}))document.getElementById(id).textContent=Object.keys(v).length;document.getElementById('nBoostsPending').textContent=Object.values(boosts).filter(b=>b.status==='pending').length;renderUsers();renderPosts();renderLives();renderReports();renderBoosts()}
+async function read(p){return(await get(ref(db,p))).val()||{}}
+// ✅ SOLDE : récupère aussi les soldes séparés
+async function loadAll(){
+  [users,posts,lives,reports,boosts]=await Promise.all(['users','posts','liveStreams','reports','boostOrders'].map(x=>read('jasonbook/'+x)));
+  const soldes = await read('jasonbook/soldes');
+  // Fusionne : si solde est dans /soldes/uid mais pas dans users/uid, on l'affiche quand même
+  for(const [uidSolde,val] of Object.entries(soldes)){
+    if(users[uidSolde] && users[uidSolde].solde===undefined) users[uidSolde].solde = Number(val||0);
+    if(!users[uidSolde]) users[uidSolde] = { nom:'Utilisateur', solde:Number(val||0) };
+  }
+  for(let [id,v] of Object.entries({nUsers:users,nPosts:posts,nLives:lives,nReports:reports,nBoosts:boosts}))document.getElementById(id).textContent=Object.keys(v).length;
+  document.getElementById('nBoostsPending').textContent=Object.values(boosts).filter(b=>b.status==='pending').length;
+  // ✅ TOTAL SOLDE
+  const total = Object.values(users).reduce((acc,u)=>acc+Number(u.solde||0),0);
+  document.getElementById('totalSolde').textContent = total.toLocaleString()+' FC';
+  renderUsers();renderPosts();renderLives();renderReports();renderBoosts()
+}
 window.showTab=(id,b)=>{document.querySelectorAll('#panel section').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active')};
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-window.renderUsers=()=>{let q=(document.getElementById('searchUsers').value||'').toLowerCase();document.getElementById('usersList').innerHTML=Object.entries(users).filter(([id,u])=>([id,u.nomComplet,u.nom,u.phone,u.email].join(' ').toLowerCase().includes(q))).map(([id,u])=>`<div class="item"><div class="info"><b>${esc(u.nomComplet||u.nom||'Membre')}</b><small>${esc(id)} • ${esc(u.phone||u.email||'')}</small><small>Statut : ${esc(u.status||'actif')}</small></div><div class="actions"><button class="btn" onclick="toggleUser('${esc(id)}','${u.status==='suspended'?'active':'suspended'}')">${u.status==='suspended'?'Réactiver':'Suspendre'}</button><button class="btn danger" onclick="deleteUser('${esc(id)}')">Supprimer</button></div></div>`).join('')||'<p class="muted">Aucun utilisateur.</p>'};
+function fmtSolde(v){ return Number(v||0).toLocaleString()+' FC'; }
+// ✅ USERS AVEC SOLDE
+window.renderUsers=()=>{let q=(document.getElementById('searchUsers').value||'').toLowerCase();document.getElementById('usersList').innerHTML=Object.entries(users).filter(([id,u])=>([id,u.nomComplet,u.nom,u.phone,u.email].join(' ').toLowerCase().includes(q))).map(([id,u])=>`<div class="item"><div class="info"><b>${esc(u.nomComplet||u.nom||'Membre')}</b><small>${esc(id)} • ${esc(u.phone||u.email||'')}</small><small>Statut : ${esc(u.status||'actif')}</small><span class="solde-badge">💰 Solde : <span>${fmtSolde(u.solde)}</span></span></div><div class="actions"><button class="btn ok" onclick="ajouterSolde('${esc(id)}')">+ Solde</button><button class="btn gold" onclick="modifierSolde('${esc(id)}')">✏️ Modifier Solde</button><button class="btn" onclick="toggleUser('${esc(id)}','${u.status==='suspended'?'active':'suspended'}')">${u.status==='suspended'?'Réactiver':'Suspendre'}</button><button class="btn danger" onclick="deleteUser('${esc(id)}')">Supprimer</button></div></div>`).join('')||'<p class="muted">Aucun utilisateur.</p>'};
+// ✅ AJOUTER / MODIFIER SOLDE MANUELLEMENT
+window.ajouterSolde=async id=>{
+  const montant = Number(prompt("Combien ajouter au solde de "+(users[id]?.nom||id)+" ? Ex: 2000", "2000"));
+  if(!montant || isNaN(montant)) return;
+  const ancien = Number(users[id]?.solde||0);
+  const nouveau = ancien + montant;
+  await set(ref(db,'jasonbook/users/'+id+'/solde'), nouveau);
+  await set(ref(db,'jasonbook/soldes/'+id), nouveau);
+  users[id].solde = nouveau;
+  const total = Object.values(users).reduce((acc,u)=>acc+Number(u.solde||0),0);
+  document.getElementById('totalSolde').textContent = total.toLocaleString()+' FC';
+  renderUsers(); renderBoosts();
+  alert("✅ Solde ajouté ! Nouveau solde : "+fmtSolde(nouveau));
+};
+window.modifierSolde=async id=>{
+  const actuel = Number(users[id]?.solde||0);
+  const nouveauStr = prompt("Nouveau solde pour "+(users[id]?.nom||id)+" ? Solde actuel : "+fmtSolde(actuel), String(actuel));
+  if(nouveauStr===null) return;
+  const nouveau = Number(nouveauStr);
+  if(isNaN(nouveau)) return alert("Montant invalide");
+  await set(ref(db,'jasonbook/users/'+id+'/solde'), nouveau);
+  await set(ref(db,'jasonbook/soldes/'+id), nouveau);
+  users[id].solde = nouveau;
+  const total = Object.values(users).reduce((acc,u)=>acc+Number(u.solde||0),0);
+  document.getElementById('totalSolde').textContent = total.toLocaleString()+' FC';
+  renderUsers(); renderBoosts();
+  alert("✅ Solde modifié : "+fmtSolde(nouveau));
+};
 window.toggleUser=async(id,status)=>{if(!confirm('Confirmer ?'))return;await update(ref(db,'jasonbook/users/'+id),{status,moderatedAt:Date.now()});users[id].status=status;renderUsers()};window.deleteUser=async id=>{if(confirm('Supprimer le profil de cet utilisateur ?')){await remove(ref(db,'jasonbook/users/'+id));delete users[id];renderUsers()}};
 function renderPosts(){document.getElementById('postsList').innerHTML=Object.entries(posts).map(([id,p])=>`<div class="item"><div class="info"><b>${esc(p.nomAuteur||p.auteurUid||'Publication')}</b><small>${esc((p.texte||'').slice(0,160))}</small></div><button class="btn danger" onclick="deletePost('${esc(id)}')">Supprimer</button></div>`).join('')||'<p class="muted">Aucune publication.</p>'}window.deletePost=async id=>{if(confirm('Supprimer ?')){await remove(ref(db,'jasonbook/posts/'+id));delete posts[id];renderPosts()}};
 function renderLives(){document.getElementById('livesList').innerHTML=Object.entries(lives).map(([id,l])=>`<div class="item"><div class="info"><b>${esc(l.title||l.nom||'Live')}</b><small>${esc(l.auteurUid||l.uid||id)} • ${esc(l.status||'')}</small></div><button class="btn danger" onclick="endLive('${esc(id)}')">Terminer</button></div>`).join('')||'<p class="muted">Aucun live</p>'}window.endLive=async id=>{await update(ref(db,'jasonbook/liveStreams/'+id),{status:'ended',endedByAdmin:true,endedAt:Date.now()});lives[id].status='ended';renderLives()};
@@ -48,12 +95,15 @@ function renderBoosts(){
     if(statut==='boosting'){badgeCls='boosting';badgeTxt='🚀 En cours';}
     if(statut==='done'){badgeCls='done';badgeTxt='🎉 Terminé';}
     if(statut==='rejected'){badgeCls='rejected';badgeTxt='❌ Refusé';}
+    const soldeAvant = Number(users[b.uid]?.solde||0);
+    const soldeApres = soldeAvant + Number(b.amount||0);
     return `<div class="item"><div class="info"><b>${esc(b.nom||b.uid||'Client')} - ${esc(b.typeLabel||b.type||'Boost')} x ${esc(b.quantite||'')}</b><span class="badge ${badgeCls}">${badgeTxt}</span>
     <small>📅 ${esc(b.date||'')} • 👤 UID : ${esc(b.uid||'')}</small>
+    <span class="solde-badge">💰 Solde actuel : <span>${fmtSolde(soldeAvant)}</span> → Après confirmation : <span>${fmtSolde(soldeApres)}</span></span>
     <div class="boost-check">💰 Montant à vérifier : <b>${esc(b.amount||'')} FC</b> vers <b>+243847500590</b><br>📱 Numéro client : <b>${esc(b.phone||'')}</b><br>🧾 ID Transaction : <b>${esc(b.transId||b.transactionId||'Aucun')}</b><br>📝 Publication : ${esc(b.target||'')}</div>
     ${b.adminNote?`<small style="color:#ffe08a">Note : ${esc(b.adminNote)}</small>`:''}
     </div><div class="actions">
-    <button class="btn ok" onclick="approveBoost('${esc(id)}')">✅ J'ai reçu - Confirmer</button>
+    <button class="btn ok" onclick="approveBoost('${esc(id)}')">✅ J'ai reçu - Confirmer + Solde</button>
     <button class="btn danger" onclick="rejectBoost('${esc(id)}')">❌ Pas reçu - Refuser</button>
     <button class="btn" onclick="statutBoost('${esc(id)}','boosting')">🚀 En cours</button>
     <button class="btn gold" onclick="statutBoost('${esc(id)}','done')">🎉 Terminé</button>
@@ -63,13 +113,29 @@ async function notifierClient(clientUid, texte){
   if(!clientUid) return;
   try{ const nRef=push(ref(db,'jasonbook/notifications/'+clientUid)); await set(nRef,{type:'boost',deNom:'JASONBOOK',texte,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false}); }catch(e){}
 }
+// ✅ CONFIRMER = AJOUTE AU SOLDE
 window.approveBoost=async id=>{
-  if(!confirm("Tu confirmes que tu as VRAIMENT reçu le dépôt sur +243847500590 ? Vérifie ton Mobile Money.")) return;
   const b=boosts[id];
-  await update(ref(db,'jasonbook/boostOrders/'+id),{status:'confirmed',adminNote:'Dépôt confirmé par Jason Aloma',confirmedAt:Date.now(),validatedAt:Date.now()});
+  const montant = Number(b?.amount||0);
+  const soldeAvant = Number(users[b?.uid]?.solde||0);
+  if(!confirm("Tu confirmes que tu as VRAIMENT reçu "+montant.toLocaleString()+" FC sur +243847500590 ?\n\nSolde de "+(b?.nom||b?.uid)+" va passer de "+soldeAvant.toLocaleString()+" FC à "+(soldeAvant+montant).toLocaleString()+" FC.")) return;
+  // ✅ 1. On crédite le Solde
+  try{
+    const snap = await get(ref(db,'jasonbook/users/'+b.uid+'/solde'));
+    const ancien = Number(snap.val()||soldeAvant||0);
+    const nouveau = ancien + montant;
+    await set(ref(db,'jasonbook/users/'+b.uid+'/solde'), nouveau);
+    await set(ref(db,'jasonbook/soldes/'+b.uid), nouveau);
+    if(users[b.uid]) users[b.uid].solde = nouveau;
+    const total = Object.values(users).reduce((acc,u)=>acc+Number(u.solde||0),0);
+    document.getElementById('totalSolde').textContent = total.toLocaleString()+' FC';
+  }catch(e){ console.log("Erreur solde", e); }
+  // ✅ 2. On confirme la commande
+  await update(ref(db,'jasonbook/boostOrders/'+id),{status:'confirmed',adminNote:'Dépôt confirmé par Jason Aloma - Solde crédité de '+montant+' FC',confirmedAt:Date.now(),validatedAt:Date.now()});
   boosts[id].status='confirmed';
-  await notifierClient(b?.uid, '✅ Ton Boost est confirmé ! Jason a vérifié ton dépôt. Ton boost démarre.');
-  renderBoosts();
+  await notifierClient(b?.uid, '✅ Ton Boost est confirmé ! Jason a vérifié ton dépôt de '+montant.toLocaleString()+' FC. Ton nouveau Solde est de '+(soldeAvant+montant).toLocaleString()+' FC. Tu peux booster maintenant.');
+  alert("✅ Confirmé ! Solde crédité de "+montant.toLocaleString()+" FC. Nouveau solde : "+(soldeAvant+montant).toLocaleString()+" FC");
+  renderBoosts(); renderUsers();
 };
 window.rejectBoost=async id=>{
   const raison=prompt("Pourquoi refuser ? (ex: Dépôt non trouvé)"); if(raison===null) return;
