@@ -35,17 +35,16 @@ body{background:#0A0A0F;color:#fff;overflow:hidden}
 .conv .time{font-size:11px;color:#888;display:block;white-space:nowrap}
 .unread{background:var(--or);color:#000;font-size:11px;font-weight:800;padding:2px 7px;border-radius:999px;display:inline-block;margin-top:2px}
 .chat{flex:1;display:flex;flex-direction:column;background:#0A0A0F;min-width:0;height:calc(100dvh - 65px - 68px)}
-.chat-head{display:flex;gap:8px;align-items:center;padding:10px 10px;border-bottom:1px solid var(--ligne);background:#12121A;width:100%;overflow:hidden;flex-shrink:0;position:relative}
+/* ✅ HEADER CHAT - PLUS DE overflow:hidden, C'ÉTAIT ÇA LE BUG */
+.chat-head{display:flex;gap:8px;align-items:center;padding:10px 10px;border-bottom:1px solid var(--ligne);background:#12121A;width:100%;flex-shrink:0}
 .chat-head .back{font-size:22px;cursor:pointer;flex-shrink:0;padding:4px}
 .chat-head .avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0}
 .chat-head .avatar img{width:100%;height:100%;object-fit:cover}
 .chat-head .info{flex:1;min-width:0}
 .chat-head b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chat-head small{color:#22C55E;font-size:12px}
-.chat-head .call{display:flex;gap:6px;flex-shrink:0;align-items:center}
-.chat-head .call a{width:38px;height:38px;border-radius:50%;background:#1F1F2E;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:17px;flex-shrink:0}
-/* ✅ 3 POINTS EN HAUT - BIEN VISIBLE MAINTENANT */
-.chat-head .dots{width:44px;height:44px;min-width:44px;border-radius:50%;background:#2A2A35;border:2px solid #fff;color:#fff;font-size:26px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px #000, 0 2px 10px #000;position:relative;z-index:102}
+/* ✅ 3 POINTS EN HAUT - BIEN VISIBLE, SEUL, SANS APPEL */
+.chat-head .dots{width:44px;height:44px;min-width:44px;border-radius:50%;background:#2A2A35;border:2px solid #fff;color:#fff;font-size:26px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px #000;margin-left:auto}
 .chat-head .dots:active{background:var(--violet)}
 .chat-body{flex:1;overflow-y:auto;padding:16px 16px 90px;display:flex;flex-direction:column;gap:8px}
 .msg{max-width:82%;padding:10px 12px 6px;border-radius:18px;font-size:15px;line-height:1.4;word-wrap:break-word;position:relative;user-select:none;-webkit-user-select:none}
@@ -58,7 +57,6 @@ body{background:#0A0A0F;color:#fff;overflow:hidden}
 .msg.other .meta{color:#888}
 .msg .tick{font-size:13px;font-weight:700;letter-spacing:-1px}
 .msg .tick.lu{color:#FFC107}
-/* ❌ PLUS DE 3 POINTS SUR LE MESSAGE - ENLEVÉ */
 .msg .msg-dots{display:none!important}
 .msg .reply-box{background:rgba(0,0,0,.25);border-left:3px solid var(--or);padding:6px 8px;border-radius:8px;font-size:12px;margin-bottom:6px}
 .msg .reply-box b{font-size:11px;color:var(--or)}
@@ -75,15 +73,16 @@ body{background:#0A0A0F;color:#fff;overflow:hidden}
 .wave.playing i{animation:zikzak .6s ease-in-out infinite alternate}
 @keyframes zikzak{from{transform:scaleY(.7)}to{transform:scaleY(1.25)}}
 .voice small{font-size:11px;white-space:nowrap}
-.menu-top-chat{position:absolute;top:62px;right:10px;background:#1F1F2E;border:1px solid var(--ligne);border-radius:16px;width:250px;z-index:200;display:none;overflow:hidden;box-shadow:0 10px 30px #000}
+/* ✅ MENU 3 POINTS - SORTI DU HEADER, EN FIXED, DEVANT TOUT */
+.menu-top-chat{position:fixed;top:118px;right:10px;background:#1F1F2E;border:1px solid var(--ligne);border-radius:16px;width:260px;z-index:500;display:none;overflow:hidden;box-shadow:0 10px 30px #000}
 .menu-top-chat.open{display:block}
-.menu-top-chat button{display:flex;gap:10px;align-items:center;width:100%;background:none;border:0;color:#fff;text-align:left;padding:12px 14px;font-size:14px;cursor:pointer}
+.menu-top-chat button{display:flex;gap:10px;align-items:center;width:100%;background:none;border:0;color:#fff;text-align:left;padding:13px 14px;font-size:14px;cursor:pointer}
 .menu-top-chat button:active{background:#2A2A35}
 .menu-top-chat button.danger{color:#FF8A9A}
 .menu-top-chat hr{border:0;height:1px;background:var(--ligne)}
-.overlay-menu{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:150;display:none}
+.overlay-menu{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;display:none}
 .overlay-menu.open{display:block}
-.menu-msg{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#1F1F2E;border:1px solid var(--ligne);border-radius:18px;z-index:300;display:none;width:calc(100% - 24px);max-width:360px;padding:8px;box-shadow:0 10px 40px #000}
+.menu-msg{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#1F1F2E;border:1px solid var(--ligne);border-radius:18px;z-index:600;display:none;width:calc(100% - 24px);max-width:360px;padding:8px;box-shadow:0 10px 40px #000}
 .menu-msg.open{display:block}
 .menu-msg .reacts{display:flex;justify-content:space-around;padding:8px 4px;font-size:26px}
 .menu-msg .reacts span{cursor:pointer;padding:6px}
@@ -144,20 +143,12 @@ body.chat-open .top{display:none}
 <div class="chat" id="chatPanel">
 <div class="empty-chat" id="emptyChat"><div class="big">💬</div><h3>Choisis une conversation</h3><p>Sélectionne un ami à gauche pour discuter.<br>Texte, photo et vocal.</p></div>
 <div id="chatContent" style="display:none;flex:1;flex-direction:column">
+<!-- ✅ HEADER SANS APPEL VOCAL / VIDÉO -->
 <div class="chat-head">
 <span class="back" onclick="retourListe()">←</span>
 <div class="avatar" id="chatAvatar">?</div>
 <div class="info"><b id="chatNom"></b><br><small id="chatStatut">En ligne</small></div>
-<div class="call"><a href="appel.html">📞</a><a href="#" onclick="return false">📹</a><button class="dots" onclick="ouvrirMenuTopChat(event)">⋮</button></div>
-<div class="menu-top-chat" id="menuTopChat">
-  <button onclick="voirProfilChat()">👤 Voir le profil</button>
-  <button onclick="toggleDisparition()">⏰ <span id="txtDisparition">Activer messages 24h</span></button>
-  <button onclick="couperNotifChat()">🔇 Couper les notifications</button>
-  <button onclick="effacerConversation()">🗑️ Effacer la conversation</button>
-  <hr>
-  <button onclick="signalerChat()">🚩 Signaler</button>
-  <button class="danger" onclick="bloquerChat()">🚫 Bloquer l'utilisateur</button>
-</div>
+<button class="dots" onclick="ouvrirMenuTopChat(event)">⋮</button>
 </div>
 <div class="chat-body" id="chatBody"></div>
 
@@ -176,9 +167,18 @@ body.chat-open .top{display:none}
 </div>
 </div>
 
+<!-- ✅ MENU 3 POINTS - DEHORS DU HEADER, IL NE SERA PLUS CACHÉ -->
 <div class="overlay-menu" id="overlayMenu" onclick="fermerMenuTopChat()"></div>
+<div class="menu-top-chat" id="menuTopChat">
+  <button onclick="voirProfilChat()">👤 Voir le profil</button>
+  <button onclick="toggleDisparition()">⏰ <span id="txtDisparition">Activer messages 24h</span></button>
+  <button onclick="couperNotifChat()">🔇 Couper les notifications</button>
+  <button onclick="effacerConversation()">🗑️ Effacer la conversation</button>
+  <hr>
+  <button onclick="signalerChat()">🚩 Signaler</button>
+  <button class="danger" onclick="bloquerChat()">🚫 Bloquer l'utilisateur</button>
+</div>
 
-<!-- ✅ MENU APPUI LONG : réactions + répondre + retirer + supprimer pour moi -->
 <div class="menu-msg" id="menuMsg">
   <div class="reacts"><span onclick="reagirMsg('❤️')">❤️</span><span onclick="reagirMsg('😂')">😂</span><span onclick="reagirMsg('😮')">😮</span><span onclick="reagirMsg('😢')">😢</span><span onclick="reagirMsg('😡')">😡</span><span onclick="reagirMsg('👍')">👍</span></div>
   <hr style="border:0;height:1px;background:#26262F">
@@ -222,124 +222,22 @@ window.couperNotifChat=async ()=>{ await set(ref(db,'jasonbook/messages_settings
 window.effacerConversation=async ()=>{ if(!confirm("Effacer toute la conversation pour toi ?")) return; fermerMenuTopChat(); const snap=await get(ref(db,'jasonbook/messages/'+convActuelle)); const d=snap.val()||{}; for(const [mid,m] of Object.entries(d)){ await update(ref(db,'jasonbook/messages/'+convActuelle+'/'+mid),{['deletedFor_'+uid]:true}); } };
 window.signalerChat=()=>{ fermerMenuTopChat(); alert("🚩 Signalé, merci."); };
 window.bloquerChat=async ()=>{ if(!destinataire) return; if(!confirm("Bloquer "+(destinataire.nomComplet||"cet utilisateur")+" ?")) return; fermerMenuTopChat(); await set(ref(db,'jasonbook/bloques/'+uid+'/'+destinataire.uid),{uid:destinataire.uid,nom:destinataire.nomComplet||"",photo:destinataire.photoProfil||"",date:new Date().toLocaleString(),timestamp:Date.now()}); alert("🚫 Utilisateur bloqué"); retourListe(); };
-
-// ✅ MENU = SEULEMENT APPUI LONG, PAS DE BOUTON SUR LE MESSAGE
-window.ouvrirMenuMsg=(id)=>{
-  msgSelectionneId=id;
-  const m=cacheMessages[id];
-  const btnRetirer=document.getElementById('btnRetirer');
-  // Retirer = seulement sur MES messages
-  if(m && m.auteurUid===uid){ btnRetirer.style.display="flex"; } else { btnRetirer.style.display="none"; }
-  document.getElementById('menuMsg').classList.add('open');
-};
+window.ouvrirMenuMsg=(id)=>{ msgSelectionneId=id; const m=cacheMessages[id]; const btnRetirer=document.getElementById('btnRetirer'); if(m && m.auteurUid===uid){ btnRetirer.style.display="flex"; } else { btnRetirer.style.display="none"; } document.getElementById('menuMsg').classList.add('open'); };
 window.fermerMenuMsg=()=>{ document.getElementById('menuMsg').classList.remove('open'); };
 window.reagirMsg=async (emoji)=>{ if(!msgSelectionneId) return; await set(ref(db,'jasonbook/messages/'+convActuelle+'/'+msgSelectionneId+'/reactions/'+uid), emoji); fermerMenuMsg(); };
 window.repondreMsg=()=>{ const m=cacheMessages[msgSelectionneId]; if(!m) return; reponseA={nom: m.auteurUid===uid ? "Toi" : (m.nomAuteur||"Ami"), texte: m.texte || (m.photoUrl?"📷 Photo": m.audioUrl?"🎤 Vocal":"")}; document.getElementById('replyNom').innerText="Réponse à "+reponseA.nom; document.getElementById('replyTxt').innerText=reponseA.texte; document.getElementById('replyPreview').classList.add('show'); document.getElementById('msgInput').focus(); fermerMenuMsg(); };
 window.annulerReponse=()=>{ reponseA=null; document.getElementById('replyPreview').classList.remove('show'); };
 window.copierMsg=async ()=>{ const m=cacheMessages[msgSelectionneId]; try{ await navigator.clipboard.writeText(m?.texte||"Vocal"); alert("Copié ✅"); }catch(e){ prompt("Copie :", m?.texte||""); } fermerMenuMsg(); };
-window.supprimerPourMoi=async ()=>{
-  if(!msgSelectionneId) return; const id=msgSelectionneId; fermerMenuMsg();
-  delete cacheMessages[id]; const el=document.getElementById('msg_'+id); if(el) el.remove();
-  try{ const obj={}; obj['deletedFor_'+uid]=true; await update(ref(db,'jasonbook/messages/'+convActuelle+'/'+id), obj); }catch(e){ alert("Erreur : "+e.message); }
-};
-// ✅ RETIRER LE MESSAGE - POUR TOUT LE MONDE
-window.retirerMessage=async ()=>{
-  if(!msgSelectionneId) return; const id=msgSelectionneId;
-  if(!confirm("Retirer ce message pour tout le monde ? L'autre personne ne le verra plus.")) return;
-  fermerMenuMsg();
-  delete cacheMessages[id]; const el=document.getElementById('msg_'+id); if(el) el.remove();
-  try{ await remove(ref(db,'jasonbook/messages/'+convActuelle+'/'+id)); }catch(e){ alert("Erreur : "+e.message); }
-};
-function creerZigzag(mid){
-  let seed=0; for(let c of String(mid)) seed+=c.charCodeAt(0);
-  let html=""; for(let i=0;i<28;i++){ const h=8+Math.abs(Math.sin(seed+i*0.7))*22; html+=`<i style="height:${h}px"></i>`; }
-  return `<div class="wave" id="wave_${mid}" onclick="lireVocal(event,'${mid}')">${html}</div>`;
-}
-window.lireVocal=(e,mid)=>{
-  e.stopPropagation(); const m=cacheMessages[mid]; if(!m?.audioUrl) return;
-  const wave=document.getElementById('wave_'+mid); const btn=document.getElementById('btnVoice_'+mid); const timeEl=document.getElementById('timeVoice_'+mid);
-  if(audioIdEnCours===mid && audioObj && !audioObj.paused){ audioObj.pause(); btn.innerText="▶️"; wave.classList.remove('playing'); return; }
-  if(audioObj) audioObj.pause();
-  document.querySelectorAll('.wave').forEach(w=>w.classList.remove('playing')); document.querySelectorAll('[id^="btnVoice_"]').forEach(b=>b.innerText="▶️");
-  if(!audioObj || audioObj.src!==m.audioUrl){ audioObj=new Audio(m.audioUrl); }
-  audioObj.play().catch(()=>alert("Impossible de lire ce vocal"));
-  audioIdEnCours=mid; btn.innerText="⏸️"; wave.classList.add('playing');
-  audioObj.onloadedmetadata=()=>{ if(timeEl) timeEl.innerText="0s / "+Math.floor(audioObj.duration)+"s"; };
-  audioObj.ontimeupdate=()=>{ if(!audioObj.duration) return; const pct=audioObj.currentTime/audioObj.duration; wave.querySelectorAll('i').forEach((bar,idx)=>{ if(idx/28<=pct) bar.classList.add('played'); else bar.classList.remove('played'); }); if(timeEl) timeEl.innerText=Math.floor(audioObj.currentTime)+"s / "+Math.floor(audioObj.duration)+"s"; };
-  audioObj.onended=()=>{ btn.innerText="▶️"; wave.classList.remove('playing'); audioIdEnCours=null; if(timeEl) timeEl.innerText="0s / "+Math.floor(audioObj.duration||0)+"s"; };
-};
-async function chargerListe(){
-  const snap = await get(ref(db,'jasonbook/users')); const data=snap.val(); if(!data) return;
-  tousUsers=Object.values(data).filter(u=>u.uid!==uid); let items=[];
-  for(const u of tousUsers){
-    const chatId = [uid, u.uid].sort().join('_'); const s=await get(ref(db,'jasonbook/messages/'+chatId)); const msgs=s.val();
-    let last="Dis bonjour...", lastTime="", nonLu=0, lastTs=0;
-    if(msgs){ const arr=Object.entries(msgs).filter(([k,m])=>!m['deletedFor_'+uid] && !(m.expireAt && Date.now()>m.expireAt)); const d=arr[arr.length-1]?.[1]; if(d){ last=d.texte|| (d.photoUrl?"📷 Photo": d.audioUrl?"🎤 Vocal":""); lastTime=d.heure||""; lastTs=d.timestamp||0; nonLu=arr.filter(([k,m])=>m.auteurUid!==uid && !m.lu).length; } }
-    items.push({u, chatId, last, lastTime, nonLu, lastTs});
-  }
-  items.sort((a,b)=>(b.lastTs||0)-(a.lastTs||0)); const box=document.getElementById('convList'); box.innerHTML="";
-  if(!items.length){ document.getElementById('noConv').style.display="block"; return; }
-  items.forEach(({u, chatId, last, lastTime, nonLu})=>{
-    const div=document.createElement('div'); div.className='conv'; div.dataset.nom=u.nomComplet||"";
-    div.innerHTML=`<div class="avatar">${avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0))}<div class="dot"></div></div><div style="flex:1;min-width:0"><b>${u.nomComplet||""}</b><small>${last}</small></div><div class="right"><span class="time">${lastTime}</span>${nonLu?`<span class="unread">${nonLu}</span>`:""}</div>`;
-    div.onclick=()=>ouvrirChat(u, chatId); box.appendChild(div);
-  });
-  if(uidCible){ const cible=tousUsers.find(u=>u.uid===uidCible); if(cible) ouvrirChat(cible, [uid, uidCible].sort().join('_')); }
-}
+window.supprimerPourMoi=async ()=>{ if(!msgSelectionneId) return; const id=msgSelectionneId; fermerMenuMsg(); delete cacheMessages[id]; const el=document.getElementById('msg_'+id); if(el) el.remove(); try{ const obj={}; obj['deletedFor_'+uid]=true; await update(ref(db,'jasonbook/messages/'+convActuelle+'/'+id), obj); }catch(e){ alert("Erreur : "+e.message); } };
+window.retirerMessage=async ()=>{ if(!msgSelectionneId) return; const id=msgSelectionneId; if(!confirm("Retirer ce message pour tout le monde ?")) return; fermerMenuMsg(); delete cacheMessages[id]; const el=document.getElementById('msg_'+id); if(el) el.remove(); try{ await remove(ref(db,'jasonbook/messages/'+convActuelle+'/'+id)); }catch(e){ alert("Erreur : "+e.message); } };
+function creerZigzag(mid){ let seed=0; for(let c of String(mid)) seed+=c.charCodeAt(0); let html=""; for(let i=0;i<28;i++){ const h=8+Math.abs(Math.sin(seed+i*0.7))*22; html+=`<i style="height:${h}px"></i>`; } return `<div class="wave" id="wave_${mid}" onclick="lireVocal(event,'${mid}')">${html}</div>`; }
+window.lireVocal=(e,mid)=>{ e.stopPropagation(); const m=cacheMessages[mid]; if(!m?.audioUrl) return; const wave=document.getElementById('wave_'+mid); const btn=document.getElementById('btnVoice_'+mid); const timeEl=document.getElementById('timeVoice_'+mid); if(audioIdEnCours===mid && audioObj && !audioObj.paused){ audioObj.pause(); btn.innerText="▶️"; wave.classList.remove('playing'); return; } if(audioObj) audioObj.pause(); document.querySelectorAll('.wave').forEach(w=>w.classList.remove('playing')); document.querySelectorAll('[id^="btnVoice_"]').forEach(b=>b.innerText="▶️"); if(!audioObj || audioObj.src!==m.audioUrl){ audioObj=new Audio(m.audioUrl); } audioObj.play().catch(()=>alert("Impossible de lire ce vocal")); audioIdEnCours=mid; btn.innerText="⏸️"; wave.classList.add('playing'); audioObj.onloadedmetadata=()=>{ if(timeEl) timeEl.innerText="0s / "+Math.floor(audioObj.duration)+"s"; }; audioObj.ontimeupdate=()=>{ if(!audioObj.duration) return; const pct=audioObj.currentTime/audioObj.duration; wave.querySelectorAll('i').forEach((bar,idx)=>{ if(idx/28<=pct) bar.classList.add('played'); else bar.classList.remove('played'); }); if(timeEl) timeEl.innerText=Math.floor(audioObj.currentTime)+"s / "+Math.floor(audioObj.duration)+"s"; }; audioObj.onended=()=>{ btn.innerText="▶️"; wave.classList.remove('playing'); audioIdEnCours=null; if(timeEl) timeEl.innerText="0s / "+Math.floor(audioObj.duration||0)+"s"; }; };
+async function chargerListe(){ const snap = await get(ref(db,'jasonbook/users')); const data=snap.val(); if(!data) return; tousUsers=Object.values(data).filter(u=>u.uid!==uid); let items=[]; for(const u of tousUsers){ const chatId = [uid, u.uid].sort().join('_'); const s=await get(ref(db,'jasonbook/messages/'+chatId)); const msgs=s.val(); let last="Dis bonjour...", lastTime="", nonLu=0, lastTs=0; if(msgs){ const arr=Object.entries(msgs).filter(([k,m])=>!m['deletedFor_'+uid] && !(m.expireAt && Date.now()>m.expireAt)); const d=arr[arr.length-1]?.[1]; if(d){ last=d.texte|| (d.photoUrl?"📷 Photo": d.audioUrl?"🎤 Vocal":""); lastTime=d.heure||""; lastTs=d.timestamp||0; nonLu=arr.filter(([k,m])=>m.auteurUid!==uid && !m.lu).length; } } items.push({u, chatId, last, lastTime, nonLu, lastTs}); } items.sort((a,b)=>(b.lastTs||0)-(a.lastTs||0)); const box=document.getElementById('convList'); box.innerHTML=""; if(!items.length){ document.getElementById('noConv').style.display="block"; return; } items.forEach(({u, chatId, last, lastTime, nonLu})=>{ const div=document.createElement('div'); div.className='conv'; div.dataset.nom=u.nomComplet||""; div.innerHTML=`<div class="avatar">${avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0))}<div class="dot"></div></div><div style="flex:1;min-width:0"><b>${u.nomComplet||""}</b><small>${last}</small></div><div class="right"><span class="time">${lastTime}</span>${nonLu?`<span class="unread">${nonLu}</span>`:""}</div>`; div.onclick=()=>ouvrirChat(u, chatId); box.appendChild(div); }); if(uidCible){ const cible=tousUsers.find(u=>u.uid===uidCible); if(cible) ouvrirChat(cible, [uid, uidCible].sort().join('_')); } }
 chargerListe(); onValue(ref(db,'jasonbook/messages'), ()=>{ chargerListe(); });
-window.ouvrirChat=async (u, chatId)=>{
-  destinataire=u; convActuelle=chatId;
-  const bSnap=await get(ref(db,'jasonbook/bloques/'+uid+'/'+u.uid));
-  if(bSnap.exists()){ if(!confirm("Cet utilisateur est bloqué. Débloquer ?")) return; await remove(ref(db,'jasonbook/bloques/'+uid+'/'+u.uid)); }
-  const setSnap=await get(ref(db,'jasonbook/messages_settings/'+chatId+'/disparition24h'));
-  disparition24h=setSnap.val()===true; document.getElementById('txtDisparition').innerText = disparition24h ? "Désactiver messages 24h ✅" : "Activer messages 24h";
-  document.getElementById('emptyChat').style.display="none"; document.getElementById('chatContent').style.display="flex";
-  document.getElementById('chatPanel').classList.add('show-mob'); document.getElementById('listPanel').classList.add('hide-mob'); document.body.classList.add('chat-open');
-  document.getElementById('chatAvatar').innerHTML=avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0));
-  document.getElementById('chatNom').innerText=u.nomComplet||""; document.getElementById('chatStatut').innerText="En ligne • "+(u.pays||"");
-  const snap=await get(ref(db,'jasonbook/messages/'+chatId)); const msgs=snap.val();
-  if(msgs){ for(const [mid,m] of Object.entries(msgs)){ if(m.auteurUid!==uid && !m.lu) await update(ref(db,'jasonbook/messages/'+chatId+'/'+mid),{lu:true}); } }
-  onValue(ref(db,'jasonbook/messages/'+chatId), (s)=>{
-    const d=s.val(); const body=document.getElementById('chatBody'); body.innerHTML=""; cacheMessages=d||{};
-    if(!d){ body.innerHTML='<p style="text-align:center;color:#888;font-size:13px;margin-top:30px">Aucun message. Dis bonjour ! 👋</p>'; return; }
-    Object.entries(d).forEach(([mid,m])=>{
-      if(m['deletedFor_'+uid]) return; if(m.expireAt && Date.now()>m.expireAt) return;
-      const div=document.createElement('div'); div.className='msg '+(m.auteurUid===uid?'mine':'other'); div.id='msg_'+mid;
-      let timer=null;
-      div.addEventListener('touchstart',()=>{ timer=setTimeout(()=>ouvrirMenuMsg(mid),550); });
-      div.addEventListener('touchend',()=>clearTimeout(timer));
-      div.addEventListener('touchmove',()=>clearTimeout(timer));
-      div.addEventListener('contextmenu',e=>{ e.preventDefault(); ouvrirMenuMsg(mid); });
-      let contenu="";
-      if(m.replyTo) contenu+=`<div class="reply-box"><b>${esc(m.replyTo.nom)}</b><br>${esc(m.replyTo.texte)}</div>`;
-      if(m.texte) contenu+=`<span class="txt">${esc(m.texte)}</span>`;
-      if(m.photoUrl) contenu+=`<br><img src="${m.photoUrl}">`;
-      if(m.audioUrl){ contenu+=`<div class="voice"><button id="btnVoice_${mid}" onclick="lireVocal(event,'${mid}')">▶️</button>${creerZigzag(mid)}<small id="timeVoice_${mid}">🎤 Vocal</small></div>`; }
-      if(m.reactions){ const ems=Object.values(m.reactions); if(ems.length) contenu+=`<div class="react-row">${ems.map(e=>`<span>${e}</span>`).join('')}</div>`; }
-      let meta=""; if(m.auteurUid===uid){ if(m.lu) meta=`<div class="meta"><span>${m.heure||""}</span><span class="tick lu">✓✓ Lu</span></div>`; else { const age = Date.now() - (m.timestamp||0); if(age < 3000) meta=`<div class="meta"><span>${m.heure||""}</span><span class="tick">✓</span></div>`; else meta=`<div class="meta"><span>${m.heure||""}</span><span class="tick recu">✓✓</span></div>`; } } else meta=`<div class="meta"><span>${m.heure||""}</span>${m.expireAt?" • ⏰ 24h":""}</div>`;
-      div.innerHTML=contenu+meta; body.appendChild(div);
-    }); body.scrollTop=body.scrollHeight;
-  });
-};
-window.envoyerMsg=async (photoUrl="", audioUrl="")=>{
-  const inp=document.getElementById('msgInput'); const txt=inp.value.trim(); if(!destinataire || (!txt && !photoUrl && !audioUrl)) return;
-  const bSnap=await get(ref(db,'jasonbook/bloques/'+destinataire.uid+'/'+uid)); if(bSnap.exists()){ alert("🚫 Tu es bloqué par cet utilisateur"); return; }
-  const newRef=push(ref(db,'jasonbook/messages/'+convActuelle));
-  await set(newRef,{ auteurUid:uid, nomAuteur:monNom, destinataireUid:destinataire.uid, texte:txt, photoUrl:photoUrl||"", audioUrl:audioUrl||"", heure:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}), timestamp:Date.now(), lu:false, expireAt: disparition24h ? Date.now()+24*60*60*1000 : 0, replyTo: reponseA||null });
-  inp.value=""; annulerReponse();
-  const nRef=push(ref(db,'jasonbook/notifications/'+destinataire.uid)); await set(nRef,{ type:"message", texte:monNom+" t'a envoyé un message", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), lu:false });
-  setTimeout(()=>chargerListe(), 500);
-};
+window.ouvrirChat=async (u, chatId)=>{ destinataire=u; convActuelle=chatId; const bSnap=await get(ref(db,'jasonbook/bloques/'+uid+'/'+u.uid)); if(bSnap.exists()){ if(!confirm("Cet utilisateur est bloqué. Débloquer ?")) return; await remove(ref(db,'jasonbook/bloques/'+uid+'/'+u.uid)); } const setSnap=await get(ref(db,'jasonbook/messages_settings/'+chatId+'/disparition24h')); disparition24h=setSnap.val()===true; document.getElementById('txtDisparition').innerText = disparition24h ? "Désactiver messages 24h ✅" : "Activer messages 24h"; document.getElementById('emptyChat').style.display="none"; document.getElementById('chatContent').style.display="flex"; document.getElementById('chatPanel').classList.add('show-mob'); document.getElementById('listPanel').classList.add('hide-mob'); document.body.classList.add('chat-open'); document.getElementById('chatAvatar').innerHTML=avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0)); document.getElementById('chatNom').innerText=u.nomComplet||""; document.getElementById('chatStatut').innerText="En ligne • "+(u.pays||""); const snap=await get(ref(db,'jasonbook/messages/'+chatId)); const msgs=snap.val(); if(msgs){ for(const [mid,m] of Object.entries(msgs)){ if(m.auteurUid!==uid && !m.lu) await update(ref(db,'jasonbook/messages/'+chatId+'/'+mid),{lu:true}); } } onValue(ref(db,'jasonbook/messages/'+chatId), (s)=>{ const d=s.val(); const body=document.getElementById('chatBody'); body.innerHTML=""; cacheMessages=d||{}; if(!d){ body.innerHTML='<p style="text-align:center;color:#888;font-size:13px;margin-top:30px">Aucun message. Dis bonjour ! 👋</p>'; return; } Object.entries(d).forEach(([mid,m])=>{ if(m['deletedFor_'+uid]) return; if(m.expireAt && Date.now()>m.expireAt) return; const div=document.createElement('div'); div.className='msg '+(m.auteurUid===uid?'mine':'other'); div.id='msg_'+mid; let timer=null; div.addEventListener('touchstart',()=>{ timer=setTimeout(()=>ouvrirMenuMsg(mid),550); }); div.addEventListener('touchend',()=>clearTimeout(timer)); div.addEventListener('touchmove',()=>clearTimeout(timer)); div.addEventListener('contextmenu',e=>{ e.preventDefault(); ouvrirMenuMsg(mid); }); let contenu=""; if(m.replyTo) contenu+=`<div class="reply-box"><b>${esc(m.replyTo.nom)}</b><br>${esc(m.replyTo.texte)}</div>`; if(m.texte) contenu+=`<span class="txt">${esc(m.texte)}</span>`; if(m.photoUrl) contenu+=`<br><img src="${m.photoUrl}">`; if(m.audioUrl){ contenu+=`<div class="voice"><button id="btnVoice_${mid}" onclick="lireVocal(event,'${mid}')">▶️</button>${creerZigzag(mid)}<small id="timeVoice_${mid}">🎤 Vocal</small></div>`; } if(m.reactions){ const ems=Object.values(m.reactions); if(ems.length) contenu+=`<div class="react-row">${ems.map(e=>`<span>${e}</span>`).join('')}</div>`; } let meta=""; if(m.auteurUid===uid){ if(m.lu) meta=`<div class="meta"><span>${m.heure||""}</span><span class="tick lu">✓✓ Lu</span></div>`; else { const age = Date.now() - (m.timestamp||0); if(age < 3000) meta=`<div class="meta"><span>${m.heure||""}</span><span class="tick">✓</span></div>`; else meta=`<div class="meta"><span>${m.heure||""}</span><span class="tick recu">✓✓</span></div>`; } } else meta=`<div class="meta"><span>${m.heure||""}</span>${m.expireAt?" • ⏰ 24h":""}</div>`; div.innerHTML=contenu+meta; body.appendChild(div); }); body.scrollTop=body.scrollHeight; }); };
+window.envoyerMsg=async (photoUrl="", audioUrl="")=>{ const inp=document.getElementById('msgInput'); const txt=inp.value.trim(); if(!destinataire || (!txt && !photoUrl && !audioUrl)) return; const bSnap=await get(ref(db,'jasonbook/bloques/'+destinataire.uid+'/'+uid)); if(bSnap.exists()){ alert("🚫 Tu es bloqué par cet utilisateur"); return; } const newRef=push(ref(db,'jasonbook/messages/'+convActuelle)); await set(newRef,{ auteurUid:uid, nomAuteur:monNom, destinataireUid:destinataire.uid, texte:txt, photoUrl:photoUrl||"", audioUrl:audioUrl||"", heure:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}), timestamp:Date.now(), lu:false, expireAt: disparition24h ? Date.now()+24*60*60*1000 : 0, replyTo: reponseA||null }); inp.value=""; annulerReponse(); const nRef=push(ref(db,'jasonbook/notifications/'+destinataire.uid)); await set(nRef,{ type:"message", texte:monNom+" t'a envoyé un message", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), lu:false }); setTimeout(()=>chargerListe(), 500); };
 document.getElementById('fileImg').addEventListener('change', e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>envoyerMsg(ev.target.result,""); r.readAsDataURL(f); });
-window.toggleRec=async ()=>{
-  if(mediaRecorder && mediaRecorder.state==="recording"){ arreterEtEnvoyerVocal(); return; }
-  try{
-    const stream=await navigator.mediaDevices.getUserMedia({audio:true}); mediaRecorder=new MediaRecorder(stream); audioChunks=[];
-    mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);
-    mediaRecorder.onstop=async ()=>{ if(mediaRecorder._annule) return; const blob=new Blob(audioChunks,{type:'audio/webm'}); const r=new FileReader(); r.onload=ev=>envoyerMsg("",ev.target.result); r.readAsDataURL(blob); };
-    mediaRecorder.start(); document.getElementById('btnRec').classList.add('on'); document.getElementById('btnRec').innerText="⏹️"; document.getElementById('recBar').classList.add('show'); recStart=Date.now(); recTimerInt=setInterval(()=>{ document.getElementById('recTimer').innerText="Enregistrement... "+Math.floor((Date.now()-recStart)/1000)+"s"; },500);
-  }catch(e){ alert("Micro non autorisé"); }
-};
+window.toggleRec=async ()=>{ if(mediaRecorder && mediaRecorder.state==="recording"){ arreterEtEnvoyerVocal(); return; } try{ const stream=await navigator.mediaDevices.getUserMedia({audio:true}); mediaRecorder=new MediaRecorder(stream); audioChunks=[]; mediaRecorder.ondataavailable=e=>audioChunks.push(e.data); mediaRecorder.onstop=async ()=>{ if(mediaRecorder._annule) return; const blob=new Blob(audioChunks,{type:'audio/webm'}); const r=new FileReader(); r.onload=ev=>envoyerMsg("",ev.target.result); r.readAsDataURL(blob); }; mediaRecorder.start(); document.getElementById('btnRec').classList.add('on'); document.getElementById('btnRec').innerText="⏹️"; document.getElementById('recBar').classList.add('show'); recStart=Date.now(); recTimerInt=setInterval(()=>{ document.getElementById('recTimer').innerText="Enregistrement... "+Math.floor((Date.now()-recStart)/1000)+"s"; },500); }catch(e){ alert("Micro non autorisé"); } };
 window.annulerEnregistrement=()=>{ if(!mediaRecorder) return; mediaRecorder._annule=true; try{ mediaRecorder.stop(); }catch(e){} mediaRecorder.stream?.getTracks().forEach(t=>t.stop()); clearInterval(recTimerInt); document.getElementById('recBar').classList.remove('show'); document.getElementById('btnRec').classList.remove('on'); document.getElementById('btnRec').innerText="🎤"; alert("Vocal annulé 🗑️"); };
 window.arreterEtEnvoyerVocal=()=>{ if(!mediaRecorder) return; mediaRecorder._annule=false; try{ mediaRecorder.stop(); }catch(e){} mediaRecorder.stream?.getTracks().forEach(t=>t.stop()); clearInterval(recTimerInt); document.getElementById('recBar').classList.remove('show'); document.getElementById('btnRec').classList.remove('on'); document.getElementById('btnRec').innerText="🎤"; };
 </script>
