@@ -10,13 +10,10 @@
 html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%;overflow-x:hidden}
 :root{--blue:#7C3AED;--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--grey:#A1A1AA;--line:#26262F;--gold:#FFC107}
 body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden}
-
-/* ✅ PETIT HEADER SIMPLE - SANS RECHERCHE, SANS NOTIF, SANS 3 TRAITS */
 .top-simple{background:#111;display:flex;align-items:center;gap:10px;padding:12px 12px;border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:20}
 .top-simple .back{width:36px;height:36px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .top-simple b{font-size:17px}
 .top-simple small{display:block;font-size:9px;color:var(--grey);letter-spacing:.8px;font-weight:400}
-
 .wrap{max-width:750px;margin:14px auto;padding:0 12px 20px}
 .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px;flex-wrap:wrap}
 .top h1{font-size:22px}
@@ -42,17 +39,19 @@ body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden}
 .invite-box .row{display:flex;gap:10px;align-items:center}
 .invite-box .btns{display:flex;gap:8px;margin-top:10px}
 .invite-box .btns button{flex:1}
+/* ✅ SALLE LIVE - VIDEO PLEIN ECRAN */
 .live-room{position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column;color:#fff}
 .live-room.open{display:flex}
-.live-room video{flex:1;width:100%;object-fit:cover;background:#111}
-.live-room .room-top{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:10px;padding:12px;background:linear-gradient(rgba(0,0,0,.7),transparent)}
+.live-room video{flex:1;width:100%;height:100%;object-fit:cover;background:#111;position:absolute;inset:0}
+.live-room .room-top{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:10px;padding:12px;background:linear-gradient(rgba(0,0,0,.7),transparent);z-index:10}
 .live-room .room-top .info{flex:1;min-width:0}
 .live-room .room-top button{background:rgba(0,0,0,.5);color:#fff;border:none;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0}
 .live-room .room-top .share-btn{background:var(--gold);color:#111;width:auto;padding:0 10px;border-radius:999px;font-size:11px;font-weight:800;height:32px}
+.live-status{position:absolute;top:70px;left:12px;background:rgba(0,0,0,.6);padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;z-index:10}
 .hearts{position:absolute;right:16px;bottom:170px;pointer-events:none;z-index:5}
 .hearts span{position:absolute;bottom:0;right:0;font-size:28px;animation:monter 1.2s ease-out forwards;opacity:1}
 @keyframes monter{0%{transform:translateY(0) scale(.6);opacity:1}100%{transform:translateY(-140px) scale(1.4) translateX(20px);opacity:0}}
-.live-room .chat{position:absolute;bottom:0;left:0;right:0;padding:12px;background:linear-gradient(transparent,rgba(0,0,0,.88));max-height:52%}
+.live-room .chat{position:absolute;bottom:0;left:0;right:0;padding:12px;background:linear-gradient(transparent,rgba(0,0,0,.88));max-height:52%;z-index:10}
 .live-room .chat-msgs{max-height:120px;overflow-y:auto;margin-bottom:8px}
 .live-room .chat-msgs p{font-size:13px;margin:4px 0;background:rgba(0,0,0,.4);padding:6px 10px;border-radius:12px;display:inline-block;max-width:90%;word-break:break-word}
 .live-room .chat-msgs b{color:var(--gold)}
@@ -61,9 +60,11 @@ body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden}
 .live-room .chat-input button{border:none;padding:11px 14px;border-radius:999px;background:var(--blue);color:#fff;font-weight:800;cursor:pointer;flex-shrink:0}
 .live-room .reactions{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
 .live-room .reactions button{background:rgba(255,255,255,.2);border:none;color:#fff;padding:8px 12px;border-radius:999px;cursor:pointer;font-size:16px}
-.btn-tap{position:absolute;right:16px;bottom:190px;width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,#E0245E,#FF2D55);border:3px solid #fff;color:#fff;font-size:32px;cursor:pointer;z-index:6;box-shadow:0 4px 20px rgba(224,36,94,.6);display:flex;align-items:center;justify-content:center}
+.btn-tap{position:absolute;right:16px;bottom:190px;width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,#E0245E,#FF2D55);border:3px solid #fff;color:#fff;font-size:32px;cursor:pointer;z-index:11;box-shadow:0 4px 20px rgba(224,36,94,.6);display:flex;align-items:center;justify-content:center}
 .btn-tap:active{transform:scale(.92)}
-.tap-count{position:absolute;right:16px;bottom:262px;background:rgba(0,0,0,.6);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;text-align:center;z-index:6}
+.tap-count{position:absolute;right:16px;bottom:262px;background:rgba(0,0,0,.6);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;text-align:center;z-index:11}
+.video-controls{position:absolute;bottom:310px;left:12px;display:flex;gap:8px;z-index:11}
+.video-controls button{background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.4);color:#fff;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:110;padding:16px}
 .modal.open{display:flex}
 .modal-box{background:#16161F;width:100%;max-width:420px;border-radius:18px;padding:20px;border:1px solid var(--line);max-height:85vh;overflow-y:auto}
@@ -86,7 +87,6 @@ body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden}
 </head>
 <body>
 
-<!-- ✅ HEADER SIMPLE : JUSTE RETOUR + JASONBOOK - PAS DE RECHERCHE, PAS DE NOTIF, PAS DE 3 TRAITS -->
 <div class="top-simple">
 <button class="back" onclick="location.href='feed.html'">←</button>
 <div><b>JASONBOOK ✨</b><small>MADE IN KINSHASA</small></div>
@@ -94,28 +94,23 @@ body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden}
 
 <div class="wrap">
 <div class="top"><h1>🔴 Lives</h1><button class="btn-red" onclick="ouvrirGoLive()">🔴 Lancer un Live</button></div>
-
-<!-- ✅ INVITATION REÇUE -->
 <div class="invite-box" id="inviteBox">
 <div class="row"><div class="avatar" id="inviteAvatar">?</div><div style="flex:1;min-width:0"><b id="inviteTexte">On t'invite à un live</b><br><small style="color:#fff;opacity:.8" id="inviteSous">Rejoins en direct</small></div><span class="live-badge">● LIVE</span></div>
 <div class="btns"><button class="btn-gold" onclick="accepterInvitation()">▶️ Rejoindre</button><button class="btn-grey" onclick="refuserInvitation()">Ignorer</button></div>
 </div>
-
 <div id="list"></div>
 <div class="empty" id="emptyBox" style="display:none"><div class="big">🔴</div><h3>Aucun live pour le moment</h3><p>Sois le premier à lancer un live !</p></div>
 </div>
 
-<!-- ❌ BARRE DU BAS SUPPRIMÉE - PLUS DE Accueil / Amis / Publier / Lives / Moi -->
-
 <div class="modal" id="modalLive"><div class="modal-box">
 <h2>🔴 Lancer un Live</h2>
-<input id="liveTitre" placeholder="Titre du live * (ex: Concert en direct)">
+<p style="color:#A1A1AA;font-size:13px;margin-top:6px">⚠️ Autorise la caméra + le micro quand le navigateur va te demander.<br>Sinon les gens ne vont pas te voir.</p>
+<input id="liveTitre" placeholder="Titre du live * (ex: Je parle en direct)">
 <textarea id="liveDesc" placeholder="De quoi vas-tu parler ?"></textarea>
 <button class="btn-red" style="width:100%;margin-top:14px;padding:13px" onclick="lancerLive()">🔴 Passer en direct</button>
 <button class="btn-grey" style="width:100%;margin-top:8px;padding:12px" onclick="fermerGoLive()">Annuler</button>
 </div></div>
 
-<!-- ✅ MODAL PARTAGER - SEULEMENT AMIS JASONBOOK -->
 <div class="modal" id="modalPartage"><div class="modal-box">
 <h2>↗️ Partager ce live</h2>
 <p style="color:#A1A1AA;font-size:13px;margin-top:6px">Choisis tes amis JASONBOOK, ils vont recevoir une invitation.</p>
@@ -140,9 +135,16 @@ body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden}
 <button class="btn-blue" style="width:100%;margin-top:14px" onclick="fermerFin()">OK, j'ai compris</button>
 </div></div>
 
+<!-- ✅ SALLE LIVE AVEC VRAIE VIDEO -->
 <div class="live-room" id="liveRoom">
-<video id="liveVideo" autoplay playsinline muted></video>
+<video id="liveVideo" autoplay playsinline></video>
 <div class="room-top"><div class="avatar" id="roomAv">?</div><div class="info"><b id="roomNom"></b><br><small><span class="live-badge">● LIVE</span> <span id="roomViewers">👁️ 1</span> • <span id="roomTaps">👋 0 tapotages</span></small></div><button class="share-btn" onclick="partagerLiveActuel()">↗️ Partager</button><button onclick="quitterLive()">✕</button></div>
+<div class="live-status" id="liveStatus">🔄 Connexion...</div>
+<div class="video-controls" id="videoControls" style="display:none">
+<button onclick="toggleCamera()">📷 Caméra</button>
+<button onclick="toggleMicro()">🎤 Micro</button>
+<button onclick="switchCamera()">🔄 Retourner</button>
+</div>
 <div class="hearts" id="heartsBox"></div>
 <button class="btn-tap" onclick="tapoter()">❤️</button>
 <div class="tap-count" id="tapCountLabel">👋 0</div>
@@ -156,126 +158,141 @@ body{background:var(--bg);color:#fff;min-height:100vh;overflow-x:hidden}
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, onValue, push, set, remove, get, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, onValue, push, set, remove, get, update, onChildAdded } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
 const monNom = localStorage.getItem('jasonbook_nom')||"";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+const viewerId = uid + "_" + Date.now() + "_" + Math.floor(Math.random()*10000);
 let lives=[], liveActuelId=null, stream=null, estAnimateur=false, liveDebut=0, unsubLive=null, aDejaVuFin=false;
 let mesAmis=[], amisChoisis=new Set(), liveAPartager=null, invitationEnCours=null;
+let peerConnections={}, myPeer=null, facingMode="user", cameraOn=true, microOn=true, unsubs=[];
+function setStatus(t){ const e=document.getElementById('liveStatus'); if(e) e.innerText=t; }
 window.ouvrirGoLive=()=>document.getElementById('modalLive').classList.add('open');
 window.fermerGoLive=()=>document.getElementById('modalLive').classList.remove('open');
 function rendre(){
   const box=document.getElementById('list'); box.innerHTML="";
-  const liste=lives;
-  document.getElementById('emptyBox').style.display=liste.length?'none':'block';
-  liste.forEach(l=>{
+  document.getElementById('emptyBox').style.display=lives.length?'none':'block';
+  lives.forEach(l=>{
     const div=document.createElement('div'); div.className='live-card'; div.onclick=()=>rejoindreLive(l.id);
     const points=Math.floor((l.tapCount||0)/10)+(l.viewers||0)*2;
-    div.innerHTML=`
-      <div class="head">
-        <div class="avatar">${l.photoAuteur?`<img src="${l.photoAuteur}">`:(l.auteurNom||"?").charAt(0)}</div>
-        <div class="info"><b>${l.auteurNom||""}</b><br><small>${l.date||""}</small></div>
-        <span class="live-badge">● LIVE</span>
-      </div>
-      <b style="display:block;margin-top:10px">${l.titre||""}</b>
-      <p style="font-size:13px;color:#A1A1AA;margin-top:4px">${l.description||""}</p>
-      <div class="stats-row"><span>👁️ ${l.viewers||1} personnes</span><span>👋 ${l.tapCount||0} tapotages</span><span>💬 ${l.commentCount||0} commentaires</span><span>⭐ ${points} pts</span></div>
-      <div class="actions"><button class="btn-red" onclick="event.stopPropagation();rejoindreLive('${l.id}')">▶️ Regarder</button><button class="btn-grey" onclick="event.stopPropagation();ouvrirPartage('${l.id}')">↗️ Partager</button>${l.auteurUid===uid?`<button class="btn-grey" onclick="event.stopPropagation();terminerLiveParId('${l.id}')">⏹️ Terminer</button>`:""}</div>`;
+    div.innerHTML=`<div class="head"><div class="avatar">${l.photoAuteur?`<img src="${l.photoAuteur}">`:(l.auteurNom||"?").charAt(0)}</div><div class="info"><b>${l.auteurNom||""}</b><br><small>${l.date||""}</small></div><span class="live-badge">● LIVE</span></div><b style="display:block;margin-top:10px">${l.titre||""}</b><p style="font-size:13px;color:#A1A1AA;margin-top:4px">${l.description||""}</p><div class="stats-row"><span>👁️ ${l.viewers||1} personnes</span><span>👋 ${l.tapCount||0} tapotages</span><span>💬 ${l.commentCount||0} commentaires</span><span>⭐ ${points} pts</span></div><div class="actions"><button class="btn-red" onclick="event.stopPropagation();rejoindreLive('${l.id}')">▶️ Regarder</button><button class="btn-grey" onclick="event.stopPropagation();ouvrirPartage('${l.id}')">↗️ Partager</button>${l.auteurUid===uid?`<button class="btn-grey" onclick="event.stopPropagation();terminerLiveParId('${l.id}')">⏹️ Terminer</button>`:""}</div>`;
     box.appendChild(div);
   });
 }
 async function chargerAmis(){
   try{
-    const s1=await get(ref(db,'jasonbook/amis/'+uid));
-    const ids=s1.val()?Object.keys(s1.val()):[];
-    const s2=await get(ref(db,'jasonbook/users/'+uid+'/amis'));
-    if(s2.val()) Object.keys(s2.val()).forEach(id=>{ if(!ids.includes(id)) ids.push(id); });
+    const s1=await get(ref(db,'jasonbook/amis/'+uid)); const ids=s1.val()?Object.keys(s1.val()):[];
+    const s2=await get(ref(db,'jasonbook/users/'+uid+'/amis')); if(s2.val()) Object.keys(s2.val()).forEach(id=>{ if(!ids.includes(id)) ids.push(id); });
     mesAmis=[];
-    for(const id of ids){
-      if(id===uid) continue;
-      const us=await get(ref(db,'jasonbook/users/'+id));
-      const u=us.val()||{};
-      mesAmis.push({uid:id, nom:u.nom||u.name||"Ami", photo:u.photo||u.photoUrl||""});
-    }
-    if(!mesAmis.length){
-      const all=await get(ref(db,'jasonbook/users'));
-      const d=all.val()||{};
-      Object.entries(d).forEach(([id,u])=>{ if(id!==uid) mesAmis.push({uid:id, nom:u.nom||"Ami", photo:u.photo||""}); });
-    }
-  }catch(e){ console.log("Amis:",e); }
+    for(const id of ids){ if(id===uid) continue; const us=await get(ref(db,'jasonbook/users/'+id)); const u=us.val()||{}; mesAmis.push({uid:id, nom:u.nom||"Ami", photo:u.photo||""}); }
+    if(!mesAmis.length){ const all=await get(ref(db,'jasonbook/users')); const d=all.val()||{}; Object.entries(d).forEach(([id,u])=>{ if(id!==uid) mesAmis.push({uid:id, nom:u.nom||"Ami", photo:u.photo||""}); }); }
+  }catch(e){}
 }
 function rendreAmis(){
-  const q=(document.getElementById('rechercheAmi').value||"").toLowerCase();
-  const box=document.getElementById('listeAmis'); box.innerHTML="";
+  const q=(document.getElementById('rechercheAmi').value||"").toLowerCase(); const box=document.getElementById('listeAmis'); box.innerHTML="";
   const liste=mesAmis.filter(a=>a.nom.toLowerCase().includes(q));
-  if(!liste.length){ box.innerHTML='<p style="color:#A1A1AA;text-align:center;padding:16px;font-size:13px">Aucun ami trouvé.<br>Ajoute des amis dans Amis d\'abord.</p>'; return; }
+  if(!liste.length){ box.innerHTML='<p style="color:#A1A1AA;text-align:center;padding:16px;font-size:13px">Aucun ami trouvé.</p>'; return; }
   liste.forEach(a=>{
-    const div=document.createElement('div');
-    div.className='ami-row'+(amisChoisis.has(a.uid)?' selected':'');
+    const div=document.createElement('div'); div.className='ami-row'+(amisChoisis.has(a.uid)?' selected':'');
     div.innerHTML=`<div class="avatar">${a.photo?`<img src="${a.photo}">`:a.nom.charAt(0)}</div><div class="info"><b>${a.nom}</b><small>Sur JASONBOOK • Ami</small></div><div class="check">${amisChoisis.has(a.uid)?'✓':''}</div>`;
-    div.onclick=()=>{
-      if(amisChoisis.has(a.uid)) amisChoisis.delete(a.uid); else amisChoisis.add(a.uid);
-      document.getElementById('nbChoisis').innerText=amisChoisis.size;
-      rendreAmis();
-    };
+    div.onclick=()=>{ if(amisChoisis.has(a.uid)) amisChoisis.delete(a.uid); else amisChoisis.add(a.uid); document.getElementById('nbChoisis').innerText=amisChoisis.size; rendreAmis(); };
     box.appendChild(div);
   });
 }
 window.rendreAmis=rendreAmis;
-window.ouvrirPartage=async (id)=>{
-  liveAPartager=id;
-  amisChoisis=new Set();
-  document.getElementById('nbChoisis').innerText="0";
-  document.getElementById('rechercheAmi').value="";
-  document.getElementById('modalPartage').classList.add('open');
-  if(!mesAmis.length) await chargerAmis();
-  rendreAmis();
-};
+window.ouvrirPartage=async (id)=>{ liveAPartager=id; amisChoisis=new Set(); document.getElementById('nbChoisis').innerText="0"; document.getElementById('rechercheAmi').value=""; document.getElementById('modalPartage').classList.add('open'); if(!mesAmis.length) await chargerAmis(); rendreAmis(); };
 window.fermerPartage=()=>document.getElementById('modalPartage').classList.remove('open');
 window.partagerLiveActuel=()=>{ if(liveActuelId) ouvrirPartage(liveActuelId); };
 window.envoyerInvitations=async ()=>{
-  if(!liveAPartager){ alert("Choisis un live"); return; }
-  if(!amisChoisis.size){ alert("Choisis au moins 1 ami"); return; }
-  const live=lives.find(x=>x.id===liveAPartager);
-  const titre=live?live.titre:"Live";
-  for(const amiUid of amisChoisis){
-    const n=push(ref(db,'jasonbook/notifications/'+amiUid));
-    await set(n,{type:"live_invite", liveId:liveAPartager, titre:titre, texte:monNom+" t'invite à rejoindre son live : "+titre, deUid:uid, deNom:monNom, dePhoto:maPhoto||"", date:new Date().toLocaleString(), timestamp:Date.now(), lu:false});
-  }
-  fermerPartage();
-  alert("Invitation envoyée à "+amisChoisis.size+" ami(s) ✅ Ils vont voir la notif dans JASONBOOK");
+  if(!liveAPartager || !amisChoisis.size){ alert("Choisis au moins 1 ami"); return; }
+  const live=lives.find(x=>x.id===liveAPartager); const titre=live?live.titre:"Live";
+  for(const amiUid of amisChoisis){ const n=push(ref(db,'jasonbook/notifications/'+amiUid)); await set(n,{type:"live_invite", liveId:liveAPartager, titre:titre, texte:monNom+" t'invite à rejoindre son live : "+titre, deUid:uid, deNom:monNom, dePhoto:maPhoto||"", date:new Date().toLocaleString(), timestamp:Date.now(), lu:false}); }
+  fermerPartage(); alert("Invitation envoyée à "+amisChoisis.size+" ami(s) ✅");
 };
-window.accepterInvitation=()=>{
-  if(!invitationEnCours) return;
-  const id=invitationEnCours.liveId;
-  document.getElementById('inviteBox').classList.remove('show');
-  invitationEnCours=null;
-  rejoindreLive(id);
-};
-window.refuserInvitation=()=>{
-  document.getElementById('inviteBox').classList.remove('show');
-  invitationEnCours=null;
-};
-window.afficherFin=(stats, titre)=>{
-  document.getElementById('finTitre').innerText=titre||"Live terminé";
-  document.getElementById('finViewers').innerText=stats.viewers||0;
-  document.getElementById('finTaps').innerText=stats.tapCount||0;
-  document.getElementById('finComs').innerText=stats.commentCount||0;
-  document.getElementById('finDuree').innerText=stats.duree||"0 min";
-  document.getElementById('finPoints').innerText=(stats.points||0)+" pts";
-  document.getElementById('finCoeurs').innerText=stats.tapCount||0;
-  document.getElementById('modalFin').classList.add('open');
-};
+window.accepterInvitation=()=>{ if(!invitationEnCours) return; const id=invitationEnCours.liveId; document.getElementById('inviteBox').classList.remove('show'); invitationEnCours=null; rejoindreLive(id); };
+window.refuserInvitation=()=>{ document.getElementById('inviteBox').classList.remove('show'); invitationEnCours=null; };
+window.afficherFin=(stats, titre)=>{ document.getElementById('finTitre').innerText=titre||"Live terminé"; document.getElementById('finViewers').innerText=stats.viewers||0; document.getElementById('finTaps').innerText=stats.tapCount||0; document.getElementById('finComs').innerText=stats.commentCount||0; document.getElementById('finDuree').innerText=stats.duree||"0 min"; document.getElementById('finPoints').innerText=(stats.points||0)+" pts"; document.getElementById('finCoeurs').innerText=stats.tapCount||0; document.getElementById('modalFin').classList.add('open'); };
 window.fermerFin=()=>{ document.getElementById('modalFin').classList.remove('open'); location.href='lives.html'; };
 window.lancerLive=async()=>{
-  const titre=document.getElementById('liveTitre').value.trim();
-  if(!titre){ alert("Titre obligatoire"); return; }
+  const titre=document.getElementById('liveTitre').value.trim(); if(!titre){ alert("Titre obligatoire"); return; }
   const newRef=push(ref(db,'jasonbook/lives'));
   await set(newRef,{ id:newRef.key, titre:titre, description:document.getElementById('liveDesc').value, auteurUid:uid, auteurNom:monNom, photoAuteur:maPhoto||"", viewers:1, tapCount:0, commentCount:0, date:new Date().toLocaleString(), timestamp:Date.now() });
   fermerGoLive(); document.getElementById('liveTitre').value=""; document.getElementById('liveDesc').value="";
   rejoindreLive(newRef.key, true);
+};
+/* ✅ WEBRTC - VRAIE VIDEO EN DIRECT */
+const ICE = { iceServers: [{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"}] };
+function creerPC(){
+  const pc = new RTCPeerConnection(ICE);
+  pc.onicecandidate = (e)=>{ if(e.candidate && liveActuelId){ const path = estAnimateur ? `jasonbook/liveSignal/${liveActuelId}/hostCandidates` : `jasonbook/liveSignal/${liveActuelId}/viewerCandidates/${viewerId}`; push(ref(db, path), e.candidate.toJSON()); } };
+  return pc;
+}
+async function demarrerEnTantQueAnimateur(liveId){
+  setStatus("📷 Allumage de ta caméra...");
+  try{
+    stream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode: facingMode }, audio:true });
+    const video = document.getElementById('liveVideo');
+    video.srcObject = stream; video.muted = true; await video.play().catch(()=>{});
+    setStatus("🔴 TU ES EN DIRECT - Les gens te voient");
+    document.getElementById('videoControls').style.display="flex";
+  }catch(e){
+    alert("⚠️ Autorise la caméra et le micro ! Sinon personne ne te verra.\n\nVa dans les paramètres du navigateur > Autoriser caméra/micro, puis relance.");
+    setStatus("❌ Caméra refusée - Autorise-la");
+    return;
+  }
+  // Quand un spectateur arrive, on lui envoie notre vidéo
+  const joinRef = ref(db, `jasonbook/liveSignal/${liveId}/join`);
+  const unsub = onChildAdded(joinRef, async (snap)=>{
+    const vId = snap.key; if(peerConnections[vId]) return;
+    const pc = creerPC(); peerConnections[vId]=pc;
+    stream.getTracks().forEach(t=>pc.addTrack(t, stream));
+    const offer = await pc.createOffer(); await pc.setLocalDescription(offer);
+    await set(ref(db, `jasonbook/liveSignal/${liveId}/offers/${vId}`), {type:offer.type, sdp:offer.sdp});
+    // Ecouter la réponse du spectateur
+    onValue(ref(db, `jasonbook/liveSignal/${liveId}/answers/${vId}`), async (s)=>{
+      const ans = s.val(); if(ans && !pc.currentRemoteDescription){ try{ await pc.setRemoteDescription(new RTCSessionDescription(ans)); setStatus("🔴 EN DIRECT - "+Object.keys(peerConnections).length+" spectateur(s) te voient"); }catch(e){} }
+    });
+    // Ecouter les ICE du spectateur
+    onChildAdded(ref(db, `jasonbook/liveSignal/${liveId}/viewerCandidates/${vId}`), async (cs)=>{ try{ await pc.addIceCandidate(new RTCIceCandidate(cs.val())); }catch(e){} });
+  });
+  unsubs.push(()=>unsub());
+  // Ecouter ICE host -> on ne fait rien, c'est pour les viewers
+}
+async function demarrerEnTantQueSpectateur(liveId){
+  setStatus("🔄 Connexion à la vidéo de l'animateur...");
+  const video = document.getElementById('liveVideo');
+  video.muted = false;
+  const pc = creerPC(); myPeer = pc;
+  pc.ontrack = (e)=>{
+    setStatus("🔴 EN DIRECT - Tu vois l'animateur");
+    video.srcObject = e.streams[0];
+    video.play().catch(()=>{});
+  };
+  // 1. Je dis "je veux regarder"
+  await set(ref(db, `jasonbook/liveSignal/${liveId}/join/${viewerId}`), { nom:monNom, timestamp:Date.now() });
+  // 2. J'attends l'offre de l'animateur
+  onValue(ref(db, `jasonbook/liveSignal/${liveId}/offers/${viewerId}`), async (s)=>{
+    const offer = s.val(); if(!offer || pc.currentRemoteDescription) return;
+    await pc.setRemoteDescription(new RTCSessionDescription(offer));
+    const answer = await pc.createAnswer(); await pc.setLocalDescription(answer);
+    await set(ref(db, `jasonbook/liveSignal/${liveId}/answers/${viewerId}`), {type:answer.type, sdp:answer.sdp});
+  });
+  // 3. ICE de l'animateur
+  onChildAdded(ref(db, `jasonbook/liveSignal/${liveId}/hostCandidates`), async (cs)=>{ try{ await pc.addIceCandidate(new RTCIceCandidate(cs.val())); }catch(e){} });
+  // Si après 8s toujours pas de vidéo, c'est que l'animateur n'a pas autorisé sa caméra
+  setTimeout(()=>{ if(!video.srcObject) setStatus("⏳ L'animateur n'a pas encore allumé sa caméra..."); }, 8000);
+}
+window.toggleCamera=()=>{ if(!stream) return; cameraOn=!cameraOn; stream.getVideoTracks().forEach(t=>t.enabled=cameraOn); alert(cameraOn?"Caméra allumée 📷":"Caméra éteinte"); };
+window.toggleMicro=()=>{ if(!stream) return; microOn=!microOn; stream.getAudioTracks().forEach(t=>t.enabled=microOn); alert(microOn?"Micro allumé 🎤":"Micro coupé 🔇"); };
+window.switchCamera=async()=>{
+  if(!stream) return; facingMode = facingMode==="user" ? "environment" : "user";
+  stream.getTracks().forEach(t=>t.stop());
+  try{ stream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:facingMode }, audio:true }); document.getElementById('liveVideo').srcObject=stream;
+    // Renvoyer les nouvelles tracks aux spectateurs
+    Object.values(peerConnections).forEach(pc=>{ const sender = pc.getSenders().find(s=>s.track && s.track.kind==="video"); if(sender) sender.replaceTrack(stream.getVideoTracks()[0]); });
+  }catch(e){ alert("Impossible de retourner la caméra"); }
 };
 window.rejoindreLive=async (id, animateur=false)=>{
   const l=lives.find(x=>x.id===id); if(!l) { alert("Ce live est terminé"); return; }
@@ -286,102 +303,40 @@ window.rejoindreLive=async (id, animateur=false)=>{
   document.getElementById('roomTaps').innerText="👋 "+(l.tapCount||0)+" tapotages";
   document.getElementById('tapCountLabel').innerText="👋 "+(l.tapCount||0);
   document.getElementById('btnTerminer').style.display=estAnimateur?'block':'none';
+  document.getElementById('videoControls').style.display=estAnimateur?'flex':'none';
   document.getElementById('liveRoom').classList.add('open');
-  if(estAnimateur){
-    try{ stream=await navigator.mediaDevices.getUserMedia({video:true,audio:true}); document.getElementById('liveVideo').srcObject=stream; }
-    catch(e){ document.getElementById('liveVideo').style.display='none'; }
-  }
+  if(estAnimateur) await demarrerEnTantQueAnimateur(id);
+  else await demarrerEnTantQueSpectateur(id);
   await set(ref(db,'jasonbook/lives/'+id+'/viewers'), (l.viewers||0)+1);
-  const mRef=push(ref(db,'jasonbook/liveChat/'+id));
-  await set(mRef,{ nom:monNom, texte:monNom+" a rejoint le live 👋", timestamp:Date.now() });
+  const mRef=push(ref(db,'jasonbook/liveChat/'+id)); await set(mRef,{ nom:monNom, texte:monNom+" a rejoint le live 👋", timestamp:Date.now() });
   ecouterChat(id);
   if(unsubLive) unsubLive();
   unsubLive=onValue(ref(db,'jasonbook/lives/'+id), snap=>{
-    if(!snap.exists() && liveActuelId===id && !aDejaVuFin){
-      aDejaVuFin=true;
-      const dureeMin=Math.max(1, Math.round((Date.now()-liveDebut)/60000));
-      const stats={viewers:l.viewers||1, tapCount:l.tapCount||0, commentCount:l.commentCount||0, duree:dureeMin+" min", points:Math.floor((l.tapCount||0)/10)+(l.viewers||0)*2};
-      quitterLiveSansFin();
-      afficherFin(stats, "🔴 Live terminé");
-    } else if(snap.exists()){
-      const v=snap.val()||{};
-      document.getElementById('roomViewers').innerText="👁️ "+(v.viewers||1);
-      document.getElementById('roomTaps').innerText="👋 "+(v.tapCount||0)+" tapotages";
-      document.getElementById('tapCountLabel').innerText="👋 "+(v.tapCount||0);
-      l.viewers=v.viewers; l.tapCount=v.tapCount; l.commentCount=v.commentCount;
-    }
+    if(!snap.exists() && liveActuelId===id && !aDejaVuFin){ aDejaVuFin=true; const dureeMin=Math.max(1, Math.round((Date.now()-liveDebut)/60000)); const stats={viewers:l.viewers||1, tapCount:l.tapCount||0, commentCount:l.commentCount||0, duree:dureeMin+" min", points:Math.floor((l.tapCount||0)/10)+(l.viewers||0)*2}; quitterLiveSansFin(); afficherFin(stats, "🔴 Live terminé"); }
+    else if(snap.exists()){ const v=snap.val()||{}; document.getElementById('roomViewers').innerText="👁️ "+(v.viewers||1); document.getElementById('roomTaps').innerText="👋 "+(v.tapCount||0)+" tapotages"; document.getElementById('tapCountLabel').innerText="👋 "+(v.tapCount||0); l.viewers=v.viewers; l.tapCount=v.tapCount; l.commentCount=v.commentCount; }
   });
 };
-function ecouterChat(id){
-  onValue(ref(db,'jasonbook/liveChat/'+id), s=>{
-    const d=s.val(); const box=document.getElementById('chatMsgs');
-    if(!d){ box.innerHTML=""; return; }
-    const msgs=Object.entries(d).map(([k,m])=>m).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0)).slice(-30);
-    box.innerHTML=msgs.map(m=>`<p><b>${m.nom||""} :</b> ${m.texte||""}</p>`).join('');
-    box.scrollTop=box.scrollHeight;
-  });
-}
-window.envoyerChat=async()=>{
-  const input=document.getElementById('chatInput'); const txt=input.value.trim(); if(!txt || !liveActuelId) return;
-  const mRef=push(ref(db,'jasonbook/liveChat/'+liveActuelId));
-  await set(mRef,{ nom:monNom, texte:txt, timestamp:Date.now() });
-  const snap=await get(ref(db,'jasonbook/lives/'+liveActuelId)); const v=snap.val()||{};
-  await update(ref(db,'jasonbook/lives/'+liveActuelId),{commentCount:(v.commentCount||0)+1});
-  input.value="";
-};
+function ecouterChat(id){ onValue(ref(db,'jasonbook/liveChat/'+id), s=>{ const d=s.val(); const box=document.getElementById('chatMsgs'); if(!d){ box.innerHTML=""; return; } const msgs=Object.entries(d).map(([k,m])=>m).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0)).slice(-30); box.innerHTML=msgs.map(m=>`<p><b>${m.nom||""} :</b> ${m.texte||""}</p>`).join(''); box.scrollTop=box.scrollHeight; }); }
+window.envoyerChat=async()=>{ const input=document.getElementById('chatInput'); const txt=input.value.trim(); if(!txt || !liveActuelId) return; const mRef=push(ref(db,'jasonbook/liveChat/'+liveActuelId)); await set(mRef,{ nom:monNom, texte:txt, timestamp:Date.now() }); const snap=await get(ref(db,'jasonbook/lives/'+liveActuelId)); const v=snap.val()||{}; await update(ref(db,'jasonbook/lives/'+liveActuelId),{commentCount:(v.commentCount||0)+1}); input.value=""; };
 document.getElementById('chatInput').addEventListener('keydown', e=>{ if(e.key==='Enter') envoyerChat(); });
-window.tapoter=async()=>{
-  if(!liveActuelId) return;
-  const box=document.getElementById('heartsBox');
-  const emojis=['❤️','🔥','❤️','💖','👏'];
-  const s=document.createElement('span'); s.innerText=emojis[Math.floor(Math.random()*emojis.length)];
-  box.appendChild(s); setTimeout(()=>s.remove(),1200);
-  try{
-    const snap=await get(ref(db,'jasonbook/lives/'+liveActuelId)); const v=snap.val()||{};
-    await update(ref(db,'jasonbook/lives/'+liveActuelId),{tapCount:(v.tapCount||0)+1});
-  }catch(e){}
-};
-window.envoyerReaction=async (emoji)=>{
-  if(!liveActuelId) return;
-  const mRef=push(ref(db,'jasonbook/liveChat/'+liveActuelId));
-  await set(mRef,{ nom:monNom, texte:emoji+" a réagi "+emoji, timestamp:Date.now() });
-};
-async function quitterLiveSansFin(){
-  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
-  document.getElementById('liveRoom').classList.remove('open');
-  document.getElementById('liveVideo').srcObject=null; document.getElementById('liveVideo').style.display='block';
-  liveActuelId=null; estAnimateur=false;
+window.tapoter=async()=>{ if(!liveActuelId) return; const box=document.getElementById('heartsBox'); const emojis=['❤️','🔥','❤️','💖','👏']; const s=document.createElement('span'); s.innerText=emojis[Math.floor(Math.random()*emojis.length)]; box.appendChild(s); setTimeout(()=>s.remove(),1200); try{ const snap=await get(ref(db,'jasonbook/lives/'+liveActuelId)); const v=snap.val()||{}; await update(ref(db,'jasonbook/lives/'+liveActuelId),{tapCount:(v.tapCount||0)+1}); }catch(e){} };
+window.envoyerReaction=async (emoji)=>{ if(!liveActuelId) return; const mRef=push(ref(db,'jasonbook/liveChat/'+liveActuelId)); await set(mRef,{ nom:monNom, texte:emoji+" a réagi "+emoji, timestamp:Date.now() }); };
+async function nettoyerWebRTC(){
+  Object.values(peerConnections).forEach(pc=>{ try{pc.close()}catch(e){} }); peerConnections={};
+  if(myPeer){ try{myPeer.close()}catch(e){} myPeer=null; }
+  unsubs.forEach(f=>{try{f()}catch(e){}}); unsubs=[];
+  if(liveActuelId){ try{ await remove(ref(db, `jasonbook/liveSignal/${liveActuelId}/join/${viewerId}`)); }catch(e){} }
 }
-window.quitterLive=async()=>{
+async function quitterLiveSansFin(){
+  await nettoyerWebRTC();
   if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
-  document.getElementById('liveRoom').classList.remove('open');
-  document.getElementById('liveVideo').srcObject=null; document.getElementById('liveVideo').style.display='block';
-  liveActuelId=null; estAnimateur=false;
-};
-window.terminerLive=async()=>{
-  if(!liveActuelId) return;
-  const id=liveActuelId;
-  const snap=await get(ref(db,'jasonbook/lives/'+id)); const v=snap.val()||{};
-  const dureeMin=Math.max(1, Math.round((Date.now()-liveDebut)/60000));
-  const points=Math.floor((v.tapCount||0)/10)+(v.viewers||0)*2;
-  const stats={viewers:v.viewers||1, tapCount:v.tapCount||0, commentCount:v.commentCount||0, duree:dureeMin+" min", points};
-  await remove(ref(db,'jasonbook/lives/'+id)); await remove(ref(db,'jasonbook/liveChat/'+id));
-  await quitterLiveSansFin();
-  afficherFin(stats, "🏁 Ton live est terminé !");
-};
-window.terminerLiveParId=async (id)=>{ if(!confirm("Terminer ce live ?")) return; await remove(ref(db,'jasonbook/lives/'+id)); await remove(ref(db,'jasonbook/liveChat/'+id)); };
+  document.getElementById('liveRoom').classList.remove('open'); document.getElementById('liveVideo').srcObject=null; document.getElementById('liveVideo').style.display='block'; liveActuelId=null; estAnimateur=false;
+}
+window.quitterLive=async()=>{ await nettoyerWebRTC(); if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; } document.getElementById('liveRoom').classList.remove('open'); document.getElementById('liveVideo').srcObject=null; liveActuelId=null; estAnimateur=false; };
+window.terminerLive=async()=>{ if(!liveActuelId) return; const id=liveActuelId; const snap=await get(ref(db,'jasonbook/lives/'+id)); const v=snap.val()||{}; const dureeMin=Math.max(1, Math.round((Date.now()-liveDebut)/60000)); const points=Math.floor((v.tapCount||0)/10)+(v.viewers||0)*2; const stats={viewers:v.viewers||1, tapCount:v.tapCount||0, commentCount:v.commentCount||0, duree:dureeMin+" min", points}; await remove(ref(db,'jasonbook/lives/'+id)); await remove(ref(db,'jasonbook/liveChat/'+id)); await remove(ref(db,'jasonbook/liveSignal/'+id)); await quitterLiveSansFin(); afficherFin(stats, "🏁 Ton live est terminé !"); };
+window.terminerLiveParId=async (id)=>{ if(!confirm("Terminer ce live ?")) return; await remove(ref(db,'jasonbook/lives/'+id)); await remove(ref(db,'jasonbook/liveChat/'+id)); await remove(ref(db,'jasonbook/liveSignal/'+id)); };
 onValue(ref(db,'jasonbook/lives'), s=>{ const d=s.val(); lives=d?Object.entries(d).map(([id,l])=>({id,...l})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendre(); });
-onValue(ref(db,"jasonbook/notifications/"+uid), s=>{
-  const d=s.val(); let invite=null;
-  if(d) Object.values(d).forEach(x=>{ if(x.type==="live_invite" && !x.lu) invite=x; });
-  if(invite && !invitationEnCours){
-    invitationEnCours=invite;
-    document.getElementById('inviteTexte').innerText=invite.deNom+" t'invite à son live";
-    document.getElementById('inviteSous').innerText=invite.titre||"Rejoins en direct";
-    document.getElementById('inviteAvatar').innerHTML=invite.dePhoto?`<img src="${invite.dePhoto}">`:invite.deNom.charAt(0);
-    document.getElementById('inviteBox').classList.add('show');
-  }
-});
+onValue(ref(db,"jasonbook/notifications/"+uid), s=>{ const d=s.val(); let invite=null; if(d) Object.values(d).forEach(x=>{ if(x.type==="live_invite" && !x.lu) invite=x; }); if(invite && !invitationEnCours){ invitationEnCours=invite; document.getElementById('inviteTexte').innerText=invite.deNom+" t'invite à son live"; document.getElementById('inviteSous').innerText=invite.titre||"Rejoins en direct"; document.getElementById('inviteAvatar').innerHTML=invite.dePhoto?`<img src="${invite.dePhoto}">`:invite.deNom.charAt(0); document.getElementById('inviteBox').classList.add('show'); } });
 chargerAmis();
 </script>
 </body>
