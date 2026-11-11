@@ -12,20 +12,16 @@ html{overflow-x:hidden}
 body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:92px;-webkit-tap-highlight-color:transparent}
 button,a{touch-action:manipulation}
 button{cursor:pointer}
-/* ===== HEADER ===== */
 .top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:10px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
 .logo{font-size:20px;font-weight:900;white-space:nowrap;flex:1;line-height:1}
 .logo i{color:var(--gold);font-style:normal}
 .logo small{display:block;font-size:8px;color:var(--muted);letter-spacing:1.2px;margin-top:1px}
 .search-top{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:8px 12px;display:flex;gap:6px;align-items:center;color:var(--muted);font-size:12px;cursor:pointer}
-/* ✅ BOUTON NOTIF EN HAUT */
 .btn-notif{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
 .btn-notif:active{background:var(--violet)}
 .btn-notif .dot{position:absolute;top:-5px;right:-5px;background:#E0245E;color:#fff;font-size:10px;font-weight:900;min-width:18px;height:18px;border-radius:999px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid #0A0A0F}
-/* ✅ BOUTON 3 TRAITS - PETIT PRO */
 .btn-menu{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;font-weight:400;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
 .btn-menu:active{background:var(--violet)}
-/* ===== MENU PRO - PETIT COMPACT ===== */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:none}
 .overlay.open{display:block}
 .menu{position:fixed;top:0;right:0;bottom:0;width:264px;max-width:82vw;background:#121218;z-index:101;transform:translateX(100%);transition:.22s ease;overflow-y:auto;border-left:1px solid var(--line);padding:0 0 14px}
@@ -50,7 +46,6 @@ button{cursor:pointer}
 .menu-item.danger .ico{background:#E0245E}
 .menu-item.danger{color:#FF8A9A}
 .hr{height:1px;background:var(--line);margin:12px 14px}
-/* ===== CONTENU ===== */
 .wrap{width:100%;max-width:650px;margin:10px auto;padding:0 10px 10px}
 .tabs{display:flex;gap:7px;overflow-x:auto;padding:6px 2px 10px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
@@ -121,13 +116,10 @@ button{cursor:pointer}
 <div class="top">
 <div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
 <div class="search-top" onclick="location.href='recherche.html'">🔍 <span>Chercher...</span></div>
-<!-- ✅ BOUTON NOTIFICATION EN HAUT -->
 <button class="btn-notif" onclick="location.href='notifications.html'">🔔<span class="dot" id="dotNotifTop">0</span></button>
-<!-- ✅ BOUTON 3 TRAITS PETIT -->
 <button class="btn-menu" onclick="ouvrirMenu()">☰</button>
 </div>
 
-<!-- ===== MENU 3 TRAITS - PETIT PRO - 14 BOUTONS ===== -->
 <div class="overlay" id="overlay" onclick="fermerMenu()"></div>
 <aside class="menu" id="menu">
   <div class="menu-top">
@@ -142,7 +134,8 @@ button{cursor:pointer}
   <button class="menu-item" onclick="location.href='feed.html'"><span class="ico">📰</span> Fil <span class="fleche">›</span></button>
   <button class="menu-item" onclick="location.href='favoris.html'"><span class="ico">⭐</span> Favoris <span class="fleche">›</span></button>
   <button class="menu-item booster" onclick="location.href='booster.html'"><span class="ico">🚀</span> Booster <small>Likes • Com • Partages</small> <span class="fleche">›</span></button>
-  <button class="menu-item live" onclick="location.href='live.html'"><span class="ico">🔴</span> Aller en Live <span class="fleche">›</span></button>
+  <!-- ✅ CORRIGÉ : lives.html avec S -->
+  <button class="menu-item live" onclick="location.href='lives.html'"><span class="ico">🔴</span> Aller en Live <span class="fleche">›</span></button>
   <button class="menu-item" onclick="location.href='recherche.html'"><span class="ico">🔍</span> Recherche</button>
   <button class="menu-item" onclick="location.href='boutique.html'"><span class="ico">🛒</span> Boutique</button>
   <button class="menu-item" onclick="location.href='anniversaires.html'"><span class="ico">🎂</span> Anniversaires</button>
@@ -156,7 +149,6 @@ button{cursor:pointer}
 </aside>
 
 <main class="wrap">
-<!-- ✅ ONGLETS EN HAUT COMME AVANT -->
 <div class="tabs">
 <button class="active">✨ Pour Toi</button>
 <button onclick="location.href='amis.html'">👥 Amis <span id="badgeAmisTop"></span></button>
@@ -174,7 +166,6 @@ button{cursor:pointer}
 <div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication</h3><p>Sois le premier à publier.</p><br><button onclick="location.href='creer-post.html'" style="background:var(--violet);border:0;padding:12px 20px;border-radius:999px;color:#fff;font-weight:800">➕ Créer le premier post</button></div>
 </main>
 
-<!-- ✅ BARRE DU BAS COMME AVANT -->
 <div class="bottom">
 <button class="active" onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
 <button onclick="location.href='amis.html'"><span>👥</span>Amis</button>
