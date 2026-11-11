@@ -8,7 +8,6 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
 body{background:#0A0A0F;color:#fff;overflow:hidden}
 :root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--or2:#FF9800;--carte:#16161F;--ligne:#26262F;--gris:#A1A1AA}
-/* ===== HEADER PRO - PAS FACEBOOK ===== */
 .top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);padding:12px 14px;border-bottom:1px solid var(--ligne);display:flex;align-items:center;gap:10px}
 .logo{font-size:21px;font-weight:900;white-space:nowrap}
 .logo i{color:var(--or);font-style:normal}
@@ -17,9 +16,7 @@ body{background:#0A0A0F;color:#fff;overflow:hidden}
 .top button{width:40px;height:40px;border-radius:50%;background:#1F1F2E;border:1px solid var(--ligne);color:#fff;font-size:18px;cursor:pointer}
 .top .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--or),var(--violet));display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;cursor:pointer}
 .top .avatar img{width:100%;height:100%;object-fit:cover}
-/* ===== LAYOUT WHATSAPP ===== */
 .layout{display:flex;height:calc(100dvh - 65px - 68px)}
-/* LISTE */
 .list{width:360px;background:#0A0A0F;border-right:1px solid var(--ligne);display:flex;flex-direction:column;overflow:hidden}
 .list-head{padding:12px 14px 6px}
 .list-head h2{font-size:20px}
@@ -28,26 +25,29 @@ body{background:#0A0A0F;color:#fff;overflow:hidden}
 .search input{background:none;border:none;outline:none;color:#fff;width:100%;font-size:14px}
 .search input::placeholder{color:#777}
 .conv-list{flex:1;overflow-y:auto}
-.conv{display:flex;gap:11px;padding:12px 14px;cursor:pointer;align-items:center;border-bottom:1px solid #1A1A22}
+.conv{display:flex;gap:11px;padding:12px 14px;cursor:pointer;align-items:center;border-bottom:1px solid #1A1A22;position:relative}
 .conv:active,.conv.active{background:#1F1F2E}
+.conv.pinned{background:rgba(255,193,7,.07);border-left:3px solid var(--or)}
 .conv .avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;position:relative}
 .conv .avatar img{width:100%;height:100%;object-fit:cover}
 .dot{position:absolute;bottom:0;right:0;width:13px;height:13px;background:#22C55E;border:2px solid #0A0A0F;border-radius:50%}
 .conv b{font-size:15px;display:block}
-.conv small{color:var(--gris);font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
-.conv .right{margin-left:auto;text-align:right;flex-shrink:0}
+.conv small{color:var(--gris);font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px}
+.conv .right{margin-left:auto;text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
 .conv .time{font-size:11px;color:#888;display:block}
-.unread{background:var(--or);color:#000;font-size:11px;font-weight:800;padding:2px 7px;border-radius:999px;display:inline-block;margin-top:4px}
-/* CHAT */
-.chat{flex:1;display:flex;flex-direction:column;background:#0A0A0F}
-.chat-head{display:flex;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--ligne);background:#12121A}
-.chat-head .back{display:none;font-size:22px;cursor:pointer}
-.chat-head .avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden}
+.unread{background:var(--or);color:#000;font-size:11px;font-weight:800;padding:2px 7px;border-radius:999px;display:inline-block;margin-top:2px}
+.pin-btn{background:none;border:none;font-size:16px;cursor:pointer;padding:4px;opacity:.6}
+.pin-btn.pinned{opacity:1}
+.chat{flex:1;display:flex;flex-direction:column;background:#0A0A0F;min-width:0}
+.chat-head{display:flex;gap:8px;align-items:center;padding:10px 10px;border-bottom:1px solid var(--ligne);background:#12121A;width:100%;overflow:hidden}
+.chat-head .back{font-size:22px;cursor:pointer;flex-shrink:0;padding:4px}
+.chat-head .avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0}
 .chat-head .avatar img{width:100%;height:100%;object-fit:cover}
-.chat-head b{font-size:15px}
+.chat-head .info{flex:1;min-width:0}
+.chat-head b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chat-head small{color:#22C55E;font-size:12px}
-.chat-head .call{margin-left:auto;display:flex;gap:8px}
-.chat-head .call a{width:38px;height:38px;border-radius:50%;background:#1F1F2E;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
+.chat-head .call{display:flex;gap:6px;flex-shrink:0}
+.chat-head .call a{width:38px;height:38px;border-radius:50%;background:#1F1F2E;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:17px;flex-shrink:0}
 .chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
 .msg{max-width:75%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.4;word-wrap:break-word}
 .msg.mine{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
@@ -58,14 +58,16 @@ body{background:#0A0A0F;color:#fff;overflow:hidden}
 .chat-input{display:flex;gap:8px;align-items:center;padding:10px 12px;border-top:1px solid var(--ligne);background:#12121A}
 .chat-input button{width:42px;height:42px;border:none;background:#2A2A35;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;color:#fff}
 .chat-input button.send{background:linear-gradient(135deg,var(--violet),var(--or));color:#fff}
-.chat-input input{flex:1;padding:12px 14px;background:#2A2A35;border:none;border-radius:999px;outline:none;font-size:15px;color:#fff}
+.chat-input input{flex:1;min-width:0;padding:12px 14px;background:#2A2A35;border:none;border-radius:999px;outline:none;font-size:15px;color:#fff}
 .chat-input input::placeholder{color:#888}
 .chat-input .rec.on{background:#E0245E;animation:pulse 1s infinite}
 @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
 .empty-chat{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gris);gap:10px;text-align:center;padding:20px}
 .empty-chat .big{font-size:60px}
-/* BOTTOM NAV JASONBOOK */
-.bottom{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,10,15,.96);display:flex;justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--ligne)}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,10,15,.96);display:flex;justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--ligne);transition:.2s}
+body.chat-open .bottom{display:none!important}
+body.chat-open .layout{height:calc(100dvh - 65px)}
+body.chat-open .top{display:none}
 .bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:10px;font-weight:700}
 .bottom button.active{color:var(--or)}
 .bottom button span{font-size:22px}
@@ -101,7 +103,7 @@ body{background:#0A0A0F;color:#fff;overflow:hidden}
 <div class="chat-head">
 <span class="back" onclick="retourListe()">←</span>
 <div class="avatar" id="chatAvatar">?</div>
-<div style="flex:1"><b id="chatNom"></b><br><small id="chatStatut">En ligne</small></div>
+<div class="info"><b id="chatNom"></b><br><small id="chatStatut">En ligne</small></div>
 <div class="call"><a href="appel.html">📞</a><a href="#" onclick="return false">📹</a></div>
 </div>
 <div class="chat-body" id="chatBody"></div>
@@ -116,7 +118,7 @@ body{background:#0A0A0F;color:#fff;overflow:hidden}
 </div>
 </div>
 
-<div class="bottom">
+<div class="bottom" id="bottomNav">
 <button onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
 <button onclick="location.href='amis.html'"><span>👥</span>Amis</button>
 <button onclick="location.href='creer-post.html'"><span class="centre">+</span></button>
@@ -136,37 +138,70 @@ document.getElementById('myAvatarTop').innerHTML = maPhoto ? `<img src="${maPhot
 let tousUsers=[], convActuelle=null, destinataire=null, mediaRecorder=null, audioChunks=[];
 const params=new URLSearchParams(location.search); const uidCible=params.get('uid');
 function avatarHTML(photo, lettre){ return photo ? `<img src="${photo}">` : lettre; }
-window.retourListe=()=>{ document.getElementById('chatPanel').classList.remove('show-mob'); document.getElementById('listPanel').classList.remove('hide-mob'); };
+// ✅ ÉPINGLÉS - SAUVEGARDÉS
+function getPinned(){ try{ return JSON.parse(localStorage.getItem('jasonbook_pinned_'+uid)||"[]"); }catch(e){ return []; } }
+function setPinned(list){ localStorage.setItem('jasonbook_pinned_'+uid, JSON.stringify(list)); }
+window.togglePin=(e, otherUid)=>{
+  e.stopPropagation();
+  let pinned = getPinned();
+  if(pinned.includes(otherUid)){ pinned = pinned.filter(x=>x!==otherUid); }
+  else { pinned.unshift(otherUid); }
+  setPinned(pinned);
+  chargerListe();
+};
+window.retourListe=()=>{
+  document.getElementById('chatPanel').classList.remove('show-mob');
+  document.getElementById('listPanel').classList.remove('hide-mob');
+  document.body.classList.remove('chat-open');
+};
 window.filtrer=()=>{
   const q=document.getElementById('searchUser').value.toLowerCase();
   document.querySelectorAll('.conv').forEach(c=>{ c.style.display = c.dataset.nom.toLowerCase().includes(q) ? 'flex' : 'none'; });
 };
-onValue(ref(db,'jasonbook/users'), async (snap)=>{
+// ✅ CHARGER + TRIER : ÉPINGLÉS EN HAUT, PUIS DERNIER MESSAGE LE PLUS RÉCENT EN HAUT
+async function chargerListe(){
+  const snap = await get(ref(db,'jasonbook/users'));
   const data=snap.val(); if(!data) return;
   tousUsers=Object.values(data).filter(u=>u.uid!==uid);
-  const box=document.getElementById('convList'); box.innerHTML="";
-  if(!tousUsers.length){ document.getElementById('noConv').style.display="block"; return; }
+  const pinned = getPinned();
+  let items=[];
   for(const u of tousUsers){
     const chatId = [uid, u.uid].sort().join('_');
     const s=await get(ref(db,'jasonbook/messages/'+chatId)); const msgs=s.val();
-    let last="Dis bonjour...", lastTime="", nonLu=0;
-    if(msgs){ const arr=Object.values(msgs); const d=arr[arr.length-1]; last=d.texte|| (d.photoUrl?"📷 Photo": d.audioUrl?"🎤 Vocal":""); lastTime=d.heure||""; nonLu=arr.filter(m=>m.auteurUid!==uid && !m.lu).length; }
-    const div=document.createElement('div'); div.className='conv'; div.dataset.nom=u.nomComplet||"";
-    div.innerHTML=`<div class="avatar">${avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0))}<div class="dot"></div></div><div style="flex:1;min-width:0"><b>${u.nomComplet||""}</b><small>${last}</small></div><div class="right"><span class="time">${lastTime}</span>${nonLu?`<br><span class="unread">${nonLu}</span>`:""}</div>`;
+    let last="Dis bonjour...", lastTime="", nonLu=0, lastTs=0;
+    if(msgs){ const arr=Object.values(msgs); const d=arr[arr.length-1]; last=d.texte|| (d.photoUrl?"📷 Photo": d.audioUrl?"🎤 Vocal":""); lastTime=d.heure||""; lastTs=d.timestamp||0; nonLu=arr.filter(m=>m.auteurUid!==uid && !m.lu).length; }
+    items.push({u, chatId, last, lastTime, nonLu, lastTs, isPinned: pinned.includes(u.uid)});
+  }
+  // TRI : 1. Épinglés d'abord, 2. Dernier message le plus récent en haut
+  items.sort((a,b)=>{
+    if(a.isPinned && !b.isPinned) return -1;
+    if(!a.isPinned && b.isPinned) return 1;
+    if(a.isPinned && b.isPinned) return pinned.indexOf(a.u.uid) - pinned.indexOf(b.u.uid);
+    return (b.lastTs||0) - (a.lastTs||0);
+  });
+  const box=document.getElementById('convList'); box.innerHTML="";
+  if(!items.length){ document.getElementById('noConv').style.display="block"; return; }
+  items.forEach(({u, chatId, last, lastTime, nonLu, isPinned})=>{
+    const div=document.createElement('div'); div.className='conv'+(isPinned?' pinned':''); div.dataset.nom=u.nomComplet||"";
+    div.innerHTML=`<div class="avatar">${avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0))}<div class="dot"></div></div><div style="flex:1;min-width:0"><b>${isPinned?'📌 ':''}${u.nomComplet||""}</b><small>${last}</small></div><div class="right"><span class="time">${lastTime}</span>${nonLu?`<span class="unread">${nonLu}</span>`:""}<button class="pin-btn ${isPinned?'pinned':''}" onclick="togglePin(event,'${u.uid}')">${isPinned?'📌':'📍'}</button></div>`;
     div.onclick=()=>ouvrirChat(u, chatId);
     box.appendChild(div);
-  }
+  });
   if(uidCible){
     const cible=tousUsers.find(u=>u.uid===uidCible);
     if(cible) ouvrirChat(cible, [uid, uidCible].sort().join('_'));
   }
-});
+}
+chargerListe();
+// ✅ QUAND UN NOUVEAU MESSAGE ARRIVE, ON RE-TRIE TOUT DE SUITE
+onValue(ref(db,'jasonbook/messages'), ()=>{ chargerListe(); });
 window.ouvrirChat=async (u, chatId)=>{
   destinataire=u; convActuelle=chatId;
   document.getElementById('emptyChat').style.display="none";
   const cc=document.getElementById('chatContent'); cc.style.display="flex";
   document.getElementById('chatPanel').classList.add('show-mob');
   document.getElementById('listPanel').classList.add('hide-mob');
+  document.body.classList.add('chat-open');
   document.getElementById('chatAvatar').innerHTML=avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0));
   document.getElementById('chatNom').innerText=u.nomComplet||"";
   document.getElementById('chatStatut').innerText="En ligne • "+(u.pays||"");
@@ -195,6 +230,8 @@ window.envoyerMsg=async (photoUrl="", audioUrl="")=>{
   inp.value="";
   const nRef=push(ref(db,'jasonbook/notifications/'+destinataire.uid));
   await set(nRef,{ type:"message", texte:monNom+" t'a envoyé un message", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), lu:false });
+  // ✅ Après avoir envoyé, on re-trie pour que la personne monte en haut
+  setTimeout(()=>chargerListe(), 500);
 };
 document.getElementById('fileImg').addEventListener('change', e=>{
   const f=e.target.files[0]; if(!f) return; const r=new FileReader();
