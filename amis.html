@@ -35,8 +35,6 @@ body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:92px;overfl
 .info small{color:var(--muted);font-size:12px;display:block;margin-top:2px}
 .badge-new{background:var(--gold);color:#111;font-size:10px;font-weight:800;padding:3px 7px;border-radius:999px}
 .badge-statut{background:var(--card2);color:#ccc;font-size:10px;padding:3px 7px;border-radius:999px}
-.badge-post{background:#1A1526;color:#C4B5FD;font-size:10px;padding:3px 7px;border-radius:999px;border:1px solid rgba(124,58,237,.4)}
-.badge-demande{background:#E0245E;color:#fff;font-size:10px;padding:3px 7px;border-radius:999px;font-weight:800}
 .btns{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
 .btns button{border:none;padding:8px 12px;border-radius:999px;font-weight:700;font-size:12px;cursor:pointer}
 .btn-violet{background:var(--violet);color:#fff}
@@ -75,7 +73,7 @@ body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:92px;overfl
 </div>
 <div class="search-box">🔍 <input id="recherche" placeholder="Rechercher un utilisateur..." oninput="rendre()"></div>
 <div id="list"></div>
-<div class="empty" id="emptyBox" style="display:none">Aucun utilisateur trouvé.</div>
+<div class="empty" id="emptyBox" style="display:none">Aucun utilisateur trouvé.<br><small>Si quelqu'un vient de s'inscrire, il apparaît ici en quelques secondes.</small></div>
 <p id="debug" style="text-align:center;color:#555;font-size:11px;margin-top:10px"></p>
 </div>
 
@@ -89,95 +87,80 @@ body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:92px;overfl
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {getDatabase,ref,onValue,set,remove,push} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import {getDatabase,ref,onValue,set,remove,push,get} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
 const app=initializeApp(firebaseConfig); const db=getDatabase(app);
 const uid=localStorage.getItem("jasonbook_uid"); if(!uid) location.href="index.html";
 const monNom=localStorage.getItem("jasonbook_nom")||"";
 const maPhoto=localStorage.getItem("jasonbook_photo")||"";
-let usersProfils={}, usersDepuisPosts={}, mesAmis=new Set(), demandesRecuesMap={}, demandesEnvoyeesMap={}, filtre="tous";
-// ✅ CORRIGÉ : on récupère le VRAI uid dans la demande, pas la clé push
+let tousUsers=[], mesAmis=new Set(), demandesRecuesMap={}, demandesEnvoyeesMap={}, filtre="tous";
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function estNouveau(ts){ if(!ts) return false; return (Date.now()-ts) < 7*24*60*60*1000; }
 function extraireDemandes(data){
   const map={};
   Object.entries(data||{}).forEach(([cle,val])=>{
     if(!val || typeof val!=="object") return;
-    // Cas 1 : clé = uid direct : demandes/TOI/UID_DE_LUI = {deUid...}
-    // Cas 2 : clé = pushId : demandes/TOI/-Nxxx = {deUid: UID_DE_LUI, deNom...}
-    // Cas 3 : demandesEnvoyees : clé = uid OU pushId avec aUid
     const vraiUid = val.deUid || val.aUid || val.uid || cle;
     const nom = val.deNom || val.nom || val.aNom || "Utilisateur";
     const photo = val.dePhoto || val.photo || val.aPhoto || "";
-    map[vraiUid]={cleFirebase:cle, nom, photo, timestamp:val.timestamp||0, raw:val};
+    map[vraiUid]={cleFirebase:cle, nom, photo, timestamp:val.timestamp||0};
   });
   return map;
-}
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function estNouveau(ts){ if(!ts) return false; return (Date.now()-ts) < 7*24*60*60*1000; }
-function fusionUsers(){
-  const map={};
-  Object.entries(usersProfils).forEach(([id,u])=>{ map[id]={uid:id, nom:u.nom||"Utilisateur", photo:u.photo||"", ville:u.ville||"", pays:u.pays||"", metier:u.metier||"", timestamp:u.timestamp||0, depuisPost:false}; });
-  Object.entries(usersDepuisPosts).forEach(([id,u])=>{ if(!map[id]) map[id]={uid:id, nom:u.nom, photo:u.photo||"", ville:"", pays:"", metier:"", timestamp:u.timestamp||0, depuisPost:true}; });
-  // ✅ IMPORTANT : même si la personne n'est ni dans users ni dans posts, si elle t'a envoyé une demande, on l'affiche quand même
-  Object.entries(demandesRecuesMap).forEach(([id,d])=>{ if(!map[id]) map[id]={uid:id, nom:d.nom, photo:d.photo||"", ville:"", pays:"", metier:"", timestamp:d.timestamp||0, depuisPost:false, depuisDemande:true}; });
-  Object.entries(demandesEnvoyeesMap).forEach(([id,d])=>{ if(!map[id]) map[id]={uid:id, nom:d.nom, photo:d.photo||"", ville:"", pays:"", metier:"", timestamp:d.timestamp||0, depuisPost:false}; });
-  return Object.values(map);
 }
 window.setFiltre=(f,btn)=>{ filtre=f; document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); rendre(); };
 function rendre(){
   const q=(document.getElementById('recherche').value||"").toLowerCase();
   const box=document.getElementById('list'); box.innerHTML="";
-  let liste=fusionUsers().filter(u=>u.uid!==uid);
+  // On fusionne : profils + personnes qui ont envoyé une demande
+  let all=[...tousUsers];
+  Object.entries(demandesRecuesMap).forEach(([id,d])=>{
+    if(!all.find(u=>u.uid===id)) all.push({uid:id, nom:d.nom, photo:d.photo, ville:"", pays:"", metier:"", timestamp:d.timestamp||0});
+  });
+  let liste=all.filter(u=>u.uid!==uid);
   if(filtre==="amis") liste=liste.filter(u=>mesAmis.has(u.uid));
   if(filtre==="recues") liste=liste.filter(u=>demandesRecuesMap[u.uid]);
   if(filtre==="envoyees") liste=liste.filter(u=>demandesEnvoyeesMap[u.uid]);
   if(q) liste=liste.filter(u=>(u.nom+" "+(u.ville||"")+" "+(u.metier||"")).toLowerCase().includes(q));
   liste.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
   document.getElementById('emptyBox').style.display=liste.length?"none":"block";
-  document.getElementById('debug').innerText="Profils : "+Object.keys(usersProfils).length+" • Demandes reçues : "+Object.keys(demandesRecuesMap).length+" • Total affiché : "+liste.length;
+  document.getElementById('debug').innerText="Dernière mise à jour : "+new Date().toLocaleTimeString()+" • Total dans la base : "+tousUsers.length;
   liste.forEach(u=>{
     const isAmi=mesAmis.has(u.uid);
     const isRecue=!!demandesRecuesMap[u.uid];
     const isEnvoyee=!!demandesEnvoyeesMap[u.uid];
     let statut=""; let btns="";
     if(isAmi){ statut='<span class="badge-statut">Ami</span>'; btns=`<button class="btn-violet" onclick="allerMessage('${u.uid}')">💬 Message</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Profil</button><button class="btn-red" onclick="retirerAmi('${u.uid}')">Retirer</button>`; }
-    else if(isRecue){ statut='<span class="badge-demande">📩 Demande reçue</span>'; btns=`<button class="btn-gold" onclick="accepterDemande('${u.uid}')">✅ Accepter</button><button class="btn-red" onclick="refuserDemande('${u.uid}')">Refuser</button>`; }
+    else if(isRecue){ statut='<span class="badge-statut">Demande reçue</span>'; btns=`<button class="btn-gold" onclick="accepterDemande('${u.uid}')">✅ Accepter</button><button class="btn-red" onclick="refuserDemande('${u.uid}')">Refuser</button>`; }
     else if(isEnvoyee){ statut='<span class="badge-statut">Envoyée</span>'; btns=`<button class="btn-grey">En attente</button><button class="btn-red" onclick="annulerDemande('${u.uid}')">Annuler</button>`; }
     else { btns=`<button class="btn-gold" onclick="envoyerDemande('${u.uid}','${esc(u.nom)}')">➕ Ajouter</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${u.uid}'">Profil</button>`; }
     const div=document.createElement('div'); div.className='user-card';
-    div.innerHTML=`<div class="avatar">${u.photo?`<img src="${esc(u.photo)}">`:esc((u.nom||"?").charAt(0).toUpperCase())}</div><div class="info"><b>${esc(u.nom)} ${estNouveau(u.timestamp)?'<span class="badge-new">NOUVEAU</span>':''} ${statut} ${u.depuisPost?'<span class="badge-post">📝 A publié</span>':''}</b><small>${esc(u.metier||"")}${u.metier&&u.ville?" • ":""}${esc(u.ville||"")}${u.pays?" • "+esc(u.pays):""}</small><div class="btns">${btns}</div></div>`;
+    div.innerHTML=`<div class="avatar">${u.photo?`<img src="${esc(u.photo)}">`:esc((u.nom||"?").charAt(0).toUpperCase())}</div><div class="info"><b>${esc(u.nom)} ${estNouveau(u.timestamp)?'<span class="badge-new">NOUVEAU</span>':''} ${statut}</b><small>${esc(u.metier||"")}${u.metier&&u.ville?" • ":""}${esc(u.ville||"")}${u.pays?" • "+esc(u.pays):""}</small><div class="btns">${btns}</div></div>`;
     box.appendChild(div);
   });
-  const total=fusionUsers().filter(u=>u.uid!==uid).length;
-  document.getElementById('nbUsers').innerText=total;
+  document.getElementById('nbUsers').innerText=all.filter(u=>u.uid!==uid).length;
   document.getElementById('nbAmis').innerText=mesAmis.size;
   document.getElementById('nbDemandes').innerText=Object.keys(demandesRecuesMap).length;
-  document.getElementById('cTous').innerText=total;
+  document.getElementById('cTous').innerText=all.filter(u=>u.uid!==uid).length;
   document.getElementById('cAmis').innerText=mesAmis.size;
 }
 window.allerMessage=(amiUid)=>{ location.href='messages.html?ami='+amiUid; };
 window.envoyerDemande=async (cibleUid,nom)=>{
-  const newRef=push(ref(db,'jasonbook/demandes/'+cibleUid));
-  await set(newRef,{deUid:uid,deNom:monNom,dePhoto:maPhoto||"",date:new Date().toLocaleString(),timestamp:Date.now()});
-  const newRef2=push(ref(db,'jasonbook/demandesEnvoyees/'+uid));
-  await set(newRef2,{aUid:cibleUid,aNom:nom,date:new Date().toLocaleString(),timestamp:Date.now()});
+  const n1=push(ref(db,'jasonbook/demandes/'+cibleUid)); await set(n1,{deUid:uid,deNom:monNom,dePhoto:maPhoto||"",date:new Date().toLocaleString(),timestamp:Date.now()});
+  const n2=push(ref(db,'jasonbook/demandesEnvoyees/'+uid)); await set(n2,{aUid:cibleUid,date:new Date().toLocaleString(),timestamp:Date.now()});
   const n=push(ref(db,'jasonbook/notifications/'+cibleUid)); await set(n,{type:"demande_ami",texte:monNom+" t'a envoyé une demande d'ami",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});
   alert("Demande envoyée à "+nom+" ✅");
 };
 window.annulerDemande=async (cibleUid)=>{
   const cle=demandesEnvoyeesMap[cibleUid]?.cleFirebase;
   if(cle) await remove(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cle));
-  // On cherche aussi la demande chez l'autre
-  const snap=await new Promise(res=>{ const unsub=onValue(ref(db,'jasonbook/demandes/'+cibleUid),s=>{res(s.val()||{});},{onlyOnce:true}); });
-  Object.entries(snap).forEach(([k,v])=>{ if(v.deUid===uid) remove(ref(db,'jasonbook/demandes/'+cibleUid+'/'+k)); });
+  const snap=await get(ref(db,'jasonbook/demandes/'+cibleUid)); const d=snap.val()||{};
+  for(const [k,v] of Object.entries(d)){ if(v.deUid===uid) await remove(ref(db,'jasonbook/demandes/'+cibleUid+'/'+k)); }
 };
 window.accepterDemande=async (deUid)=>{
   await set(ref(db,'jasonbook/amis/'+uid+'/'+deUid),{timestamp:Date.now()});
   await set(ref(db,'jasonbook/amis/'+deUid+'/'+uid),{timestamp:Date.now()});
   const cle=demandesRecuesMap[deUid]?.cleFirebase;
   if(cle) await remove(ref(db,'jasonbook/demandes/'+uid+'/'+cle));
-  // Supprimer aussi dans envoyées chez lui
-  const snap=await new Promise(res=>{ onValue(ref(db,'jasonbook/demandesEnvoyees/'+deUid),s=>{res(s.val()||{});},{onlyOnce:true}); });
-  Object.entries(snap).forEach(([k,v])=>{ if(v.aUid===uid) remove(ref(db,'jasonbook/demandesEnvoyees/'+deUid+'/'+k)); });
   alert("Ami ajouté ✅");
 };
 window.refuserDemande=async (deUid)=>{
@@ -186,13 +169,8 @@ window.refuserDemande=async (deUid)=>{
 };
 window.retirerAmi=async (amiUid)=>{ if(!confirm("Retirer cet ami ?")) return; await remove(ref(db,'jasonbook/amis/'+uid+'/'+amiUid)); await remove(ref(db,'jasonbook/amis/'+amiUid+'/'+uid)); };
 onValue(ref(db,'jasonbook/users'),s=>{
-  const d=s.val()||{}; usersProfils={};
-  Object.entries(d).forEach(([id,u])=>{ usersProfils[id]={nom:u.nom||u.name||"Utilisateur", photo:u.photo||u.photoUrl||"", ville:u.ville||"", pays:u.pays||"", metier:u.metier||u.profession||"", timestamp:u.timestamp||u.createdAt||0}; });
-  rendre();
-});
-onValue(ref(db,'jasonbook/posts'),s=>{
-  const d=s.val()||{}; usersDepuisPosts={};
-  Object.values(d).forEach(p=>{ if(!p.auteurUid) return; if(!usersDepuisPosts[p.auteurUid]) usersDepuisPosts[p.auteurUid]={nom:p.nomAuteur||"Utilisateur", photo:p.photoAuteur||"", timestamp:p.timestamp||0}; });
+  const d=s.val()||{};
+  tousUsers=Object.entries(d).map(([uid2,u])=>({uid:uid2, nom:u.nom||u.name||"Utilisateur", photo:u.photo||u.photoUrl||"", ville:u.ville||"", pays:u.pays||"", metier:u.metier||u.profession||"", timestamp:u.timestamp||u.createdAt||0}));
   rendre();
 });
 onValue(ref(db,'jasonbook/amis/'+uid),s=>{ const d=s.val()||{}; mesAmis=new Set(Object.keys(d)); rendre(); });
