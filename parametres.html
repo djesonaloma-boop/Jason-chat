@@ -3,47 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>JASONBOOK - Paramètres</title>
+<meta name="theme-color" content="#0A0A0F">
+<title>JASONBOOK ✨ - Paramètres</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
 html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
-:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
-body{background:var(--bg);min-height:100vh}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.3px;flex:1}
-.logo span{width:34px;height:34px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.logo i{color:#FFD700;font-style:normal}
-.icons{display:flex;gap:6px;align-items:center}
-.icons a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
-.avatar{width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.wrap{max-width:650px;margin:16px auto;padding:0 12px}
-.wrap h1{font-size:23px;margin-bottom:14px;letter-spacing:-.3px}
-.section{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--line)}
-.section h3{margin-bottom:12px}
-.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f2f5;gap:10px}
+:root{--blue:#7C3AED;--blue2:#A855F7;--gold:#FFC107;--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--grey:#A1A1AA;--line:#26262F;--white:#fff}
+body{background:var(--bg);color:var(--white);min-height:100vh}
+/* HEADER - MEME COULEUR QUE PROFIL - SANS NOTIF, SANS MESSAGES, SANS RECHERCHE */
+.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.logo{font-size:21px;font-weight:900;white-space:nowrap;flex:1;cursor:pointer}
+.logo i{color:var(--gold);font-style:normal}
+.logo small{display:block;font-size:8px;color:var(--grey);letter-spacing:1.2px}
+.btn-param{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#FF9800);border:none;color:#000;font-size:18px;cursor:pointer;flex-shrink:0}
+.avatar-top{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--blue));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar-top img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:650px;margin:16px auto;padding:0 12px 20px}
+.wrap h1{font-size:23px;margin-bottom:14px}
+.section{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:12px}
+.section h3{margin-bottom:12px;font-size:16px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);gap:10px;cursor:pointer}
 .row:last-child{border-bottom:none}
 .row .label b{font-size:14px}.row .label p{font-size:12px;color:var(--grey);margin-top:2px}
-.row input,.row select{padding:9px 12px;border:1.5px solid #e4e6eb;border-radius:9px;outline:none;font-size:14px;background:#f8f9fa;max-width:190px}
-.row input:focus,.row select:focus{border-color:var(--blue);background:#fff}
-.switch{position:relative;width:48px;height:26px;background:#ccc;border-radius:999px;cursor:pointer;flex-shrink:0}
+.row input,.row select{padding:10px 12px;border:1px solid var(--line);border-radius:12px;outline:none;font-size:14px;background:var(--card2);color:#fff;max-width:190px}
+.row input:focus,.row select:focus{border-color:var(--blue)}
+.row .arrow{color:var(--grey);font-size:20px}
+.switch{position:relative;width:48px;height:26px;background:#444;border-radius:999px;cursor:pointer;flex-shrink:0;transition:.2s}
 .switch::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s}
-.switch.on{background:var(--blue)}.switch.on::after{left:25px}
-.btn-blue{background:var(--blue);color:#fff;border:none;padding:12px;border-radius:10px;font-weight:800;cursor:pointer;width:100%;font-size:14px}
-.btn-grey{background:#f0f2f5;border:none;padding:12px;border-radius:10px;font-weight:700;cursor:pointer;width:100%;font-size:14px}
-.btn-red{background:#e0245e;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:800;cursor:pointer;width:100%;font-size:14px}
-.danger{border:1.5px solid #ffc9c9}
-.bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+.switch.on{background:linear-gradient(135deg,var(--blue),var(--blue2))}.switch.on::after{left:25px}
+.btn-blue{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;cursor:pointer;width:100%;font-size:14px}
+.btn-grey{background:var(--card2);border:1px solid var(--line);color:#fff;padding:12px;border-radius:12px;font-weight:700;cursor:pointer;width:100%;font-size:14px}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border:none;padding:12px;border-radius:12px;font-weight:800;cursor:pointer;width:100%;font-size:14px}
+.btn-red{background:#E0245E;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;cursor:pointer;width:100%;font-size:14px}
+.danger{border:1.5px solid #FF6B6B}
 </style>
-<link rel="stylesheet" href="assets/brand.css">
 </head>
 <body>
 
-<header>
-<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
-</header>
+<!-- HEADER PROFIL : LOGO + PARAMETRES + PHOTO, RIEN D'AUTRE -->
+<div class="top">
+<div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
+<button class="btn-param" onclick="location.href='parametres.html'">⚙️</button>
+<div class="avatar-top" id="myAvatar" onclick="location.href='profil.html'">?</div>
+</div>
 
 <div class="wrap">
 <h1>⚙️ Paramètres</h1>
@@ -61,7 +63,9 @@ header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14p
 <div class="row"><div class="label"><b>Nouveau mot de passe</b></div><input id="newPass" type="password" placeholder="6 caractères minimum"></div>
 <div class="row"><div class="label"><b>Confirmer le nouveau</b></div><input id="confirmPass" type="password" placeholder="Répéter le mot de passe"></div>
 <button class="btn-blue" style="margin-top:10px" onclick="changerMotDePasse()">🔒 Modifier le mot de passe</button><p id="passMsg" style="font-size:12px;margin-top:9px"></p>
-<p style="font-size:11px;color:#A1A1AA;margin-top:10px">Migration Firebase Authentication obligatoire avant mise en production : cette version conserve temporairement l'ancien système de connexion.</p></div><div class="section">
+<p style="font-size:11px;color:#A1A1AA;margin-top:10px">Migration Firebase Authentication obligatoire avant mise en production : cette version conserve temporairement l'ancien système de connexion.</p></div>
+
+<div class="section">
 <h3>🔒 Confidentialité</h3>
 <div class="row"><div class="label"><b>Profil public</b><p>Tout le monde peut voir ton profil</p></div><div class="switch on" id="swPublic" onclick="toggleSwitch('swPublic','jasonbook_public')"></div></div>
 <div class="row"><div class="label"><b>Qui peut m'envoyer un message ?</b></div><select id="selMsg"><option value="tous">Tout le monde</option><option value="amis">Amis seulement</option></select></div>
@@ -80,16 +84,32 @@ header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14p
 
 <div class="section">
 <h3>🎨 Apparence</h3>
-<div class="row"><div class="label"><b>Mode sombre</b><p>Thème sombre pour toute l'app</p></div><div class="switch" id="swDark" onclick="toggleDark()"></div></div>
+<div class="row"><div class="label"><b>Mode sombre</b><p>Déjà activé sur JASONBOOK PRO</p></div><div class="switch on" id="swDark" onclick="toggleDark()"></div></div>
 <div class="row"><div class="label"><b>Langue</b></div><select id="selLangue"><option value="fr">Français</option><option value="en">English</option><option value="ln">Lingala</option></select></div>
 <button class="btn-blue" style="margin-top:10px" onclick="sauvegarderLangue()">💾 Enregistrer la langue</button>
 </div>
 
+<!-- ✅ NOUVEAU : VRAIS PARAMETRES -->
+<div class="section">
+<h3>🛡️ Sécurité & Gestion</h3>
+<div class="row" onclick="alert('Fonction Personnes bloquées : bientôt disponible')"><div class="label"><b>🚫 Personnes bloquées</b><p>Gérer les personnes que tu as bloquées</p></div><span class="arrow">›</span></div>
+<div class="row" onclick="viderCache()"><div class="label"><b>🧹 Vider le cache</b><p>Libère de l'espace, rend l'app plus rapide</p></div><span class="arrow">›</span></div>
+<div class="row" onclick="alert('Historique des connexions : bientôt disponible')"><div class="label"><b>📱 Appareils connectés</b><p>Voir où ton compte est connecté</p></div><span class="arrow">›</span></div>
+</div>
+
+<div class="section">
+<h3>💬 Aide & Support</h3>
+<div class="row" onclick="alert('Centre d’aide JASONBOOK : Écris-nous sur WhatsApp / Email Jason Team')"><div class="label"><b>❓ Centre d’aide</b><p>Questions fréquentes, tutoriels</p></div><span class="arrow">›</span></div>
+<div class="row" onclick="alert('Merci de signaler ! Décris le problème à Jason Team.')"><div class="label"><b>🚩 Signaler un problème</b><p>Bug, compte, publication</p></div><span class="arrow">›</span></div>
+<div class="row" onclick="alert('JASONBOOK - Respecte les autres, pas de harcèlement, pas de contenu haineux. Merci ! ❤️')"><div class="label"><b>📜 Conditions d’utilisation</b><p>Règles de la communauté</p></div><span class="arrow">›</span></div>
+<div class="row" onclick="alert('JASONBOOK respecte ta vie privée. Tes données restent à toi.')"><div class="label"><b>🔏 Politique de confidentialité</b></div><span class="arrow">›</span></div>
+</div>
+
 <div class="section">
 <h3>ℹ️ À propos</h3>
-<div class="row"><div class="label"><b>Version</b></div><span style="color:#65676b;font-size:14px">JASONBOOK 1.0</span></div>
-<div class="row"><div class="label"><b>Développeur</b></div><span style="color:#65676b;font-size:14px">Jason Team</span></div>
-<div class="row"><div class="label"><b>Conditions d'utilisation</b></div><button class="btn-grey" style="width:auto;padding:8px 14px" onclick="alert('JASONBOOK - Respecte les autres, pas de harcèlement, pas de contenu haineux. Merci ! ❤️')">Voir</button></div>
+<div class="row"><div class="label"><b>Version</b></div><span style="color:#A1A1AA;font-size:14px">JASONBOOK 1.0</span></div>
+<div class="row"><div class="label"><b>Développeur</b></div><span style="color:#A1A1AA;font-size:14px">Jason Team</span></div>
+<div class="row"><div class="label"><b>Booster mon compte</b><p>Gagne plus de vues</p></div><button class="btn-gold" style="width:auto;padding:8px 14px" onclick="location.href='booster.html'">🚀 Booster</button></div>
 </div>
 
 <div class="section danger">
@@ -97,9 +117,9 @@ header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14p
 <button class="btn-grey" style="margin-bottom:8px" onclick="deconnecter()">🚪 Se déconnecter</button>
 <button class="btn-red" onclick="supprimerCompte()">🗑️ Supprimer mon compte définitivement</button>
 </div>
-</div>
 
-<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="parametres.html">⚙️</a><a href="profil.html">👤</a></nav>
+<button class="btn-grey" onclick="location.href='feed.html'" style="margin-top:4px">← Retour à l’accueil</button>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -117,15 +137,11 @@ document.getElementById('selMsg').value = localStorage.getItem('jasonbook_msg_qu
 document.getElementById('selAmis').value = localStorage.getItem('jasonbook_amis_qui')||"tous";
 document.getElementById('selLangue').value = localStorage.getItem('jasonbook_langue')||"fr";
 ['swPublic','swOnline','swLike','swCom','swAmi','swMsg'].forEach(id=>{
-  const key='jasonbook_'+id; const val=localStorage.getItem(key);
+  const val=localStorage.getItem('jasonbook_'+id);
   if(val==='0') document.getElementById(id).classList.remove('on');
   if(val==='1') document.getElementById(id).classList.add('on');
 });
-if(localStorage.getItem('jasonbook_dark')==='1'){ document.getElementById('swDark').classList.add('on'); appliquerDark(true); }
-function appliquerDark(on){
-  if(on){ document.body.style.background='#18191a'; document.querySelectorAll('.section').forEach(s=>{ s.style.background='#242526'; s.style.color='#e4e6eb'; }); }
-  else { document.body.style.background='#f0f2f5'; document.querySelectorAll('.section').forEach(s=>{ s.style.background='#fff'; s.style.color='#000'; }); }
-}
+if(localStorage.getItem('jasonbook_dark')==='0'){ document.getElementById('swDark').classList.remove('on'); }
 window.toggleSwitch=(id,key)=>{
   const el=document.getElementById(id); el.classList.toggle('on');
   localStorage.setItem(key, el.classList.contains('on')?'1':'0');
@@ -133,8 +149,7 @@ window.toggleSwitch=(id,key)=>{
 };
 window.toggleDark=()=>{
   const el=document.getElementById('swDark'); el.classList.toggle('on');
-  const on=el.classList.contains('on');
-  localStorage.setItem('jasonbook_dark', on?'1':'0'); appliquerDark(on);
+  localStorage.setItem('jasonbook_dark', el.classList.contains('on')?'1':'0');
 };
 window.sauvegarderProfil=async()=>{
   const nom=document.getElementById('inNom').value.trim();
@@ -156,6 +171,12 @@ window.sauvegarderConf=()=>{
 window.sauvegarderLangue=()=>{
   localStorage.setItem('jasonbook_langue', document.getElementById('selLangue').value);
   alert("Langue enregistrée ! 🌍");
+};
+window.viderCache=()=>{
+  if(!confirm("Vider le cache ? Tes posts en cache seront effacés, mais pas ton compte.")) return;
+  localStorage.removeItem('jasonbook_feed_cache');
+  localStorage.removeItem('jasonbook_profil_cache');
+  alert("Cache vidé ! L'app sera plus rapide. 🧹");
 };
 window.deconnecter=()=>{
   if(!confirm("Te déconnecter ?")) return;
