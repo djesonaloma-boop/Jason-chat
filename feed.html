@@ -30,11 +30,11 @@ body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:92px;overfl
 .btn-suivre.suit{background:var(--gold);color:#111}
 .post-texte{padding:2px 12px 10px;font-size:15px;line-height:1.4;white-space:pre-wrap;word-break:break-word}
 .post-img{width:100%;display:block;max-height:520px;object-fit:cover;background:#000}
-/* ✅ BARRE D'ACTIONS EN BAS - COMME TES AUTRES POSTS, PLUS RIEN SUR LA PHOTO */
-.actions{display:flex;align-items:center;gap:6px;padding:10px 8px;border-top:1px solid var(--line)}
-.actions button{flex:1;background:var(--card2);border:1px solid var(--line);color:#fff;padding:9px 4px;border-radius:999px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:5px}
-.actions button.active-like{background:rgba(224,36,94,.18);border-color:var(--red);color:#FF6B9D}
-.actions button.active-fav{background:rgba(255,193,7,.18);border-color:var(--gold);color:var(--gold)}
+/* ✅ C'EST TON STYLE D'AVANT POUR LES BOUTONS EN BAS - COMME TON POST "Nsimba nsix" */
+.actions{display:flex;align-items:center;gap:6px;padding:10px 8px}
+.actions button{flex:1;background:var(--card2);border:none;color:#fff;padding:9px 4px;border-radius:999px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:5px}
+.actions button.active-like{color:#FF6B9D}
+.actions button.active-fav{color:var(--gold)}
 .actions button span{font-size:15px}
 .commentaires{background:#0F0F16;padding:10px 12px;border-top:1px solid var(--line);display:none}
 .commentaires.open{display:block}
@@ -98,7 +98,6 @@ function rendre(){
   let liste=Object.entries(posts).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
   document.getElementById('emptyBox').style.display=liste.length?"none":"block";
   liste.forEach(p=>{
-    // ✅ CORRIGÉ : on compte VRAIMENT les likes, commentaires, partages
     const nbLikes = likes[p.id] ? Object.keys(likes[p.id]).length : (p.likes || 0);
     const nbComs = commentaires[p.id] ? Object.keys(commentaires[p.id]).length : (p.nbCommentaires || 0);
     const nbPartages = p.partages || 0;
@@ -115,9 +114,8 @@ function rendre(){
       ${p.texte?`<div class="post-texte">${esc(p.texte)}</div>`:''}
       ${p.image?`<img class="post-img" src="${esc(p.image)}" loading="lazy">`:''}
       ${p.video?`<video class="post-img" src="${esc(p.video)}" controls preload="none"></video>`:''}
-      <!-- ✅ PLUS DE BARRE VERTICALE SUR LA PHOTO, TOUT EST ICI EN BAS -->
       <div class="actions">
-        <button class="${jaiLike?'active-like':''}" onclick="toggleLike('${p.id}',this)"><span>${jaiLike?'❤️':'🤍'}</span> ${nbLikes}</button>
+        <button class="${jaiLike?'active-like':''}" onclick="toggleLike('${p.id}',this)"><span>${jaiLike?'❤️':'❤️'}</span> ${nbLikes}</button>
         <button onclick="toggleComs('${p.id}')"><span>💬</span> ${nbComs}</button>
         <button onclick="partager('${p.id}')"><span>↗️</span> ${nbPartages}</button>
         <button class="${estFav?'active-fav':''}" onclick="toggleFav('${p.id}',this)"><span>⭐</span> ${estFav?'Favori':'Favori'}</button>
@@ -128,7 +126,6 @@ function rendre(){
       </div>
     `;
     box.appendChild(div);
-    // Remplir les commentaires de ce post
     const cBox=document.getElementById(`liste-coms-${p.id}`);
     if(cBox){
       const coms=commentaires[p.id]||{};
@@ -140,13 +137,13 @@ function rendre(){
     }
   });
 }
-window.toggleLike=async (postId,btn)=>{
+window.toggleLike=async (postId)=>{
   const likeRef=ref(db,'jasonbook/likes/'+postId+'/'+uid);
   const snap=await get(likeRef);
   if(snap.exists()){ await remove(likeRef); }
   else { await set(likeRef,{uid, nom:monNom, timestamp:Date.now()}); }
 };
-window.toggleFav=async (postId,btn)=>{
+window.toggleFav=async (postId)=>{
   const favRef=ref(db,'jasonbook/favoris/'+uid+'/'+postId);
   const snap=await get(favRef);
   if(snap.exists()){ await remove(favRef); }
@@ -167,7 +164,7 @@ window.partager=async (postId)=>{
   else { await navigator.clipboard.writeText(texte); alert("Texte copié !"); }
   await set(ref(db,'jasonbook/posts/'+postId+'/partages'), (p.partages||0)+1);
 };
-window.toggleSuivre=async (cibleUid,btn)=>{
+window.toggleSuivre=async (cibleUid)=>{
   if(suivis.has(cibleUid)){ await remove(ref(db,'jasonbook/suivis/'+uid+'/'+cibleUid)); }
   else { await set(ref(db,'jasonbook/suivis/'+uid+'/'+cibleUid),{timestamp:Date.now()}); }
 };
