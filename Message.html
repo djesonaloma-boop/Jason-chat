@@ -2,104 +2,107 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>JASONBOOK - Messages</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>JASONBOOK ✨ - Messages</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-html{overflow-x:clip;overflow-y:auto;-webkit-overflow-scrolling:touch}
-body{width:100%;overflow-x:clip;background:#0F0F14;min-height:100vh;color:#fff}
-:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--noir:#111;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35}
-header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid var(--or);box-shadow:0 2px 15px rgba(0,0,0,.5)}
-.top-bar{display:flex;align-items:center;gap:10px;padding:12px 12px 6px}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:22px;cursor:pointer;flex:1;white-space:nowrap}
-.logo span{width:36px;height:36px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 12px rgba(255,193,7,.5)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:#0A0A0F;color:#fff;overflow:hidden}
+:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--or2:#FF9800;--carte:#16161F;--ligne:#26262F;--gris:#A1A1AA}
+/* ===== HEADER PRO - PAS FACEBOOK ===== */
+.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);padding:12px 14px;border-bottom:1px solid var(--ligne);display:flex;align-items:center;gap:10px}
+.logo{font-size:21px;font-weight:900;white-space:nowrap}
 .logo i{color:var(--or);font-style:normal}
-.nav-top{display:flex;justify-content:space-between;padding:2px 6px 6px}
-.nav-top a{flex:1;text-decoration:none;color:#A1A1AA;display:flex;align-items:center;justify-content:center;padding:8px 2px;position:relative;font-size:24px;border-bottom:3px solid transparent}
-.nav-top a.active{color:var(--or);border-bottom:3px solid var(--or)}
-.nav-top a .badge{position:absolute;top:1px;right:50%;transform:translateX(18px);background:#E0245E;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:999px;min-width:20px;text-align:center;border:2px solid #111;display:none}
-.nav-top a .badge.or{background:var(--or);color:#111}
-.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;overflow:hidden;flex-shrink:0;cursor:pointer;position:relative}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.dot{position:absolute;bottom:0;right:0;width:12px;height:12px;background:#22C55E;border:2px solid #111;border-radius:50%}
-.layout{display:flex;height:calc(100vh - 109px)}
-.list{width:340px;background:#17171F;border-right:1px solid var(--ligne);overflow-y:auto}
-.list h2{padding:14px 14px 6px;font-size:20px;color:#fff}
-.list .search-box{padding:0 14px 10px}
-.list .search-box input{width:100%;padding:11px 14px;background:#2A2A35;border:none;border-radius:999px;outline:none;font-size:14px;color:#fff}
-.list .search-box input::placeholder{color:#888}
-.conv{display:flex;gap:10px;padding:11px 14px;cursor:pointer;align-items:center;border-bottom:1px solid #22222D}
-.conv:hover,.conv.active{background:#2A2A35}
-.conv b{font-size:14px;display:block;color:#fff}
-.conv small{color:var(--gris);font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
-.conv .time{margin-left:auto;font-size:11px;color:#888;white-space:nowrap}
-.unread{background:#E0245E;color:#fff;font-size:11px;font-weight:800;padding:2px 7px;border-radius:999px;margin-left:auto}
-.chat{flex:1;display:flex;flex-direction:column;background:#0F0F14}
-.chat-head{display:flex;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--ligne);background:#17171F}
-.chat-head b{font-size:15px;color:#fff}.chat-head small{color:#22C55E;font-size:12px}
-.chat-head .back{display:none;font-size:22px;cursor:pointer;color:#fff}
-.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;background:#0F0F14}
-.msg{max-width:70%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.4;word-wrap:break-word}
+.logo small{display:block;font-size:8px;color:var(--gris);letter-spacing:1.2px}
+.top .spacer{flex:1}
+.top button{width:40px;height:40px;border-radius:50%;background:#1F1F2E;border:1px solid var(--ligne);color:#fff;font-size:18px;cursor:pointer}
+.top .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--or),var(--violet));display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;cursor:pointer}
+.top .avatar img{width:100%;height:100%;object-fit:cover}
+/* ===== LAYOUT WHATSAPP ===== */
+.layout{display:flex;height:calc(100dvh - 65px - 68px)}
+/* LISTE */
+.list{width:360px;background:#0A0A0F;border-right:1px solid var(--ligne);display:flex;flex-direction:column;overflow:hidden}
+.list-head{padding:12px 14px 6px}
+.list-head h2{font-size:20px}
+.list-head small{color:var(--gris)}
+.search{margin:10px 14px;background:#1F1F2E;border:1px solid var(--ligne);border-radius:999px;padding:10px 14px;display:flex;gap:8px;align-items:center}
+.search input{background:none;border:none;outline:none;color:#fff;width:100%;font-size:14px}
+.search input::placeholder{color:#777}
+.conv-list{flex:1;overflow-y:auto}
+.conv{display:flex;gap:11px;padding:12px 14px;cursor:pointer;align-items:center;border-bottom:1px solid #1A1A22}
+.conv:active,.conv.active{background:#1F1F2E}
+.conv .avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;position:relative}
+.conv .avatar img{width:100%;height:100%;object-fit:cover}
+.dot{position:absolute;bottom:0;right:0;width:13px;height:13px;background:#22C55E;border:2px solid #0A0A0F;border-radius:50%}
+.conv b{font-size:15px;display:block}
+.conv small{color:var(--gris);font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}
+.conv .right{margin-left:auto;text-align:right;flex-shrink:0}
+.conv .time{font-size:11px;color:#888;display:block}
+.unread{background:var(--or);color:#000;font-size:11px;font-weight:800;padding:2px 7px;border-radius:999px;display:inline-block;margin-top:4px}
+/* CHAT */
+.chat{flex:1;display:flex;flex-direction:column;background:#0A0A0F}
+.chat-head{display:flex;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--ligne);background:#12121A}
+.chat-head .back{display:none;font-size:22px;cursor:pointer}
+.chat-head .avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden}
+.chat-head .avatar img{width:100%;height:100%;object-fit:cover}
+.chat-head b{font-size:15px}
+.chat-head small{color:#22C55E;font-size:12px}
+.chat-head .call{margin-left:auto;display:flex;gap:8px}
+.chat-head .call a{width:38px;height:38px;border-radius:50%;background:#1F1F2E;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
+.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:75%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.4;word-wrap:break-word}
 .msg.mine{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.msg.other{background:var(--carte);color:#fff;align-self:flex-start;border-bottom-left-radius:4px;border:1px solid var(--ligne)}
+.msg.other{background:#1F1F2E;color:#fff;align-self:flex-start;border-bottom-left-radius:4px;border:1px solid var(--ligne)}
 .msg small{display:block;font-size:10px;opacity:.7;margin-top:4px;text-align:right}
 .msg img{max-width:100%;border-radius:10px;margin-top:4px}
 .msg audio{width:100%;margin-top:4px}
-.chat-input{display:flex;gap:8px;align-items:center;padding:10px 12px;border-top:1px solid var(--ligne);background:#17171F}
-.chat-input button{width:40px;height:40px;border:none;background:#2A2A35;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;color:#fff}
+.chat-input{display:flex;gap:8px;align-items:center;padding:10px 12px;border-top:1px solid var(--ligne);background:#12121A}
+.chat-input button{width:42px;height:42px;border:none;background:#2A2A35;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;color:#fff}
 .chat-input button.send{background:linear-gradient(135deg,var(--violet),var(--or));color:#fff}
 .chat-input input{flex:1;padding:12px 14px;background:#2A2A35;border:none;border-radius:999px;outline:none;font-size:15px;color:#fff}
 .chat-input input::placeholder{color:#888}
-.chat-input .rec.on{background:#E0245E;color:#fff;animation:pulse 1s infinite}
+.chat-input .rec.on{background:#E0245E;animation:pulse 1s infinite}
 @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
 .empty-chat{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gris);gap:10px;text-align:center;padding:20px}
 .empty-chat .big{font-size:60px}
+/* BOTTOM NAV JASONBOOK */
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,10,15,.96);display:flex;justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--ligne)}
+.bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:10px;font-weight:700}
+.bottom button.active{color:var(--or)}
+.bottom button span{font-size:22px}
+.bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
 @media(max-width:800px){
-.list{width:100%;display:block}.list.hide-mob{display:none}
+.list{width:100%}.list.hide-mob{display:none}
 .chat{display:none}.chat.show-mob{display:flex}
 .chat-head .back{display:block}
-.layout{height:calc(100vh - 109px)}
+.layout{height:calc(100dvh - 65px - 68px)}
 }
 </style>
-<link rel="stylesheet" href="assets/brand.css">
 </head>
 <body>
 
-<header>
-  <!-- ✅ JUSTE LE LOGO - PAS DE RECHERCHE, PAS DE 3 TRAITS -->
-  <div class="top-bar">
-    <div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-  </div>
-  <!-- ✅ TOUS LES BADGES CACHÉS AU DÉPART -->
-  <nav class="nav-top">
-    <a href="feed.html">🏠<span class="badge or" id="badgeFeed"></span></a>
-    <a href="amis.html">👥<span class="badge" id="badgeAmis"></span></a>
-    <a href="messages.html" class="active">💬<span class="badge" id="badgeMsg"></span></a>
-    <a href="videos.html">🎥<span class="badge or" id="badgeVideos"></span></a>
-    <a href="notifications.html">🔔<span class="badge" id="badgeNotif"></span></a>
-    <a href="marketplace.html">🛒<span class="badge" id="badgeMarket"></span></a>
-  </nav>
-</header>
+<div class="top">
+<div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
+<div class="spacer"></div>
+<button onclick="location.href='notifications.html'">🔔</button>
+<div class="avatar" id="myAvatarTop" onclick="location.href='profil.html'">?</div>
+</div>
 
 <div class="layout">
 <div class="list" id="listPanel">
-<h2>Messages</h2>
-<!-- ✅ RECHERCHE D'AMIS ICI, DANS MESSAGES -->
-<div class="search-box"><input id="searchUser" placeholder="🔍 Rechercher un ami..." oninput="filtrer()"></div>
-<div id="convList"></div>
-<div id="noConv" style="padding:20px;text-align:center;color:#A1A1AA;font-size:13px;display:none">Aucune conversation.<br>Cherche une personne et envoie un message.</div>
+<div class="list-head"><h2>Messages 💬</h2><small>Discute avec tes amis</small></div>
+<div class="search">🔍 <input id="searchUser" placeholder="Rechercher un ami..." oninput="filtrer()"></div>
+<div class="conv-list" id="convList"></div>
+<div id="noConv" style="padding:20px;text-align:center;color:#A1A1AA;font-size:13px;display:none">Aucune conversation.<br>Cherche une personne et dis bonjour 👋</div>
 </div>
 
 <div class="chat" id="chatPanel">
-<div class="empty-chat" id="emptyChat"><div class="big">💬</div><h3>Choisis une conversation</h3><p>Sélectionne une personne à gauche pour discuter.<br>Texte, photo et vocal.</p></div>
-
+<div class="empty-chat" id="emptyChat"><div class="big">💬</div><h3>Choisis une conversation</h3><p>Sélectionne un ami à gauche pour discuter.<br>Texte, photo et vocal.</p></div>
 <div id="chatContent" style="display:none;flex:1;flex-direction:column">
 <div class="chat-head">
 <span class="back" onclick="retourListe()">←</span>
 <div class="avatar" id="chatAvatar">?</div>
 <div style="flex:1"><b id="chatNom"></b><br><small id="chatStatut">En ligne</small></div>
-<a href="appel.html" style="text-decoration:none;font-size:20px">📞</a>
-<a href="#" onclick="return false" style="text-decoration:none;font-size:20px">📹</a>
+<div class="call"><a href="appel.html">📞</a><a href="#" onclick="return false">📹</a></div>
 </div>
 <div class="chat-body" id="chatBody"></div>
 <div class="chat-input">
@@ -113,6 +116,14 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 </div>
 </div>
 
+<div class="bottom">
+<button onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
+<button onclick="location.href='amis.html'"><span>👥</span>Amis</button>
+<button onclick="location.href='creer-post.html'"><span class="centre">+</span></button>
+<button class="active" onclick="location.href='messages.html'"><span>💬</span>Messages</button>
+<button onclick="location.href='profil.html'"><span>👤</span>Moi</button>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, push, set, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -120,9 +131,9 @@ const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", auth
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
 const monNom = localStorage.getItem('jasonbook_nom')||"";
+const maPhoto = localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatarTop').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
 let tousUsers=[], convActuelle=null, destinataire=null, mediaRecorder=null, audioChunks=[];
-// ✅ SI 0 = ON CACHE, SI +0 = ON AFFICHE
-function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; e.innerText=''; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
 const params=new URLSearchParams(location.search); const uidCible=params.get('uid');
 function avatarHTML(photo, lettre){ return photo ? `<img src="${photo}">` : lettre; }
 window.retourListe=()=>{ document.getElementById('chatPanel').classList.remove('show-mob'); document.getElementById('listPanel').classList.remove('hide-mob'); };
@@ -141,7 +152,7 @@ onValue(ref(db,'jasonbook/users'), async (snap)=>{
     let last="Dis bonjour...", lastTime="", nonLu=0;
     if(msgs){ const arr=Object.values(msgs); const d=arr[arr.length-1]; last=d.texte|| (d.photoUrl?"📷 Photo": d.audioUrl?"🎤 Vocal":""); lastTime=d.heure||""; nonLu=arr.filter(m=>m.auteurUid!==uid && !m.lu).length; }
     const div=document.createElement('div'); div.className='conv'; div.dataset.nom=u.nomComplet||"";
-    div.innerHTML=`<div class="avatar">${avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0))}<div class="dot"></div></div><div style="flex:1;min-width:0"><b>${u.nomComplet||""}</b><small>${last}</small></div><span class="time">${lastTime}</span>${nonLu?`<span class="unread">${nonLu}</span>`:""}`;
+    div.innerHTML=`<div class="avatar">${avatarHTML(u.photoProfil,(u.prenom||"?").charAt(0))}<div class="dot"></div></div><div style="flex:1;min-width:0"><b>${u.nomComplet||""}</b><small>${last}</small></div><div class="right"><span class="time">${lastTime}</span>${nonLu?`<br><span class="unread">${nonLu}</span>`:""}</div>`;
     div.onclick=()=>ouvrirChat(u, chatId);
     box.appendChild(div);
   }
@@ -150,22 +161,6 @@ onValue(ref(db,'jasonbook/users'), async (snap)=>{
     if(cible) ouvrirChat(cible, [uid, uidCible].sort().join('_'));
   }
 });
-// ✅ VRAIS BADGES SEULEMENT
-onValue(ref(db,'jasonbook/demandes/'+uid),s=>{ const d=s.val(); setBadge('badgeAmis', d?Object.keys(d).length:0); });
-onValue(ref(db,'jasonbook/notifications/'+uid),s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(x=>{ if(!x.lu) n++; }); setBadge('badgeNotif', n); });
-onValue(ref(db,'jasonbook/messages'),s=>{
-  const d=s.val(); let n=0;
-  if(d) Object.values(d).forEach(chat=>{
-    if(chat && typeof chat==='object') Object.values(chat).forEach(m=>{
-      if(m && m.destinataireUid===uid && !m.lu) n++;
-      if(m && m.pour===uid && !m.lu) n++;
-    });
-  });
-  setBadge('badgeMsg', n);
-});
-setBadge('badgeMarket', 0);
-setBadge('badgeFeed', 0);
-setBadge('badgeVideos', 0);
 window.ouvrirChat=async (u, chatId)=>{
   destinataire=u; convActuelle=chatId;
   document.getElementById('emptyChat').style.display="none";
