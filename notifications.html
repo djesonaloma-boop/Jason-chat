@@ -10,16 +10,11 @@
 body{background:#0F0F14;color:#fff;min-height:100vh}
 :root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35;--rouge:#FF2D55}
 header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid var(--or)}
-.top-bar{display:flex;align-items:center;gap:10px;padding:10px 12px 6px}
+.top-bar{display:flex;align-items:center;gap:10px;padding:12px 14px}
 .logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:22px;cursor:pointer;flex:1;white-space:nowrap}
 .logo span{width:36px;height:36px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
 .logo i{color:var(--or);font-style:normal}
 .logo small{display:block;font-size:8px;color:var(--gris);letter-spacing:1.2px}
-.nav-top{display:flex;justify-content:space-between;padding:2px 6px 6px}
-.nav-top a{flex:1;text-decoration:none;color:#A1A1AA;display:flex;align-items:center;justify-content:center;padding:8px 2px;position:relative;font-size:24px;border-bottom:3px solid transparent}
-.nav-top a.active{color:var(--or);border-bottom:3px solid var(--or)}
-.nav-top a .badge{position:absolute;top:1px;right:50%;transform:translateX(18px);background:#E0245E;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:999px;min-width:20px;text-align:center;border:2px solid #111;display:none}
-.nav-top a .badge.or{background:var(--or);color:#111}
 .wrap{max-width:700px;margin:14px auto;padding:0 10px 40px}
 .head{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap}
 .head h1{font-size:26px}
@@ -56,15 +51,7 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 </head>
 <body>
 <header>
-  <div class="top-bar"><div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i><small style="display:block;font-size:8px">MADE IN KINSHASA</small></div></div>
-  <nav class="nav-top">
-    <a href="feed.html">🏠<span class="badge or" id="badgeFeed"></span></a>
-    <a href="amis.html">👥<span class="badge" id="badgeAmis"></span></a>
-    <a href="messages.html">💬<span class="badge" id="badgeMsg"></span></a>
-    <a href="videos.html">🎥<span class="badge or" id="badgeVideos"></span></a>
-    <a href="notifications.html" class="active">🔔<span class="badge" id="badgeNotif"></span></a>
-    <a href="marketplace.html">🛒<span class="badge" id="badgeMarket"></span></a>
-  </nav>
+  <div class="top-bar"><div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i><small>MADE IN KINSHASA</small></div></div>
 </header>
 <div class="wrap">
 <div class="head"><h1>Notifications</h1><button class="btn-lu" onclick="toutLire()">Tout marquer comme lu</button></div>
@@ -119,7 +106,6 @@ function iconeType(type){
   return "🔔";
 }
 function texteParDefaut(n){
-  // Si l'ancien code n'a pas mis de texte, on le recrée avec le type
   if(n.texte) return n.texte;
   if(n.type==='like') return "a aimé ta publication ❤️";
   if(n.type==='commentaire') return "a commenté ta publication 💬";
@@ -160,7 +146,6 @@ function rendre(){
         <button class="btn-msg" onclick="event.stopPropagation();ecrireMessage('${n.deUid}')">💬 Message</button>
       </div>`;
     } else if(n.type==='live' && n.deUid){
-      // ✅ LIVE : BOUTON REJOINDRE
       const liveId=n.liveId||n.deUid;
       btns=`<div class="btns">
         <button class="btn-live" onclick="event.stopPropagation();rejoindreLive('${liveId}','${n.id}')">🔴 Rejoindre son LIVE</button>
@@ -169,10 +154,8 @@ function rendre(){
     } else if(n.type==='message' && n.deUid){
       btns=`<div class="btns"><button class="btn-msg" onclick="event.stopPropagation();ecrireMessage('${n.deUid}')">💬 Répondre</button><button class="btn-profil" onclick="event.stopPropagation();voirProfil('${n.deUid}')">👤 Voir le profil</button></div>`;
     } else if(n.type==='like' && n.deUid){
-      // ✅ LIKE : VOIR LE POST + LIKER EN RETOUR
       btns=`<div class="btns"><button class="btn-like" onclick="event.stopPropagation();voirPost('${n.postId||''}')">❤️ Voir la publication</button><button class="btn-profil" onclick="event.stopPropagation();voirProfil('${n.deUid}')">👤 Voir le profil</button></div>`;
     } else if(n.type==='commentaire' && n.deUid){
-      // ✅ COMMENTAIRE : VOIR + REPONDRE
       btns=`<div class="btns"><button class="btn-voir" onclick="event.stopPropagation();voirPost('${n.postId||''}')">💬 Voir le commentaire</button><button class="btn-msg" onclick="event.stopPropagation();ecrireMessage('${n.deUid}')">💬 Répondre en privé</button></div>`;
     } else if(n.type==='anniversaire' && n.deUid){
       btns=`<div class="btns"><button class="btn-like" onclick="event.stopPropagation();voirPost('${n.postId||''}')">🎂 Voir son souhait</button><button class="btn-msg" onclick="event.stopPropagation();ecrireMessage('${n.deUid}')">💬 Merci !</button></div>`;
@@ -185,8 +168,6 @@ function rendre(){
     div.onclick=()=>{ marquerLu(n.id); if(n.type==='live'){ rejoindreLive(n.liveId||n.deUid, n.id); } else if(n.type==='like'||n.type==='commentaire'||n.type==='partage'||n.type==='anniversaire'){ voirPost(n.postId||''); } else if(n.deUid) voirProfil(n.deUid); };
     box.appendChild(div);
   });
-  const nonLus = toutesNotifs.filter(n=>!n.lu).length;
-  setBadge('badgeNotif', nonLus);
 }
 async function marquerLu(id){ if(!id) return; try{ await update(ref(db,'jasonbook/notifications/'+uid+'/'+id),{lu:true}); }catch(e){} }
 window.voirProfil=(targetUid)=>{
@@ -203,11 +184,9 @@ window.voirPost=(postId)=>{
 };
 window.rejoindreLive=async (liveId, notifId)=>{
   if(notifId) await marquerLu(notifId);
-  // Si le live est encore en cours, on va dedans, sinon on dit que c'est fini
   if(liveId && livesActifs[liveId]){
     location.href='live.html?id='+liveId;
   } else if(liveId){
-    // On vérifie dans Firebase si le live existe encore
     try{
       const snap=await get(ref(db,'jasonbook/lives/'+liveId));
       if(snap.exists()) location.href='live.html?id='+liveId;
@@ -252,18 +231,6 @@ onValue(ref(db,'jasonbook/notifications/'+uid), s=>{
 onValue(ref(db,'jasonbook/lives'), s=>{
   livesActifs=s.val()||{};
 });
-onValue(ref(db,'jasonbook/demandes/'+uid), s=>{ const d=s.val(); setBadge('badgeAmis', d?Object.keys(d).length:0); });
-onValue(ref(db,'jasonbook/messages'), s=>{
-  const d=s.val(); let n=0;
-  if(d) Object.values(d).forEach(chat=>{
-    if(chat && typeof chat==='object') Object.values(chat).forEach(m=>{
-      if(m && m.destinataireUid===uid && !m.lu) n++;
-      if(m && m.pour===uid && !m.lu) n++;
-    });
-  });
-  setBadge('badgeMsg', n);
-});
-setBadge('badgeMarket', 0); setBadge('badgeFeed', 0); setBadge('badgeVideos', 0);
 </script>
 </body>
 </html>
