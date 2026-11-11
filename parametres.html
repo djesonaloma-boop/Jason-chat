@@ -8,9 +8,8 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
 html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
-:root{--blue:#7C3AED;--blue2:#A855F7;--gold:#FFC107;--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--grey:#A1A1AA;--line:#26262F;--white:#fff}
+:root{--blue:#7C3AED;--blue2:#A855F7;--gold:#FFC107;--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--grey:#A1A1AA;--line:#26262F;--white:#fff;--green:#25D366}
 body{background:var(--bg);color:var(--white);min-height:100vh}
-/* HEADER - MEME COULEUR QUE PROFIL - SANS NOTIF, SANS MESSAGES, SANS RECHERCHE */
 .top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
 .logo{font-size:21px;font-weight:900;white-space:nowrap;flex:1;cursor:pointer}
 .logo i{color:var(--gold);font-style:normal}
@@ -35,12 +34,14 @@ body{background:var(--bg);color:var(--white);min-height:100vh}
 .btn-grey{background:var(--card2);border:1px solid var(--line);color:#fff;padding:12px;border-radius:12px;font-weight:700;cursor:pointer;width:100%;font-size:14px}
 .btn-gold{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border:none;padding:12px;border-radius:12px;font-weight:800;cursor:pointer;width:100%;font-size:14px}
 .btn-red{background:#E0245E;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;cursor:pointer;width:100%;font-size:14px}
+.btn-wa{background:var(--green);color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;cursor:pointer;width:100%;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
 .danger{border:1.5px solid #FF6B6B}
+.dev-card{background:linear-gradient(135deg,#1C1C24,#2A1A4A);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.dev-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--blue));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;flex-shrink:0}
 </style>
 </head>
 <body>
 
-<!-- HEADER PROFIL : LOGO + PARAMETRES + PHOTO, RIEN D'AUTRE -->
 <div class="top">
 <div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
 <button class="btn-param" onclick="location.href='parametres.html'">⚙️</button>
@@ -89,7 +90,6 @@ body{background:var(--bg);color:var(--white);min-height:100vh}
 <button class="btn-blue" style="margin-top:10px" onclick="sauvegarderLangue()">💾 Enregistrer la langue</button>
 </div>
 
-<!-- ✅ NOUVEAU : VRAIS PARAMETRES -->
 <div class="section">
 <h3>🛡️ Sécurité & Gestion</h3>
 <div class="row" onclick="alert('Fonction Personnes bloquées : bientôt disponible')"><div class="label"><b>🚫 Personnes bloquées</b><p>Gérer les personnes que tu as bloquées</p></div><span class="arrow">›</span></div>
@@ -99,17 +99,22 @@ body{background:var(--bg);color:var(--white);min-height:100vh}
 
 <div class="section">
 <h3>💬 Aide & Support</h3>
-<div class="row" onclick="alert('Centre d’aide JASONBOOK : Écris-nous sur WhatsApp / Email Jason Team')"><div class="label"><b>❓ Centre d’aide</b><p>Questions fréquentes, tutoriels</p></div><span class="arrow">›</span></div>
-<div class="row" onclick="alert('Merci de signaler ! Décris le problème à Jason Team.')"><div class="label"><b>🚩 Signaler un problème</b><p>Bug, compte, publication</p></div><span class="arrow">›</span></div>
+<div class="row" onclick="alert('Centre d’aide JASONBOOK : Écris-nous sur WhatsApp au +243847500590')"><div class="label"><b>❓ Centre d’aide</b><p>Questions fréquentes, tutoriels</p></div><span class="arrow">›</span></div>
+<div class="row" onclick="window.open('https://wa.me/243847500590?text=Bonjour%20Jason%2C%20j%27ai%20un%20probl%C3%A8me%20sur%20JASONBOOK','_blank')"><div class="label"><b>🚩 Signaler un problème</b><p>Bug, compte, publication</p></div><span class="arrow">›</span></div>
 <div class="row" onclick="alert('JASONBOOK - Respecte les autres, pas de harcèlement, pas de contenu haineux. Merci ! ❤️')"><div class="label"><b>📜 Conditions d’utilisation</b><p>Règles de la communauté</p></div><span class="arrow">›</span></div>
 <div class="row" onclick="alert('JASONBOOK respecte ta vie privée. Tes données restent à toi.')"><div class="label"><b>🔏 Politique de confidentialité</b></div><span class="arrow">›</span></div>
 </div>
 
 <div class="section">
 <h3>ℹ️ À propos</h3>
+<div class="dev-card">
+<div class="dev-avatar">JA</div>
+<div style="flex:1"><b style="font-size:16px">Jason Aloma</b><p style="font-size:12px;color:#A1A1AA;margin-top:2px">Développeur de JASONBOOK ✨<br>Made in Kinshasa 🇨🇩</p></div>
+</div>
 <div class="row"><div class="label"><b>Version</b></div><span style="color:#A1A1AA;font-size:14px">JASONBOOK 1.0</span></div>
-<div class="row"><div class="label"><b>Développeur</b></div><span style="color:#A1A1AA;font-size:14px">Jason Team</span></div>
-<div class="row"><div class="label"><b>Booster mon compte</b><p>Gagne plus de vues</p></div><button class="btn-gold" style="width:auto;padding:8px 14px" onclick="location.href='booster.html'">🚀 Booster</button></div>
+<div class="row"><div class="label"><b>WhatsApp Développeur</b><p>+243 847 500 590</p></div><span class="arrow">›</span></div>
+<a class="btn-wa" href="https://wa.me/243847500590?text=Bonjour%20Jason%20Aloma%2C%20je%20viens%20de%20JASONBOOK" target="_blank" style="margin-top:10px">💬 Contacter Jason Aloma sur WhatsApp</a>
+<button class="btn-gold" style="margin-top:8px" onclick="location.href='booster.html'">🚀 Booster mon compte</button>
 </div>
 
 <div class="section danger">
