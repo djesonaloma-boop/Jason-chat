@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,96 +6,278 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#0A0A0F">
 <title>JASONBOOK ✨ - Mon Profil</title>
+
 <style>
-:root{--blue:#7C3AED;--blue2:#A855F7;--gold:#FFC107;--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--grey:#A1A1AA;--line:#26262F;--white:#fff}
+:root{
+--blue:#7C3AED;
+--blue2:#A855F7;
+--gold:#FFC107;
+--bg:#0A0A0F;
+--card:#16161F;
+--card2:#1F1F2E;
+--grey:#A1A1AA;
+--line:#26262F;
+--white:#fff
+}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
 html,body{width:100%;min-height:100%;overflow-x:hidden;background:var(--bg);color:var(--white)}
 body{padding-bottom:92px}
 button,input,textarea{font:inherit}
 button{cursor:pointer}
 img{max-width:100%;display:block}
-.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+
+.top{
+position:sticky;top:0;z-index:50;
+background:rgba(10,10,15,.96);
+backdrop-filter:blur(12px);
+padding:12px 14px;border-bottom:1px solid var(--line);
+display:flex;align-items:center;gap:10px
+}
 .logo{font-size:21px;font-weight:900;white-space:nowrap;flex:1}
 .logo i{color:var(--gold);font-style:normal}
 .logo small{display:block;font-size:8px;color:var(--grey);letter-spacing:1.2px}
-.btn-param{width:40px;height:40px;border-radius:50%;background:#1F1F2E;border:1px solid var(--line);color:#fff;font-size:18px;cursor:pointer;flex-shrink:0}
-.avatar-top{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;cursor:pointer;flex-shrink:0}
+.btn-param{
+width:40px;height:40px;border-radius:50%;
+background:#1F1F2E;border:1px solid var(--line);
+color:#fff;font-size:18px;flex-shrink:0
+}
+.avatar-top{
+width:40px;height:40px;border-radius:50%;
+background:linear-gradient(135deg,var(--gold),var(--blue));
+display:flex;align-items:center;justify-content:center;
+font-weight:900;overflow:hidden;cursor:pointer;flex-shrink:0
+}
 .avatar-top img{width:100%;height:100%;object-fit:cover}
-.cover-wrap{max-width:1000px;width:calc(100% - 24px);margin:14px auto 0;background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
-.cover{height:220px;position:relative;overflow:hidden;background:linear-gradient(130deg,#5125A6,#A855F7,#E7A923);cursor:pointer}
+
+.cover-wrap{
+max-width:1000px;width:calc(100% - 24px);
+margin:14px auto 0;background:var(--card);
+border:1px solid var(--line);border-radius:20px;overflow:hidden
+}
+.cover{
+height:220px;position:relative;overflow:hidden;
+background:linear-gradient(130deg,#5125A6,#A855F7,#E7A923);
+cursor:pointer
+}
 .cover img{width:100%;height:100%;object-fit:cover}
-.cover-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px}
-.change-cover{position:absolute;right:12px;bottom:12px;border:0;border-radius:999px;background:#fff;color:#111;padding:9px 13px;font-weight:800;font-size:12px;z-index:5}
-.profile-row{padding:0 16px 15px;margin-top:-65px;position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
-.big-avatar{width:132px;height:132px;border-radius:50%;border:5px solid var(--card);position:relative;background:linear-gradient(135deg,var(--blue),var(--gold));display:grid;place-items:center;overflow:hidden;font-size:48px;font-weight:900;box-shadow:0 5px 25px #0008}
+.cover-empty{
+position:absolute;inset:0;display:flex;
+align-items:center;justify-content:center;
+font-weight:800;font-size:17px
+}
+.change-cover{
+position:absolute;right:12px;bottom:12px;border:0;
+border-radius:999px;background:#fff;color:#111;
+padding:9px 13px;font-weight:800;font-size:12px;z-index:5
+}
+.profile-row{
+padding:0 16px 15px;margin-top:-65px;position:relative;
+display:flex;flex-direction:column;align-items:center;text-align:center
+}
+.big-avatar{
+width:132px;height:132px;border-radius:50%;
+border:5px solid var(--card);position:relative;
+background:linear-gradient(135deg,var(--blue),var(--gold));
+display:grid;place-items:center;overflow:hidden;
+font-size:48px;font-weight:900;box-shadow:0 5px 25px #0008
+}
 .big-avatar img{width:100%;height:100%;object-fit:cover}
-.cam{position:absolute;right:5px;bottom:5px;width:33px;height:33px;border-radius:50%;background:#fff;color:#111;display:grid;place-items:center;border:2px solid var(--card);font-size:15px}
+.cam{
+position:absolute;right:5px;bottom:5px;
+width:33px;height:33px;border-radius:50%;
+background:#fff;color:#111;display:grid;place-items:center;
+border:2px solid var(--card);font-size:15px
+}
 .profile-info{width:100%;margin-top:9px}
 .profile-info h1{font-size:26px;overflow-wrap:anywhere}
 .profile-info p{font-size:13px;color:var(--grey);margin-top:5px;line-height:1.5;overflow-wrap:anywhere}
-.profile-btns{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;width:100%}
+
+.profile-btns{
+display:flex;justify-content:center;gap:8px;
+flex-wrap:wrap;margin-top:14px;width:100%
+}
 .btn{border:0;border-radius:12px;padding:11px 15px;font-size:13px;font-weight:800}
 .btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff}
 .btn-secondary{background:var(--card2);color:#fff;border:1px solid var(--line)}
 .btn-gold{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000}
-.stats{display:flex;gap:0;background:#1F1F2E;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:14px auto 0;max-width:420px;width:100%}
-.stats div{flex:1;text-align:center;padding:12px 4px;cursor:pointer}
+
+.stats{
+display:flex;gap:0;background:#1F1F2E;
+border:1px solid var(--line);border-radius:16px;
+overflow:hidden;margin:14px auto 0;max-width:500px;width:100%
+}
+.stats div{
+flex:1;text-align:center;padding:12px 4px;cursor:pointer;
+transition:.2s
+}
+.stats div:active{background:#ffffff12}
 .stats div+div{border-left:1px solid var(--line)}
-.stats b{display:block;font-size:19px;color:var(--gold);line-height:1.2}
+.stats b{display:block;font-size:20px;color:var(--gold);line-height:1.2}
 .stats span{font-size:11px;color:var(--grey)}
-.tabs{display:flex;gap:7px;padding:10px 12px;border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+
+.tabs{
+display:flex;gap:7px;padding:10px 12px;
+border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:none
+}
 .tabs::-webkit-scrollbar{display:none}
-.tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--card2);color:#fff;padding:9px 15px;border-radius:999px;font-weight:800;font-size:13px}
-.tabs button.active{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border-color:transparent}
-.layout{display:flex;gap:15px;max-width:1000px;width:100%;margin:15px auto;padding:0 12px;align-items:flex-start}
+.tabs button{
+flex:0 0 auto;border:1px solid var(--line);
+background:var(--card2);color:#fff;padding:9px 15px;
+border-radius:999px;font-weight:800;font-size:13px
+}
+.tabs button.active{
+background:linear-gradient(135deg,var(--gold),#FF9800);
+color:#000;border-color:transparent
+}
+
+.layout{
+display:flex;gap:15px;max-width:1000px;
+width:100%;margin:15px auto;padding:0 12px;align-items:flex-start
+}
 .left{width:320px;flex-shrink:0;position:sticky;top:75px}
 .right{flex:1;min-width:0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:15px;margin-bottom:13px;min-width:0}
+.card{
+background:var(--card);border:1px solid var(--line);
+border-radius:20px;padding:15px;margin-bottom:13px;min-width:0
+}
 .card h3{font-size:16px;margin-bottom:12px}
-.info-row{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.5;overflow-wrap:anywhere}
-.info-row:last-child{border-bottom:0}
+.info-row{
+display:flex;gap:10px;padding:10px 0;
+border-bottom:1px solid var(--line);font-size:13px;
+line-height:1.5;overflow-wrap:anywhere
+}
 .info-row span{font-size:17px}
 .create{display:flex;align-items:center;gap:10px}
-.avatar-mini{width:42px;height:42px;min-width:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--gold));display:grid;place-items:center;overflow:hidden;font-weight:900}
+.avatar-mini{
+width:42px;height:42px;min-width:42px;border-radius:50%;
+background:linear-gradient(135deg,var(--blue),var(--gold));
+display:grid;place-items:center;overflow:hidden;font-weight:900
+}
 .avatar-mini img{width:100%;height:100%;object-fit:cover}
-.create input{width:100%;min-width:0;border:0;outline:0;border-radius:999px;background:var(--card2);color:#fff;padding:13px 16px;font-size:14px}
+.create input{
+width:100%;min-width:0;border:0;outline:0;border-radius:999px;
+background:var(--card2);color:#fff;padding:13px 16px;font-size:14px
+}
 .create input::placeholder{color:#999}
+
 .post-head{display:flex;align-items:center;gap:10px}
 .post-head b{font-size:14px}
 .post-head small{color:var(--grey);font-size:11px}
-.post-text{margin:12px 0;white-space:pre-wrap;line-height:1.55;font-size:14px;overflow-wrap:anywhere}
-.post-image{width:100%;max-height:520px;object-fit:contain;background:#111;border-radius:14px}
-.actions-text{display:flex;gap:8px;border-top:1px solid var(--line);margin-top:12px;padding-top:10px}
-.actions-text button{flex:1;border:0;background:var(--card2);color:#fff;padding:10px;border-radius:999px;font-weight:700;font-size:12px}
-.counts-row{display:flex;gap:14px;padding:8px 4px 2px;font-size:13px;color:#A1A1AA}
+.post-text{
+margin:12px 0;white-space:pre-wrap;
+line-height:1.55;font-size:14px;overflow-wrap:anywhere
+}
+.post-image{
+width:100%;max-height:520px;object-fit:contain;
+background:#111;border-radius:14px
+}
+.counts-row{
+display:flex;gap:14px;padding:8px 4px 2px;
+font-size:13px;color:#A1A1AA;flex-wrap:wrap
+}
 .counts-row span{cursor:pointer}
-.ami-row{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.counts-row span:hover{color:var(--gold)}
+.actions-text{
+display:flex;gap:8px;border-top:1px solid var(--line);
+margin-top:12px;padding-top:10px
+}
+.actions-text button{
+flex:1;border:0;background:var(--card2);color:#fff;
+padding:10px;border-radius:999px;font-weight:700;font-size:12px
+}
+.actions-text button:active{background:var(--blue)}
+
+.ami-row{
+display:flex;align-items:center;gap:11px;
+padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer
+}
 .ami-row:last-child{border-bottom:0}
 .ami-row .avatar-mini{width:48px;height:48px;min-width:48px}
 .ami-row b{font-size:14px}
 .ami-row small{font-size:11px;color:var(--grey)}
 .ami-arrow{margin-left:auto;color:var(--grey);font-size:22px}
+
 .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.photo-grid img{width:100%;height:100px;object-fit:cover;border-radius:10px;background:#111}
+.photo-grid img{
+width:100%;height:100px;object-fit:cover;
+border-radius:10px;background:#111
+}
 .photo-grid.large{grid-template-columns:repeat(2,1fr)}
 .photo-grid.large img{height:180px}
-.empty{text-align:center;color:var(--grey);font-size:13px;padding:25px 10px;line-height:1.6}
-.modal{position:fixed;inset:0;background:#000b;z-index:100;display:none;align-items:center;justify-content:center;padding:15px}
+
+.empty{
+text-align:center;color:var(--grey);
+font-size:13px;padding:25px 10px;line-height:1.6
+}
+.loading{color:var(--grey);text-align:center;padding:18px;font-size:13px}
+
+.modal{
+position:fixed;inset:0;background:#000b;z-index:100;
+display:none;align-items:center;justify-content:center;padding:15px
+}
 .modal.open{display:flex}
-.modal-box{width:100%;max-width:440px;max-height:90vh;overflow-y:auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}
+.modal-box{
+width:100%;max-width:440px;max-height:90vh;overflow-y:auto;
+background:var(--card);border:1px solid var(--line);
+border-radius:20px;padding:20px
+}
 .modal-box h2{font-size:20px;margin-bottom:15px}
-.modal-box label{display:block;font-size:12px;font-weight:800;margin-top:12px;color:#ddd}
-.modal-box input,.modal-box textarea{width:100%;margin-top:6px;padding:12px;border-radius:12px;border:1px solid var(--line);outline:none;background:var(--card2);color:#fff;font-size:14px}
+.modal-box label{
+display:block;font-size:12px;font-weight:800;
+margin-top:12px;color:#ddd
+}
+.modal-box input,.modal-box textarea{
+width:100%;margin-top:6px;padding:12px;
+border-radius:12px;border:1px solid var(--line);
+outline:none;background:var(--card2);color:#fff;font-size:14px
+}
 .modal-box textarea{min-height:85px;resize:vertical}
-.modal-box input:focus,.modal-box textarea:focus{border-color:var(--blue)}
 .modal-buttons{display:flex;gap:8px;margin-top:15px}
 .modal-buttons button{flex:1}
-.loading{color:var(--grey);text-align:center;padding:18px;font-size:13px}
-.bottom{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,10,15,.96);display:flex;justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
-.bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:10px;font-weight:700}
+
+.bottom{
+position:fixed;bottom:0;left:0;right:0;z-index:60;
+background:rgba(10,10,15,.96);display:flex;
+justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));
+border-top:1px solid var(--line)
+}
+.bottom button{
+background:none;border:none;color:#888;display:flex;
+flex-direction:column;align-items:center;gap:2px;
+font-size:10px;font-weight:700
+}
 .bottom button.active{color:var(--gold)}
 .bottom button span{font-size:22px}
-.bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--blue),var(--gold));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
+.bottom .centre{
+width:52px;height:52px;border-radius:50%;margin-top:-30px;
+background:linear-gradient(135deg,var(--blue),var(--gold));
+display:flex;align-items:center;justify-content:center;
+font-size:26px;color:#fff;border:4px solid #0A0A0F
+}
+
+#modalLikes{
+position:fixed;inset:0;background:rgba(0,0,0,.8);
+z-index:400;display:none;align-items:flex-end;justify-content:center
+}
+.likes-box{
+width:100%;max-width:500px;max-height:82vh;
+background:#16161F;border:1px solid #26262F;
+border-radius:20px 20px 0 0;padding:16px;overflow:auto
+}
+.like-person{
+display:flex;gap:10px;align-items:center;
+padding:10px 0;border-bottom:1px solid var(--line)
+}
+.like-person img{
+width:42px;height:42px;border-radius:50%;object-fit:cover
+}
+.like-person .letter{
+width:42px;height:42px;border-radius:50%;
+display:grid;place-items:center;
+background:linear-gradient(135deg,var(--gold),var(--blue));
+font-weight:900
+}
+
 @media(max-width:800px){
 .layout{padding:0 8px;display:block}
 .left{display:none}
@@ -110,66 +293,142 @@ img{max-width:100%;display:block}
 @media(max-width:380px){
 .profile-btns .btn{padding:10px 11px;font-size:12px}
 .tabs button{padding:9px 12px}
+.stats b{font-size:17px}
 }
 </style>
 </head>
+
 <body>
 
 <div class="top">
-<div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
+<div class="logo" onclick="location.href='feed.html'">
+JASON<i>BOOK</i> ✨
+<small>MADE IN KINSHASA</small>
+</div>
 <button class="btn-param" onclick="location.href='parametres.html'">⚙️</button>
 <div class="avatar-top" id="myAvatarTop" onclick="location.href='profil.html'">?</div>
 </div>
 
 <section class="cover-wrap">
+
 <div class="cover" id="coverDiv" onclick="document.getElementById('fileCover').click()">
 <div class="cover-empty" id="coverTxt">📷 Ajouter une photo de couverture</div>
 <button class="change-cover" onclick="event.stopPropagation();document.getElementById('fileCover').click()">✏️ Modifier</button>
 </div>
+
 <input type="file" id="fileCover" accept="image/*" hidden>
 <input type="file" id="fileAvatar" accept="image/*" hidden>
+
 <div class="profile-row">
-<div class="big-avatar" id="bigAvatar" onclick="document.getElementById('fileAvatar').click()">?<div class="cam">📷</div></div>
+
+<div class="big-avatar" id="bigAvatar" onclick="document.getElementById('fileAvatar').click()">?</div>
+
 <div class="profile-info">
 <h1 id="nomAffiche">Chargement...</h1>
 <p id="bioAffiche"></p>
 <p id="metaAffiche"></p>
 <p id="amisCount">0 ami</p>
 </div>
+
 <div class="stats">
-  <div onclick="showTab('amis',document.querySelectorAll('.tabs button')[2])"><b id="nbAmis">0</b><span>👥 Amis</span></div>
-  <div onclick="showTab('posts',document.querySelectorAll('.tabs button')[0])"><b id="nbLikes">0</b><span>❤️ J'aime</span></div>
-  <div onclick="showTab('posts',document.querySelectorAll('.tabs button')[0])"><b id="nbPubs">0</b><span>📝 Publications</span></div>
+
+<div onclick="showTab('amis',document.querySelectorAll('.tabs button')[2])">
+<b id="nbAmis">0</b>
+<span>👥 Amis</span>
 </div>
+
+<div onclick="showTab('posts',document.querySelectorAll('.tabs button')[0])">
+<b id="nbLikes">0</b>
+<span>❤️ J'aime</span>
+</div>
+
+<div onclick="showTab('posts',document.querySelectorAll('.tabs button')[0])">
+<b id="nbPubs">0</b>
+<span>📝 Publications</span>
+</div>
+
+</div>
+
 <div class="profile-btns">
 <button class="btn btn-primary" onclick="ouvrirEdit()">✏️ Modifier le profil</button>
 <button class="btn btn-secondary" onclick="location.href='creer-post.html'">＋ Publier</button>
 <button class="btn btn-gold" onclick="location.href='booster.html'">🚀 Booster</button>
 <button class="btn btn-secondary" onclick="deconnecter()">🚪 Déconnexion</button>
 </div>
+
 </div>
+
 <nav class="tabs">
 <button class="active" onclick="showTab('posts',this)">📝 Publications</button>
 <button onclick="showTab('apropos',this)">ℹ️ À propos</button>
 <button onclick="showTab('amis',this)">👥 Amis</button>
 <button onclick="showTab('photos',this)">📸 Photos</button>
 </nav>
+
 </section>
 
 <main class="layout">
+
 <aside class="left" id="leftCol">
-<div class="card"><h3>👤 Intro</h3><div id="introList"></div><button class="btn btn-secondary" style="width:100%;margin-top:10px" onclick="ouvrirEdit()">Modifier les infos</button></div>
-<div class="card"><h3>📸 Photos</h3><div id="photosGrid" class="photo-grid"></div><p id="noPhotos" class="empty">Aucune photo pour le moment</p></div>
-<div class="card"><h3>👥 Amis</h3><div id="amisList"></div></div>
+
+<div class="card">
+<h3>👤 Intro</h3>
+<div id="introList"></div>
+<button class="btn btn-secondary" style="width:100%;margin-top:10px" onclick="ouvrirEdit()">Modifier les infos</button>
+</div>
+
+<div class="card">
+<h3>📸 Photos</h3>
+<div id="photosGrid" class="photo-grid"></div>
+<p id="noPhotos" class="empty">Aucune photo pour le moment</p>
+</div>
+
+<div class="card">
+<h3>👥 Amis</h3>
+<div id="amisList"></div>
+</div>
+
 </aside>
+
 <section class="right" id="tabPosts">
-<div class="card"><div class="create"><div class="avatar-mini" id="createAvatar">?</div><input placeholder="Quoi de neuf ?" readonly onclick="location.href='creer-post.html'"></div></div>
+<div class="card">
+<div class="create">
+<div class="avatar-mini" id="createAvatar">?</div>
+<input placeholder="Quoi de neuf ?" readonly onclick="location.href='creer-post.html'">
+</div>
+</div>
+
 <div id="mesPosts"></div>
-<div id="noPosts" class="card empty" style="display:none">Aucune publication pour le moment.<br>Publie ta première publication !</div>
+<div id="noPosts" class="card empty" style="display:none">
+Aucune publication pour le moment.<br>
+Publie ta première publication !
+</div>
 </section>
-<section class="right" id="tabApropos" style="display:none"><div class="card"><h3>ℹ️ À propos</h3><div id="aproposFull"></div></div></section>
-<section class="right" id="tabAmis" style="display:none"><div class="card"><h3>👥 Mes amis (<span id="amisCount2">0</span>)</h3><div id="amisFull"></div><p id="noAmisFull" class="empty" style="display:none">Aucun ami pour le moment.</p><p id="loadingAmis" class="loading">Chargement des amis...</p></div></section>
-<section class="right" id="tabPhotos" style="display:none"><div class="card"><h3>📸 Mes photos</h3><div id="photosFull" class="photo-grid large"></div><p id="noPhotosFull" class="empty" style="display:none">Aucune photo publiée.</p></div></section>
+
+<section class="right" id="tabApropos" style="display:none">
+<div class="card">
+<h3>ℹ️ À propos</h3>
+<div id="aproposFull"></div>
+</div>
+</section>
+
+<section class="right" id="tabAmis" style="display:none">
+<div class="card">
+<h3>👥 Mes amis (<span id="amisCount2">0</span>)</h3>
+<div id="amisFull"></div>
+<p id="noAmisFull" class="empty" style="display:none">Aucun ami pour le moment.</p>
+<p id="loadingAmis" class="loading">Chargement des amis...</p>
+</div>
+</section>
+
+<section class="right" id="tabPhotos" style="display:none">
+<div class="card">
+<h3>📸 Mes photos</h3>
+<div id="photosFull" class="photo-grid large"></div>
+<p id="noPhotosFull" class="empty" style="display:none">Aucune photo publiée.</p>
+</div>
+</section>
+
 </main>
 
 <div class="bottom">
@@ -180,194 +439,1005 @@ img{max-width:100%;display:block}
 <button class="active" onclick="location.href='profil.html'"><span>👤</span>Moi</button>
 </div>
 
-<div class="modal" id="modalEdit"><div class="modal-box">
+<div class="modal" id="modalEdit">
+<div class="modal-box">
 <h2>✏️ Modifier mon profil</h2>
-<label>Bio</label><textarea id="editBio" placeholder="Parle de toi..."></textarea>
-<label>Activité</label><input id="editActivite" placeholder="Ton activité">
-<label>Ville</label><input id="editVille" placeholder="Ta ville">
-<label>Pays</label><input id="editPays" placeholder="Ton pays">
-<div class="modal-buttons"><button class="btn btn-primary" id="saveProfileBtn" onclick="sauvegarderProfil()">Enregistrer</button><button class="btn btn-secondary" onclick="fermerEdit()">Annuler</button></div>
-</div></div>
+<label>Bio</label>
+<textarea id="editBio" placeholder="Parle de toi..."></textarea>
+<label>Activité</label>
+<input id="editActivite" placeholder="Ton activité">
+<label>Ville</label>
+<input id="editVille" placeholder="Ta ville">
+<label>Pays</label>
+<input id="editPays" placeholder="Ton pays">
+<div class="modal-buttons">
+<button class="btn btn-primary" id="saveProfileBtn" onclick="sauvegarderProfil()">Enregistrer</button>
+<button class="btn btn-secondary" onclick="fermerEdit()">Annuler</button>
+</div>
+</div>
+</div>
 
-<div id="modalLikes" style="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:400;display:none;align-items:flex-end;justify-content:center" onclick="if(event.target===this) fermerLikes()">
-  <div style="width:100%;max-width:500px;max-height:82vh;background:#16161F;border:1px solid #26262F;border-radius:20px 20px 0 0;padding:16px;overflow:auto">
-    <div style="display:flex;justify-content:space-between;align-items:center"><h3 id="titreLikes">❤️ Personnes qui ont aimé</h3><button onclick="fermerLikes()" style="width:35px;height:35px;border-radius:50%;background:#26262F;border:none;color:#fff;font-size:18px">✕</button></div>
-    <p id="totalLikes" style="color:#A1A1AA;font-size:12px;margin:6px 0"></p>
-    <div id="listeLikes"></div>
-  </div>
+<div id="modalLikes" onclick="if(event.target===this)fermerLikes()">
+<div class="likes-box">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<h3 id="titreLikes">❤️ Personnes qui ont aimé</h3>
+<button onclick="fermerLikes()" style="width:35px;height:35px;border-radius:50%;background:#26262F;border:none;color:#fff;font-size:18px">✕</button>
+</div>
+<p id="totalLikes" style="color:#A1A1AA;font-size:12px;margin:6px 0"></p>
+<div id="listeLikes"></div>
+</div>
 </div>
 
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {getDatabase,ref,onValue,get,update} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
-const app=initializeApp(firebaseConfig); const db=getDatabase(app);
-const uid=localStorage.getItem("jasonbook_uid"); if(!uid){location.href="index.html";}
-let monProfil=null; let amisChargement=false;
-let monNomLocal=(localStorage.getItem("jasonbook_nom")||"Jason Aloma").toLowerCase().trim();
-let maPhotoProfil=localStorage.getItem("jasonbook_photo")||"";
-const $=id=>document.getElementById(id);
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function imageAutorisee(src){ if(typeof src!=="string") return ""; if(src.startsWith("data:image/")) return src; if(src.startsWith("https://")) return src; return ""; }
-function creerAvatar(photo,lettre="J"){ const box=document.createElement("div"); box.className="avatar-mini"; const src=imageAutorisee(photo); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de profil"; img.loading="lazy"; box.appendChild(img); }else{ box.textContent=lettre||"J"; } return box; }
-function afficherPhotoDans(element,photo,lettre="J"){ element.replaceChildren(); const src=imageAutorisee(photo); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de profil"; element.appendChild(img); }else{ element.append(document.createTextNode(lettre)); } }
-function ajouterInfo(parent,emoji,label,value){ const row=document.createElement("div"); row.className="info-row"; const icon=document.createElement("span"); icon.textContent=emoji; const text=document.createElement("div"); text.textContent=label+": "+(value||"Non renseigné"); row.append(icon,text); parent.appendChild(row); }
-function afficherInfos(u){ const intro=$("introList"); const apropos=$("aproposFull"); intro.replaceChildren(); apropos.replaceChildren(); const infos=[["💼","Activité",u.activite],["📍","Ville",u.ville],["🌍","Pays",u.pays],["📞","Téléphone",u.phone],["✉️","Email",u.email],["📅","Membre depuis",u.dateInscription]]; infos.forEach(([emoji,label,value])=>{ ajouterInfo(intro,emoji,label,value); ajouterInfo(apropos,emoji,label,value); }); }
-function getPhotoCouverture(u){ return u.photoCouverture || u.couverture || u.cover || u.photoCover || ""; }
-function getPhotoProfil(u){ return u.photoProfil || u.photo || u.photoUrl || ""; }
 
-// ✅ TOUS MES UID - sans DAVBOT
-// On ne met PLUS davbot, car le post à 102 likes est à DAVBOT, pas à toi
-function getMesUids(){
-  let uids=[uid];
-  let noms=[monNomLocal];
-  try{
-    const comptes=JSON.parse(localStorage.getItem("jasonbook_comptes")||"[]");
-    comptes.forEach(c=>{
-      // ✅ On ne prend que les comptes qui ont le même nom que toi (Jason Aloma)
-      // On ne prend PAS DAVBOT
-      const nomC=(c.nom||"").toLowerCase().trim();
-      if(nomC && (nomC.includes("jason") || nomC===monNomLocal)){
-        if(c.uid) uids.push(c.uid);
-        if(c.nom) noms.push(nomC);
-      }
-    });
-  }catch(e){}
-  return {uids:[...new Set(uids)], noms:[...new Set(noms)]};
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getDatabase,ref,onValue,get,update
 }
-let MES_UIDS=getMesUids().uids;
-let MES_NOMS=getMesUids().noms;
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",
+authDomain:"starlink-investit.firebaseapp.com",
+databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",
+projectId:"starlink-investit",
+storageBucket:"starlink-investit.firebasestorage.app",
+messagingSenderId:"807081599583",
+appId:"1:807081599583:web:e00ec3959bc4acdae031ea"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
+
+const uid=localStorage.getItem("jasonbook_uid");
+
+if(!uid){
+location.href="index.html";
+throw new Error("Utilisateur non connecté");
+}
+
+const $=id=>document.getElementById(id);
+
+let monProfil=null;
+let MES_UIDS=[uid];
+let MES_NOMS=[];
+let mesPublications=[];
+let toutesLesPublications={};
+let toutesLesLikes={};
+let amisChargement=false;
+
+function esc(v){
+return String(v??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+}
+
+function imageAutorisee(src){
+if(typeof src!=="string")return "";
+if(src.startsWith("data:image/"))return src;
+if(src.startsWith("https://"))return src;
+return "";
+}
+
+function getPhotoProfil(u){
+return u?.photoProfil||u?.photo||u?.photoUrl||"";
+}
+
+function getPhotoCouverture(u){
+return u?.photoCouverture||u?.couverture||u?.cover||u?.photoCover||"";
+}
+
+function creerAvatar(photo,lettre="J"){
+const box=document.createElement("div");
+box.className="avatar-mini";
+
+const src=imageAutorisee(photo);
+
+if(src){
+const img=document.createElement("img");
+img.src=src;
+img.alt="Photo de profil";
+img.loading="lazy";
+box.appendChild(img);
+}else{
+box.textContent=lettre;
+}
+
+return box;
+}
+
+function afficherPhotoDans(element,photo,lettre="J"){
+element.replaceChildren();
+
+const src=imageAutorisee(photo);
+
+if(src){
+const img=document.createElement("img");
+img.src=src;
+img.alt="Photo de profil";
+element.appendChild(img);
+}else{
+element.append(document.createTextNode(lettre));
+}
+}
+
+function ajouterInfo(parent,emoji,label,value){
+const row=document.createElement("div");
+row.className="info-row";
+
+const icon=document.createElement("span");
+icon.textContent=emoji;
+
+const text=document.createElement("div");
+text.textContent=label+": "+(value||"Non renseigné");
+
+row.append(icon,text);
+parent.appendChild(row);
+}
+
+function afficherInfos(u){
+
+const intro=$("introList");
+const apropos=$("aproposFull");
+
+intro.replaceChildren();
+apropos.replaceChildren();
+
+const infos=[
+["💼","Activité",u.activite],
+["📍","Ville",u.ville],
+["🌍","Pays",u.pays],
+["📞","Téléphone",u.phone],
+["✉️","Email",u.email],
+["📅","Membre depuis",u.dateInscription]
+];
+
+infos.forEach(([emoji,label,value])=>{
+ajouterInfo(intro,emoji,label,value);
+ajouterInfo(apropos,emoji,label,value);
+});
+}
+
+/* IDENTIFICATION DES ANCIENS COMPTES */
+
+function getMesComptes(){
+
+const noms=[];
+const uids=[uid];
+
+try{
+const comptes=JSON.parse(
+localStorage.getItem("jasonbook_comptes")||"[]"
+);
+
+comptes.forEach(c=>{
+const nom=(c.nom||"").toLowerCase().trim();
+
+if(nom && nom.includes("jason")){
+if(c.uid)uids.push(c.uid);
+noms.push(nom);
+}
+});
+}catch(e){}
+
+return {
+uids:[...new Set(uids)],
+noms:[...new Set(noms)]
+};
+}
+
+/*
+IMPORTANT :
+Une publication est attribuée à son UID en priorité.
+Le nom exact sert uniquement pour les anciennes publications
+qui ne possèdent pas de UID.
+On ne récupère jamais les publications DAVBOT par sa photo.
+*/
+
+function cEstMonPost(p){
+
+if(!p)return false;
+
+const identifiants=[
+p.auteurUid,
+p.uid,
+p.auteurId,
+p.userId,
+p.ownerUid,
+p.createurUid
+].filter(Boolean).map(String);
+
+if(identifiants.includes(String(uid)))return true;
+
+if(identifiants.some(id=>MES_UIDS.includes(id)))return true;
+
+const nomPost=(
+p.nomAuteur||p.auteurNom||p.nom||""
+).toLowerCase().trim();
+
+if(nomPost==="davbot"||nomPost==="dav bot")return false;
+
+if(nomPost && MES_NOMS.includes(nomPost))return true;
+
+return false;
+}
+
+/* AFFICHAGE PROFIL */
 
 function afficherProfil(u){
-  monProfil=u;
-  const nom=u.nomComplet||[u.prenom,u.nom].filter(Boolean).join(" ")||"Utilisateur";
-  monNomLocal=nom.toLowerCase().trim();
-  maPhotoProfil=getPhotoProfil(u) || maPhotoProfil;
-  const maj=getMesUids(); MES_UIDS=maj.uids; MES_NOMS=[...new Set([...maj.noms, monNomLocal])];
-  const lettre=(u.prenom||u.nom||nom||"J").charAt(0).toUpperCase();
-  $("nomAffiche").textContent=nom; $("bioAffiche").textContent=u.bio||""; $("metaAffiche").textContent=[u.activite,u.ville,u.pays].filter(Boolean).join(" • ");
-  const pp=getPhotoProfil(u);
-  $("myAvatarTop").innerHTML = imageAutorisee(pp) ? `<img src="${pp}">` : lettre;
-  afficherPhotoDans($("bigAvatar"),pp,lettre);
-  const cam=document.createElement("div"); cam.className="cam"; cam.textContent="📷"; $("bigAvatar").appendChild(cam);
-  $("createAvatar").replaceChildren(creerAvatar(pp,lettre).childNodes[0]||document.createTextNode(lettre));
-  afficherInfos(u);
-  const cover=$("coverDiv"); cover.querySelector("img")?.remove(); $("coverTxt").style.display="flex";
-  const cov=getPhotoCouverture(u);
-  if(cov){ const src=imageAutorisee(cov); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de couverture"; cover.prepend(img); $("coverTxt").style.display="none"; } }
-}
-window.showTab=(id,btn)=>{ ["tabPosts","tabApropos","tabAmis","tabPhotos"].forEach(name=>{ $(name).style.display="none"; }); $("tab"+id.charAt(0).toUpperCase()+id.slice(1)).style.display="block"; document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); $("leftCol").style.display=id==="posts"&&innerWidth>800?"block":"none"; if(id==="amis") chargerAmis(); };
-window.ouvrirEdit=()=>{ if(!monProfil) return; $("editBio").value=monProfil.bio||""; $("editActivite").value=monProfil.activite||""; $("editVille").value=monProfil.ville||""; $("editPays").value=monProfil.pays||""; $("modalEdit").classList.add("open"); };
-window.fermerEdit=()=>{ $("modalEdit").classList.remove("open"); };
-window.sauvegarderProfil=async()=>{ const bouton=$("saveProfileBtn"); bouton.disabled=true; bouton.textContent="Enregistrement..."; try{ await update(ref(db,"jasonbook/users/"+uid),{ bio:$("editBio").value.trim(), activite:$("editActivite").value.trim(), ville:$("editVille").value.trim(), pays:$("editPays").value.trim() }); fermerEdit(); alert("Profil mis à jour !"); }catch(error){ console.error(error); alert("Impossible de modifier le profil. Vérifie ta connexion."); }finally{ bouton.disabled=false; bouton.textContent="Enregistrer"; } };
-window.deconnecter=()=>{ if(confirm("Voulez-vous vraiment vous déconnecter ?")){ localStorage.clear(); location.href="index.html"; } };
-function compresserImage(file,maxWidth=1100,quality=.72){ return new Promise((resolve,reject)=>{ if(!file || !file.type.startsWith("image/")){ reject(new Error("Fichier image invalide")); return; } const reader=new FileReader(); reader.onerror=()=>reject(new Error("Lecture impossible")); reader.onload=()=>{ const img=new Image(); img.onerror=()=>reject(new Error("Image invalide")); img.onload=()=>{ const ratio=Math.min(1,maxWidth/img.width); const canvas=document.createElement("canvas"); canvas.width=Math.round(img.width*ratio); canvas.height=Math.round(img.height*ratio); const ctx=canvas.getContext("2d"); ctx.drawImage(img,0,0,canvas.width,canvas.height); resolve(canvas.toDataURL("image/jpeg",quality)); }; img.src=reader.result; }; reader.readAsDataURL(file); }); }
-async function enregistrerImage(file,champ){
-  if(!file) return;
-  if(file.size>12*1024*1024){ alert("Image trop volumineuse. Choisis une image de moins de 12 Mo."); return; }
-  try{
-    const image=await compresserImage(file,champ==="photoCouverture"?1400:900,.70);
-    if(champ==="photoCouverture"){ await update(ref(db,"jasonbook/users/"+uid),{ photoCouverture:image, couverture:image, cover:image }); }
-    else { await update(ref(db,"jasonbook/users/"+uid),{ photoProfil:image, photo:image }); }
-    if(champ==="photoProfil"){ localStorage.setItem("jasonbook_photo",image); }
-    alert("Photo mise à jour ✅");
-  }catch(error){ console.error(error); alert("Impossible d'envoyer cette image."); }
-}
-$("fileAvatar").addEventListener("change",async e=>{ await enregistrerImage(e.target.files[0],"photoProfil"); e.target.value=""; });
-$("fileCover").addEventListener("change",async e=>{ await enregistrerImage(e.target.files[0],"photoCouverture"); e.target.value=""; });
-onValue(ref(db,"jasonbook/users/"+uid),snap=>{ const u=snap.val(); if(!u) return; afficherProfil(u); });
 
-// ✅ VOIR QUI A AIMÉ
-window.voirLikes=async(postId)=>{
-  const modal=$("modalLikes"); $("titreLikes").innerText="❤️ Personnes qui ont aimé"; $("listeLikes").innerHTML="Chargement..."; modal.style.display="flex";
-  const snap=await get(ref(db,'jasonbook/likes/'+postId)); const d=snap.val()||{};
-  const arr=Object.entries(d).map(([k,l])=>{ if(l===true) return {nom:'Utilisateur',photo:'',date:''}; return l; });
-  $("totalLikes").innerText=arr.length+" personnes ont aimé";
-  if(!arr.length){ $("listeLikes").innerHTML='<p style="color:#A1A1AA">Aucune personne.</p>'; return; }
-  $("listeLikes").innerHTML=arr.map(l=>`<div style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #26262F"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FFC107,#7C3AED);display:flex;align-items:center;justify-content:center;overflow:hidden;font-weight:900">${l.photo?`<img src="${esc(l.photo)}" style="width:100%;height:100%;object-fit:cover">`:esc((l.nom||'?').charAt(0))}</div><div style="flex:1"><b>${esc(l.nom||'Fan')}</b><small style="display:block;color:#A1A1AA">${esc(l.date||'')}</small></div><span>❤️</span></div>`).join('');
+monProfil=u;
+
+const nom=u.nomComplet||
+[u.prenom,u.nom].filter(Boolean).join(" ")||
+"Utilisateur";
+
+const lettre=(u.prenom||u.nom||nom||"J")
+.charAt(0).toUpperCase();
+
+const comptes=getMesComptes();
+
+MES_UIDS=comptes.uids;
+MES_NOMS=[...new Set([
+...comptes.noms,
+nom.toLowerCase().trim()
+])];
+
+$("nomAffiche").textContent=nom;
+$("bioAffiche").textContent=u.bio||"";
+$("metaAffiche").textContent=[
+u.activite,u.ville,u.pays
+].filter(Boolean).join(" • ");
+
+const pp=getPhotoProfil(u);
+
+$("myAvatarTop").replaceChildren();
+
+if(imageAutorisee(pp)){
+const img=document.createElement("img");
+img.src=pp;
+$("myAvatarTop").appendChild(img);
+}else{
+$("myAvatarTop").textContent=lettre;
+}
+
+afficherPhotoDans($("bigAvatar"),pp,lettre);
+
+const cam=document.createElement("div");
+cam.className="cam";
+cam.textContent="📷";
+$("bigAvatar").appendChild(cam);
+
+$("createAvatar").replaceChildren(
+creerAvatar(pp,lettre).firstChild ||
+document.createTextNode(lettre)
+);
+
+afficherInfos(u);
+
+const cover=$("coverDiv");
+cover.querySelector("img")?.remove();
+$("coverTxt").style.display="flex";
+
+const cov=getPhotoCouverture(u);
+
+if(imageAutorisee(cov)){
+const img=document.createElement("img");
+img.src=cov;
+img.alt="Photo de couverture";
+cover.prepend(img);
+$("coverTxt").style.display="none";
+}
+
+actualiserStatistiques();
+}
+
+/* MODIFICATION PROFIL */
+
+window.ouvrirEdit=()=>{
+if(!monProfil)return;
+
+$("editBio").value=monProfil.bio||"";
+$("editActivite").value=monProfil.activite||"";
+$("editVille").value=monProfil.ville||"";
+$("editPays").value=monProfil.pays||"";
+
+$("modalEdit").classList.add("open");
 };
-window.fermerLikes=()=>{ $("modalLikes").style.display="none"; };
+
+window.fermerEdit=()=>{
+$("modalEdit").classList.remove("open");
+};
+
+window.sauvegarderProfil=async()=>{
+
+const bouton=$("saveProfileBtn");
+
+bouton.disabled=true;
+bouton.textContent="Enregistrement...";
+
+try{
+
+await update(ref(db,"jasonbook/users/"+uid),{
+bio:$("editBio").value.trim(),
+activite:$("editActivite").value.trim(),
+ville:$("editVille").value.trim(),
+pays:$("editPays").value.trim()
+});
+
+fermerEdit();
+alert("Profil mis à jour !");
+
+}catch(error){
+console.error(error);
+alert("Impossible de modifier le profil. Vérifie ta connexion.");
+}finally{
+bouton.disabled=false;
+bouton.textContent="Enregistrer";
+}
+};
+
+/* DÉCONNEXION */
+
+window.deconnecter=()=>{
+if(confirm("Voulez-vous vraiment vous déconnecter ?")){
+localStorage.removeItem("jasonbook_uid");
+localStorage.removeItem("jasonbook_nom");
+localStorage.removeItem("jasonbook_photo");
+location.href="index.html";
+}
+};
+
+/* PHOTOS */
+
+function compresserImage(file,maxWidth=1100,quality=.72){
+
+return new Promise((resolve,reject)=>{
+
+if(!file||!file.type.startsWith("image/")){
+reject(new Error("Fichier image invalide"));
+return;
+}
+
+const reader=new FileReader();
+
+reader.onerror=()=>reject(new Error("Lecture impossible"));
+
+reader.onload=()=>{
+
+const img=new Image();
+
+img.onerror=()=>reject(new Error("Image invalide"));
+
+img.onload=()=>{
+
+const ratio=Math.min(1,maxWidth/img.width);
+
+const canvas=document.createElement("canvas");
+
+canvas.width=Math.round(img.width*ratio);
+canvas.height=Math.round(img.height*ratio);
+
+const ctx=canvas.getContext("2d");
+
+ctx.drawImage(img,0,0,canvas.width,canvas.height);
+
+resolve(canvas.toDataURL("image/jpeg",quality));
+
+};
+
+img.src=reader.result;
+};
+
+reader.readAsDataURL(file);
+});
+}
+
+async function enregistrerImage(file,champ){
+
+if(!file)return;
+
+if(file.size>12*1024*1024){
+alert("Image trop volumineuse. Choisis une image de moins de 12 Mo.");
+return;
+}
+
+try{
+
+const image=await compresserImage(
+file,
+champ==="photoCouverture"?1400:900,
+.70
+);
+
+if(champ==="photoCouverture"){
+
+await update(ref(db,"jasonbook/users/"+uid),{
+photoCouverture:image,
+couverture:image,
+cover:image
+});
+
+}else{
+
+await update(ref(db,"jasonbook/users/"+uid),{
+photoProfil:image,
+photo:image
+});
+
+localStorage.setItem("jasonbook_photo",image);
+}
+
+alert("Photo mise à jour ✅");
+
+}catch(error){
+console.error(error);
+alert("Impossible d'envoyer cette image.");
+}
+}
+
+$("fileAvatar").addEventListener("change",async e=>{
+await enregistrerImage(e.target.files[0],"photoProfil");
+e.target.value="";
+});
+
+$("fileCover").addEventListener("change",async e=>{
+await enregistrerImage(e.target.files[0],"photoCouverture");
+e.target.value="";
+});
+
+/* STATISTIQUES RÉELLES */
+
+function nombreLikes(postId,post){
+
+const likes=toutesLesLikes[postId];
+
+if(likes && typeof likes==="object"){
+return Object.keys(likes).length;
+}
+
+return Number(
+post.likesCount||
+(typeof post.likes==="number"?post.likes:0)||
+0
+);
+}
+
+function actualiserStatistiques(){
+
+const posts=mesPublications;
+
+let totalLikes=0;
+
+posts.forEach(([id,p])=>{
+totalLikes+=nombreLikes(id,p);
+});
+
+$("nbPubs").textContent=posts.length;
+$("nbLikes").textContent=totalLikes;
+}
+
+/* MODAL QUI A AIMÉ */
+
+window.voirLikes=async(postId)=>{
+
+const modal=$("modalLikes");
+
+$("listeLikes").innerHTML=
+'<p class="loading">Chargement des personnes...</p>';
+
+modal.style.display="flex";
+
+try{
+
+const likes=toutesLesLikes[postId]||{};
+
+const entries=Object.entries(likes);
+
+$("totalLikes").textContent=
+entries.length+" personne(s) ont aimé";
+
+if(!entries.length){
+$("listeLikes").innerHTML=
+'<p class="empty">Aucune personne pour le moment.</p>';
+return;
+}
+
+const usersSnap=await get(ref(db,"jasonbook/users"));
+const users=usersSnap.val()||{};
+
+const box=$("listeLikes");
+box.replaceChildren();
+
+entries.forEach(([userId,like])=>{
+
+const utilisateur=users[userId]||like||{};
+
+const nom=utilisateur.nomComplet||
+[utilisateur.prenom,utilisateur.nom].filter(Boolean).join(" ")||
+utilisateur.nom||
+"Utilisateur";
+
+const photo=imageAutorisee(
+utilisateur.photoProfil||
+utilisateur.photo||
+utilisateur.photoUrl||
+""
+);
+
+const row=document.createElement("div");
+row.className="like-person";
+
+if(photo){
+
+const img=document.createElement("img");
+img.src=photo;
+img.alt=nom;
+row.appendChild(img);
+
+}else{
+
+const lettre=document.createElement("div");
+lettre.className="letter";
+lettre.textContent=nom.charAt(0).toUpperCase();
+row.appendChild(lettre);
+
+}
+
+const info=document.createElement("div");
+info.style.flex="1";
+
+const bold=document.createElement("b");
+bold.textContent=nom;
+
+const small=document.createElement("small");
+small.style.display="block";
+small.style.color="#A1A1AA";
+small.textContent=utilisateur.ville||"Membre de JASONBOOK";
+
+info.append(bold,small);
+
+const heart=document.createElement("span");
+heart.textContent="❤️";
+
+row.append(info,heart);
+box.appendChild(row);
+
+});
+
+}catch(error){
+console.error(error);
+$("listeLikes").innerHTML=
+'<p class="empty">Impossible de charger les J’aime.</p>';
+}
+};
+
+window.fermerLikes=()=>{
+$("modalLikes").style.display="none";
+};
+
+/* AFFICHER LES PUBLICATIONS */
+
+function afficherPublications(){
+
+const box=$("mesPosts");
+const grid=$("photosGrid");
+const full=$("photosFull");
+
+box.replaceChildren();
+grid.replaceChildren();
+full.replaceChildren();
+
+mesPublications=Object.entries(toutesLesPublications)
+.filter(([id,p])=>cEstMonPost(p))
+.sort((a,b)=>(b[1].timestamp||0)-(a[1].timestamp||0));
+
+const posts=mesPublications;
+
+$("nbPubs").textContent=posts.length;
+
+let compteurPhotos=0;
+
+posts.forEach(([id,p])=>{
+
+const card=document.createElement("article");
+card.className="card";
+
+const head=document.createElement("div");
+head.className="post-head";
+
+const nom=p.nomAuteur||
+monProfil?.nomComplet||
+"Moi";
+
+const photoAuteur=p.photoAuteur||
+getPhotoProfil(monProfil||{});
+
+head.appendChild(
+creerAvatar(photoAuteur,nom.charAt(0).toUpperCase())
+);
+
+const auteur=document.createElement("div");
+
+const auteurNom=document.createElement("b");
+auteurNom.textContent=nom;
+
+const date=document.createElement("small");
+date.textContent=p.date||"Publication";
+
+auteur.append(
+auteurNom,
+document.createElement("br"),
+date
+);
+
+head.appendChild(auteur);
+card.appendChild(head);
+
+/* TEXTE */
+
+if(p.texte){
+
+const texte=document.createElement("div");
+texte.className="post-text";
+texte.textContent=p.texte;
+
+card.appendChild(texte);
+
+}
+
+/* IMAGE */
+
+const photo=imageAutorisee(
+p.photoUrl||p.image||""
+);
+
+if(photo){
+
+const img=document.createElement("img");
+
+img.className="post-image";
+img.src=photo;
+img.alt="Photo publiée";
+img.loading="lazy";
+
+card.appendChild(img);
+
+compteurPhotos++;
+
+const mini=document.createElement("img");
+mini.src=photo;
+mini.alt="Photo";
+mini.loading="lazy";
+grid.appendChild(mini);
+
+const grande=document.createElement("img");
+grande.src=photo;
+grande.alt="Photo publiée";
+grande.loading="lazy";
+full.appendChild(grande);
+
+}
+
+/* COMPTEURS */
+
+const likes=nombreLikes(id,p);
+
+const commentaires=Number(
+p.commentairesCount||p.commentsCount||p.comments||0
+);
+
+const partages=Number(
+p.partagesCount||p.shares||0
+);
+
+const counts=document.createElement("div");
+counts.className="counts-row";
+
+const likeBtn=document.createElement("span");
+likeBtn.textContent="❤️ "+likes+" J'aime";
+likeBtn.addEventListener("click",()=>voirLikes(id));
+
+const commentBtn=document.createElement("span");
+commentBtn.textContent="💬 "+commentaires+" commentaires";
+
+const shareBtn=document.createElement("span");
+shareBtn.textContent="↗️ "+partages+" partages";
+
+counts.append(likeBtn,commentBtn,shareBtn);
+
+card.appendChild(counts);
+
+/* BOUTONS */
+
+const actions=document.createElement("div");
+actions.className="actions-text";
+
+const btnLike=document.createElement("button");
+btnLike.textContent="❤️ "+likes+" J'aime";
+btnLike.addEventListener("click",()=>voirLikes(id));
+
+const btnComment=document.createElement("button");
+btnComment.textContent="💬 Commentaires";
+
+const btnShare=document.createElement("button");
+btnShare.textContent="↗️ Partages";
+
+actions.append(btnLike,btnComment,btnShare);
+
+card.appendChild(actions);
+
+box.appendChild(card);
+
+});
+
+/* TOTAL DES J'AIME */
+
+actualiserStatistiques();
+
+/* ÉTAT VIDE */
+
+$("noPosts").style.display=
+posts.length?"none":"block";
+
+$("noPhotos").style.display=
+compteurPhotos?"none":"block";
+
+$("noPhotosFull").style.display=
+compteurPhotos?"none":"block";
+
+}
+
+/* FIREBASE : PROFIL */
+
+onValue(
+ref(db,"jasonbook/users/"+uid),
+snap=>{
+
+const u=snap.val();
+
+if(!u)return;
+
+afficherProfil(u);
+
+}
+);
+
+/* FIREBASE : PUBLICATIONS */
+
+onValue(
+ref(db,"jasonbook/posts"),
+snap=>{
+
+toutesLesPublications=snap.val()||{};
+
+afficherPublications();
+
+},
+error=>{
+console.error("Erreur publications:",error);
+$("mesPosts").innerHTML=
+'<div class="card empty">Impossible de charger tes publications.</div>';
+}
+);
+
+/* FIREBASE : TOUS LES J'AIME */
+
+onValue(
+ref(db,"jasonbook/likes"),
+snap=>{
+
+toutesLesLikes=snap.val()||{};
+
+afficherPublications();
+
+},
+error=>{
+console.error("Erreur likes:",error);
+}
+);
+
+/* AMIS */
 
 async function chargerAmis(){
-  if(amisChargement) return; amisChargement=true;
-  const box=$("amisFull"); const boxLeft=$("amisList"); const loading=$("loadingAmis"); const noAmis=$("noAmisFull");
-  loading.style.display="block"; noAmis.style.display="none"; box.replaceChildren(); boxLeft.replaceChildren();
-  try{
-    let tousIds=new Set();
-    for(let idUid of MES_UIDS){
-      const snap=await get(ref(db,"jasonbook/amis/"+idUid)); const data=snap.val()||{}; Object.keys(data).forEach(k=>tousIds.add(k));
-    }
-    const ids=[...tousIds];
-    $("amisCount").textContent=ids.length+" ami"+(ids.length>1?"s":""); $("amisCount2").textContent=ids.length;
-    $("nbAmis").textContent=ids.length;
-    if(!ids.length){ noAmis.style.display="block"; boxLeft.textContent="Aucun ami pour le moment"; boxLeft.style.color="var(--grey)"; return; }
-    const tousSnap=await get(ref(db,"jasonbook/users")); const tous=tousSnap.val()||{};
-    ids.forEach(fid=>{
-      let u=tous[fid];
-      if(!u){ for(const [key,value] of Object.entries(tous)){ if(value&&(value.uid===fid||value.id===fid)){ u=value; break; } } }
-      const nom=u?.nomComplet||[u?.prenom,u?.nom].filter(Boolean).join(" ")||"Ami";
-      const photo=getPhotoProfil(u||{}); const ville=u?.ville||"";
-      const row=document.createElement("div"); row.className="ami-row"; row.appendChild(creerAvatar(photo,nom.charAt(0).toUpperCase()));
-      const info=document.createElement("div"); info.style.flex="1"; const bold=document.createElement("b"); bold.textContent=nom; const small=document.createElement("small"); small.textContent=ville||"Membre de JASONBOOK"; info.append(bold,document.createElement("br"),small);
-      const arrow=document.createElement("span"); arrow.className="ami-arrow"; arrow.textContent="›"; row.append(info,arrow); row.addEventListener("click",()=>{ location.href="profil-ami.html?uid="+encodeURIComponent(fid); }); box.appendChild(row);
-      const leftRow=document.createElement("div"); leftRow.className="ami-row"; leftRow.appendChild(creerAvatar(photo,nom.charAt(0).toUpperCase())); const leftName=document.createElement("b"); leftName.textContent=nom; leftRow.appendChild(leftName); leftRow.addEventListener("click",()=>{ location.href="profil-ami.html?uid="+encodeURIComponent(fid); }); boxLeft.appendChild(leftRow);
-    });
-  }catch(error){ console.error(error); box.textContent="Impossible de charger les amis."; }finally{ loading.style.display="none"; amisChargement=false; }
-}
-window.chargerAmis=chargerAmis; chargerAmis();
-onValue(ref(db,"jasonbook/amis/"+uid),s=>{ const d=s.val()||{}; const n=Object.keys(d).length; if(n>0){ $("nbAmis").textContent=n; $("amisCount").textContent=n+" ami"+(n>1?"s":""); } });
 
-// ✅ CORRECTION : MES PUBLICATIONS = SEULEMENT MOI (Jason Aloma)
-// ❌ On ne compte PLUS DAVBOT - le post à 102 likes est à DAVBOT, pas à toi
-// ✅ Ton partage de DAVBOT, lui, sera compté comme à toi car son auteurUid = ton uid
-function cEstMonPost(p){
-  if(!p) return false;
-  // 1. Ton UID actuel + tes anciens UID qui ont le nom Jason
-  if(MES_UIDS.includes(p.auteurUid)) return true;
-  if(MES_UIDS.includes(p.uid)) return true;
-  if(MES_UIDS.includes(p.auteurId)) return true;
-  // 2. Ton nom exact : Jason Aloma
-  const nomPost=(p.nomAuteur||p.nom||p.auteurNom||"").toLowerCase().trim();
-  if(nomPost && MES_NOMS.includes(nomPost)) return true;
-  // 3. Ta photo de profil - tes publications ont ta photo, celles de DAVBOT ont une autre photo
-  // On vérifie seulement si la photo est exactement la tienne ET que le nom n'est pas DAVBOT
-  if(nomPost==="davbot" || nomPost==="dav bot") return false;
-  if(maPhotoProfil && p.photoAuteur && p.photoAuteur===maPhotoProfil && nomPost!=="davbot") return true;
-  // 4. Sécurité : si le post a été créé avec un champ différent
-  if(p.auteurUid && p.auteurUid===uid) return true;
-  return false;
+if(amisChargement)return;
+
+amisChargement=true;
+
+const box=$("amisFull");
+const boxLeft=$("amisList");
+
+$("loadingAmis").style.display="block";
+$("noAmisFull").style.display="none";
+
+box.replaceChildren();
+boxLeft.replaceChildren();
+
+try{
+
+const tousIds=new Set();
+
+for(const idUid of MES_UIDS){
+
+const snap=await get(
+ref(db,"jasonbook/amis/"+idUid)
+);
+
+const data=snap.val()||{};
+
+Object.keys(data).forEach(k=>tousIds.add(k));
+
 }
 
-onValue(ref(db,"jasonbook/posts"),snap=>{
-  const data=snap.val()||{}; const box=$("mesPosts"); const grid=$("photosGrid"); const full=$("photosFull");
-  box.replaceChildren(); grid.replaceChildren(); full.replaceChildren();
-  const miens=Object.entries(data).filter(([id,p])=>cEstMonPost(p)).sort((a,b)=>(b[1].timestamp||0)-(a[1].timestamp||0));
-  $("nbPubs").textContent=miens.length;
-  const totalLikes=miens.reduce((s,[id,p])=>s+Number(p.likesCount||p.likes||0),0);
-  $("nbLikes").textContent=totalLikes;
-  $("noPosts").style.display=miens.length?"none":"block";
-  let compteurPhotos=0;
-  miens.forEach(([id,p])=>{
-    const card=document.createElement("article"); card.className="card";
-    const head=document.createElement("div"); head.className="post-head";
-    const nom=p.nomAuteur||monProfil?.nomComplet||"Moi"; const lettre=nom.charAt(0).toUpperCase();
-    head.appendChild(creerAvatar(p.photoAuteur||getPhotoProfil(monProfil||{}),lettre));
-    const auteur=document.createElement("div"); const auteurNom=document.createElement("b"); auteurNom.textContent=nom; const date=document.createElement("small"); date.textContent=p.date||"Publication"; auteur.append(auteurNom,document.createElement("br"),date); head.appendChild(auteur); card.appendChild(head);
-    if(p.texte){ const texte=document.createElement("div"); texte.className="post-text"; texte.textContent=p.texte; card.appendChild(texte); }
-    const photo=imageAutorisee(p.photoUrl||p.image||"");
-    if(photo){ const img=document.createElement("img"); img.className="post-image"; img.src=photo; img.alt="Photo publiée"; img.loading="lazy"; card.appendChild(img); compteurPhotos++; const mini=document.createElement("img"); mini.src=photo; mini.alt="Photo"; mini.loading="lazy"; grid.appendChild(mini); const grande=document.createElement("img"); grande.src=photo; grande.alt="Photo publiée"; grande.loading="lazy"; full.appendChild(grande); }
-    const counts=document.createElement("div"); counts.className="counts-row";
-    // ✅ Si c'est un partage, on l'indique
-    const labelPartage=p.partageDe ? " • Partagé de "+(p.partageDeNom||"DAVBOT") : "";
-    counts.innerHTML=`<span onclick="voirLikes('${esc(id)}')">❤️ ${Number(p.likesCount||p.likes||0)} J'aime</span><span>💬 ${Number(p.commentairesCount||p.comments||0)} commentaires</span><span>↗️ ${Number(p.partagesCount||p.shares||0)} partages</span>`;
-    if(labelPartage){ const sp=document.createElement("div"); sp.style.cssText="font-size:11px;color:#A1A1AA;padding:4px"; sp.textContent="↗️ Partagé de "+(p.partageDeNom||"DAVBOT"); card.appendChild(sp); }
-    card.appendChild(counts);
-    const actions=document.createElement("div"); actions.className="actions-text"; ["❤️ "+(p.likesCount||0),"💬 "+(p.commentairesCount||0),"↗️ "+(p.partagesCount||0)].forEach(label=>{ const button=document.createElement("button"); button.textContent=label; actions.appendChild(button); }); card.appendChild(actions); box.appendChild(card);
-  });
-  $("noPhotos").style.display=compteurPhotos?"none":"block"; $("noPhotosFull").style.display=compteurPhotos?"none":"block";
+const ids=[...tousIds];
+
+$("amisCount").textContent=
+ids.length+" ami"+(ids.length>1?"s":"");
+
+$("amisCount2").textContent=ids.length;
+$("nbAmis").textContent=ids.length;
+
+if(!ids.length){
+
+$("noAmisFull").style.display="block";
+boxLeft.textContent="Aucun ami pour le moment";
+boxLeft.style.color="var(--grey)";
+
+return;
+}
+
+const tousSnap=await get(
+ref(db,"jasonbook/users")
+);
+
+const tous=tousSnap.val()||{};
+
+ids.forEach(fid=>{
+
+let u=tous[fid];
+
+if(!u){
+
+for(const [key,value] of Object.entries(tous)){
+if(value&&(value.uid===fid||value.id===fid)){
+u=value;
+break;
+}
+}
+
+}
+
+const nom=u?.nomComplet||
+[u?.prenom,u?.nom].filter(Boolean).join(" ")||
+"Ami";
+
+const photo=getPhotoProfil(u||{});
+
+const row=document.createElement("div");
+row.className="ami-row";
+
+row.appendChild(
+creerAvatar(photo,nom.charAt(0).toUpperCase())
+);
+
+const info=document.createElement("div");
+info.style.flex="1";
+
+const bold=document.createElement("b");
+bold.textContent=nom;
+
+const small=document.createElement("small");
+small.textContent=u?.ville||"Membre de JASONBOOK";
+
+info.append(
+bold,
+document.createElement("br"),
+small
+);
+
+const arrow=document.createElement("span");
+arrow.className="ami-arrow";
+arrow.textContent="›";
+
+row.append(info,arrow);
+
+row.addEventListener("click",()=>{
+location.href="profil-ami.html?uid="+encodeURIComponent(fid);
 });
-$("modalEdit").addEventListener("click",e=>{ if(e.target===$("modalEdit")) fermerEdit(); });
-document.addEventListener("keydown",e=>{ if(e.key==="Escape") fermerEdit(); });
+
+box.appendChild(row);
+
+const leftRow=document.createElement("div");
+leftRow.className="ami-row";
+
+leftRow.appendChild(
+creerAvatar(photo,nom.charAt(0).toUpperCase())
+);
+
+const leftName=document.createElement("b");
+leftName.textContent=nom;
+
+leftRow.appendChild(leftName);
+
+leftRow.addEventListener("click",()=>{
+location.href="profil-ami.html?uid="+encodeURIComponent(fid);
+});
+
+boxLeft.appendChild(leftRow);
+
+});
+
+}catch(error){
+
+console.error(error);
+box.textContent="Impossible de charger les amis.";
+
+}finally{
+
+$("loadingAmis").style.display="none";
+amisChargement=false;
+
+}
+
+}
+
+window.chargerAmis=chargerAmis;
+
+chargerAmis();
+
+onValue(
+ref(db,"jasonbook/amis/"+uid),
+snap=>{
+
+const data=snap.val()||{};
+const n=Object.keys(data).length;
+
+$("nbAmis").textContent=n;
+$("amisCount").textContent=n+" ami"+(n>1?"s":"");
+
+}
+);
+
+/* NAVIGATION ENTRE LES ONGLETS */
+
+window.showTab=(id,btn)=>{
+
+["tabPosts","tabApropos","tabAmis","tabPhotos"]
+.forEach(name=>{
+$(name).style.display="none";
+});
+
+$("tab"+id.charAt(0).toUpperCase()+id.slice(1))
+.style.display="block";
+
+document.querySelectorAll(".tabs button")
+.forEach(b=>b.classList.remove("active"));
+
+btn.classList.add("active");
+
+$("leftCol").style.display=
+id==="posts"&&innerWidth>800?"block":"none";
+
+if(id==="amis")chargerAmis();
+
+};
+
+/* FERMETURE MODALES */
+
+$("modalEdit").addEventListener("click",e=>{
+if(e.target===$("modalEdit"))fermerEdit();
+});
+
+document.addEventListener("keydown",e=>{
+if(e.key==="Escape"){
+fermerEdit();
+fermerLikes();
+}
+});
+
 </script>
 </body>
 </html>
