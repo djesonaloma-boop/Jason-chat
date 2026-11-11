@@ -1,1386 +1,190 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#090910">
-<title>JASONBOOK - Amis</title>
-
+<meta name="theme-color" content="#0A0A0F">
+<title>JASONBOOK ✨ - Amis</title>
 <style>
-:root{
---bg:#090910;
---card:#14141D;
---card2:#1C1C28;
---violet:#8B5CF6;
---violet2:#A855F7;
---gold:#F5C451;
---text:#fff;
---muted:#9292A3;
---line:#292936;
---green:#22C55E;
---red:#FF6565;
-}
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-}
+:root{--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--violet:#7C3AED;--violet2:#A855F7;--gold:#FFC107;--text:#fff;--muted:#A1A1AA;--line:#26262F;--green:#22C55E;--red:#FF6565}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 html{overflow-x:hidden}
-body{
-background:var(--bg);
-color:var(--text);
-min-height:100vh;
-overflow-x:hidden;
--webkit-tap-highlight-color:transparent;
-}
+body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:92px;-webkit-tap-highlight-color:transparent}
 button,a{touch-action:manipulation}
 button{cursor:pointer}
-
-header{
-background:rgba(9,9,16,.97);
-position:sticky;
-top:0;
-z-index:30;
-border-bottom:1px solid var(--line);
-}
-.top-bar{
-display:flex;
-align-items:center;
-gap:10px;
-padding:10px 12px 6px;
-}
-.logo{
-display:flex;
-align-items:center;
-gap:8px;
-font-weight:900;
-font-size:21px;
-flex:1;
-white-space:nowrap;
-cursor:pointer;
-}
-.logo span{
-width:38px;
-height:38px;
-background:linear-gradient(135deg,var(--gold),#FF9800);
-color:#111;
-border-radius:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:23px;
-}
+/* HEADER PRO - PAS FACEBOOK */
+.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.logo{font-size:21px;font-weight:900;white-space:nowrap}
 .logo i{color:var(--gold);font-style:normal}
-.logo small{
-display:block;
-font-size:8px;
-color:var(--muted);
-letter-spacing:1.5px;
-}
-.icon-top{
-width:39px;
-height:39px;
-background:var(--card2);
-border:1px solid var(--line);
-border-radius:13px;
-color:#fff;
-font-size:18px;
-}
-.icon-top.menu{
-background:var(--violet);
-border:0;
-}
-.nav-top{
-display:flex;
-justify-content:space-around;
-padding:3px 5px 0;
-}
-.nav-top a{
-flex:1;
-text-decoration:none;
-color:var(--muted);
-display:flex;
-align-items:center;
-justify-content:center;
-padding:9px 2px;
-position:relative;
-font-size:21px;
-border-bottom:2px solid transparent;
-}
-.nav-top a.active{
-color:var(--gold);
-border-color:var(--gold);
-}
-.nav-top .badge{
-position:absolute;
-top:0;
-right:50%;
-transform:translateX(18px);
-background:#E0245E;
-color:white;
-font-size:10px;
-padding:2px 5px;
-border-radius:20px;
-display:none;
-}
-.nav-top .badge.or{
-background:var(--gold);
-color:#111;
-}
-
-.wrap{
-max-width:700px;
-width:100%;
-margin:15px auto;
-padding:0 11px 45px;
-}
-.page-title{
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin-bottom:4px;
-}
-.page-title h1{
-font-size:23px;
-font-weight:900;
-}
-.page-title .icon{
-width:42px;
-height:42px;
-border-radius:13px;
-background:var(--card);
-border:1px solid var(--line);
-display:grid;
-place-items:center;
-font-size:21px;
-}
-.sub{
-font-size:12px;
-color:var(--muted);
-margin-bottom:16px;
-}
-
-/* STATISTIQUES */
-
-.stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-margin-bottom:15px;
-}
-.stat{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:14px;
-padding:12px 8px;
-text-align:center;
-}
-.stat strong{
-display:block;
-font-size:21px;
-color:var(--gold);
-}
-.stat small{
-color:var(--muted);
-font-size:10px;
-}
-
-/* ONGLETS */
-
-.tabs{
-display:flex;
-gap:7px;
-overflow-x:auto;
-padding:2px 0 12px;
-scrollbar-width:none;
-}
+.logo small{display:block;font-size:8px;color:var(--muted);letter-spacing:1.2px}
+.search-top{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:9px 14px;display:flex;gap:6px;align-items:center;color:var(--muted);font-size:13px;cursor:pointer}
+.avatar-top{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--violet));display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;cursor:pointer;flex-shrink:0}
+.avatar-top img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:700px;width:100%;margin:15px auto;padding:0 11px 10px}
+.page-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.page-title h1{font-size:23px;font-weight:900}
+.page-title .icon{width:42px;height:42px;border-radius:13px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:21px}
+.sub{font-size:12px;color:var(--muted);margin-bottom:16px}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:15px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center}
+.stat strong{display:block;font-size:21px;color:var(--gold)}
+.stat small{color:var(--muted);font-size:10px}
+/* TABS */
+.tabs{display:flex;gap:7px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tabs button{
-border:1px solid var(--line);
-background:var(--card);
-color:white;
-padding:9px 13px;
-border-radius:30px;
-font-size:11px;
-font-weight:750;
-white-space:nowrap;
-flex-shrink:0;
-}
-.tabs button.active{
-background:linear-gradient(135deg,var(--violet),var(--violet2));
-border-color:transparent;
-}
-.tabs button span{
-color:var(--gold);
-margin-left:3px;
-}
-
+.tabs button{border:1px solid var(--line);background:var(--card);color:#fff;padding:9px 13px;border-radius:999px;font-size:11px;font-weight:750;white-space:nowrap;flex-shrink:0}
+.tabs button.active{background:linear-gradient(135deg,var(--violet),var(--violet2));border-color:transparent}
+.tabs button span{color:var(--gold);margin-left:3px}
 /* RECHERCHE */
-
-.search-box{
-position:relative;
-margin-bottom:14px;
-}
-.search-box span{
-position:absolute;
-left:14px;
-top:50%;
-transform:translateY(-50%);
-font-size:16px;
-}
-.search-big{
-width:100%;
-padding:13px 40px;
-border:1px solid var(--line);
-border-radius:13px;
-font-size:13px;
-outline:none;
-background:var(--card);
-color:white;
-}
-.search-big:focus{
-border-color:var(--violet);
-}
+.search-box{position:relative;margin-bottom:14px}
+.search-box span{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px}
+.search-big{width:100%;padding:13px 40px;border:1px solid var(--line);border-radius:14px;font-size:13px;outline:none;background:var(--card);color:#fff}
+.search-big:focus{border-color:var(--violet)}
 .search-big::placeholder{color:var(--muted)}
-.clear-search{
-position:absolute;
-right:12px;
-top:50%;
-transform:translateY(-50%);
-background:none;
-border:0;
-color:var(--muted);
-font-size:18px;
-display:none;
-}
-
+.clear-search{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--muted);font-size:18px;display:none}
 /* LISTES */
-
-.list{
-display:flex;
-flex-direction:column;
-gap:9px;
-}
-.friend-row{
-display:flex;
-gap:11px;
-align-items:center;
-background:var(--card);
-border:1px solid var(--line);
-border-radius:15px;
-padding:11px;
-min-width:0;
-}
-.avatar{
-width:46px;
-height:46px;
-border-radius:50%;
-background:linear-gradient(135deg,var(--violet),var(--gold));
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:900;
-font-size:17px;
-overflow:hidden;
-flex-shrink:0;
-cursor:pointer;
-}
-.avatar img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-.friend-row .info{
-flex:1;
-min-width:0;
-}
-.friend-row .info b{
-font-size:13px;
-display:block;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-}
-.friend-row .info small{
-font-size:11px;
-color:var(--muted);
-display:block;
-margin:3px 0 8px;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-}
-.friend-row .btns{
-display:flex;
-gap:6px;
-flex-wrap:wrap;
-}
-.friend-row .btns button{
-border:0;
-padding:7px 11px;
-border-radius:9px;
-font-weight:750;
-font-size:10.5px;
-white-space:nowrap;
-}
-.friend-row .btns button:disabled{
-opacity:.6;
-}
-.btn-blue{
-background:var(--violet);
-color:white;
-}
-.btn-grey{
-background:var(--card2);
-color:white;
-border:1px solid var(--line)!important;
-}
-.btn-green{
-background:var(--green);
-color:#06150A;
-}
-.btn-red{
-background:#3A0A0A;
-color:#FF7777;
-border:1px solid #5A1A1A!important;
-}
-.btn-or{
-background:linear-gradient(135deg,var(--gold),#FF9800);
-color:#111;
-}
-.badge-nouveau{
-background:var(--gold);
-color:#111;
-font-size:9px;
-padding:2px 5px;
-border-radius:20px;
-margin-left:5px;
-vertical-align:middle;
-}
-.badge-statut{
-background:var(--card2);
-color:var(--muted);
-font-size:9px;
-padding:3px 6px;
-border-radius:20px;
-margin-left:5px;
-vertical-align:middle;
-}
-
-.empty{
-text-align:center;
-color:var(--muted);
-padding:32px 12px;
-background:var(--card);
-border-radius:15px;
-border:1px solid var(--line);
-font-size:13px;
-}
-.empty .big{
-font-size:35px;
-width:60px;
-height:60px;
-background:var(--card2);
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-margin:0 auto 10px;
-}
-.empty b{
-display:block;
-color:white;
-margin-bottom:5px;
-}
-.loading{
-text-align:center;
-color:var(--gold);
-padding:20px;
-font-size:13px;
-}
-.toast{
-position:fixed;
-bottom:25px;
-left:50%;
-transform:translate(-50%,20px);
-background:#20202D;
-border:1px solid var(--line);
-padding:12px 18px;
-border-radius:12px;
-font-size:13px;
-z-index:300;
-opacity:0;
-pointer-events:none;
-transition:.2s;
-max-width:90%;
-text-align:center;
-}
-.toast.show{
-opacity:1;
-transform:translate(-50%,0);
-}
-
-/* MENU */
-
-.overlay{
-position:fixed;
-inset:0;
-background:#0009;
-z-index:90;
-display:none;
-}
-.overlay.open{display:block}
-.drawer{
-position:fixed;
-top:0;
-right:0;
-bottom:0;
-width:290px;
-max-width:88vw;
-background:#15151F;
-z-index:100;
-transform:translateX(100%);
-transition:transform .2s ease;
-display:flex;
-flex-direction:column;
-overflow-y:auto;
-}
-.drawer.open{transform:translateX(0)}
-.drawer-head{
-display:flex;
-align-items:center;
-gap:10px;
-padding:16px;
-border-bottom:1px solid var(--line);
-}
-.drawer-head .info{flex:1;min-width:0}
-.drawer-head b{
-font-size:15px;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-}
-.drawer-head small{
-display:block;
-color:var(--muted);
-}
-.drawer-close{
-background:var(--card2);
-border:0;
-color:white;
-width:35px;
-height:35px;
-border-radius:50%;
-}
-.drawer a{
-display:flex;
-align-items:center;
-gap:12px;
-padding:12px 16px;
-text-decoration:none;
-color:white;
-border-bottom:1px solid #242431;
-font-size:13px;
-}
-.drawer a span{
-width:27px;
-font-size:18px;
-}
-.drawer .titre{
-padding:14px 16px 5px;
-color:var(--gold);
-font-size:11px;
-font-weight:800;
-letter-spacing:1px;
-}
-.drawer .logout{
-margin:14px 16px;
-padding:12px;
-background:#3A0A0A;
-color:#FF7070;
-border:1px solid #5A1A1A;
-border-radius:10px;
-font-weight:800;
-}
-
-@media(max-width:360px){
-.wrap{padding-left:7px;padding-right:7px}
-.friend-row{padding:9px;gap:8px}
-.friend-row .avatar{width:40px;height:40px}
-.friend-row .btns button{padding:7px 8px;font-size:10px}
-.page-title h1{font-size:21px}
-}
+.list{display:flex;flex-direction:column;gap:9px}
+.friend-row{display:flex;gap:11px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:11px;min-width:0}
+.avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--gold));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;overflow:hidden;flex-shrink:0;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.friend-row .info{flex:1;min-width:0}
+.friend-row .info b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.friend-row .info small{font-size:11px;color:var(--muted);display:block;margin:3px 0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.friend-row .btns{display:flex;gap:6px;flex-wrap:wrap}
+.friend-row .btns button{border:0;padding:8px 12px;border-radius:10px;font-weight:750;font-size:11px;white-space:nowrap}
+.friend-row .btns button:disabled{opacity:.6}
+.btn-blue{background:var(--violet);color:#fff}
+.btn-grey{background:var(--card2);color:#fff;border:1px solid var(--line)!important}
+.btn-green{background:var(--green);color:#06150A}
+.btn-red{background:#3A0A0A;color:#FF7777;border:1px solid #5A1A1A!important}
+.btn-or{background:linear-gradient(135deg,var(--gold),#FF9800);color:#111}
+.badge-nouveau{background:var(--gold);color:#111;font-size:9px;padding:2px 5px;border-radius:20px;margin-left:5px;vertical-align:middle}
+.badge-statut{background:var(--card2);color:var(--muted);font-size:9px;padding:3px 6px;border-radius:20px;margin-left:5px;vertical-align:middle}
+.empty{text-align:center;color:var(--muted);padding:32px 12px;background:var(--card);border-radius:16px;border:1px solid var(--line);font-size:13px}
+.empty .big{font-size:35px;width:60px;height:60px;background:var(--card2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.empty b{display:block;color:#fff;margin-bottom:5px}
+.loading{text-align:center;color:var(--gold);padding:20px;font-size:13px}
+.toast{position:fixed;bottom:100px;left:50%;transform:translate(-50%,20px);background:#20202D;border:1px solid var(--line);padding:12px 18px;border-radius:12px;font-size:13px;z-index:300;opacity:0;pointer-events:none;transition:.2s;max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+/* BOTTOM NAV JASONBOOK - PAS FACEBOOK */
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,10,15,.96);display:flex;justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+.bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:10px;font-weight:700}
+.bottom button.active{color:var(--gold)}
+.bottom button span{font-size:22px}
+.bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
+@media(max-width:360px){.wrap{padding-left:7px;padding-right:7px}.friend-row{padding:9px;gap:8px}.friend-row .avatar{width:40px;height:40px}.friend-row .btns button{padding:7px 8px;font-size:10px}.page-title h1{font-size:21px}}
 </style>
 </head>
-
 <body>
 
-<header>
-<div class="top-bar">
-
-<div class="logo" onclick="location.href='feed.html'">
-<span>J</span>
-<div>JASON<i>BOOK</i><small>MADE IN KINSHASA</small></div>
-</div>
-
-<button class="icon-top" onclick="location.href='recherche.html'">🔍</button>
-<button class="icon-top menu" onclick="ouvrirMenu()">☰</button>
-
-</div>
-
-<nav class="nav-top">
-<a href="feed.html">🏠<span class="badge or" id="badgeFeed"></span></a>
-<a href="amis.html" class="active">👥<span class="badge" id="badgeAmis"></span></a>
-<a href="messages.html">💬<span class="badge" id="badgeMsg"></span></a>
-<a href="videos.html">🎥<span class="badge or" id="badgeVideos"></span></a>
-<a href="notifications.html">🔔<span class="badge" id="badgeNotif"></span></a>
-<a href="marketplace.html">🛒<span class="badge" id="badgeMarket"></span></a>
-</nav>
-</header>
-
-<div class="overlay" id="overlay" onclick="fermerMenu()"></div>
-
-<div class="drawer" id="drawer">
-
-<div class="drawer-head">
-<div class="avatar" id="drawerAvatar">?</div>
-<div class="info">
-<b id="drawerNom">Jason</b>
-<small>Voir ton profil</small>
-</div>
-<button class="drawer-close" onclick="fermerMenu()">✕</button>
-</div>
-
-<div class="titre">Principal</div>
-<a href="feed.html"><span>🏠</span>Fil d'actualité</a>
-<a href="profil.html"><span>👤</span>Mon Profil</a>
-<a href="profil-ami.html"><span>👤</span>Profil Ami</a>
-<a href="amis.html"><span>👥</span>Amis</a>
-<a href="messages.html"><span>💬</span>Messages</a>
-<a href="notifications.html"><span>🔔</span>Notifications</a>
-<a href="recherche.html"><span>🔍</span>Recherche</a>
-
-<div class="titre">Publier & Voir</div>
-<a href="creer-post.html"><span>➕</span>Créer un post</a>
-<a href="stories.html"><span>✨</span>Stories</a>
-<a href="videos.html"><span>🎥</span>Vidéos</a>
-<a href="photos.html"><span>🖼️</span>Photos</a>
-<a href="lives.html"><span>🔴</span>Lives</a>
-<a href="souvenirs.html"><span>🕰️</span>Souvenirs</a>
-
-<div class="titre">Découvrir</div>
-<a href="groupes.html"><span>👨‍👩‍👧</span>Groupes</a>
-<a href="evenements.html"><span>📅</span>Événements</a>
-<a href="anniversaires.html"><span>🎂</span>Anniversaires</a>
-<a href="annonces.html"><span>📢</span>Annonces</a>
-<a href="sondages.html"><span>📊</span>Sondages</a>
-<a href="jeux.html"><span>🎮</span>Jeux</a>
-<a href="musique.html"><span>🎵</span>Musique</a>
-<a href="marche.html"><span>🛒</span>Marché</a>
-<a href="marketplace.html"><span>🏪</span>Marketplace</a>
-<a href="emploi.html"><span>💼</span>Emploi</a>
-<a href="favoris.html"><span>⭐</span>Favoris</a>
-
-<div class="titre">Paramètres & Aide</div>
-<a href="parametres.html"><span>⚙️</span>Paramètres</a>
-<a href="aide.html"><span>❓</span>Aide</a>
-<a href="signalements.html"><span>🚨</span>Signalements</a>
-<a href="bloques.html"><span>🚫</span>Bloqués</a>
-<a href="admin.html"><span>🛡️</span>Admin</a>
-<a href="index.html"><span>🚪</span>Connexion / Accueil</a>
-
-<button class="logout" onclick="deconnecter()">🚪 Se déconnecter</button>
+<div class="top">
+<div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
+<div class="search-top" onclick="document.getElementById('searchAmis').focus()">🔍 <span>Chercher...</span></div>
+<div class="avatar-top" id="myAvatarTop" onclick="location.href='profil.html'">?</div>
 </div>
 
 <main class="wrap">
-
-<div class="page-title">
-<h1>👥 Mes amis</h1>
-<div class="icon">🤝</div>
-</div>
-
+<div class="page-title"><h1>👥 Mes amis</h1><div class="icon">🤝</div></div>
 <p class="sub" id="subText">Gère tes relations et découvre de nouvelles personnes.</p>
-
 <div class="stats">
-
-<div class="stat">
-<strong id="statTous">0</strong>
-<small>Utilisateurs</small>
+<div class="stat"><strong id="statTous">0</strong><small>Utilisateurs</small></div>
+<div class="stat"><strong id="statAmis">0</strong><small>Mes amis</small></div>
+<div class="stat"><strong id="statDemandes">0</strong><small>Demandes reçues</small></div>
 </div>
-
-<div class="stat">
-<strong id="statAmis">0</strong>
-<small>Mes amis</small>
-</div>
-
-<div class="stat">
-<strong id="statDemandes">0</strong>
-<small>Demandes reçues</small>
-</div>
-
-</div>
-
 <div class="tabs">
-
-<button id="tabBtn-tous" class="active" onclick="showTab('tous')">
-🌍 Tous <span id="countTous"></span>
-</button>
-
-<button id="tabBtn-demandes" onclick="showTab('demandes')">
-📩 Reçues <span id="countDemandes"></span>
-</button>
-
-<button id="tabBtn-amis" onclick="showTab('amis')">
-🤝 Amis <span id="countAmis"></span>
-</button>
-
-<button id="tabBtn-envoyees" onclick="showTab('envoyees')">
-📤 Envoyées <span id="countEnvoyees"></span>
-</button>
-
-<button id="tabBtn-decouvrir" onclick="showTab('decouvrir')">
-✨ Découvrir <span id="countDecouvrir"></span>
-</button>
-
+<button id="tabBtn-tous" class="active" onclick="showTab('tous')">🌍 Tous <span id="countTous"></span></button>
+<button id="tabBtn-demandes" onclick="showTab('demandes')">📩 Reçues <span id="countDemandes"></span></button>
+<button id="tabBtn-amis" onclick="showTab('amis')">🤝 Amis <span id="countAmis"></span></button>
+<button id="tabBtn-envoyees" onclick="showTab('envoyees')">📤 Envoyées <span id="countEnvoyees"></span></button>
+<button id="tabBtn-decouvrir" onclick="showTab('decouvrir')">✨ Découvrir <span id="countDecouvrir"></span></button>
 </div>
-
-<div class="search-box">
-<span>🔍</span>
-<input class="search-big" id="searchAmis"
-placeholder="Rechercher un utilisateur..."
-oninput="filtrer()">
-<button class="clear-search" id="clearSearch" onclick="viderRecherche()">✕</button>
-</div>
-
+<div class="search-box"><span>🔍</span><input class="search-big" id="searchAmis" placeholder="Rechercher un utilisateur..." oninput="filtrer()"><button class="clear-search" id="clearSearch" onclick="viderRecherche()">✕</button></div>
 <div id="loading" class="loading">⏳ Chargement des utilisateurs...</div>
-
-<div id="section-tous">
-<div class="list" id="gridTous"></div>
-<div class="empty" id="emptyTous" style="display:none">
-<div class="big">👥</div>
-<b>Aucune personne</b>
-<p>Aucun utilisateur trouvé.</p>
-</div>
-</div>
-
-<div id="section-demandes" style="display:none">
-<div class="list" id="gridDemandes"></div>
-<div class="empty" id="emptyDemandes" style="display:none">
-<div class="big">📩</div>
-<b>Aucune demande</b>
-<p>Tu n'as pas encore reçu de demande d'ami.</p>
-</div>
-</div>
-
-<div id="section-amis" style="display:none">
-<div class="list" id="gridAmis"></div>
-<div class="empty" id="emptyAmis" style="display:none">
-<div class="big">🤝</div>
-<b>Pas encore d'amis</b>
-<p>Découvre des personnes et ajoute-les !</p>
-</div>
-</div>
-
-<div id="section-envoyees" style="display:none">
-<div class="list" id="gridEnvoyees"></div>
-<div class="empty" id="emptyEnvoyees" style="display:none">
-<div class="big">📤</div>
-<b>Aucune demande envoyée</b>
-<p>Tes demandes en attente apparaîtront ici.</p>
-</div>
-</div>
-
-<div id="section-decouvrir" style="display:none">
-<div class="list" id="gridDecouvrir"></div>
-<div class="empty" id="emptyDecouvrir" style="display:none">
-<div class="big">🌍</div>
-<b>Tout le monde est déjà découvert !</b>
-<p>Reviens plus tard pour découvrir de nouvelles personnes.</p>
-</div>
-</div>
-
+<div id="section-tous"><div class="list" id="gridTous"></div><div class="empty" id="emptyTous" style="display:none"><div class="big">👥</div><b>Aucune personne</b><p>Aucun utilisateur trouvé.</p></div></div>
+<div id="section-demandes" style="display:none"><div class="list" id="gridDemandes"></div><div class="empty" id="emptyDemandes" style="display:none"><div class="big">📩</div><b>Aucune demande</b><p>Tu n'as pas encore reçu de demande d'ami.</p></div></div>
+<div id="section-amis" style="display:none"><div class="list" id="gridAmis"></div><div class="empty" id="emptyAmis" style="display:none"><div class="big">🤝</div><b>Pas encore d'amis</b><p>Découvre des personnes et ajoute-les !</p></div></div>
+<div id="section-envoyees" style="display:none"><div class="list" id="gridEnvoyees"></div><div class="empty" id="emptyEnvoyees" style="display:none"><div class="big">📤</div><b>Aucune demande envoyée</b><p>Tes demandes en attente apparaîtront ici.</p></div></div>
+<div id="section-decouvrir" style="display:none"><div class="list" id="gridDecouvrir"></div><div class="empty" id="emptyDecouvrir" style="display:none"><div class="big">🌍</div><b>Tout le monde est déjà découvert !</b><p>Reviens plus tard pour découvrir de nouvelles personnes.</p></div></div>
 </main>
+
+<div class="bottom">
+<button onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
+<button class="active" onclick="location.href='amis.html'"><span>👥</span>Amis</button>
+<button onclick="location.href='creer-post.html'"><span class="centre">+</span></button>
+<button onclick="location.href='messages.html'"><span>💬</span>Messages</button>
+<button onclick="location.href='profil.html'"><span>👤</span>Moi</button>
+</div>
 
 <div class="toast" id="toast"></div>
 
 <script type="module">
-
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-
-import {
-getDatabase,ref,onValue,get,set,remove,push
-}
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-const firebaseConfig={
-apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",
-authDomain:"starlink-investit.firebaseapp.com",
-databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",
-projectId:"starlink-investit",
-storageBucket:"starlink-investit.firebasestorage.app",
-messagingSenderId:"807081599583",
-appId:"1:807081599583:web:e00ec3959bc4acdae031ea"
-};
-
-const app=initializeApp(firebaseConfig);
-const db=getDatabase(app);
-
-const uid=localStorage.getItem("jasonbook_uid");
-
-if(!uid){
-location.href="index.html";
-throw new Error("Connexion nécessaire");
-}
-
-const monNom=localStorage.getItem("jasonbook_nom")||"Jason";
-const maPhoto=localStorage.getItem("jasonbook_photo")||"";
-
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {getDatabase,ref,onValue,get,set,remove,push} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
+const app=initializeApp(firebaseConfig); const db=getDatabase(app);
+const uid=localStorage.getItem("jasonbook_uid"); if(!uid){location.href="index.html"; throw new Error("Connexion nécessaire");}
+const monNom=localStorage.getItem("jasonbook_nom")||"Jason"; const maPhoto=localStorage.getItem("jasonbook_photo")||"";
 const $=id=>document.getElementById(id);
-
-function esc(v){
-return String(v??"").replace(/[&<>"']/g,c=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[c]));
-}
-
-function photoHTML(photo,nom){
-return photo
-?`<img loading="lazy" decoding="async" src="${esc(photo)}" alt="">`
-:esc((nom||"?").charAt(0).toUpperCase());
-}
-
-$("drawerAvatar").innerHTML=photoHTML(maPhoto,monNom);
-$("drawerNom").textContent=monNom;
-
-$("drawerAvatar").onclick=()=>location.href="profil.html";
-
-window.ouvrirMenu=()=>{
-$("drawer").classList.add("open");
-$("overlay").classList.add("open");
-};
-
-window.fermerMenu=()=>{
-$("drawer").classList.remove("open");
-$("overlay").classList.remove("open");
-};
-
-window.deconnecter=()=>{
-if(!confirm("Tu veux te déconnecter ?"))return;
-localStorage.removeItem("jasonbook_uid");
-localStorage.removeItem("jasonbook_nom");
-localStorage.removeItem("jasonbook_photo");
-location.href="index.html";
-};
-
-function badge(id,n){
-const el=$(id);
-if(!el)return;
-el.style.display=n>0?"block":"none";
-el.textContent=n>99?"99+":n;
-}
-
-let tousUsers=[];
-let mesAmisIds=new Set();
-let demandesRecues=[];
-let demandesEnvoyeesIds=new Set();
-let tabActuel="tous";
-let chargement=false;
-let renduPlanifie=false;
-
-function toast(msg){
-const el=$("toast");
-el.textContent=msg;
-el.classList.add("show");
-clearTimeout(window.toastTimeout);
-window.toastTimeout=setTimeout(()=>{
-el.classList.remove("show");
-},2600);
-}
-
-/* RECHERCHE */
-
-function matchRecherche(u){
-
-const q=$("searchAmis").value.toLowerCase().trim();
-
-if(!q)return true;
-
-const txt=[
-u.nomComplet,
-u.prenom,
-u.nom,
-u.pays,
-u.activite,
-u.email
-].join(" ").toLowerCase();
-
-return txt.includes(q);
-}
-
-window.filtrer=()=>{
-$("clearSearch").style.display=$("searchAmis").value?"block":"none";
-rendreProgramme();
-};
-
-window.viderRecherche=()=>{
-$("searchAmis").value="";
-$("clearSearch").style.display="none";
-rendreProgramme();
-};
-
-/* ONGlets */
-
-window.showTab=t=>{
-
-tabActuel=t;
-
-["tous","demandes","amis","envoyees","decouvrir"].forEach(x=>{
-
-$("section-"+x).style.display=x===t?"block":"none";
-
-$("tabBtn-"+x).classList.toggle("active",x===t);
-
-});
-
-rendreProgramme();
-
-};
-
-/* CARTES UTILISATEURS */
-
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function photoHTML(photo,nom){return photo?`<img loading="lazy" decoding="async" src="${esc(photo)}" alt="">`:esc((nom||"?").charAt(0).toUpperCase());}
+$("myAvatarTop").innerHTML=photoHTML(maPhoto,monNom);
+let tousUsers=[]; let mesAmisIds=new Set(); let demandesRecues=[]; let demandesEnvoyeesIds=new Set(); let tabActuel="tous"; let chargement=false; let renduPlanifie=false;
+function toast(msg){const el=$("toast"); el.textContent=msg; el.classList.add("show"); clearTimeout(window.toastTimeout); window.toastTimeout=setTimeout(()=>{el.classList.remove("show");},2600);}
+function matchRecherche(u){const q=$("searchAmis").value.toLowerCase().trim(); if(!q)return true; const txt=[u.nomComplet,u.prenom,u.nom,u.pays,u.activite,u.email].join(" ").toLowerCase(); return txt.includes(q);}
+window.filtrer=()=>{$("clearSearch").style.display=$("searchAmis").value?"block":"none"; rendreProgramme();};
+window.viderRecherche=()=>{$("searchAmis").value=""; $("clearSearch").style.display="none"; rendreProgramme();};
+window.showTab=t=>{tabActuel=t; ["tous","demandes","amis","envoyees","decouvrir"].forEach(x=>{$("section-"+x).style.display=x===t?"block":"none"; $("tabBtn-"+x).classList.toggle("active",x===t);}); rendreProgramme();};
 function carte(u,type){
-
-const userId=esc(u.uid);
-const nom=esc(u.nomComplet||u.prenom||u.nom||"Utilisateur");
-const lettre=(u.prenom||u.nom||u.nomComplet||"?").charAt(0).toUpperCase();
-
-const nouveau=u.timestamp&&
-(Date.now()-u.timestamp<7*24*60*60*1000);
-
-let btns="";
-let statut="";
-
-if(type==="demande"){
-
-btns=`
-<button class="btn-green" onclick="accepter('${userId}')">✓ Accepter</button>
-<button class="btn-red" onclick="refuser('${userId}')">Refuser</button>
-`;
-
-statut='<span class="badge-statut">Demande reçue</span>';
-
-}
-
-if(type==="ami"){
-
-btns=`
-<button class="btn-blue" onclick="location.href='messages.html?uid=${userId}'">💬 Message</button>
-<button class="btn-grey" onclick="retirerAmi('${userId}')">Retirer</button>
-`;
-
-statut='<span class="badge-statut">Ami</span>';
-
-}
-
-if(type==="envoyee"){
-
-btns=`
-<button class="btn-grey" disabled>En attente</button>
-<button class="btn-red" onclick="annulerDemande('${userId}')">Annuler</button>
-`;
-
-statut='<span class="badge-statut">Envoyée</span>';
-
-}
-
-if(type==="decouvrir"){
-
-btns=`
-<button class="btn-or" onclick="envoyerDemande('${userId}')">➕ Ajouter</button>
-<button class="btn-grey" onclick="location.href='profil-ami.html?uid=${userId}'">Profil</button>
-`;
-
-}
-
+const userId=esc(u.uid); const nom=esc(u.nomComplet||u.prenom||u.nom||"Utilisateur"); const lettre=(u.prenom||u.nom||u.nomComplet||"?").charAt(0).toUpperCase();
+const nouveau=u.timestamp&&(Date.now()-u.timestamp<7*24*60*60*1000);
+let btns=""; let statut="";
+if(type==="demande"){btns=`<button class="btn-green" onclick="accepter('${userId}')">✓ Accepter</button><button class="btn-red" onclick="refuser('${userId}')">Refuser</button>`; statut='<span class="badge-statut">Demande reçue</span>';}
+if(type==="ami"){btns=`<button class="btn-blue" onclick="location.href='messages.html?uid=${userId}'">💬 Message</button><button class="btn-grey" onclick="retirerAmi('${userId}')">Retirer</button>`; statut='<span class="badge-statut">Ami</span>';}
+if(type==="envoyee"){btns=`<button class="btn-grey" disabled>En attente</button><button class="btn-red" onclick="annulerDemande('${userId}')">Annuler</button>`; statut='<span class="badge-statut">Envoyée</span>';}
+if(type==="decouvrir"){btns=`<button class="btn-or" onclick="envoyerDemande('${userId}')">➕ Ajouter</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${userId}'">Profil</button>`;}
 if(type==="tous"){
-
-if(mesAmisIds.has(u.uid)){
-
-btns=`
-<button class="btn-blue" onclick="location.href='messages.html?uid=${userId}'">💬 Message</button>
-<button class="btn-grey" onclick="location.href='profil-ami.html?uid=${userId}'">Profil</button>
-`;
-
-statut='<span class="badge-statut">Ami</span>';
-
-}else if(demandesRecues.some(d=>d.uid===u.uid)){
-
-btns=`
-<button class="btn-green" onclick="accepter('${userId}')">✓ Accepter</button>
-<button class="btn-red" onclick="refuser('${userId}')">Refuser</button>
-`;
-
-statut='<span class="badge-statut">Demande reçue</span>';
-
-}else if(demandesEnvoyeesIds.has(u.uid)){
-
-btns=`
-<button class="btn-grey" disabled>En attente</button>
-<button class="btn-red" onclick="annulerDemande('${userId}')">Annuler</button>
-`;
-
-statut='<span class="badge-statut">Envoyée</span>';
-
-}else{
-
-btns=`
-<button class="btn-or" onclick="envoyerDemande('${userId}')">➕ Ajouter</button>
-<button class="btn-grey" onclick="location.href='profil-ami.html?uid=${userId}'">Profil</button>
-`;
-
+if(mesAmisIds.has(u.uid)){btns=`<button class="btn-blue" onclick="location.href='messages.html?uid=${userId}'">💬 Message</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${userId}'">Profil</button>`; statut='<span class="badge-statut">Ami</span>';}
+else if(demandesRecues.some(d=>d.uid===u.uid)){btns=`<button class="btn-green" onclick="accepter('${userId}')">✓ Accepter</button><button class="btn-red" onclick="refuser('${userId}')">Refuser</button>`; statut='<span class="badge-statut">Demande reçue</span>';}
+else if(demandesEnvoyeesIds.has(u.uid)){btns=`<button class="btn-grey" disabled>En attente</button><button class="btn-red" onclick="annulerDemande('${userId}')">Annuler</button>`; statut='<span class="badge-statut">Envoyée</span>';}
+else{btns=`<button class="btn-or" onclick="envoyerDemande('${userId}')">➕ Ajouter</button><button class="btn-grey" onclick="location.href='profil-ami.html?uid=${userId}'">Profil</button>`;}
 }
-
+return `<div class="friend-row"><div class="avatar" onclick="location.href='profil-ami.html?uid=${userId}'">${photoHTML(u.photoProfil,lettre)}</div><div class="info"><b>${nom}${nouveau?'<span class="badge-nouveau">NOUVEAU</span>':""}${statut}</b><small>${esc(u.activite||"Membre JASONBOOK")} • ${esc(u.pays||"")}</small><div class="btns">${btns}</div></div></div>`;
 }
-
-return `
-<div class="friend-row">
-
-<div class="avatar"
-onclick="location.href='profil-ami.html?uid=${userId}'">
-${photoHTML(u.photoProfil,lettre)}
-</div>
-
-<div class="info">
-
-<b>
-${nom}
-${nouveau?'<span class="badge-nouveau">NOUVEAU</span>':""}
-${statut}
-</b>
-
-<small>${esc(u.activite||"Membre JASONBOOK")} • ${esc(u.pays||"")}</small>
-
-<div class="btns">${btns}</div>
-
-</div>
-</div>
-`;
-
-}
-
-/* AFFICHAGE OPTIMISÉ */
-
-function rendreProgramme(){
-
-if(renduPlanifie)return;
-
-renduPlanifie=true;
-
-requestAnimationFrame(()=>{
-renduPlanifie=false;
-rendre();
-});
-
-}
-
-function afficherListe(id,emptyId,liste,type){
-
-const box=$(id);
-const empty=$(emptyId);
-
-box.innerHTML="";
-
-if(!liste.length){
-empty.style.display="block";
-return;
-}
-
-empty.style.display="none";
-
-const fragment=document.createDocumentFragment();
-
-liste.forEach(u=>{
-
-const temp=document.createElement("div");
-temp.innerHTML=carte(u,type);
-
-fragment.appendChild(temp.firstElementChild);
-
-});
-
-box.appendChild(fragment);
-
-}
-
+function rendreProgramme(){if(renduPlanifie)return; renduPlanifie=true; requestAnimationFrame(()=>{renduPlanifie=false; rendre();});}
+function afficherListe(id,emptyId,liste,type){const box=$(id); const empty=$(emptyId); box.innerHTML=""; if(!liste.length){empty.style.display="block"; return;} empty.style.display="none"; const fragment=document.createDocumentFragment(); liste.forEach(u=>{const temp=document.createElement("div"); temp.innerHTML=carte(u,type); fragment.appendChild(temp.firstElementChild);}); box.appendChild(fragment);}
 function rendre(){
-
-if(chargement)return;
-
-$("loading").style.display="none";
-
+if(chargement)return; $("loading").style.display="none";
 const recherche=$("searchAmis").value.trim();
-
-let tous=tousUsers.filter(matchRecherche);
-
-tous.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
-
+let tous=tousUsers.filter(matchRecherche); tous.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
 const demandes=demandesRecues.filter(matchRecherche);
-
-const amis=tousUsers.filter(u=>
-mesAmisIds.has(u.uid)&&matchRecherche(u)
-);
-
-const envoyees=tousUsers.filter(u=>
-demandesEnvoyeesIds.has(u.uid)&&matchRecherche(u)
-);
-
-const decouvrir=tousUsers.filter(u=>
-!mesAmisIds.has(u.uid)&&
-!demandesEnvoyeesIds.has(u.uid)&&
-!demandesRecues.some(d=>d.uid===u.uid)&&
-matchRecherche(u)
-);
-
+const amis=tousUsers.filter(u=>mesAmisIds.has(u.uid)&&matchRecherche(u));
+const envoyees=tousUsers.filter(u=>demandesEnvoyeesIds.has(u.uid)&&matchRecherche(u));
+const decouvrir=tousUsers.filter(u=>!mesAmisIds.has(u.uid)&&!demandesEnvoyeesIds.has(u.uid)&&!demandesRecues.some(d=>d.uid===u.uid)&&matchRecherche(u));
 $("countTous").textContent=tousUsers.length?"("+tousUsers.length+")":"";
 $("countDemandes").textContent=demandesRecues.length?"("+demandesRecues.length+")":"";
 $("countAmis").textContent=mesAmisIds.size?"("+mesAmisIds.size+")":"";
 $("countEnvoyees").textContent=demandesEnvoyeesIds.size?"("+demandesEnvoyeesIds.size+")":"";
 $("countDecouvrir").textContent=decouvrir.length?"("+decouvrir.length+")":"";
-
-$("statTous").textContent=tousUsers.length;
-$("statAmis").textContent=mesAmisIds.size;
-$("statDemandes").textContent=demandesRecues.length;
-
-badge("badgeAmis",demandesRecues.length);
-
-/* On construit uniquement l'onglet visible */
-
-if(tabActuel==="tous"){
-afficherListe("gridTous","emptyTous",tous,"tous");
+$("statTous").textContent=tousUsers.length; $("statAmis").textContent=mesAmisIds.size; $("statDemandes").textContent=demandesRecues.length;
+if(tabActuel==="tous") afficherListe("gridTous","emptyTous",tous,"tous");
+if(tabActuel==="demandes") afficherListe("gridDemandes","emptyDemandes",demandes,"demande");
+if(tabActuel==="amis") afficherListe("gridAmis","emptyAmis",amis,"ami");
+if(tabActuel==="envoyees") afficherListe("gridEnvoyees","emptyEnvoyees",envoyees,"envoyee");
+if(tabActuel==="decouvrir") afficherListe("gridDecouvrir","emptyDecouvrir",decouvrir,"decouvrir");
+$("subText").textContent=recherche?`Résultats pour "${recherche}" : ${tous.length} personne(s)`:"Gère tes relations et découvre de nouvelles personnes.";
 }
-
-if(tabActuel==="demandes"){
-afficherListe("gridDemandes","emptyDemandes",demandes,"demande");
-}
-
-if(tabActuel==="amis"){
-afficherListe("gridAmis","emptyAmis",amis,"ami");
-}
-
-if(tabActuel==="envoyees"){
-afficherListe("gridEnvoyees","emptyEnvoyees",envoyees,"envoyee");
-}
-
-if(tabActuel==="decouvrir"){
-afficherListe("gridDecouvrir","emptyDecouvrir",decouvrir,"decouvrir");
-}
-
-$("subText").textContent=recherche
-?`Résultats pour "${recherche}" : ${tous.length} personne(s)`
-:"Gère tes relations et découvre de nouvelles personnes.";
-
-}
-
-/* LISTENERS FIREBASE */
-
-/* Utilisateurs */
-
-onValue(ref(db,"jasonbook/users"),snap=>{
-
-const d=snap.val();
-
-tousUsers=d
-?Object.entries(d)
-.map(([key,u])=>({uid:key,...u}))
-.filter(u=>u.uid!==uid)
-:[ ];
-
-rendreProgramme();
-
-error=>console.error("Utilisateurs:",error);
-
-});
-
-/* Amis */
-
-onValue(ref(db,"jasonbook/amis/"+uid),snap=>{
-
-const d=snap.val();
-
-mesAmisIds=new Set(d?Object.keys(d):[]);
-
-rendreProgramme();
-
-});
-
-/* Demandes reçues */
-
-onValue(ref(db,"jasonbook/demandes/"+uid),snap=>{
-
-const d=snap.val();
-
-demandesRecues=[];
-
-if(d){
-
-Object.keys(d).forEach(fromUid=>{
-
-const user=tousUsers.find(u=>u.uid===fromUid);
-
-if(user){
-demandesRecues.push(user);
-}
-
-});
-
-}
-
-rendreProgramme();
-
-});
-
-/* Demandes envoyées */
-
-onValue(ref(db,"jasonbook/demandesEnvoyees/"+uid),snap=>{
-
-const d=snap.val();
-
-demandesEnvoyeesIds=new Set(d?Object.keys(d):[]);
-
-rendreProgramme();
-
-});
-
-/* Notifications */
-
-onValue(ref(db,"jasonbook/notifications/"+uid),snap=>{
-
-const d=snap.val();
-let n=0;
-
-if(d){
-Object.values(d).forEach(x=>{
-if(!x.lu)n++;
-});
-}
-
-badge("badgeNotif",n);
-
-});
-
-/* Messages */
-
-onValue(ref(db,"jasonbook/messages"),snap=>{
-
-const d=snap.val();
-let n=0;
-
-if(d){
-
-Object.values(d).forEach(chat=>{
-
-if(chat&&typeof chat==="object"){
-
-Object.values(chat).forEach(m=>{
-
-if(m&&(m.destinataireUid===uid||m.pour===uid)&&!m.lu){
-n++;
-}
-
-});
-
-}
-
-});
-
-}
-
-badge("badgeMsg",n);
-
-});
-
-badge("badgeMarket",0);
-badge("badgeFeed",0);
-badge("badgeVideos",0);
-
-/* ACTIONS AMIS */
-
+onValue(ref(db,"jasonbook/users"),snap=>{const d=snap.val(); tousUsers=d?Object.entries(d).map(([key,u])=>({uid:key,...u})).filter(u=>u.uid!==uid):[]; rendreProgramme();});
+onValue(ref(db,"jasonbook/amis/"+uid),snap=>{const d=snap.val(); mesAmisIds=new Set(d?Object.keys(d):[]); rendreProgramme();});
+onValue(ref(db,"jasonbook/demandes/"+uid),snap=>{const d=snap.val(); demandesRecues=[]; if(d){Object.keys(d).forEach(fromUid=>{const user=tousUsers.find(u=>u.uid===fromUid); if(user){demandesRecues.push(user);}});} rendreProgramme();});
+onValue(ref(db,"jasonbook/demandesEnvoyees/"+uid),snap=>{const d=snap.val(); demandesEnvoyeesIds=new Set(d?Object.keys(d):[]); rendreProgramme();});
 let actionsEnCours=new Set();
-
-async function executerAction(id,callback){
-
-if(actionsEnCours.has(id))return;
-
-actionsEnCours.add(id);
-rendreProgramme();
-
-try{
-await callback();
-}catch(e){
-console.error(e);
-toast("Une erreur est survenue. Vérifie ta connexion.");
-}finally{
-actionsEnCours.delete(id);
-}
-
-}
-
-/* ENVOYER UNE DEMANDE */
-
-window.envoyerDemande=async cibleUid=>{
-
-if(cibleUid===uid)return;
-
-await executerAction("send-"+cibleUid,async()=>{
-
-const existe=await get(ref(db,"jasonbook/demandes/"+cibleUid+"/"+uid));
-
-if(existe.exists()){
-toast("Une demande existe déjà.");
-return;
-}
-
-const date=new Date().toLocaleString();
-
-await Promise.all([
-
-set(ref(db,"jasonbook/demandes/"+cibleUid+"/"+uid),{
-deUid:uid,
-deNom:monNom,
-date
-}),
-
-set(ref(db,"jasonbook/demandesEnvoyees/"+uid+"/"+cibleUid),{
-versUid:cibleUid,
-date
-})
-
-]);
-
-const n=push(ref(db,"jasonbook/notifications/"+cibleUid));
-
-await set(n,{
-type:"demande",
-texte:monNom+" t'a envoyé une demande d'ami",
-deUid:uid,
-deNom:monNom,
-date,
-lu:false
-});
-
-toast("Demande envoyée ! 🎉");
-
-});
-
-};
-
-/* ACCEPTER */
-
-window.accepter=async fromUid=>{
-
-await executerAction("accept-"+fromUid,async()=>{
-
-const date=new Date().toLocaleString();
-
-await Promise.all([
-
-set(ref(db,"jasonbook/amis/"+uid+"/"+fromUid),true),
-
-set(ref(db,"jasonbook/amis/"+fromUid+"/"+uid),true),
-
-remove(ref(db,"jasonbook/demandes/"+uid+"/"+fromUid)),
-
-remove(ref(db,"jasonbook/demandesEnvoyees/"+fromUid+"/"+uid))
-
-]);
-
-const n=push(ref(db,"jasonbook/notifications/"+fromUid));
-
-await set(n,{
-type:"ami",
-texte:monNom+" a accepté ta demande d'ami",
-deUid:uid,
-deNom:monNom,
-date,
-lu:false
-});
-
-toast("Vous êtes maintenant amis ! 🤝");
-
-});
-
-};
-
-/* REFUSER */
-
-window.refuser=async fromUid=>{
-
-await executerAction("refuse-"+fromUid,async()=>{
-
-await Promise.all([
-
-remove(ref(db,"jasonbook/demandes/"+uid+"/"+fromUid)),
-
-remove(ref(db,"jasonbook/demandesEnvoyees/"+fromUid+"/"+uid))
-
-]);
-
-toast("Demande refusée.");
-
-});
-
-};
-
-/* ANNULER */
-
-window.annulerDemande=async cibleUid=>{
-
-await executerAction("cancel-"+cibleUid,async()=>{
-
-await Promise.all([
-
-remove(ref(db,"jasonbook/demandes/"+cibleUid+"/"+uid)),
-
-remove(ref(db,"jasonbook/demandesEnvoyees/"+uid+"/"+cibleUid))
-
-]);
-
-toast("Demande annulée.");
-
-});
-
-};
-
-/* RETIRER UN AMI */
-
-window.retirerAmi=async amiUid=>{
-
-if(!confirm("Veux-tu vraiment retirer cette personne de tes amis ?"))return;
-
-await executerAction("remove-"+amiUid,async()=>{
-
-await Promise.all([
-
-remove(ref(db,"jasonbook/amis/"+uid+"/"+amiUid)),
-
-remove(ref(db,"jasonbook/amis/"+amiUid+"/"+uid))
-
-]);
-
-toast("Ami retiré.");
-
-});
-
-};
-
+async function executerAction(id,callback){if(actionsEnCours.has(id))return; actionsEnCours.add(id); rendreProgramme(); try{await callback();}catch(e){console.error(e); toast("Une erreur est survenue. Vérifie ta connexion.");}finally{actionsEnCours.delete(id);}}
+window.envoyerDemande=async cibleUid=>{if(cibleUid===uid)return; await executerAction("send-"+cibleUid,async()=>{const existe=await get(ref(db,"jasonbook/demandes/"+cibleUid+"/"+uid)); if(existe.exists()){toast("Une demande existe déjà."); return;} const date=new Date().toLocaleString(); await Promise.all([set(ref(db,"jasonbook/demandes/"+cibleUid+"/"+uid),{deUid:uid,deNom:monNom,date}),set(ref(db,"jasonbook/demandesEnvoyees/"+uid+"/"+cibleUid),{versUid:cibleUid,date})]); const n=push(ref(db,"jasonbook/notifications/"+cibleUid)); await set(n,{type:"demande",texte:monNom+" t'a envoyé une demande d'ami",deUid:uid,deNom:monNom,date,lu:false}); toast("Demande envoyée ! 🎉");});};
+window.accepter=async fromUid=>{await executerAction("accept-"+fromUid,async()=>{const date=new Date().toLocaleString(); await Promise.all([set(ref(db,"jasonbook/amis/"+uid+"/"+fromUid),true),set(ref(db,"jasonbook/amis/"+fromUid+"/"+uid),true),remove(ref(db,"jasonbook/demandes/"+uid+"/"+fromUid)),remove(ref(db,"jasonbook/demandesEnvoyees/"+fromUid+"/"+uid))]); const n=push(ref(db,"jasonbook/notifications/"+fromUid)); await set(n,{type:"ami",texte:monNom+" a accepté ta demande d'ami",deUid:uid,deNom:monNom,date,lu:false}); toast("Vous êtes maintenant amis ! 🤝");});};
+window.refuser=async fromUid=>{await executerAction("refuse-"+fromUid,async()=>{await Promise.all([remove(ref(db,"jasonbook/demandes/"+uid+"/"+fromUid)),remove(ref(db,"jasonbook/demandesEnvoyees/"+fromUid+"/"+uid))]); toast("Demande refusée.");});};
+window.annulerDemande=async cibleUid=>{await executerAction("cancel-"+cibleUid,async()=>{await Promise.all([remove(ref(db,"jasonbook/demandes/"+cibleUid+"/"+uid)),remove(ref(db,"jasonbook/demandesEnvoyees/"+uid+"/"+cibleUid))]); toast("Demande annulée.");});};
+window.retirerAmi=async amiUid=>{if(!confirm("Veux-tu vraiment retirer cette personne de tes amis ?"))return; await executerAction("remove-"+amiUid,async()=>{await Promise.all([remove(ref(db,"jasonbook/amis/"+uid+"/"+amiUid)),remove(ref(db,"jasonbook/amis/"+amiUid+"/"+uid))]); toast("Ami retiré.");});};
 </script>
 </body>
 </html>
