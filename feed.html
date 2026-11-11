@@ -4,428 +4,248 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#0A0A0F">
-<title>JASONBOOK ✨ - Fil</title>
+<title>JASONBOOK ✨ - Recherche</title>
 <style>
-:root{--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--violet:#7C3AED;--violet2:#A855F7;--gold:#FFC107;--text:#fff;--muted:#A1A1AA;--line:#26262F}
+:root{--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--violet:#7C3AED;--gold:#FFC107;--muted:#A1A1AA;--line:#26262F}
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-html{overflow-x:hidden}
-body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:92px;padding-top:62px;-webkit-tap-highlight-color:transparent}
-button,a{touch-action:manipulation}
+body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:92px;padding-top:62px;-webkit-tap-highlight-color:transparent}
 button{cursor:pointer}
-/* ✅ SEUL CE HEADER RESTE EN HAUT - JASONBOOK + RECHARGER + NOTIF + 3 TRAITS */
+/* HEADER COMME FEED - NE DISPARAIT PAS */
 .header-fixe{position:fixed;top:0;left:0;right:0;z-index:999;background:#0A0A0F;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:10px 12px}
 .logo{font-size:20px;font-weight:900;white-space:nowrap;flex:1;line-height:1}
 .logo i{color:var(--gold);font-style:normal}
 .logo small{display:block;font-size:8px;color:var(--muted);letter-spacing:1.2px;margin-top:1px}
-.btn-top{width:38px;height:38px;min-width:38px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
-.btn-top:active{background:var(--violet)}
+.btn-top{width:38px;height:38px;min-width:38px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:19px;display:flex;align-items:center;justify-content:center;position:relative}
 .btn-top .dot{position:absolute;top:-5px;right:-5px;background:#E0245E;color:#fff;font-size:10px;font-weight:900;min-width:18px;height:18px;border-radius:999px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid #0A0A0F}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:none}
-.overlay.open{display:block}
-.menu{position:fixed;top:0;right:0;bottom:0;width:264px;max-width:82vw;background:#121218;z-index:101;transform:translateX(100%);transition:.22s ease;overflow-y:auto;border-left:1px solid var(--line);padding:0 0 14px}
-.menu.open{transform:translateX(0)}
-.menu-top{display:flex;align-items:center;gap:10px;padding:14px 14px 12px;border-bottom:1px solid var(--line)}
-.menu-top .m-ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
-.menu-top .m-ava img{width:100%;height:100%;object-fit:cover}
-.menu-top b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.menu-top small{color:var(--muted);font-size:11px}
-.menu-top button{margin-left:auto;background:var(--card2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;font-size:14px;cursor:pointer;flex-shrink:0}
-.menu-sec{padding:14px 14px 4px;font-size:10px;color:var(--muted);letter-spacing:1px;font-weight:800}
-.menu-item{display:flex;align-items:center;gap:10px;width:100%;background:none;border:none;color:#EDEDEF;text-align:left;padding:8px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600}
-.menu-item:active{background:var(--card2)}
-.menu-item .ico{width:30px;height:30px;min-width:30px;background:var(--card2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px}
-.menu-item small{color:var(--muted);font-weight:400;font-size:11px;margin-left:-4px}
-.menu-item .fleche{margin-left:auto;color:var(--muted);font-size:12px}
-.menu-item.profil{background:#1E1A0A;border:1px solid rgba(255,193,7,.35)}
-.menu-item.profil .ico{background:var(--gold);color:#111}
-.menu-item.booster{background:#1A1526;border:1px solid rgba(124,58,237,.4)}
-.menu-item.booster .ico{background:var(--violet)}
-.menu-item.live .ico{background:#E0245E}
-.menu-item.danger .ico{background:#E0245E}
-.menu-item.danger{color:#FF8A9A}
-.hr{height:1px;background:var(--line);margin:12px 14px}
-.wrap{width:100%;max-width:650px;margin:10px auto;padding:0 10px 10px}
-.tabs{display:flex;gap:7px;overflow-x:auto;padding:6px 2px 10px;scrollbar-width:none}
+.wrap{max-width:650px;margin:0 auto;padding:12px 10px}
+.search-box{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:12px}
+.search-box .row{display:flex;gap:8px;align-items:center;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:4px 4px 4px 14px}
+.search-box input{flex:1;min-width:0;background:transparent;border:0;outline:none;color:#fff;font-size:15px;padding:10px 0}
+.search-box input::placeholder{color:var(--muted)}
+.btn-search{background:var(--violet);border:0;color:#fff;padding:10px 16px;border-radius:999px;font-weight:800;font-size:14px;white-space:nowrap}
+.btn-clear{background:#2A2A35;border:0;color:#fff;width:36px;height:36px;border-radius:50%;font-size:14px}
+.tabs{display:flex;gap:7px;overflow-x:auto;padding:12px 0 8px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tabs button{border:1px solid var(--line);background:var(--card);color:#fff;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.tabs button{border:1px solid var(--line);background:var(--card);color:#fff;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
 .tabs button.active{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border-color:transparent}
-.stories{display:flex;gap:12px;overflow-x:auto;padding:3px 2px 10px;scrollbar-width:none}
-.stories::-webkit-scrollbar{display:none}
-.story{flex-shrink:0;width:72px;text-align:center;cursor:pointer}
-.story .c{width:64px;height:64px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--gold),var(--violet),#FF2D55);margin:0 auto}
-.story .c div{width:100%;height:100%;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;border:3px solid #0A0A0F}
-.story .c img{width:100%;height:100%;object-fit:cover}
-.story b{font-size:11px;display:block;margin-top:5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.create,.post{background:var(--card);border:1px solid var(--line);border-radius:20px;margin:10px 0;padding:12px;width:100%}
-.create .top,.post .head{display:flex;gap:10px;align-items:center}
-.avatar{width:40px;height:40px;flex-shrink:0;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:800}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.create input{flex:1;min-width:0;background:var(--card2);border:1px solid var(--line);padding:12px 15px;border-radius:999px;color:#fff;outline:none;cursor:pointer}
-.create input::placeholder{color:var(--muted)}
-.create .btns{display:flex;gap:7px;margin-top:10px}
-.create .btns button{flex:1;border:0;background:var(--card2);color:#eee;padding:10px 4px;border-radius:12px;font-weight:700;font-size:12px}
-.post{margin-bottom:14px;padding:13px;overflow:hidden;position:relative}
+.sec{font-size:12px;color:var(--muted);font-weight:800;letter-spacing:1px;padding:12px 4px 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;margin-bottom:10px;display:flex;gap:10px;align-items:center;cursor:pointer}
+.card:active{background:var(--card2)}
+.ava{width:52px;height:52px;min-width:52px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;overflow:hidden}
+.ava img{width:100%;height:100%;object-fit:cover}
+.card .info{flex:1;min-width:0}
+.card .info b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .info small{color:var(--muted);font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn-mini{border:0;padding:8px 12px;border-radius:999px;font-weight:800;font-size:12px;white-space:nowrap}
+.btn-voir{background:var(--card2);color:#fff}
+.btn-ami{background:var(--gold);color:#000}
+.post{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:13px;margin-bottom:12px;cursor:pointer}
+.post .head{display:flex;gap:10px;align-items:center}
 .post .head .info{flex:1;min-width:0}
 .post .head small{color:var(--muted);font-size:11px}
-.post p{margin:10px 0;white-space:pre-wrap;line-height:1.5;font-size:14px;overflow-wrap:anywhere;color:#E8E8EF}
-.post .media{position:relative;border-radius:14px;overflow:hidden}
-.post img.pimg{width:100%;height:auto;max-height:420px;object-fit:cover;border-radius:14px;background:var(--card2);display:block;cursor:zoom-in}
-.post video{width:100%;max-height:420px;border-radius:14px;background:#000}
-.actions-text{display:flex;gap:8px;margin-top:10px}
-.actions-text button{flex:1;background:var(--card2);border:0;color:#fff;padding:10px;border-radius:999px;font-weight:700;font-size:12px}
-.actions-text button.liked{color:var(--gold)}
-.actions-text button.fav{color:var(--gold)}
-.counts-row{display:flex;gap:14px;padding:8px 4px 2px;font-size:13px;color:#A1A1AA}
-.counts-row span{cursor:pointer}
-.counts-row span:active{color:#FFC107}
+.post p{margin:10px 0;white-space:pre-wrap;line-height:1.5;font-size:14px;color:#E8E8EF;overflow-wrap:anywhere}
+.post img.pimg{width:100%;max-height:320px;object-fit:cover;border-radius:14px;display:block}
+.post video{width:100%;max-height:320px;border-radius:14px;background:#000}
+.post .counts{color:var(--muted);font-size:12px;margin-top:8px;display:flex;gap:12px}
+.empty{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px 12px;color:var(--muted);margin-top:10px}
 .loading{text-align:center;color:var(--gold);padding:20px;font-size:13px}
-.empty{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px 10px;color:var(--muted)}
-.comments{border-top:1px solid var(--line);margin-top:10px;padding-top:10px;display:none}
-.comments.open{display:block}
-.comment{display:flex;gap:8px;margin-bottom:9px;align-items:flex-start}
-.comment .avatar{width:32px;height:32px;font-size:12px}
-.comment .bubble{background:var(--card2);padding:9px 12px;border-radius:14px;flex:1;min-width:0}
-.comment .bubble b{font-size:12px}
-.comment .bubble span{display:block;font-size:13px;margin-top:3px;overflow-wrap:anywhere}
-.comment .bubble small{color:var(--muted);font-size:10px}
-.comment-input{display:flex;gap:7px;margin-top:10px}
-.comment-input input{flex:1;min-width:0;background:var(--card2);border:1px solid var(--line);padding:11px;border-radius:999px;color:#fff;outline:none}
-.comment-input button{width:40px;height:40px;border:0;border-radius:50%;background:var(--violet);color:#fff;font-size:17px}
-.modal{position:fixed;inset:0;background:#000B;display:none;align-items:center;justify-content:center;z-index:200;padding:15px}
-.modal.open{display:flex}
-.modal-box{width:100%;max-width:420px;background:#17171F;border:1px solid var(--line);border-radius:18px;padding:18px}
-.modal-box h3{margin-bottom:12px}
-.modal-box textarea{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px;color:#fff;min-height:85px;outline:none;resize:vertical}
-.modal-box button{width:100%;padding:12px;margin-top:9px;border:0;border-radius:12px;font-weight:800}
-.btn-violet{background:var(--violet);color:#fff}
-.btn-grey{background:var(--card2);color:#fff}
+.histo{display:flex;flex-wrap:wrap;gap:7px;padding:4px 0}
+.histo button{background:var(--card2);border:1px solid var(--line);color:#fff;padding:7px 12px;border-radius:999px;font-size:12px}
 .bottom{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,10,15,.96);display:flex;justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
-.bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:10px;font-weight:700}
+.bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:700}
 .bottom button.active{color:var(--gold)}
 .bottom button span{font-size:22px}
 .bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
-@media(max-width:360px){.wrap{padding-left:7px;padding-right:7px}.logo{font-size:18px}}
 </style>
 </head>
 <body>
 
-<!-- ✅ JUSTE ÇA QUI RESTE EN HAUT -->
 <div class="header-fixe">
   <div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
-  <button class="btn-top" onclick="location.reload()" title="Recharger">🔄</button>
-  <button class="btn-top" onclick="location.href='notifications.html'" title="Notifications">🔔<span class="dot" id="dotNotifTop">0</span></button>
-  <button class="btn-top" onclick="ouvrirMenu()" title="Menu">☰</button>
+  <button class="btn-top" onclick="location.href='recherche.html'">🔍</button>
+  <button class="btn-top" onclick="location.href='notifications.html'">🔔<span class="dot" id="dotNotifTop">0</span></button>
+  <button class="btn-top" onclick="location.href='feed.html'">🏠</button>
 </div>
-
-<div class="overlay" id="overlay" onclick="fermerMenu()"></div>
-<aside class="menu" id="menu">
-  <div class="menu-top">
-    <div class="m-ava" id="menuAvatar" onclick="location.href='profil.html'">?</div>
-    <div style="flex:1;min-width:0"><b id="menuNom">Chargement...</b><small id="menuVille"></small></div>
-    <button onclick="fermerMenu()">✕</button>
-  </div>
-  <div class="menu-sec">MON COMPTE</div>
-  <button class="menu-item profil" onclick="location.href='profil.html'"><span class="ico">👤</span> Mon Profil <span class="fleche">›</span></button>
-  <button class="menu-item" onclick="location.href='profil.html?edit=1'"><span class="ico">✏️</span> Modifier mon profil</button>
-  <div class="menu-sec">JASONBOOK</div>
-  <button class="menu-item" onclick="location.href='feed.html'"><span class="ico">📰</span> Fil <span class="fleche">›</span></button>
-  <button class="menu-item" onclick="location.href='favoris.html'"><span class="ico">⭐</span> Favoris <span class="fleche">›</span></button>
-  <button class="menu-item booster" onclick="location.href='booster.html'"><span class="ico">🚀</span> Booster <small>Likes • Com • Partages</small> <span class="fleche">›</span></button>
-  <button class="menu-item live" onclick="location.href='live.html'"><span class="ico">🔴</span> Aller en Live <span class="fleche">›</span></button>
-  <button class="menu-item" onclick="location.href='recherche.html'"><span class="ico">🔍</span> Recherche</button>
-  <button class="menu-item" onclick="location.href='boutique.html'"><span class="ico">🛒</span> Boutique</button>
-  <button class="menu-item" onclick="location.href='anniversaires.html'"><span class="ico">🎂</span> Anniversaires</button>
-  <div class="menu-sec">RÉGLAGES</div>
-  <button class="menu-item" onclick="location.href='parametres.html'"><span class="ico">⚙️</span> Paramètres</button>
-  <button class="menu-item" onclick="location.href='bloques.html'"><span class="ico">🚫</span> Personnes bloquées</button>
-  <button class="menu-item" onclick="location.href='aide.html'"><span class="ico">❓</span> Aide</button>
-  <div class="hr"></div>
-  <button class="menu-item" onclick="changerCompte()"><span class="ico">🔄</span> Changer de compte</button>
-  <button class="menu-item danger" onclick="seDeconnecter()"><span class="ico">🚪</span> Se déconnecter</button>
-</aside>
 
 <main class="wrap">
+<div class="search-box">
+  <div class="row">
+    <span>🔍</span>
+    <input id="inputRecherche" placeholder="Chercher une personne, une publication..." autocomplete="off">
+    <button class="btn-clear" id="btnClear" onclick="effacerRecherche()" style="display:none">✕</button>
+    <button class="btn-search" onclick="lancerRecherche()">Chercher</button>
+  </div>
+  <div id="zoneHisto" style="display:none">
+    <div class="sec">🕐 RÉCENTES</div>
+    <div class="histo" id="listeHisto"></div>
+    <button onclick="effacerHisto()" style="background:none;border:0;color:#FF8A9A;font-size:12px;padding:6px">Effacer l'historique</button>
+  </div>
+</div>
+
 <div class="tabs">
-<button class="active">✨ Pour Toi</button>
-<button onclick="location.href='amis.html'">👥 Amis <span id="badgeAmisTop"></span></button>
-<button onclick="location.href='videos.html'">🎥 Vidéos</button>
-<button onclick="location.href='notifications.html'">🔔 Notifs <span id="badgeNotifTop"></span></button>
-<button onclick="location.href='messages.html'">💬 Messages <span id="badgeMsgTop"></span></button>
+  <button class="active" data-filtre="tout" onclick="setFiltre('tout',this)">✨ Tout</button>
+  <button data-filtre="personnes" onclick="setFiltre('personnes',this)">👥 Personnes</button>
+  <button data-filtre="posts" onclick="setFiltre('posts',this)">📝 Publications</button>
+  <button data-filtre="videos" onclick="setFiltre('videos',this)">🎥 Vidéos</button>
 </div>
-<div class="stories" id="storiesRow"></div>
-<div class="create">
-<div class="top"><div class="avatar" id="myAvatar2">?</div><input placeholder="Quoi de neuf ?" onclick="location.href='creer-post.html'" readonly></div>
-<div class="btns"><button onclick="location.href='creer-post.html'">🖼️ Photo</button><button onclick="location.href='creer-post.html'">🎥 Vidéo</button><button onclick="location.href='creer-post.html'">✍️ Publier</button></div>
+
+<div id="loading" class="loading" style="display:none">⏳ Recherche...</div>
+<div id="resultats"></div>
+<div id="empty" class="empty" style="display:none">
+  <div style="font-size:42px">🔍</div>
+  <h3 style="color:#fff;margin:8px 0">Tape un nom ou un mot</h3>
+  <p>Ex : Jason, Kinshasa, Musique...</p>
 </div>
-<div class="loading" id="loading">⏳ Chargement du fil...</div>
-<div id="list"></div>
-<div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication</h3><p>Sois le premier à publier.</p><br><button onclick="location.href='creer-post.html'" style="background:var(--violet);border:0;padding:12px 20px;border-radius:999px;color:#fff;font-weight:800">➕ Créer le premier post</button></div>
 </main>
 
 <div class="bottom">
-<button class="active" onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
+<button onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
 <button onclick="location.href='amis.html'"><span>👥</span>Amis</button>
 <button onclick="location.href='creer-post.html'"><span class="centre">+</span></button>
 <button onclick="location.href='messages.html'"><span>💬</span>Messages</button>
 <button onclick="location.href='profil.html'"><span>👤</span>Moi</button>
 </div>
 
-<div class="modal" id="modalPartage"><div class="modal-box"><h3>↗️ Partager ce post</h3><p id="partagePreview" style="color:#A1A1AA;font-size:13px;margin-bottom:8px"></p><textarea id="partageTexte" placeholder="Ajoute un mot (optionnel)..."></textarea><button class="btn-violet" onclick="confirmerPartage()">Partager sur mon fil</button><button class="btn-grey" onclick="fermerPartage()">Annuler</button></div></div>
-
-<div id="modalPhoto" style="position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:300;display:none;flex-direction:column">
-  <div style="display:flex;justify-content:space-between;align-items:center;padding:12px">
-    <b id="photoNom" style="color:#fff">Photo</b>
-    <button onclick="fermerPhoto()" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px">✕</button>
-  </div>
-  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:10px;overflow:hidden">
-    <img id="photoGrande" src="" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:12px">
-  </div>
-  <div style="padding:12px;display:flex;gap:8px">
-    <button onclick="copierLienPost()" style="flex:1;background:#1F1F2E;border:1px solid #26262F;color:#fff;padding:12px;border-radius:12px;font-weight:700">🔗 Copier lien</button>
-    <button onclick="telechargerPhoto()" style="flex:1;background:#1F1F2E;border:1px solid #26262F;color:#fff;padding:12px;border-radius:12px;font-weight:700">⬇️ Télécharger</button>
-    <button onclick="boosterPost()" style="flex:1;background:#FFC107;border:none;color:#111;padding:12px;border-radius:12px;font-weight:800">🚀 Booster</button>
-  </div>
-  <p id="lienCopie" style="text-align:center;color:#FFC107;font-size:12px;padding-bottom:12px;display:none">Lien copié ✅</p>
-</div>
-
-<div id="modalLikes" style="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:400;display:none;align-items:flex-end;justify-content:center" onclick="if(event.target===this) fermerLikes()">
-  <div style="width:100%;max-width:500px;max-height:82vh;background:#16161F;border:1px solid #26262F;border-radius:20px 20px 0 0;padding:16px;overflow:auto">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <h3 id="titreLikes" style="font-size:16px">❤️ Personnes qui ont aimé</h3>
-      <button onclick="fermerLikes()" style="width:35px;height:35px;border-radius:50%;background:#26262F;border:none;color:#fff;font-size:18px">✕</button>
-    </div>
-    <p id="totalLikes" style="color:#A1A1AA;font-size:12px;margin:6px 0"></p>
-    <div id="listeLikes"></div>
-  </div>
-</div>
-
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {getDatabase,ref,onValue,set,remove,push,get,query,orderByChild,limitToLast,update} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import {getDatabase,ref,onValue,get} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
 const app=initializeApp(firebaseConfig); const db=getDatabase(app);
-const uid=localStorage.getItem("jasonbook_uid"); if(!uid){location.href="index.html"; throw new Error("Utilisateur non connecté");}
-const monNom=localStorage.getItem("jasonbook_nom")||"Jason"; const maPhoto=localStorage.getItem("jasonbook_photo")||"";
+const uid=localStorage.getItem("jasonbook_uid");
 const $=id=>document.getElementById(id);
-function escapeHTML(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function avatarHTML(photo,nom){return photo?`<img loading="lazy" decoding="async" src="${escapeHTML(photo)}">`:escapeHTML((nom||"?").charAt(0).toUpperCase());}
-$("myAvatar2").innerHTML=avatarHTML(maPhoto,monNom);
-$("menuNom").innerText=monNom; $("menuAvatar").innerHTML=avatarHTML(maPhoto,monNom);
-get(ref(db,'jasonbook/users/'+uid)).then(s=>{ const u=s.val()||{}; $("menuVille").innerText=(u.ville||"")+" "+(u.pays?"• "+u.pays:""); });
-window.ouvrirMenu=()=>{ $("menu").classList.add('open'); $("overlay").classList.add('open'); };
-window.fermerMenu=()=>{ $("menu").classList.remove('open'); $("overlay").classList.remove('open'); };
-window.changerCompte=()=>{
-  if(!confirm("Changer de compte ?")) return;
-  try{ let comptes=JSON.parse(localStorage.getItem('jasonbook_comptes')||"[]"); if(!comptes.find(c=>c.uid===uid)) comptes.push({uid,nom:monNom,photo:maPhoto}); localStorage.setItem('jasonbook_comptes',JSON.stringify(comptes)); }catch(e){}
-  localStorage.removeItem('jasonbook_uid'); localStorage.removeItem('jasonbook_nom'); localStorage.removeItem('jasonbook_photo');
-  location.href='index.html?changer=1';
-};
-window.seDeconnecter=()=>{
-  if(!confirm("Se déconnecter de JASONBOOK ?")) return;
-  localStorage.removeItem('jasonbook_uid'); localStorage.removeItem('jasonbook_nom'); localStorage.removeItem('jasonbook_photo');
-  sessionStorage.clear(); location.href='index.html';
-};
-function setBadgeTop(id,n){const e=$(id); if(!e) return; e.textContent=n>0?`(${n})`:"";}
-let mesLikes=new Set(); let mesFavoris=new Set(); let tousPosts=[]; let commentairesParPost={}; let postAPartager=null; let renduProgramme=false;
-function rendrePostsRapide(){if(renduProgramme)return; renduProgramme=true; requestAnimationFrame(()=>{renduProgramme=false; rendrePosts();});}
-function rendrePosts(){
-const box=$("list"); if(!box) return; box.innerHTML=""; $("loading").style.display="none";
-if(!tousPosts.length){$("emptyBox").style.display="block"; return;} $("emptyBox").style.display="none";
-const fragment=document.createDocumentFragment();
-tousPosts.forEach(p=>{
-const liked=mesLikes.has(p.id); const fav=mesFavoris.has(p.id); const coms=commentairesParPost[p.id]||[];
-const photo=p.photoUrl||p.image||""; const video=p.videoUrl||"";
-let comsHtml=coms.map(c=>`<div class="comment"><div class="avatar">${avatarHTML(c.photoAuteur||c.photo,c.nomAuteur||c.nom)}</div><div class="bubble"><b>${escapeHTML(c.nomAuteur||c.nom||"")}</b><span>${escapeHTML(c.texte||"")}</span><small>${escapeHTML(c.date||"")}</small></div></div>`).join("");
-if(!coms.length){comsHtml='<p style="color:#A1A1AA;font-size:13px;text-align:center">Aucun commentaire. Sois le premier !</p>';}
-const id=escapeHTML(p.id); const auteur=escapeHTML(p.auteurUid||""); const nom=escapeHTML(p.nomAuteur||"Utilisateur");
-const div=document.createElement("article"); div.className="post";
-let mediaHtml="";
-if(photo || video){
-mediaHtml=`<div class="media">${photo?`<img class="pimg" loading="lazy" decoding="async" src="${escapeHTML(photo)}" alt="Publication" onclick="ouvrirPhoto('${id}')">`:""}${video?`<video controls preload="none" playsinline><source src="${escapeHTML(video)}"></video>`:""}</div>`;
+function escapeHTML(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function avatarHTML(photo,nom){return photo?`<img src="${escapeHTML(photo)}">`:escapeHTML((nom||"?").charAt(0).toUpperCase());}
+let tousUsers=[]; let tousPosts=[]; let filtre="tout"; let requete="";
+
+function getHisto(){ try{return JSON.parse(localStorage.getItem("jasonbook_histo_recherche")||"[]")}catch(e){return []} }
+function saveHisto(q){
+  let h=getHisto(); h=h.filter(x=>x.toLowerCase()!==q.toLowerCase()); h.unshift(q); h=h.slice(0,8);
+  localStorage.setItem("jasonbook_histo_recherche",JSON.stringify(h)); afficherHisto();
 }
-let countsHtml=`<div class="counts-row"><span onclick="voirLikes('${id}')">❤️ ${Number(p.likesCount||p.likes||0)} J'aime</span><span onclick="voirCommentaires('${id}')">💬 ${Number(p.commentairesCount||p.comments||0)} commentaires</span><span>↗️ ${Number(p.partagesCount||p.shares||0)} partages</span></div>`;
-let actionsText=`<div class="actions-text"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"} J'aime</button><button onclick="toggleCommentaires('${id}')">💬 Commenter</button><button onclick="ouvrirPartage('${id}')">↗️ Partager</button><button class="${fav?"fav":""}" onclick="toggleFavori('${id}')">⭐ Favori</button></div>`;
-div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${auteur}'">${avatarHTML(p.photoAuteur,p.nomAuteur)}</div><div class="info"><b>${nom}</b><br><small>${escapeHTML(p.date||"")}${p.partageDe?` • Partagé de ${escapeHTML(p.partageDeNom||"")}`:""}</small></div>${p.auteurUid===uid?`<button style="border:0;background:none;font-size:18px;color:#fff" onclick="supprimerPost('${id}')">🗑️</button>`:`<button style="border:1px solid var(--gold);background:none;color:var(--gold);padding:6px 12px;border-radius:999px;font-weight:800;font-size:12px">Suivre</button>`}</div>${p.texte?`<p>${escapeHTML(p.texte)}</p>`:""}${mediaHtml}${countsHtml}${actionsText}<div class="comments" id="com-${id}"><div>${comsHtml}</div><div class="comment-input"><input id="inputCom-${id}" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter')envoyerCommentaire('${id}')"><button onclick="envoyerCommentaire('${id}')">➤</button></div></div>`;
-fragment.appendChild(div);
-});
-box.appendChild(fragment);
+function afficherHisto(){
+  let h=getHisto();
+  if(!h.length){ $("zoneHisto").style.display="none"; return; }
+  if(requete){ $("zoneHisto").style.display="none"; return; }
+  $("zoneHisto").style.display="block";
+  $("listeHisto").innerHTML=h.map(x=>`<button onclick="rechercherDepuisHisto('${escapeHTML(x)}')">🕐 ${escapeHTML(x)}</button>`).join("");
 }
-window.toggleCommentaires=id=>{const el=$("com-"+id); if(el) el.classList.toggle("open");};
-window.toggleFavori=async id=>{
-  const favRef=ref(db,"jasonbook/favoris/"+uid+"/"+id);
-  try{
-    if(mesFavoris.has(id)){ await remove(favRef); alert("Retiré des favoris ⭐"); }
-    else { await set(favRef,{postId:id,timestamp:Date.now()}); alert("Ajouté aux favoris ⭐"); }
-  }catch(e){ console.error(e); alert("Erreur favoris."); }
+window.effacerHisto=()=>{ localStorage.removeItem("jasonbook_histo_recherche"); afficherHisto(); };
+window.rechercherDepuisHisto=(q)=>{ $("inputRecherche").value=q; lancerRecherche(); };
+window.effacerRecherche=()=>{ $("inputRecherche").value=""; requete=""; $("btnClear").style.display="none"; afficherHisto(); $("resultats").innerHTML=""; $("empty").style.display="block"; };
+
+window.setFiltre=(f,btn)=>{
+  filtre=f;
+  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+  if(btn) btn.classList.add("active");
+  afficherResultats();
 };
-window.voirLikes = async (postId) => {
-  const modal = document.getElementById('modalLikes');
-  const liste = document.getElementById('listeLikes');
-  document.getElementById('titreLikes').textContent = '❤️ Personnes qui ont aimé';
-  liste.innerHTML = 'Chargement...';
-  modal.style.display = 'flex';
-  try{
-    const snap = await get(ref(db,'jasonbook/likes/'+postId));
-    const d = snap.val()||{};
-    const arr = Object.entries(d).map(([key,l])=>{
-      if(l===true) return {key, nom:'Utilisateur', photo:'', date:'', timestamp:0, auto:false, uid:key};
-      if(typeof l==='object') return {key, ...l};
-      return {key, nom:'Utilisateur', photo:'', date:'', timestamp:0, auto:false};
-    }).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
-    document.getElementById('totalLikes').textContent = arr.length + ' personnes ont aimé';
-    if(!arr.length){ liste.innerHTML = '<p style="color:#A1A1AA">Aucune personne pour le moment.</p>'; return; }
-    liste.innerHTML = arr.map(l=>`
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #26262F">
-        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FFC107,#7C3AED);display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;flex-shrink:0">
-          ${l.photo ? `<img src="${escapeHTML(l.photo)}" style="width:100%;height:100%;object-fit:cover">` : escapeHTML((l.nom||'?').charAt(0).toUpperCase())}
-        </div>
-        <div style="flex:1"><b style="font-size:14px">${escapeHTML(l.nom||'Fan JASONBOOK')}</b><small style="display:block;color:#A1A1AA">${escapeHTML(l.date||'')}</small></div>
-        <span>❤️</span>
-      </div>`).join('');
-  }catch(e){ liste.innerHTML = 'Erreur : '+escapeHTML(e.message); }
+
+function normalise(s){ return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); }
+
+window.lancerRecherche=()=>{
+  let q=$("inputRecherche").value.trim();
+  if(!q) return;
+  requete=q;
+  $("btnClear").style.display="block";
+  saveHisto(q);
+  afficherResultats();
 };
-window.voirCommentaires = async (postId) => {
-  const modal = document.getElementById('modalLikes');
-  const liste = document.getElementById('listeLikes');
-  document.getElementById('titreLikes').textContent = '💬 Personnes qui ont commenté';
-  liste.innerHTML = 'Chargement...';
-  modal.style.display = 'flex';
-  try{
-    const snap = await get(ref(db,'jasonbook/commentaires/'+postId));
-    const d = snap.val()||{};
-    const arr = Object.entries(d).map(([key,c])=>({key,...c})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
-    document.getElementById('totalLikes').textContent = arr.length + ' commentaires';
-    if(!arr.length){ liste.innerHTML = '<p style="color:#A1A1AA">Aucun commentaire pour le moment.</p>'; return; }
-    liste.innerHTML = arr.map(c=>`
-      <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #26262F">
-        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#A855F7);display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;flex-shrink:0">
-          ${c.photoAuteur||c.photo ? `<img src="${escapeHTML(c.photoAuteur||c.photo)}" style="width:100%;height:100%;object-fit:cover">` : escapeHTML((c.nomAuteur||c.nom||'?').charAt(0).toUpperCase())}
-        </div>
-        <div style="flex:1"><b style="font-size:14px">${escapeHTML(c.nomAuteur||c.nom||'Fan JASONBOOK')}</b><small style="display:block;color:#A1A1AA">${escapeHTML(c.date||'')}</small><p style="margin-top:4px;font-size:14px;white-space:pre-wrap">${escapeHTML(c.texte||'')}</p></div>
-      </div>`).join('');
-  }catch(e){ liste.innerHTML = 'Erreur : '+escapeHTML(e.message); }
-};
-window.fermerLikes = () => { document.getElementById('modalLikes').style.display = 'none'; };
-window.liker=async id=>{
-  const p=tousPosts.find(x=>x.id===id); if(!p) return;
-  const likeParPostRef=ref(db,"jasonbook/likes/"+id+"/"+uid);
-  const likeParUserRef=ref(db,"jasonbook/likes/"+uid+"/"+id);
-  try{
-    if(mesLikes.has(id)){
-      await remove(likeParPostRef); await remove(likeParUserRef);
-      await update(ref(db,"jasonbook/posts/"+id),{likesCount: Math.max(0,(Number(p.likesCount||p.likes||0)-1)), likes: Math.max(0,(Number(p.likes||p.likesCount||0)-1))});
-    }else{
-      await set(likeParPostRef,{uid, nom:monNom, photo:maPhoto, date:new Date().toLocaleString(), timestamp:Date.now(), auto:false});
-      await set(likeParUserRef,true);
-      await update(ref(db,"jasonbook/posts/"+id),{likesCount: (Number(p.likesCount||p.likes||0)+1), likes: (Number(p.likes||p.likesCount||0)+1)});
-      if(p.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"like",texte:monNom+" a aimé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});}
-    }
-  }catch(e){console.error("Erreur like:",e); alert("Impossible de modifier le like.");}
-};
-window.envoyerCommentaire=async id=>{const input=$("inputCom-"+id); if(!input) return; const txt=input.value.trim(); if(!txt) return; const p=tousPosts.find(x=>x.id===id); if(!p) return; input.disabled=true; try{const newRef=push(ref(db,"jasonbook/commentaires/"+id)); await set(newRef,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:txt,date:new Date().toLocaleString(),timestamp:Date.now()}); await set(ref(db,"jasonbook/posts/"+id+"/commentairesCount"), (Number(p.commentairesCount)||0)+1); if(p.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"commentaire",texte:monNom+" a commenté ta publication : "+txt,deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});} input.value="";}catch(e){console.error(e); alert("Erreur lors de l'envoi.");}finally{input.disabled=false;}};
-window.ouvrirPartage=id=>{postAPartager=tousPosts.find(x=>x.id===id); if(!postAPartager) return; $("partagePreview").textContent="Publication de "+postAPartager.nomAuteur+" : "+(postAPartager.texte||"").slice(0,80); $("partageTexte").value=""; $("modalPartage").classList.add("open");};
-window.fermerPartage=()=>{$("modalPartage").classList.remove("open"); postAPartager=null;};
-window.confirmerPartage=async()=>{if(!postAPartager) return; const original=postAPartager; const texte=$("partageTexte").value.trim(); const bouton=$("modalPartage").querySelector(".btn-violet"); bouton.disabled=true; bouton.textContent="Partage en cours..."; try{const newRef=push(ref(db,"jasonbook/posts")); await set(newRef,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:texte?texte+"\n\n--- Partagé ---\n"+(original.texte||""):(original.texte||""),photoUrl:original.photoUrl||original.image||"",videoUrl:original.videoUrl||"",date:new Date().toLocaleString(),timestamp:Date.now(),likesCount:0,commentairesCount:0,partagesCount:0,partageDe:original.id,partageDeNom:original.nomAuteur||""}); if(original.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+original.auteurUid)); await set(n,{type:"partage",texte:monNom+" a partagé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});} await set(ref(db,"jasonbook/posts/"+original.id+"/partagesCount"),(Number(original.partagesCount)||0)+1); fermerPartage(); alert("Publication partagée ! 🎉");}catch(e){console.error(e); alert("Erreur lors du partage.");}finally{bouton.disabled=false; bouton.textContent="Partager sur mon fil";}};
-window.supprimerPost=async id=>{if(!confirm("Supprimer cette publication ?")) return; try{await remove(ref(db,"jasonbook/posts/"+id));}catch(e){alert("Impossible de supprimer cette publication."); console.error(e);}};
-let photoOuverteId=""; let photoOuverteUrl=""; let photoOuverteNom="";
-window.ouvrirPhoto=(postId)=>{
-  const p=tousPosts.find(x=>x.id===postId); if(!p) return;
-  photoOuverteId=postId;
-  photoOuverteUrl=p.photoUrl||p.image||"";
-  photoOuverteNom=p.nomAuteur||"Photo";
-  $("photoNom").innerText="Photo de "+photoOuverteNom;
-  $("photoGrande").src=photoOuverteUrl;
-  $("lienCopie").style.display="none";
-  $("modalPhoto").style.display="flex";
-};
-window.fermerPhoto=()=>{ $("modalPhoto").style.display="none"; $("photoGrande").src=""; };
-window.copierLienPost=async ()=>{
-  const lien=location.origin+"/feed.html?post="+photoOuverteId;
-  try{ await navigator.clipboard.writeText(lien); }
-  catch(e){ prompt("Copie ce lien pour Booster :", lien); return; }
-  const msg=$("lienCopie"); msg.innerText="Lien copié ✅ : "+lien; msg.style.display="block";
-  localStorage.setItem("jasonbook_lien_a_booster", lien);
-  localStorage.setItem("jasonbook_post_a_booster", photoOuverteId);
-};
-window.telechargerPhoto=async ()=>{
-  if(!photoOuverteUrl) return;
-  try{
-    const res=await fetch(photoOuverteUrl);
-    const blob=await res.blob();
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a'); a.href=url; a.download="jasonbook-"+photoOuverteId+".jpg";
-    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    alert("Photo téléchargée ✅");
-  }catch(e){ window.open(photoOuverteUrl,"_blank"); }
-};
-window.boosterPost=()=>{
-  localStorage.setItem("jasonbook_post_a_booster", photoOuverteId);
-  localStorage.setItem("jasonbook_lien_a_booster", location.origin+"/feed.html?post="+photoOuverteId);
-  location.href="booster.html?post="+photoOuverteId;
-};
-const postsQuery=query(ref(db,"jasonbook/posts"),orderByChild("timestamp"),limitToLast(40));
-onValue(postsQuery,s=>{const d=s.val(); tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendrePostsRapide();},error=>{console.error(error); $("loading").textContent="Erreur de chargement des publications.";});
-onValue(ref(db,"jasonbook/likes/"+uid),s=>{const d=s.val(); mesLikes=new Set(d?Object.keys(d):[]); rendrePostsRapide();});
-onValue(ref(db,"jasonbook/favoris/"+uid),s=>{const d=s.val(); mesFavoris=new Set(d?Object.keys(d):[]); rendrePostsRapide();});
-const commentaireRefs={};
-function actualiserEcouteursCommentaires(){
-const ids=new Set(tousPosts.map(p=>p.id));
-Object.keys(commentaireRefs).forEach(id=>{if(!ids.has(id)){const item=commentaireRefs[id]; item.unsubscribe(); delete commentaireRefs[id]; delete commentairesParPost[id];}});
-tousPosts.forEach(p=>{if(commentaireRefs[p.id]) return; const commentaireQuery=query(ref(db,"jasonbook/commentaires/"+p.id),orderByChild("timestamp"),limitToLast(20)); const callback=onValue(commentaireQuery,s=>{const d=s.val(); commentairesParPost[p.id]=d?Object.entries(d).map(([id,c])=>({id,...c})).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0)):[]; rendrePostsRapide();},error=>console.error(error)); commentaireRefs[p.id]={unsubscribe:()=>callback()};});
-}
-onValue(postsQuery,()=>{actualiserEcouteursCommentaires();});
-onValue(ref(db,"jasonbook/demandes/"+uid),s=>{const d=s.val(); setBadgeTop("badgeAmisTop",d?Object.keys(d).length:0);});
-onValue(ref(db,"jasonbook/notifications/"+uid),s=>{
-  const d=s.val(); let n=0; if(d){Object.values(d).forEach(x=>{if(!x.lu)n++;});}
-  setBadgeTop("badgeNotifTop",n);
-  const dot=$("dotNotifTop");
-  if(dot){ if(n>0){ dot.style.display="flex"; dot.innerText=n>99?"99+":n; } else { dot.style.display="none"; } }
-});
-onValue(ref(db,"jasonbook/messages"),s=>{const d=s.val(); let n=0; if(d){Object.values(d).forEach(chat=>{if(chat&&typeof chat==="object"){Object.values(chat).forEach(m=>{if(m&&(m.destinataireUid===uid||m.pour===uid)&&!m.lu)n++;});}});} setBadgeTop("badgeMsgTop",n);});
-function photoDuStory(s){
-  if(!s) return "";
-  const cles=["photoUrl","image","photo","imageUrl","mediaUrl","media","url","storyUrl","storyImage","file","src","photoURL","imageURL","videoUrl"];
-  for(const k of cles){
-    const v=s[k];
-    if(v && typeof v==="string" && (v.startsWith("http") || v.startsWith("data:image") || v.startsWith("data:video"))){
-      if(k.toLowerCase().includes("auteur")) continue;
-      return v;
-    }
+
+function afficherResultats(){
+  let box=$("resultats");
+  if(!requete){
+    box.innerHTML=""; $("empty").style.display="block"; afficherHisto(); return;
   }
-  for(const [k,v] of Object.entries(s)){
-    if(typeof v==="string" && v.length>100 && (v.startsWith("http") || v.startsWith("data:"))){
-      if(k.toLowerCase().includes("auteur")) continue;
-      return v;
-    }
+  $("empty").style.display="none"; $("zoneHisto").style.display="none";
+  let q=normalise(requete);
+  // ✅ VRAIE RECHERCHE DANS LES UTILISATEURS
+  let users=tousUsers.filter(u=>{
+    let texte=normalise((u.nom||"")+" "+(u.ville||"")+" "+(u.pays||"")+" "+(u.bio||""));
+    return texte.includes(q);
+  }).slice(0,20);
+  // ✅ VRAIE RECHERCHE DANS LES POSTS
+  let posts=tousPosts.filter(p=>{
+    let texte=normalise((p.texte||"")+" "+(p.nomAuteur||""));
+    return texte.includes(q);
+  }).slice(0,20);
+  let videos=posts.filter(p=>p.videoUrl);
+
+  if(filtre==="personnes") posts=[];
+  if(filtre==="posts") users=[];
+  if(filtre==="videos"){ users=[]; posts=videos; }
+
+  let html="";
+  if(users.length){
+    html+=`<div class="sec">👥 PERSONNES (${users.length})</div>`;
+    html+=users.map(u=>{
+      let isMoi=u.id===uid;
+      return `<div class="card" onclick="voirProfil('${escapeHTML(u.id)}')">
+        <div class="ava">${avatarHTML(u.photo||u.photoUrl,u.nom)}</div>
+        <div class="info"><b>${escapeHTML(u.nom||"Utilisateur")}</b><small>${escapeHTML(u.ville||"")}${u.pays?" • "+escapeHTML(u.pays):""}${u.bio?" • "+escapeHTML(u.bio.slice(0,40)):""}</small></div>
+        <button class="btn-mini ${isMoi?'btn-voir':'btn-ami'}" onclick="event.stopPropagation(); voirProfil('${escapeHTML(u.id)}')">${isMoi?'Moi':'Voir'}</button>
+      </div>`;
+    }).join("");
   }
-  return "";
+  if(posts.length){
+    html+=`<div class="sec">📝 PUBLICATIONS (${posts.length})</div>`;
+    html+=posts.map(p=>{
+      let photo=p.photoUrl||p.image||""; let video=p.videoUrl||"";
+      return `<div class="post" onclick="voirProfil('${escapeHTML(p.auteurUid||"")}')">
+        <div class="head"><div class="ava" style="width:40px;height:40px;font-size:14px">${avatarHTML(p.photoAuteur,p.nomAuteur)}</div><div class="info"><b>${escapeHTML(p.nomAuteur||"")}</b><br><small>${escapeHTML(p.date||"")}</small></div></div>
+        <p>${escapeHTML((p.texte||"").slice(0,220))}</p>
+        ${photo?`<img class="pimg" src="${escapeHTML(photo)}">`:""}
+        ${video?`<video controls src="${escapeHTML(video)}"></video>`:""}
+        <div class="counts">❤️ ${p.likesCount||0} • 💬 ${p.commentairesCount||0} • ↗️ ${p.partagesCount||0}</div>
+      </div>`;
+    }).join("");
+  }
+  if(!html){
+    box.innerHTML=`<div class="empty"><div style="font-size:42px">😢</div><h3 style="color:#fff;margin:8px 0">Aucun résultat pour "${escapeHTML(requete)}"</h3><p>Essaie un autre nom ou un autre mot.</p></div>`;
+    return;
+  }
+  box.innerHTML=html;
 }
-onValue(query(ref(db,"jasonbook/stories"),orderByChild("expire"),limitToLast(50)),async s=>{
-const d=s.val(); const now=Date.now(); const row=$("storiesRow"); row.innerHTML="";
-const add=document.createElement("div"); add.className="story"; add.innerHTML=`<div class="c"><div>+</div></div><b>Toi</b>`; add.onclick=()=>location.href="stories.html?uid="+uid; row.appendChild(add);
-if(!d) return;
-let usersCache={};
-try{ const snapUsers=await get(ref(db,'jasonbook/users')); usersCache=snapUsers.val()||{}; }catch(e){}
-const parAuteur={};
-Object.values(d).forEach(x=>{
-  if(!x || (x.expire||0)<=now) return;
-  const aUid=x.auteurUid||x.uid||x.auteurId||x.auteur||"";
-  if(!aUid) return;
-  if(!parAuteur[aUid]) parAuteur[aUid]=[];
-  parAuteur[aUid].push({...x, auteurUid:aUid});
+window.voirProfil=(id)=>{
+  if(!id) return;
+  if(id===uid) location.href='profil.html';
+  else location.href='profil-ami.html?uid='+id;
+};
+
+// ✅ CHARGE LES VRAIS UTILISATEURS DEPUIS FIREBASE
+get(ref(db,'jasonbook/users')).then(s=>{
+  let d=s.val()||{};
+  tousUsers=Object.entries(d).map(([id,u])=>({id,...u}));
+  // Si tu as déjà tapé, re-affiche
+  if(requete) afficherResultats();
 });
-Object.values(parAuteur).forEach(g=>{
-  g.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
-  const st=g[0];
-  const profil=usersCache[st.auteurUid]||{};
-  const nom=st.auteurNom||st.nom||profil.nom||"Utilisateur";
-  const photoRond = photoDuStory(st) || profil.photo || profil.photoUrl || st.photoAuteur || "";
-  const div=document.createElement("div"); div.className="story";
-  div.innerHTML=`<div class="c"><div>${photoRond?`<img src="${escapeHTML(photoRond)}">`:escapeHTML((nom||"?").charAt(0))}</div></div><b>${escapeHTML(nom)}</b>`;
-  div.onclick=()=>location.href="stories.html?uid="+st.auteurUid;
-  row.appendChild(div);
+onValue(ref(db,'jasonbook/posts'),s=>{
+  let d=s.val()||{};
+  tousPosts=Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+  if(requete) afficherResultats();
 });
-},error=>console.error("Stories:",error));
+
+// ✅ NOTIF EN HAUT
+if(uid){
+  onValue(ref(db,'jasonbook/notifications/'+uid),s=>{
+    let d=s.val(); let n=0; if(d) Object.values(d).forEach(x=>{if(!x.lu)n++});
+    let dot=$("dotNotifTop"); if(dot){ if(n>0){dot.style.display="flex"; dot.innerText=n>99?"99+":n;} else dot.style.display="none"; }
+  });
+}
+
+// ✅ QUAND TU ARRIVES DEPUIS FEED AVEC ?q=Jason
+let params=new URLSearchParams(location.search);
+let q0=params.get("q");
+if(q0){ $("inputRecherche").value=q0; requete=q0; $("btnClear").style.display="block"; afficherResultats(); }
+else { $("empty").style.display="block"; afficherHisto(); }
+
+$("inputRecherche").addEventListener("input",()=>{
+  let v=$("inputRecherche").value.trim();
+  $("btnClear").style.display=v?"block":"none";
+  if(!v){ requete=""; afficherResultats(); return; }
+  requete=v; afficherResultats();
+});
+$("inputRecherche").addEventListener("keydown",e=>{ if(e.key==="Enter") lancerRecherche(); });
+$("inputRecherche").focus();
 </script>
 </body>
 </html>
