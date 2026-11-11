@@ -27,6 +27,7 @@ body{background:var(--bg);color:var(--white);min-height:100vh}
 .row input,.row select{padding:10px 12px;border:1px solid var(--line);border-radius:12px;outline:none;font-size:14px;background:var(--card2);color:#fff;max-width:190px}
 .row input:focus,.row select:focus{border-color:var(--blue)}
 .row .arrow{color:var(--grey);font-size:20px}
+.row .val{color:var(--gold);font-size:13px;font-weight:800;text-align:right}
 .switch{position:relative;width:48px;height:26px;background:#444;border-radius:999px;cursor:pointer;flex-shrink:0;transition:.2s}
 .switch::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s}
 .switch.on{background:linear-gradient(135deg,var(--blue),var(--blue2))}.switch.on::after{left:25px}
@@ -38,6 +39,21 @@ body{background:var(--bg);color:var(--white);min-height:100vh}
 .danger{border:1.5px solid #FF6B6B}
 .dev-card{background:linear-gradient(135deg,#1C1C24,#2A1A4A);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .dev-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--blue));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;flex-shrink:0}
+/* MODAL TELEPHONE */
+.modal{position:fixed;inset:0;background:#000B;z-index:100;display:none;align-items:center;justify-content:center;padding:15px}
+.modal.open{display:flex}
+.modal-box{width:100%;max-width:440px;max-height:90vh;overflow-y:auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}
+.modal-box h2{font-size:20px;margin-bottom:4px}
+.modal-box p.sub{font-size:12px;color:var(--grey);margin-bottom:12px}
+.phone-info{margin-top:6px}
+.phone-row{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
+.phone-row:last-child{border-bottom:none}
+.phone-row b{font-weight:700}
+.phone-row span{text-align:right;color:var(--gold);font-weight:700;overflow-wrap:anywhere;max-width:60%}
+.bar{height:10px;background:#2A2A35;border-radius:999px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--gold));border-radius:999px}
+.battery-big{text-align:center;background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}
+.battery-big .pct{font-size:38px;font-weight:900;color:var(--gold)}
 </style>
 </head>
 <body>
@@ -57,6 +73,15 @@ body{background:var(--bg);color:var(--white);min-height:100vh}
 <div class="row"><div class="label"><b>Ville</b></div><input id="inVille" style="width:180px"></div>
 <div class="row"><div class="label"><b>Bio</b></div><input id="inBio" style="width:180px"></div>
 <button class="btn-blue" style="margin-top:10px" onclick="sauvegarderProfil()">💾 Enregistrer les modifications</button>
+</div>
+
+<!-- ✅ NOUVEAU : SYSTEME TELEPHONE -->
+<div class="section">
+<h3>📱 Mon Téléphone</h3>
+<div class="row" onclick="ouvrirPhone()"><div class="label"><b>📱 Voir les infos de mon téléphone</b><p>Batterie, stockage, version, modèle, RAM...</p></div><span class="val" id="miniBatterie">-- %</span><span class="arrow">›</span></div>
+<div class="row" onclick="ouvrirPhone()"><div class="label"><b>🔋 Batterie</b><p id="miniCharge">Chargement...</p></div><span class="val" id="miniBatterie2">--</span></div>
+<div class="row" onclick="ouvrirPhone()"><div class="label"><b>💾 Stockage JASONBOOK</b><p>Ce que l'app utilise sur ton téléphone</p></div><span class="val" id="miniStockage">--</span></div>
+<button class="btn-blue" style="margin-top:10px" onclick="ouvrirPhone()">📱 Voir tout mon téléphone</button>
 </div>
 
 <div class="section"><h3>🔐 Sécurité du compte</h3>
@@ -126,6 +151,16 @@ body{background:var(--bg);color:var(--white);min-height:100vh}
 <button class="btn-grey" onclick="location.href='feed.html'" style="margin-top:4px">← Retour à l’accueil</button>
 </div>
 
+<!-- MODAL MON TELEPHONE -->
+<div class="modal" id="modalPhone"><div class="modal-box">
+<h2>📱 Mon Téléphone</h2>
+<p class="sub">Infos détectées automatiquement par JASONBOOK</p>
+<div class="battery-big"><div style="font-size:14px">🔋 Batterie</div><div class="pct" id="phoneBatterie">-- %</div><div id="phoneCharge" style="font-size:13px;color:#A1A1AA">--</div><div class="bar"><i id="barBatterie" style="width:0%"></i></div></div>
+<div class="phone-info" id="phoneInfos"></div>
+<button class="btn-blue" onclick="actualiserPhone()">🔄 Actualiser</button>
+<button class="btn-grey" style="margin-top:8px" onclick="fermerPhone()">Fermer</button>
+</div></div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, set, remove, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -156,6 +191,119 @@ window.toggleDark=()=>{
   const el=document.getElementById('swDark'); el.classList.toggle('on');
   localStorage.setItem('jasonbook_dark', el.classList.contains('on')?'1':'0');
 };
+// ========== 📱 SYSTEME TELEPHONE - JASONBOOK ==========
+function formatMo(octets){ if(!octets) return "0 Mo"; if(octets<1024*1024) return (octets/1024).toFixed(0)+" Ko"; if(octets<1024*1024*1024) return (octets/1024/1024).toFixed(1)+" Mo"; return (octets/1024/1024/1024).toFixed(2)+" Go"; }
+function detecterModele(){
+  const ua=navigator.userAgent||"";
+  // Android : Samsung, Tecno, Infinix, Itel, Xiaomi...
+  let m=ua.match(/\(([^;]+);[^)]*Android[^;]*;\s*([^;\)]+)/);
+  if(m && m[2]) return m[2].trim();
+  if(ua.includes("iPhone")) return "iPhone";
+  if(ua.includes("iPad")) return "iPad";
+  if(ua.includes("Windows")) return "Ordinateur Windows";
+  if(ua.includes("Macintosh")) return "Mac";
+  if(ua.includes("Linux")) return "Ordinateur Linux";
+  return "Téléphone Android";
+}
+function detecterVersion(){
+  const ua=navigator.userAgent||"";
+  let v=ua.match(/Android\s([0-9.]+)/); if(v) return "Android "+v[1];
+  let ios=ua.match(/OS\s([0-9_]+).*like Mac/); if(ios) return "iOS "+ios[1].replace(/_/g,".");
+  if(ua.includes("Windows NT 10")) return "Windows 10 / 11";
+  if(ua.includes("Windows NT")) return "Windows";
+  return "Version inconnue";
+}
+function detecterNavigateur(){
+  const ua=navigator.userAgent||"";
+  if(ua.includes("Edg/")) return "Microsoft Edge";
+  if(ua.includes("OPR/")||ua.includes("Opera")) return "Opera";
+  if(ua.includes("SamsungBrowser")) return "Samsung Internet";
+  if(ua.includes("Chrome")) return "Google Chrome";
+  if(ua.includes("Firefox")) return "Firefox";
+  if(ua.includes("Safari")) return "Safari";
+  return "Navigateur";
+}
+async function getInfosPhone(){
+  let batteriePct="--", enCharge="--", tempsCharge="--";
+  try{
+    if(navigator.getBattery){
+      const b=await navigator.getBattery();
+      batteriePct=Math.round(b.level*100)+"%";
+      enCharge=b.charging?"⚡ En charge":"🔋 Sur batterie";
+      if(b.charging && b.chargingTime!==Infinity) tempsCharge="Pleine dans "+Math.round(b.chargingTime/60)+" min";
+      if(!b.charging && b.dischargingTime!==Infinity) tempsCharge="Reste ~ "+Math.round(b.dischargingTime/60)+" min";
+    }
+  }catch(e){}
+  let stockageUtilise="--", stockageTotal="--", stockagePct=0;
+  try{
+    if(navigator.storage && navigator.storage.estimate){
+      const est=await navigator.storage.estimate();
+      stockageUtilise=formatMo(est.usage||0);
+      stockageTotal=formatMo(est.quota||0);
+      if(est.quota) stockagePct=Math.round((est.usage/est.quota)*100);
+    }
+  }catch(e){}
+  const conn=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+  return {
+    modele: detecterModele(),
+    version: detecterVersion(),
+    navigateur: detecterNavigateur(),
+    batterie: batteriePct,
+    enCharge: enCharge,
+    temps: tempsCharge,
+    stockageUtilise, stockageTotal, stockagePct,
+    ram: navigator.deviceMemory ? navigator.deviceMemory+" Go RAM" : "Non détecté",
+    coeurs: navigator.hardwareConcurrency ? navigator.hardwareConcurrency+" cœurs" : "Non détecté",
+    ecran: screen.width+" x "+screen.height+" px",
+    tailleEcran: (window.innerWidth+" x "+window.innerHeight+" (fenêtre)"),
+    langue: navigator.language||"fr",
+    fuseau: Intl.DateTimeFormat().resolvedOptions().timeZone||"Africa/Kinshasa",
+    reseau: conn ? (conn.effectiveType||"")+" "+(conn.type||"") : "Non détecté",
+    enLigne: navigator.onLine?"✅ En ligne":"❌ Hors ligne",
+    cookies: navigator.cookieEnabled?"✅ Activés":"❌ Désactivés",
+    plateforme: navigator.platform||"Android",
+    userAgent: navigator.userAgent||""
+  };
+}
+async function actualiserPhone(){
+  const infos=await getInfosPhone();
+  document.getElementById('phoneBatterie').textContent=infos.batterie;
+  document.getElementById('phoneCharge').textContent=infos.enCharge+" • "+infos.temps;
+  const pctNum=parseInt(infos.batterie)||0; document.getElementById('barBatterie').style.width=pctNum+"%";
+  document.getElementById('miniBatterie').textContent=infos.batterie;
+  document.getElementById('miniBatterie2').textContent=infos.batterie;
+  document.getElementById('miniCharge').textContent=infos.enCharge;
+  document.getElementById('miniStockage').textContent=infos.stockageUtilise+" / "+infos.stockageTotal;
+  const lignes=[
+    ["📱 Modèle / Nom du téléphone", infos.modele],
+    ["🤖 Version du système", infos.version],
+    ["🌐 Navigateur", infos.navigateur],
+    ["🔋 Batterie", infos.batterie],
+    ["⚡ État de charge", infos.enCharge],
+    ["⏳ Autonomie", infos.temps],
+    ["💾 Stockage utilisé (JASONBOOK)", infos.stockageUtilise],
+    ["💽 Stockage total autorisé", infos.stockageTotal],
+    ["📊 Stockage utilisé", infos.stockagePct+"%"],
+    ["🧠 Mémoire RAM", infos.ram],
+    ["⚙️ Processeur", infos.coeurs],
+    ["📐 Écran", infos.ecran],
+    ["🖥️ Fenêtre", infos.tailleEcran],
+    ["🌍 Langue", infos.langue],
+    ["🕐 Fuseau horaire", infos.fuseau],
+    ["📶 Réseau", infos.reseau],
+    ["📡 Connexion", infos.enLigne],
+    ["🍪 Cookies", infos.cookies],
+    ["💻 Plateforme", infos.plateforme],
+  ];
+  document.getElementById('phoneInfos').innerHTML=lignes.map(([k,v])=>`<div class="phone-row"><b>${k}</b><span>${v}</span></div>`).join("")+
+  `<div style="margin-top:12px;background:#1F1F2E;border-radius:12px;padding:10px"><div class="bar"><i style="width:${infos.stockagePct}%"></i></div><p style="font-size:11px;color:#A1A1AA;margin-top:6px">Stockage JASONBOOK : ${infos.stockageUtilise} / ${infos.stockageTotal}</p></div>`;
+}
+window.actualiserPhone=actualiserPhone;
+window.ouvrirPhone=async()=>{ document.getElementById('modalPhone').classList.add('open'); await actualiserPhone(); };
+window.fermerPhone=()=>{ document.getElementById('modalPhone').classList.remove('open'); };
+document.getElementById('modalPhone').addEventListener('click',e=>{ if(e.target.id==='modalPhone') fermerPhone(); });
+actualiserPhone();
+// ========== FIN SYSTEME TELEPHONE ==========
 window.sauvegarderProfil=async()=>{
   const nom=document.getElementById('inNom').value.trim();
   if(!nom){ alert("Nom obligatoire"); return; }
