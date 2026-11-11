@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>JASONBOOK - Notifications</title>
+<meta name="theme-color" content="#0A0A0F">
+<title>JASONBOOK ✨ - Notifications</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
 body{background:#0F0F14;color:#fff;min-height:100vh}
-:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35}
+:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35;--rouge:#FF2D55}
 header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid var(--or)}
 .top-bar{display:flex;align-items:center;gap:10px;padding:10px 12px 6px}
 .logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:22px;cursor:pointer;flex:1;white-space:nowrap}
 .logo span{width:36px;height:36px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
 .logo i{color:var(--or);font-style:normal}
-.icon-top{width:40px;height:40px;background:#2A2A35;border:none;border-radius:50%;cursor:pointer;font-size:19px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
-.icon-top.menu{background:linear-gradient(135deg,var(--violet),var(--violet2))}
+.logo small{display:block;font-size:8px;color:var(--gris);letter-spacing:1.2px}
 .nav-top{display:flex;justify-content:space-between;padding:2px 6px 6px}
 .nav-top a{flex:1;text-decoration:none;color:#A1A1AA;display:flex;align-items:center;justify-content:center;padding:8px 2px;position:relative;font-size:24px;border-bottom:3px solid transparent}
 .nav-top a.active{color:var(--or);border-bottom:3px solid var(--or)}
@@ -31,26 +31,32 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 .list{display:flex;flex-direction:column;gap:10px}
 .notif{display:flex;gap:12px;background:var(--carte);border:1px solid var(--ligne);border-radius:16px;padding:12px;align-items:flex-start}
 .notif.nonlue{border-color:var(--violet);background:#221A35}
-.notif .avatar{width:48px;height:48px;min-width:48px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;overflow:hidden;cursor:pointer;flex-shrink:0}
+.notif.live{border:2px solid var(--rouge);background:linear-gradient(135deg,#2A0A15,#1C1C24)}
+.notif.anniv{border:2px solid var(--or);background:linear-gradient(135deg,#2A220A,#1C1C24)}
+.notif .avatar{width:48px;height:48px;min-width:48px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;overflow:hidden;cursor:pointer;flex-shrink:0;position:relative}
 .notif .avatar img{width:100%;height:100%;object-fit:cover}
+.notif .avatar .live-dot{position:absolute;bottom:0;right:0;background:var(--rouge);color:#fff;font-size:8px;font-weight:900;padding:2px 5px;border-radius:999px;border:2px solid #111}
 .notif .info{flex:1;min-width:0}
 .notif .info b{font-size:14.5px;display:block;cursor:pointer}
 .notif .info p{font-size:13.5px;color:#EDEDEF;line-height:1.4;margin:2px 0}
 .notif .info small{font-size:11px;color:var(--gris)}
+.notif .info .preview{margin-top:6px;background:#111;border:1px solid var(--ligne);border-radius:10px;padding:8px 10px;font-size:12.5px;color:#D1D1D1}
 .btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.btns button{border:none;padding:7px 12px;border-radius:999px;font-weight:700;cursor:pointer;font-size:12px;white-space:nowrap}
+.btns button{border:none;padding:8px 12px;border-radius:999px;font-weight:700;cursor:pointer;font-size:12px;white-space:nowrap}
 .btn-accepter{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}
 .btn-refuser{background:#2A2A35;color:#fff}
 .btn-profil{background:#2A2A35;color:#fff;border:1px solid var(--ligne)}
 .btn-msg{background:linear-gradient(135deg,var(--or),#FF9800);color:#111}
 .btn-voir{background:#2A2A35;color:#fff}
+.btn-live{background:var(--rouge);color:#fff;font-weight:900;animation:pulse 1.2s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+.btn-like{background:linear-gradient(135deg,#FF4081,#FF6B9D);color:#fff}
 .empty{text-align:center;color:var(--gris);padding:40px 10px;background:var(--carte);border-radius:16px}
 </style>
-<link rel="stylesheet" href="assets/brand.css">
 </head>
 <body>
 <header>
-  <div class="top-bar"><div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div><button class="icon-top" onclick="location.href='recherche.html'">🔍</button><button class="icon-top menu" onclick="location.href='feed.html'">☰</button></div>
+  <div class="top-bar"><div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i><small style="display:block;font-size:8px">MADE IN KINSHASA</small></div></div>
   <nav class="nav-top">
     <a href="feed.html">🏠<span class="badge or" id="badgeFeed"></span></a>
     <a href="amis.html">👥<span class="badge" id="badgeAmis"></span></a>
@@ -65,8 +71,12 @@ header{background:#111;position:sticky;top:0;z-index:30;border-bottom:2px solid 
 <div class="tabs">
 <button id="tab-toutes" class="active" onclick="showTab('toutes')">Toutes</button>
 <button id="tab-nonlues" onclick="showTab('nonlues')">Non lues</button>
+<button id="tab-likes" onclick="showTab('likes')">❤️ Likes</button>
+<button id="tab-commentaires" onclick="showTab('commentaires')">💬 Commentaires</button>
+<button id="tab-lives" onclick="showTab('lives')">🔴 Lives</button>
 <button id="tab-demandes" onclick="showTab('demandes')">Demandes d'ami</button>
 <button id="tab-messages" onclick="showTab('messages')">Messages</button>
+<button id="tab-anniv" onclick="showTab('anniv')">🎂 Anniversaires</button>
 </div>
 <div class="list" id="notifList"></div>
 <div class="empty" id="emptyNotif" style="display:none"><div style="font-size:40px">🔔</div><p>Aucune notification</p></div>
@@ -79,11 +89,11 @@ const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", auth
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
 const monNom = localStorage.getItem('jasonbook_nom')||"";
-let toutesNotifs=[], tabActuel='toutes', usersCache={};
+let toutesNotifs=[], tabActuel='toutes', usersCache={}, livesActifs={};
 function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; e.innerText=''; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
 window.showTab=(t)=>{
   tabActuel=t;
-  ['toutes','nonlues','demandes','messages'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active', x===t));
+  ['toutes','nonlues','likes','commentaires','lives','demandes','messages','anniv'].forEach(x=>{ const el=document.getElementById('tab-'+x); if(el) el.classList.toggle('active', x===t); });
   rendre();
 };
 function avatarPour(n){
@@ -92,18 +102,56 @@ function avatarPour(n){
   const lettre = (n.deNom||"?").charAt(0).toUpperCase();
   return lettre;
 }
+function iconeType(type){
+  if(type==='like') return "❤️";
+  if(type==='commentaire') return "💬";
+  if(type==='live') return "🔴";
+  if(type==='anniversaire') return "🎂";
+  if(type==='demande') return "👥";
+  if(type==='message') return "💬";
+  if(type==='partage') return "↗️";
+  if(type==='mention') return "@";
+  if(type==='ami') return "✅";
+  if(type==='suivi') return "👀";
+  if(type==='video') return "🎥";
+  if(type==='story') return "📸";
+  if(type==='boost') return "🚀";
+  return "🔔";
+}
+function texteParDefaut(n){
+  // Si l'ancien code n'a pas mis de texte, on le recrée avec le type
+  if(n.texte) return n.texte;
+  if(n.type==='like') return "a aimé ta publication ❤️";
+  if(n.type==='commentaire') return "a commenté ta publication 💬";
+  if(n.type==='live') return "est en LIVE maintenant ! 🔴 Rejoins son live";
+  if(n.type==='anniversaire') return "t'a souhaité joyeux anniversaire ! 🎂";
+  if(n.type==='partage') return "a partagé ta publication ↗️";
+  if(n.type==='mention') return "t'a mentionné dans une publication @";
+  if(n.type==='suivi') return "a commencé à te suivre 👀";
+  return n.texte||"Nouvelle notification";
+}
 function rendre(){
   let list = [...toutesNotifs].sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
   if(tabActuel==='nonlues') list = list.filter(n=>!n.lu);
+  if(tabActuel==='likes') list = list.filter(n=>n.type==='like');
+  if(tabActuel==='commentaires') list = list.filter(n=>n.type==='commentaire');
+  if(tabActuel==='lives') list = list.filter(n=>n.type==='live');
   if(tabActuel==='demandes') list = list.filter(n=>n.type==='demande');
   if(tabActuel==='messages') list = list.filter(n=>n.type==='message');
+  if(tabActuel==='anniv') list = list.filter(n=>n.type==='anniversaire');
   const box=document.getElementById('notifList'); box.innerHTML="";
   document.getElementById('emptyNotif').style.display = list.length ? 'none' : 'block';
   list.forEach(n=>{
     const div=document.createElement('div');
-    div.className='notif '+(n.lu?'':'nonlue');
+    let classe='notif '+(n.lu?'':'nonlue');
+    if(n.type==='live') classe+=' live';
+    if(n.type==='anniversaire') classe+=' anniv';
+    div.className=classe;
+    const texte=texteParDefaut(n);
+    const icone=iconeType(n.type);
     let btns="";
-    // ✅ DEMANDE D'AMI : on utilise deUid, JAMAIS le nom
+    let preview="";
+    if(n.commentaireTexte || n.message) preview=`<div class="preview">💬 "${n.commentaireTexte||n.message}"</div>`;
     if(n.type==='demande' && n.deUid){
       btns=`<div class="btns">
         <button class="btn-accepter" onclick="event.stopPropagation();accepterDemande('${n.deUid}','${n.id}')">✅ Accepter</button>
@@ -111,18 +159,36 @@ function rendre(){
         <button class="btn-profil" onclick="event.stopPropagation();voirProfil('${n.deUid}')">👤 Voir le profil</button>
         <button class="btn-msg" onclick="event.stopPropagation();ecrireMessage('${n.deUid}')">💬 Message</button>
       </div>`;
+    } else if(n.type==='live' && n.deUid){
+      // ✅ LIVE : BOUTON REJOINDRE
+      const liveId=n.liveId||n.deUid;
+      btns=`<div class="btns">
+        <button class="btn-live" onclick="event.stopPropagation();rejoindreLive('${liveId}','${n.id}')">🔴 Rejoindre son LIVE</button>
+        <button class="btn-profil" onclick="event.stopPropagation();voirProfil('${n.deUid}')">👤 Voir le profil</button>
+      </div>`;
     } else if(n.type==='message' && n.deUid){
       btns=`<div class="btns"><button class="btn-msg" onclick="event.stopPropagation();ecrireMessage('${n.deUid}')">💬 Répondre</button><button class="btn-profil" onclick="event.stopPropagation();voirProfil('${n.deUid}')">👤 Voir le profil</button></div>`;
+    } else if(n.type==='like' && n.deUid){
+      // ✅ LIKE : VOIR LE POST + LIKER EN RETOUR
+      btns=`<div class="btns"><button class="btn-like" onclick="event.stopPropagation();voirPost('${n.postId||''}')">❤️ Voir la publication</button><button class="btn-profil" onclick="event.stopPropagation();voirProfil('${n.deUid}')">👤 Voir le profil</button></div>`;
+    } else if(n.type==='commentaire' && n.deUid){
+      // ✅ COMMENTAIRE : VOIR + REPONDRE
+      btns=`<div class="btns"><button class="btn-voir" onclick="event.stopPropagation();voirPost('${n.postId||''}')">💬 Voir le commentaire</button><button class="btn-msg" onclick="event.stopPropagation();ecrireMessage('${n.deUid}')">💬 Répondre en privé</button></div>`;
+    } else if(n.type==='anniversaire' && n.deUid){
+      btns=`<div class="btns"><button class="btn-like" onclick="event.stopPropagation();voirPost('${n.postId||''}')">🎂 Voir son souhait</button><button class="btn-msg" onclick="event.stopPropagation();ecrireMessage('${n.deUid}')">💬 Merci !</button></div>`;
+    } else if(n.type==='partage' && n.deUid){
+      btns=`<div class="btns"><button class="btn-voir" onclick="event.stopPropagation();voirPost('${n.postId||''}')">↗️ Voir le partage</button><button class="btn-profil" onclick="event.stopPropagation();voirProfil('${n.deUid}')">👤 Voir le profil</button></div>`;
     } else if(n.deUid){
       btns=`<div class="btns"><button class="btn-profil" onclick="event.stopPropagation();voirProfil('${n.deUid}')">👤 Voir le profil</button></div>`;
     }
-    div.innerHTML=`<div class="avatar" onclick="voirProfil('${n.deUid||''}')">${avatarPour(n)}</div><div class="info"><b onclick="voirProfil('${n.deUid||''}')">${n.deNom||"JASONBOOK"}</b><p>${n.texte||""}</p><small>${n.date||""}</small>${btns}</div>`;
-    div.onclick=()=>{ if(n.deUid) voirProfil(n.deUid); };
+    div.innerHTML=`<div class="avatar" onclick="voirProfil('${n.deUid||''}')">${avatarPour(n)}${n.type==='live'?`<span class="live-dot">LIVE</span>`:""}</div><div class="info"><b onclick="voirProfil('${n.deUid||''}')">${icone} ${n.deNom||"JASONBOOK"}</b><p>${texte}</p>${preview}<small>${n.date||""}</small>${btns}</div>`;
+    div.onclick=()=>{ marquerLu(n.id); if(n.type==='live'){ rejoindreLive(n.liveId||n.deUid, n.id); } else if(n.type==='like'||n.type==='commentaire'||n.type==='partage'||n.type==='anniversaire'){ voirPost(n.postId||''); } else if(n.deUid) voirProfil(n.deUid); };
     box.appendChild(div);
   });
   const nonLus = toutesNotifs.filter(n=>!n.lu).length;
   setBadge('badgeNotif', nonLus);
 }
+async function marquerLu(id){ if(!id) return; try{ await update(ref(db,'jasonbook/notifications/'+uid+'/'+id),{lu:true}); }catch(e){} }
 window.voirProfil=(targetUid)=>{
   if(!targetUid || targetUid==='undefined' || targetUid==='null'){ alert("Profil introuvable, réessaie."); return; }
   location.href='profil-ami.html?uid='+targetUid;
@@ -131,23 +197,37 @@ window.ecrireMessage=(targetUid)=>{
   if(!targetUid){ alert("Impossible d'écrire, profil introuvable."); return; }
   location.href='messages.html?uid='+targetUid;
 };
-// ✅ ACCEPTER - AVEC LE VRAI deUid
+window.voirPost=(postId)=>{
+  if(postId && postId!=='undefined' && postId!=='') location.href='feed.html?post='+postId;
+  else location.href='feed.html';
+};
+window.rejoindreLive=async (liveId, notifId)=>{
+  if(notifId) await marquerLu(notifId);
+  // Si le live est encore en cours, on va dedans, sinon on dit que c'est fini
+  if(liveId && livesActifs[liveId]){
+    location.href='live.html?id='+liveId;
+  } else if(liveId){
+    // On vérifie dans Firebase si le live existe encore
+    try{
+      const snap=await get(ref(db,'jasonbook/lives/'+liveId));
+      if(snap.exists()) location.href='live.html?id='+liveId;
+      else { if(confirm("Ce live est terminé. Voir le profil de la personne ?")) location.href='feed.html'; }
+    }catch(e){ location.href='live.html?id='+liveId; }
+  } else {
+    location.href='videos.html';
+  }
+};
 window.accepterDemande=async (fromUid, notifId)=>{
   if(!fromUid || fromUid==='undefined'){ alert("Erreur : on ne trouve pas qui a envoyé. Va dans Amis > Demandes reçues."); return; }
   try{
-    // 1. On devient amis dans les 2 sens
     await set(ref(db,'jasonbook/amis/'+uid+'/'+fromUid), true);
     await set(ref(db,'jasonbook/amis/'+fromUid+'/'+uid), true);
-    // 2. On supprime la demande - dans les 2 sens, même si la clé est différente
     await remove(ref(db,'jasonbook/demandes/'+uid+'/'+fromUid));
     await remove(ref(db,'jasonbook/demandesEnvoyees/'+fromUid+'/'+uid));
-    // 3. On marque la notif comme lue + on dit que c'est accepté
     if(notifId) await update(ref(db,'jasonbook/notifications/'+uid+'/'+notifId),{lu:true});
-    // 4. On prévient l'autre
     const nRef=push(ref(db,'jasonbook/notifications/'+fromUid));
     await set(nRef,{ type:"ami", texte:monNom+" a accepté ta demande d'ami", deUid:uid, deNom:monNom, date:new Date().toLocaleString(), timestamp:Date.now(), lu:false });
     alert("Vous êtes maintenant amis avec "+(usersCache[fromUid]?.nomComplet||"cette personne")+" ✅");
-    // On va sur son profil pour lui écrire
     location.href='profil-ami.html?uid='+fromUid;
   }catch(e){ alert("Erreur : "+e.message); }
 };
@@ -168,6 +248,9 @@ onValue(ref(db,'jasonbook/notifications/'+uid), s=>{
   const d=s.val()||{};
   toutesNotifs = Object.entries(d).map(([id,n])=>({id, timestamp: n.timestamp||0, ...n}));
   rendre();
+});
+onValue(ref(db,'jasonbook/lives'), s=>{
+  livesActifs=s.val()||{};
 });
 onValue(ref(db,'jasonbook/demandes/'+uid), s=>{ const d=s.val(); setBadge('badgeAmis', d?Object.keys(d).length:0); });
 onValue(ref(db,'jasonbook/messages'), s=>{
