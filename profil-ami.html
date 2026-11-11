@@ -2,81 +2,69 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0A0A0F">
-<title>JASONBOOK ✨ - Profil</title>
+<title>JASONBOOK ✨ - Profil Ami</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-html{overflow-x:clip;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch}
-body{overflow-x:clip;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch}
-:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--nuit:#0F0F14;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35}
-body{background:var(--nuit);color:#fff;min-height:100vh;width:100%;max-width:100vw}
-header{background:#111;display:flex;align-items:center;justify-content:flex-start;padding:12px 14px;border-bottom:2px solid var(--or);width:100%;position:sticky;top:0;z-index:20}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:22px;cursor:pointer;white-space:nowrap}
-.logo span{width:36px;height:36px;min-width:36px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+body{background:#0F0F14;color:#fff;min-height:100vh;width:100%;overflow-x:hidden}
+:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35}
+header{background:#111;display:flex;align-items:center;padding:10px 12px;border-bottom:2px solid var(--or);position:sticky;top:0;z-index:20}
+.logo{display:flex;align-items:center;gap:6px;font-weight:900;font-size:19px;cursor:pointer;white-space:nowrap}
+.logo span{width:32px;height:32px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px}
 .logo i{color:var(--or);font-style:normal}
 .logo small{display:block;font-size:8px;color:var(--gris);letter-spacing:1.2px}
-.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.cover-wrap{background:var(--carte);max-width:1000px;width:calc(100% - 24px);margin:12px auto 0;padding-bottom:18px;border-radius:16px;border:1px solid var(--ligne);overflow:visible;text-align:center;position:relative}
-.cover{height:200px;background:linear-gradient(135deg,var(--violet),var(--violet2),var(--or));overflow:hidden;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;cursor:pointer;position:relative;padding:0 12px;text-align:center;border-radius:16px 16px 0 0}
+/* ✅ PROFIL PETIT ET VISIBLE */
+.cover-wrap{background:var(--carte);max-width:520px;width:calc(100% - 16px);margin:10px auto 0;padding-bottom:12px;border-radius:16px;border:1px solid var(--ligne);overflow:hidden;text-align:center}
+.cover{height:120px;background:linear-gradient(135deg,var(--violet),var(--violet2),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;cursor:pointer;position:relative}
 .cover img{width:100%;height:100%;object-fit:cover}
-.cover .hint{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.6);padding:5px 10px;border-radius:999px;font-size:11px}
-.profile-row{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 20px;margin-top:-60px;width:100%;position:relative;z-index:5}
-.big-avatar{width:130px;height:130px;min-width:130px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;border:5px solid #111;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:900;overflow:hidden;flex-shrink:0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.4);position:relative;z-index:5}
+.cover .hint{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.6);padding:4px 8px;border-radius:999px;font-size:10px}
+.profile-row{padding:0 12px;margin-top:-42px;position:relative;z-index:5}
+.big-avatar{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));border:4px solid #111;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;overflow:hidden;margin:0 auto;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.4)}
 .big-avatar img{width:100%;height:100%;object-fit:cover}
-.profile-info{width:100%;word-break:break-word;margin-top:10px;text-align:center}
-.profile-info h1{font-size:28px;color:#fff;word-break:break-word;line-height:1.2;text-align:center}
-.profile-info p{color:var(--gris);font-size:14px;margin-top:6px;word-break:break-word;line-height:1.4;text-align:center}
-/* ✅ STATS - AMIS / J'AIME / PUBLICATIONS */
-.stats{display:flex;gap:0;background:#2A2A35;border:1px solid var(--ligne);border-radius:16px;overflow:hidden;margin:14px auto 0;max-width:420px;width:100%}
-.stats div{flex:1;text-align:center;padding:12px 4px}
+.profile-info h1{font-size:20px;margin-top:6px;line-height:1.2}
+.profile-info p{color:var(--gris);font-size:12px;margin-top:3px;line-height:1.4}
+.stats{display:flex;background:#2A2A35;border:1px solid var(--ligne);border-radius:12px;overflow:hidden;margin:10px auto 0;max-width:360px;width:100%}
+.stats div{flex:1;text-align:center;padding:8px 2px}
 .stats div+div{border-left:1px solid var(--ligne)}
-.stats b{display:block;font-size:19px;color:var(--or);line-height:1.2}
-.stats span{font-size:11px;color:var(--gris)}
-.profile-btns{display:flex;gap:10px;justify-content:center;align-items:center;width:100%;margin-top:14px;flex-wrap:wrap}
-.profile-btns button{padding:12px 22px;border:none;border-radius:999px;font-weight:800;cursor:pointer;font-size:14px;white-space:nowrap;min-width:130px}
+.stats b{display:block;font-size:16px;color:var(--or)}
+.stats span{font-size:10px;color:var(--gris)}
+.profile-btns{display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.profile-btns button{padding:9px 14px;border:none;border-radius:999px;font-weight:800;cursor:pointer;font-size:12px;white-space:nowrap}
 .btn-blue{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}.btn-grey{background:#2A2A35;color:#fff}.btn-green{background:#22C55E;color:#fff}
-.layout{display:flex;gap:15px;max-width:1000px;width:100%;margin:14px auto;padding:0 12px 30px;align-items:flex-start}
-.left{width:340px;flex-shrink:0}
-.right{flex:1;min-width:0}
-.card{background:var(--carte);border-radius:16px;padding:14px;margin-bottom:12px;border:1px solid var(--ligne);width:100%}
-.card h3{margin-bottom:10px;color:#fff}
-.info-row{display:flex;gap:10px;padding:8px 0;font-size:14px;border-bottom:1px solid var(--ligne);color:#EDEDEF;word-break:break-word}
-.post-head{display:flex;gap:10px;align-items:center}
-.post-text{margin:10px 0;font-size:15px;white-space:pre-wrap;line-height:1.5;color:#fff;word-break:break-word}
-.post img.main{width:100%;border-radius:10px;max-height:500px;object-fit:cover;cursor:pointer}
-.actions{display:flex;justify-content:space-around;border-top:1px solid var(--ligne);padding-top:8px;margin-top:8px}
-.actions button{border:none;background:none;font-weight:700;color:var(--gris);cursor:pointer;padding:7px;font-size:13px;flex:1}
+/* ✅ PARTAGER / TÉLÉCHARGER / COPIER LE LIEN */
+.share-box{display:flex;gap:6px;margin:10px 12px 0}
+.share-box button{flex:1;border:1px solid var(--ligne);background:#2A2A35;color:#fff;border-radius:10px;padding:9px 4px;font-size:11px;font-weight:800;cursor:pointer}
+.share-box button:active{background:var(--violet)}
+.layout{max-width:520px;width:100%;margin:10px auto;padding:0 8px 30px}
+.card{background:var(--carte);border-radius:14px;padding:12px;margin-bottom:10px;border:1px solid var(--ligne)}
+.card h3{margin-bottom:8px;font-size:14px}
+.info-row{display:flex;gap:8px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--ligne);word-break:break-word}
+.post-head{display:flex;gap:8px;align-items:center}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.post-text{margin:8px 0;font-size:14px;white-space:pre-wrap;line-height:1.5;word-break:break-word}
+.post img.main{width:100%;border-radius:10px;max-height:380px;object-fit:cover;cursor:pointer}
+.actions{display:flex;justify-content:space-around;border-top:1px solid var(--ligne);padding-top:6px;margin-top:6px}
+.actions button{border:none;background:none;font-weight:700;color:var(--gris);cursor:pointer;padding:6px;font-size:12px;flex:1}
 .actions button.actif{color:var(--or)}
-.comment-box{display:none;margin-top:10px;gap:8px}
+.comment-box{display:none;margin-top:8px;gap:6px}
 .comment-box.show{display:flex}
-.comment-box input{flex:1;min-width:0;background:#2A2A35;border:none;padding:10px 12px;border-radius:999px;color:#fff;outline:none;font-size:13px}
-.comment-box button{background:var(--violet);border:none;color:#fff;padding:10px 14px;border-radius:999px;font-weight:800;cursor:pointer}
-.comment-item{display:flex;gap:8px;margin-top:8px;font-size:13px;align-items:flex-start}
-.comment-item b{color:#fff}
+.comment-box input{flex:1;min-width:0;background:#2A2A35;border:none;padding:9px 10px;border-radius:999px;color:#fff;outline:none;font-size:12px}
+.comment-box button{background:var(--violet);border:none;color:#fff;padding:9px 12px;border-radius:999px;font-weight:800;cursor:pointer}
 .viewer{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;display:none;flex-direction:column}
 .viewer.open{display:flex}
 .viewer-top{display:flex;justify-content:space-between;align-items:center;padding:12px}
-.viewer-top b{color:#fff}
-.viewer-top button{background:#2A2A35;border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer}
-.viewer-img{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:0 12px}
-.viewer-img img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px}
-.viewer-actions{display:flex;justify-content:space-around;padding:14px;border-top:1px solid #333;background:#111}
-.viewer-actions button{border:none;background:none;color:#fff;font-weight:800;font-size:14px;cursor:pointer;padding:10px}
+.viewer-top button{background:#2A2A35;border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer}
+.viewer-img{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:0 10px}
+.viewer-img img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px}
+.viewer-actions{display:flex;justify-content:space-around;padding:12px;border-top:1px solid #333;background:#111}
+.viewer-actions button{border:none;background:none;color:#fff;font-weight:800;font-size:13px;cursor:pointer;padding:8px}
 .viewer-actions button.actif{color:var(--or)}
-.viewer-comments{max-height:180px;overflow-y:auto;padding:0 14px 10px;background:#111}
-.viewer-comment-box{display:flex;gap:8px;padding:10px;background:#111;border-top:1px solid #333}
-.viewer-comment-box input{flex:1;min-width:0;background:#2A2A35;border:none;padding:12px;border-radius:999px;color:#fff;outline:none}
-.viewer-comment-box button{background:var(--violet);border:none;color:#fff;padding:12px 16px;border-radius:999px;font-weight:800}
-@media(max-width:800px){
-  .left{display:none}
-  .cover{height:170px}
-  .big-avatar{width:120px;height:120px;min-width:120px;font-size:50px}
-  .profile-row{padding:0 12px;margin-top:-55px}
-  .layout{flex-direction:column;padding:0 12px 30px}
-  .right{width:100%}
-}
+.viewer-comments{max-height:160px;overflow-y:auto;padding:0 12px 8px;background:#111}
+.viewer-comment-box{display:flex;gap:6px;padding:10px;background:#111;border-top:1px solid #333}
+.viewer-comment-box input{flex:1;min-width:0;background:#2A2A35;border:none;padding:10px;border-radius:999px;color:#fff;outline:none}
+.viewer-comment-box button{background:var(--violet);border:none;color:#fff;padding:10px 14px;border-radius:999px;font-weight:800}
 </style>
 </head>
 <body>
@@ -95,31 +83,30 @@ header{background:#111;display:flex;align-items:center;justify-content:flex-star
 <p id="metaAffiche"></p>
 <p id="amisCount"></p>
 </div>
-
-<!-- ✅ NOMBRE D'AMIS / J'AIME / PUBLICATIONS DE CETTE PERSONNE -->
 <div class="stats">
   <div><b id="nbAmis">0</b><span>👥 Amis</span></div>
   <div><b id="nbLikes">0</b><span>❤️ J'aime</span></div>
   <div><b id="nbPubs">0</b><span>📝 Publications</span></div>
 </div>
-
 <div class="profile-btns">
 <button class="btn-blue" id="btnAmi" onclick="actionAmi()">➕ Ajouter</button>
 <button class="btn-grey" id="btnMsg" onclick="allerMessage()">💬 Message</button>
+</div>
+<!-- ✅ TÉLÉCHARGER / COPIER LE LIEN -->
+<div class="share-box">
+<button onclick="copierLienProfil()">🔗 Copier le lien</button>
+<button onclick="telechargerPhotoProfil()">⬇️ Photo profil</button>
+<button onclick="telechargerCouverture()">🖼️ Couverture</button>
 </div>
 </div>
 </div>
 
 <div class="layout">
-<div class="left">
 <div class="card"><h3>Intro</h3><div id="introList"></div></div>
-<div class="card"><h3>Photos</h3><div id="photosGrid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px"></div><p id="noPhotos" style="color:#A1A1AA;font-size:13px">Aucune photo</p></div>
-</div>
-<div class="right">
-<div class="card"><p style="font-weight:700;font-size:15px">Publications de <span id="nomPost">cette personne</span></p></div>
+<div class="card"><h3>Photos</h3><div id="photosGrid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px"></div><p id="noPhotos" style="color:#A1A1AA;font-size:12px">Aucune photo</p></div>
+<div class="card"><p style="font-weight:700;font-size:14px">Publications de <span id="nomPost">cette personne</span></p></div>
 <div id="postsList"></div>
 <div class="card" id="noPosts" style="display:none"><p style="text-align:center;color:#A1A1AA">Aucune publication pour le moment</p></div>
-</div>
 </div>
 
 <div class="viewer" id="viewer">
@@ -129,6 +116,7 @@ header{background:#111;display:flex;align-items:center;justify-content:flex-star
     <button id="btnViewerLike" onclick="aimerPhotoViewer()">❤️ <span id="viewerLikeCount">0</span></button>
     <button onclick="document.getElementById('viewerInput').focus()">💬 <span id="viewerComCount">0</span></button>
     <button onclick="partagerPhotoViewer()">↗️ <span id="viewerPartageCount">0</span> Partager</button>
+    <button onclick="telechargerPhotoViewer()">⬇️ Télécharger</button>
   </div>
   <div class="viewer-comments" id="viewerComments"></div>
   <div class="viewer-comment-box"><input id="viewerInput" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter') commenterPhotoViewer()"><button onclick="commenterPhotoViewer()">➤</button></div>
@@ -146,12 +134,23 @@ const cibleUid = new URLSearchParams(location.search).get('uid');
 if(!cibleUid) location.href='feed.html';
 if(cibleUid===uid) location.href='profil.html';
 let profilCible=null, statut="inconnu", vraiUid=cibleUid, photoTypeActuel='profil', photoData={profil:{likes:{},comments:{},partages:0},cover:{likes:{},comments:{},partages:0}};
+
+// ✅ COPIER LE LIEN / TÉLÉCHARGER
+window.copierLienProfil=async ()=>{
+  const lien = location.origin + location.pathname + '?uid=' + encodeURIComponent(cibleUid) + '&nom=' + encodeURIComponent(document.getElementById('nomAffiche').innerText||"");
+  try{ await navigator.clipboard.writeText(lien); alert("Lien copié ✅\n"+lien); }catch(e){ prompt("Copie ce lien :", lien); }
+};
+function telechargerImage(url, nomFichier){
+  if(!url){ alert("Pas de photo à télécharger"); return; }
+  const a=document.createElement('a'); a.href=url; a.download=nomFichier; a.target="_blank"; document.body.appendChild(a); a.click(); a.remove();
+}
+window.telechargerPhotoProfil=()=>{ telechargerImage(profilCible?.photoProfil||"", "photo-profil-"+(profilCible?.nomComplet||"ami")+".jpg"); };
+window.telechargerCouverture=()=>{ telechargerImage(profilCible?.photoCouverture||"", "couverture-"+(profilCible?.nomComplet||"ami")+".jpg"); };
+window.telechargerPhotoViewer=()=>{ const img=document.getElementById('viewerImg').src; telechargerImage(img, "photo-jasonbook.jpg"); };
+
 async function envoyerNotif(destUid, type, texte, extra={}){
   if(!destUid || destUid===uid) return;
-  try{
-    const nRef=push(ref(db,'jasonbook/notifications/'+destUid));
-    await set(nRef,{type, texte, deUid:uid, deNom:monNom, dePhoto:maPhoto||"", date:new Date().toLocaleString(), timestamp:Date.now(), lu:false, ...extra});
-  }catch(e){}
+  try{ const nRef=push(ref(db,'jasonbook/notifications/'+destUid)); await set(nRef,{type, texte, deUid:uid, deNom:monNom, dePhoto:maPhoto||"", date:new Date().toLocaleString(), timestamp:Date.now(), lu:false, ...extra}); }catch(e){}
 }
 function majBouton(){
   const b=document.getElementById('btnAmi');
@@ -190,18 +189,23 @@ function afficherProfil(u){
   profilCible=u;
   const lettre=(u.prenom||u.nomComplet||"?").charAt(0).toUpperCase();
   document.getElementById('bigAvatar').innerHTML = u.photoProfil ? `<img src="${u.photoProfil}">` : lettre;
-  document.getElementById('nomAffiche').innerText=u.nomComplet||"";
-  document.getElementById('nomPost').innerText=u.nomComplet||"";
+  // ✅ CORRIGÉ : plus jamais "Utilisateur JASONBOOK" - on met le vrai nom ou "Ami"
+  const nomFinal = u.nomComplet || u.nom || "Ami";
+  document.getElementById('nomAffiche').innerText=nomFinal;
+  document.getElementById('nomPost').innerText=nomFinal;
   document.getElementById('bioAffiche').innerText=u.bio||"";
-  document.getElementById('metaAffiche').innerText=`${u.activite||""} • ${u.ville||""} • ${u.pays||""}`;
+  document.getElementById('metaAffiche').innerText=[u.activite,u.ville,u.pays].filter(Boolean).join(" • ");
   document.getElementById('introList').innerHTML=`
     <div class="info-row">💼 ${u.activite||"Non précisée"}</div>
     <div class="info-row">📍 ${u.ville||""} ${u.pays? "- "+u.pays:""}</div>
     <div class="info-row">📅 Membre depuis ${u.dateInscription||""}</div>`;
-  document.getElementById('coverDiv').innerHTML = u.photoCouverture ? `<img src="${u.photoCouverture}"><span class="hint">👆 Appuie pour voir</span>` : (u.nomComplet||"");
+  document.getElementById('coverDiv').innerHTML = u.photoCouverture ? `<img src="${u.photoCouverture}"><span class="hint">👆 Appuie pour voir</span>` : nomFinal;
   ecouterPhotoStats();
 }
 async function chargerProfil(){
+  // ✅ Affiche tout de suite le nom depuis l'URL ?nom=Jean Mvuanda pour ne pas voir "Chargement..."
+  const nomUrl=new URLSearchParams(location.search).get('nom');
+  if(nomUrl){ document.getElementById('nomAffiche').innerText=decodeURIComponent(nomUrl); document.getElementById('nomPost').innerText=decodeURIComponent(nomUrl); }
   let snap = await get(ref(db,'jasonbook/users/'+cibleUid));
   if(snap.val()){ vraiUid=cibleUid; afficherProfil({uid:cibleUid, ...snap.val()}); chargerPosts(); return; }
   const tous = await get(ref(db,'jasonbook/users'));
@@ -209,9 +213,11 @@ async function chargerProfil(){
   for(const [key,u] of Object.entries(d)){
     if(key===cibleUid || u.uid===cibleUid || u.id===cibleUid){ vraiUid=key; afficherProfil({uid:key, ...u}); chargerPosts(); return; }
   }
-  let nomTrouve="";
-  const dem = await get(ref(db,'jasonbook/demandes/'+uid+'/'+cibleUid));
-  if(dem.val() && dem.val().deNom) nomTrouve=dem.val().deNom;
+  let nomTrouve=nomUrl?decodeURIComponent(nomUrl):"";
+  if(!nomTrouve){
+    const dem = await get(ref(db,'jasonbook/demandes/'+uid+'/'+cibleUid));
+    if(dem.val() && dem.val().deNom) nomTrouve=dem.val().deNom;
+  }
   if(!nomTrouve){
     const notifs = await get(ref(db,'jasonbook/notifications/'+uid));
     if(notifs.val()){ for(const n of Object.values(notifs.val())){ if(n.deUid===cibleUid && n.deNom){ nomTrouve=n.deNom; break; } } }
@@ -223,14 +229,14 @@ async function chargerProfil(){
     }
   }
   vraiUid=cibleUid;
-  afficherProfil({uid:cibleUid, nomComplet: nomTrouve || "Utilisateur JASONBOOK", prenom: nomTrouve ? nomTrouve.split(' ')[0] : "?", photoProfil:"", bio:"Ce compte a été créé 2 fois. Son profil est sous un autre identifiant, mais tu peux lui écrire.", activite:"", ville:"", pays:"", dateInscription:""});
+  // ✅ FALLBACK CORRIGÉ : "Ami" et pas "Utilisateur JASONBOOK"
+  afficherProfil({uid:cibleUid, nomComplet: nomTrouve || "Ami", prenom: nomTrouve ? nomTrouve.split(' ')[0] : "?", photoProfil:"", bio:"Ce compte a été créé 2 fois. Son profil est sous un autre identifiant, mais tu peux lui écrire.", activite:"", ville:"", pays:"", dateInscription:""});
   chargerPosts();
 }
 chargerProfil();
 onValue(ref(db,'jasonbook/amis/'+uid), s=>{ const d=s.val(); if(d && (d[cibleUid] || d[vraiUid])) statut='ami'; else if(statut==='ami') statut='inconnu'; majBouton(); });
 onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_envoyee'; majBouton(); });
 onValue(ref(db,'jasonbook/demandes/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_recue'; majBouton(); });
-// ✅ NOMBRE D'AMIS DE CETTE PERSONNE
 onValue(ref(db,'jasonbook/amis/'+cibleUid), s=>{ const d=s.val(); const n=d?Object.keys(d).length:0; document.getElementById('nbAmis').innerText=n; if(n) document.getElementById('amisCount').innerText=n+" ami"+(n>1?"s":""); });
 function photoPath(type){ return 'jasonbook/photos/'+cibleUid+'_'+type; }
 function ecouterPhotoStats(){
@@ -262,8 +268,8 @@ function majViewer(){
   document.getElementById('btnViewerLike').classList.toggle('actif', !!(d.likes && d.likes[uid]));
   const box=document.getElementById('viewerComments'); box.innerHTML="";
   Object.values(d.comments||{}).forEach(c=>{
-    const div=document.createElement('div'); div.className='comment-item';
-    div.innerHTML=`<div class="avatar" style="width:28px;height:28px;font-size:12px">${(c.nom||"?").charAt(0)}</div><div><b>${c.nom||""}</b> <span style="color:#EDEDEF">${c.texte||""}</span><br><small style="color:#888">${c.date||""}</small></div>`;
+    const div=document.createElement('div'); div.style.cssText="display:flex;gap:8px;margin-top:8px;font-size:13px";
+    div.innerHTML=`<div class="avatar" style="width:28px;height:28px;font-size:12px">${(c.nom||"?").charAt(0)}</div><div><b>${c.nom||""}</b> <span>${c.texte||""}</span><br><small style="color:#888">${c.date||""}</small></div>`;
     box.appendChild(div);
   });
 }
@@ -271,10 +277,7 @@ window.aimerPhotoViewer=async ()=>{
   const p=photoPath(photoTypeActuel);
   const snap=await get(ref(db,p+'/likes/'+uid));
   if(snap.val()){ await remove(ref(db,p+'/likes/'+uid)); }
-  else {
-    await set(ref(db,p+'/likes/'+uid), {nom:monNom, date:new Date().toLocaleString()});
-    await envoyerNotif(vraiUid, "like", monNom+" a aimé ta photo de "+(photoTypeActuel==='profil'?"profil":"couverture")+" ❤️");
-  }
+  else { await set(ref(db,p+'/likes/'+uid), {nom:monNom, date:new Date().toLocaleString()}); await envoyerNotif(vraiUid, "like", monNom+" a aimé ta photo de "+(photoTypeActuel==='profil'?"profil":"couverture")+" ❤️"); }
 };
 window.commenterPhotoViewer=async ()=>{
   const inp=document.getElementById('viewerInput'); const txt=inp.value.trim(); if(!txt) return;
@@ -291,7 +294,7 @@ window.partagerPhotoViewer=async ()=>{
   const r=push(ref(db,'jasonbook/posts'));
   await set(r, {auteurUid:uid, nomAuteur:monNom, photoAuteur:maPhoto, texte: monNom+" a partagé la photo de "+(profilCible?.nomComplet||""), photoUrl:img, date:new Date().toLocaleString(), timestamp:Date.now(), likesCount:0, commentairesCount:0, partagesCount:0});
   await envoyerNotif(vraiUid, "partage", monNom+" a partagé ta photo ↗️", {postId:r.key});
-  alert("Partagé ✅ Ça s'affiche aussi dans son profil / feed");
+  alert("Partagé ✅");
   chargerPosts();
 };
 async function chargerPosts(){
@@ -300,7 +303,6 @@ async function chargerPosts(){
   const data=snap.val();
   if(!data){ document.getElementById('noPosts').style.display="block"; document.getElementById('nbPubs').innerText="0"; document.getElementById('nbLikes').innerText="0"; return; }
   const siens=Object.entries(data).filter(([id,p])=>p.auteurUid===cibleUid || p.auteurUid===vraiUid).reverse();
-  // ✅ NOMBRE DE PUBLICATIONS + TOTAL J'AIME DE CETTE PERSONNE
   document.getElementById('nbPubs').innerText=siens.length;
   const totalLikes=siens.reduce((s,[id,p])=>s+Number(p.likesCount||p.likes||0),0);
   document.getElementById('nbLikes').innerText=totalLikes;
@@ -311,7 +313,7 @@ async function chargerPosts(){
     const dejaLike = p.likes && p.likes[uid];
     div.innerHTML=`<div class="post-head"><div class="avatar">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div><b>${p.nomAuteur}</b><br><small style="color:#A1A1AA">${p.date||""}</small></div></div><div class="post-text">${p.texte||""}</div>${p.photoUrl?`<img class="main" src="${p.photoUrl}" onclick="ouvrirPostPhoto('${p.photoUrl}')">`:""}${p.videoUrl?`<video controls style="width:100%;border-radius:10px" src="${p.videoUrl}"></video>`:""}<div class="actions"><button class="${dejaLike?'actif':''}" onclick="aimerPost('${id}', this)">❤️ ${p.likesCount||0}</button><button onclick="toggleComPost(this)">💬 ${p.commentairesCount||0}</button><button onclick="partagerPost('${id}')">↗️ ${p.partagesCount||0}</button></div><div class="comment-box"><input placeholder="Écris un commentaire..."><button onclick="envoyerComPost('${id}', this)">➤</button></div><div class="comments-list"></div>`;
     box.appendChild(div);
-    if(p.photoUrl) grid.innerHTML+=`<img src="${p.photoUrl}" style="width:100%;height:80px;object-fit:cover;border-radius:8px" onclick="ouvrirPostPhoto('${p.photoUrl}')">`;
+    if(p.photoUrl) grid.innerHTML+=`<img src="${p.photoUrl}" style="width:100%;height:70px;object-fit:cover;border-radius:8px" onclick="ouvrirPostPhoto('${p.photoUrl}')">`;
   });
   if(!grid.innerHTML) document.getElementById('noPhotos').style.display="block"; else document.getElementById('noPhotos').style.display="none";
 }
