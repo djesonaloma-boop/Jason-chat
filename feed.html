@@ -2,146 +2,130 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>JASONBOOK ✨ - Fil</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>JASONBOOK ✨</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
-html{overflow-x:clip;overflow-y:auto;-webkit-overflow-scrolling:touch}
-body{width:100%;overflow-x:clip;background:#0A0A0F;min-height:100vh;color:#fff}
-:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--or2:#FF9800;--carte:#16161F;--gris:#A1A1AA;--ligne:#26262F}
-header{background:rgba(10,10,15,.95);position:sticky;top:0;z-index:30;border-bottom:1px solid var(--ligne)}
-.top-bar{display:flex;align-items:center;gap:10px;padding:10px 12px 6px}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:22px;cursor:pointer;flex:1;white-space:nowrap}
-.logo span{width:38px;height:38px;background:linear-gradient(135deg,var(--or),var(--or2));color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:0 4px 16px rgba(255,193,7,.4)}
+body{background:#0A0A0F;color:#fff;padding-bottom:92px;overflow-x:hidden}
+:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--or2:#FF9800;--carte:#16161F;--ligne:#26262F;--gris:#A1A1AA}
+/* ===== NOUVEAU HEADER - PAS FACEBOOK ===== */
+.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.92);backdrop-filter:blur(12px);padding:10px 14px;border-bottom:1px solid var(--ligne);display:flex;align-items:center;gap:10px}
+.logo{font-size:21px;font-weight:900;letter-spacing:-.5px;white-space:nowrap}
 .logo i{color:var(--or);font-style:normal}
-.logo small{display:block;font-size:8px;color:var(--gris);letter-spacing:1.2px}
-.icon-top{width:40px;height:40px;background:#1F1F2E;border:1px solid var(--ligne);border-radius:50%;cursor:pointer;font-size:19px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
-.icon-top.menu{background:linear-gradient(135deg,var(--violet),var(--violet2));border:none;box-shadow:0 0 10px rgba(124,58,237,.5);font-weight:900}
-.nav-top{display:flex;justify-content:space-between;padding:2px 6px 6px}
-.nav-top a{flex:1;text-decoration:none;color:#A1A1AA;display:flex;align-items:center;justify-content:center;padding:8px 2px;position:relative;font-size:22px;border-bottom:3px solid transparent}
-.nav-top a.active{color:var(--or);border-bottom:3px solid var(--or)}
-.nav-top a .badge{position:absolute;top:1px;right:50%;transform:translateX(18px);background:#E0245E;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:999px;min-width:20px;text-align:center;border:2px solid #0A0A0F;display:none}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:90;display:none}
-.overlay.open{display:block}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:290px;max-width:88vw;background:#17171F;z-index:100;transform:translateX(100%);transition:.28s;display:flex;flex-direction:column;overflow-y:auto;color:#fff}
-.drawer.open{transform:translateX(0)}
-.drawer-head{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--ligne)}
-.drawer-head .info{flex:1;min-width:0}
-.drawer-head b{font-size:16px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.drawer-head small{color:var(--gris)}
-.drawer-close{border:none;background:#2A2A35;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;color:#fff}
-.drawer a{display:flex;align-items:center;gap:12px;padding:13px 16px;text-decoration:none;color:#fff;font-weight:600;font-size:14.5px;border-bottom:1px solid #22222D}
-.drawer a span{font-size:19px;width:28px;text-align:center;flex-shrink:0}
-.drawer .titre{padding:14px 16px 4px;font-size:11px;font-weight:800;color:var(--or);text-transform:uppercase;letter-spacing:1px}
-.drawer .logout{margin:14px 16px;padding:12px;background:#3A0A0A;color:#FF6B6B;border:1px solid #5A1A1A;border-radius:12px;font-weight:800;cursor:pointer;font-size:14px}
-.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
+.logo small{display:block;font-size:8px;color:var(--gris);letter-spacing:1.5px}
+.search{flex:1;background:#1F1F2E;border:1px solid var(--ligne);border-radius:999px;padding:9px 14px;display:flex;gap:6px;align-items:center;color:var(--gris);font-size:13px;cursor:pointer}
+.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--or),var(--violet));display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;flex-shrink:0;cursor:pointer;border:2px solid #fff}
 .avatar img{width:100%;height:100%;object-fit:cover}
-.wrap{max-width:650px;margin:12px auto;padding:0 10px 40px;width:100%}
-.stories{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 8px;scrollbar-width:none;max-width:100%}
+/* ===== TABS POUR TOI / SUIVIS - COMME TIKTOK, PAS FACEBOOK ===== */
+.tabs{display:flex;gap:8px;padding:12px 14px 4px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex-shrink:0;border:1px solid var(--ligne);background:var(--carte);color:#fff;padding:8px 16px;border-radius:999px;font-weight:700;font-size:13px;cursor:pointer}
+.tabs button.active{background:linear-gradient(135deg,var(--or),var(--or2));color:#000;border-color:transparent}
+/* ===== STORIES CERCLES - STYLE INSTA / TIKTOK ===== */
+.stories{display:flex;gap:12px;overflow-x:auto;padding:10px 14px;scrollbar-width:none}
 .stories::-webkit-scrollbar{display:none}
-.s-card{width:110px;height:185px;flex:0 0 110px;border-radius:18px;overflow:hidden;position:relative;cursor:pointer;background:#222;border:2px solid var(--ligne)}
-.s-card img{width:100%;height:100%;object-fit:cover}
-.s-card .overlay2{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.8))}
-.s-card .name{position:absolute;bottom:8px;left:7px;right:7px;color:#fff;font-weight:700;font-size:12px}
-.s-card .av{position:absolute;top:7px;left:7px;width:34px;height:34px;border-radius:50%;border:3px solid var(--or);background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden}
-.s-card .av img{width:100%;height:100%;object-fit:cover}
-.s-card.add{background:var(--carte);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--violet)}
-.s-card.add .plus{width:42px;height:42px;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px}
-.s-card.add p{font-size:12px;font-weight:700;color:#fff}
-.create{background:var(--carte);border-radius:20px;padding:12px;margin:10px 0;border:1px solid var(--ligne);width:100%}
-.create .top{display:flex;gap:10px;align-items:center}
-.create input{flex:1;min-width:0;background:#2A2A35;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer;color:#fff}
-.create input::placeholder{color:#888}
-.create .btns{display:flex;gap:6px;margin-top:10px}
-.create .btns button{flex:1;border:none;background:#2A2A35;padding:10px;border-radius:12px;font-weight:700;cursor:pointer;font-size:13px;color:#fff}
-.post{background:var(--carte);border-radius:20px;padding:14px;margin-bottom:12px;border:1px solid var(--ligne);width:100%;overflow:hidden}
-.post .head{display:flex;gap:10px;align-items:center}
-.post .head .info{flex:1;min-width:0}.post .head small{color:var(--gris)}
-.post p{margin:10px 0;white-space:pre-wrap;font-size:15px;line-height:1.5;word-break:break-word;color:#EDEDEF}
-.post img.pimg{width:100%;border-radius:14px;max-height:380px;object-fit:cover}
-.post video{width:100%;border-radius:14px;max-height:420px;background:#000}
-.post .actions{display:flex;justify-content:space-around;border-top:1px solid var(--ligne);padding-top:8px;margin-top:8px}
-.post .actions button{border:none;background:none;font-weight:700;color:var(--gris);cursor:pointer;padding:8px;font-size:13.5px}
-.post .actions button.liked{color:var(--or)}
-.loading{text-align:center;color:var(--or);padding:20px;font-weight:700}
-.empty{text-align:center;color:var(--gris);padding:30px 10px;background:var(--carte);border-radius:20px;border:1px solid var(--ligne)}
-.comments{border-top:1px solid var(--ligne);margin-top:10px;padding-top:10px;display:none}
+.story{flex-shrink:0;width:72px;text-align:center;cursor:pointer}
+.story .c{width:64px;height:64px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--or),var(--violet),#FF2D55);margin:0 auto}
+.story .c div{width:100%;height:100%;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-size:26px;overflow:hidden;border:3px solid #0A0A0F}
+.story .c img{width:100%;height:100%;object-fit:cover}
+.story b{font-size:11px;display:block;margin-top:5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ===== POST - STYLE TIKTOK, PAS FACEBOOK ===== */
+.wrap{max-width:620px;margin:0 auto;padding:0 12px}
+.post{background:var(--carte);border-radius:24px;overflow:hidden;margin-bottom:16px;border:1px solid var(--ligne);position:relative}
+.post-head{display:flex;gap:10px;align-items:center;padding:12px}
+.post-head .info{flex:1;min-width:0}
+.post-head b{font-size:15px}
+.post-head small{color:var(--gris);font-size:12px}
+.post-head .follow{border:1px solid var(--or);background:none;color:var(--or);padding:6px 12px;border-radius:999px;font-weight:800;font-size:12px;cursor:pointer}
+.post p.txt{padding:0 14px 12px;font-size:15px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.post .media{position:relative;background:#000}
+.post .media img,.post .media video{width:100%;display:block;max-height:520px;object-fit:cover}
+/* ACTIONS A DROITE - COMME TIKTOK, PAS EN BAS COMME FACEBOOK */
+.side-actions{position:absolute;right:10px;bottom:14px;display:flex;flex-direction:column;gap:10px;align-items:center;z-index:5}
+.side-actions button{width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(6px);color:#fff;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.side-actions button.liked{background:linear-gradient(135deg,var(--or),var(--or2));color:#000;border-color:transparent}
+.side-actions small{font-size:11px;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,.8);margin-top:-6px}
+/* COMMENTAIRES */
+.comments{border-top:1px solid var(--ligne);padding:12px;display:none}
 .comments.open{display:block}
-.comment{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start}
+.comment{display:flex;gap:8px;margin-bottom:8px}
 .comment .avatar{width:32px;height:32px;font-size:13px}
 .comment .bubble{background:#2A2A35;padding:8px 12px;border-radius:14px;flex:1}
-.comment .bubble b{font-size:13px;color:#fff}
-.comment .bubble span{font-size:13px;color:#EDEDEF;display:block;margin-top:2px;word-break:break-word}
+.comment .bubble b{font-size:13px}
+.comment .bubble span{font-size:13px;display:block;margin-top:2px}
 .comment .bubble small{font-size:11px;color:var(--gris)}
 .comment-input{display:flex;gap:8px;margin-top:8px}
-.comment-input input{flex:1;background:#2A2A35;border:none;padding:10px 14px;border-radius:999px;color:#fff;outline:none;font-size:14px}
-.comment-input button{background:linear-gradient(135deg,var(--violet),var(--violet2));border:none;color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:16px;flex-shrink:0}
+.comment-input input{flex:1;background:#2A2A35;border:none;padding:10px 14px;border-radius:999px;color:#fff;outline:none}
+.comment-input button{background:linear-gradient(135deg,var(--violet),var(--violet2));border:none;color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer}
+/* BOUTON CREER */
+.create-card{background:linear-gradient(135deg,rgba(124,58,237,.22),rgba(255,193,7,.14));border:1px solid rgba(168,85,247,.35);border-radius:20px;padding:14px;margin:6px 0 14px;display:flex;gap:10px;align-items:center;cursor:pointer}
+.create-card .txt{flex:1}
+.create-card b{font-size:15px}
+.create-card small{color:var(--gris);font-size:12px}
+.create-card .plus{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+/* BOTTOM NAV JASONBOOK */
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);display:flex;justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--ligne)}
+.bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:10px;font-weight:700}
+.bottom button.active{color:var(--or)}
+.bottom button span{font-size:22px}
+.bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F;box-shadow:0 8px 20px rgba(124,58,237,.5)}
+.loading{text-align:center;color:var(--or);padding:20px;font-weight:700}
+.empty{text-align:center;color:var(--gris);padding:30px;background:var(--carte);border-radius:20px;border:1px solid var(--ligne)}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:200;padding:16px}
 .modal.open{display:flex}
-.modal-box{background:#17171F;width:100%;max-width:420px;border-radius:18px;padding:20px;border:1px solid var(--ligne);color:#fff}
-.modal-box h3{margin-bottom:10px}
-.modal-box textarea{width:100%;background:#2A2A35;border:1px solid var(--ligne);border-radius:12px;color:#fff;padding:12px;font-size:14px;outline:none;min-height:80px;resize:vertical}
-.modal-box button{width:100%;margin-top:10px;padding:12px;border:none;border-radius:12px;font-weight:800;cursor:pointer;font-size:14px}
-.btn-violet{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}
-.btn-grey{background:#2A2A35;color:#fff}
+.modal-box{background:#17171F;width:100%;max-width:420px;border-radius:18px;padding:20px;border:1px solid var(--ligne)}
+.modal-box textarea{width:100%;background:#2A2A35;border:1px solid var(--ligne);border-radius:12px;color:#fff;padding:12px;min-height:80px;outline:none}
+.modal-box button{width:100%;margin-top:10px;padding:12px;border:none;border-radius:12px;font-weight:800;cursor:pointer}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="top-bar">
-    <div class="logo" onclick="location.href='feed.html'"><span>J</span><div>JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div></div>
-    <button class="icon-top" onclick="location.href='recherche.html'">🔍</button>
-    <button class="icon-top menu" onclick="ouvrirMenu()">☰</button>
-  </div>
-  <nav class="nav-top">
-    <a href="feed.html" class="active">🏠<span class="badge" id="badgeFeed"></span></a>
-    <a href="amis.html">👥<span class="badge" id="badgeAmis"></span></a>
-    <a href="messages.html">💬<span class="badge" id="badgeMsg"></span></a>
-    <a href="videos.html">🎥<span class="badge" id="badgeVideos"></span></a>
-    <a href="notifications.html">🔔<span class="badge" id="badgeNotif"></span></a>
-  </nav>
-</header>
+<!-- NOUVEAU HEADER -->
+<div class="top">
+<div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
+<div class="search" onclick="location.href='recherche.html'">🔍 <span>Chercher...</span></div>
+<div class="avatar" id="myAvatarTop" onclick="location.href='profil.html'">?</div>
+</div>
 
-<div class="overlay" id="overlay" onclick="fermerMenu()"></div>
-<div class="drawer" id="drawer">
-<div class="drawer-head"><div class="avatar" id="drawerAvatar" style="width:48px;height:48px">?</div><div class="info"><b id="drawerNom">Jason</b><small>Voir ton profil</small></div><button class="drawer-close" onclick="fermerMenu()">✕</button></div>
-<div class="titre">Principal</div>
-<a href="feed.html"><span>🏠</span> Fil d'actualité</a>
-<a href="profil.html"><span>👤</span> Mon Profil</a>
-<a href="amis.html"><span>👥</span> Amis</a>
-<a href="messages.html"><span>💬</span> Messages</a>
-<a href="notifications.html"><span>🔔</span> Notifications</a>
-<a href="recherche.html"><span>🔍</span> Recherche</a>
-<div class="titre">Publier & Voir</div>
-<a href="creer-post.html"><span>➕</span> Créer un post</a>
-<a href="stories.html"><span>✨</span> Stories</a>
-<a href="videos.html"><span>🎥</span> Vidéos</a>
-<a href="photos.html"><span>🖼️</span> Photos</a>
-<a href="parametres.html"><span>⚙️</span> Paramètres</a>
-<!-- ✅ SUPPRIMÉ : Groupes, Événements, Anniversaires, Annonces, Sondages, Jeux, Musique, Marché, Marketplace, Emploi, Favoris, Aide, Signalements, Bloqués, Lives, Souvenirs, Profil Ami -->
-<a href="index.html"><span>🚪</span> Connexion / Accueil</a>
-<button class="logout" onclick="deconnecter()">🚪 Se déconnecter</button>
+<!-- TABS TIKTOK -->
+<div class="tabs">
+<button class="active">✨ Pour Toi</button>
+<button onclick="location.href='amis.html'">👥 Amis</button>
+<button onclick="location.href='videos.html'">🎥 Vidéos</button>
+<button onclick="location.href='notifications.html'">🔔 Notifs <span id="badgeNotifTop"></span></button>
 </div>
 
 <div class="wrap">
+<!-- STORIES CERCLES -->
 <div class="stories" id="storiesRow"></div>
-<div class="create">
-<div class="top"><div class="avatar" id="myAvatar2">?</div><input placeholder="Quoi de neuf, Jason ?" onclick="location.href='creer-post.html'" readonly></div>
-<div class="btns"><button onclick="location.href='creer-post.html'">🖼️ Photo</button><button onclick="location.href='creer-post.html'">🎥 Vidéo</button><button onclick="location.href='creer-post.html'">✍️ Publier</button></div>
+
+<!-- CREER -->
+<div class="create-card" onclick="location.href='creer-post.html'">
+<div class="avatar" id="myAvatar2">?</div>
+<div class="txt"><b>Quoi de neuf, Jason ?</b><br><small>Photo • Vidéo • Texte • Cours • Dessin</small></div>
+<div class="plus">+</div>
 </div>
+
 <div class="loading" id="loading">⏳ Chargement...</div>
 <div id="list"></div>
 <div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication</h3><p>Sois le premier à publier<br><br><button onclick="location.href='creer-post.html'" style="background:linear-gradient(135deg,#7C3AED,#FFC107);border:none;padding:12px 20px;border-radius:999px;color:#fff;font-weight:800;cursor:pointer">➕ Créer le 1er post</button></p></div>
-<div style="height:30px"></div>
+</div>
+
+<!-- BOTTOM NAV - PAS FACEBOOK -->
+<div class="bottom">
+<button class="active" onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
+<button onclick="location.href='amis.html'"><span>👥</span>Amis</button>
+<button onclick="location.href='creer-post.html'"><span class="centre">+</span></button>
+<button onclick="location.href='videos.html'"><span>🎥</span>Vidéos</button>
+<button onclick="location.href='profil.html'"><span>👤</span>Moi</button>
 </div>
 
 <div class="modal" id="modalPartage"><div class="modal-box">
 <h3>↗️ Partager ce post</h3>
 <p id="partagePreview" style="color:#A1A1AA;font-size:13px;margin-bottom:8px"></p>
 <textarea id="partageTexte" placeholder="Ajoute un mot (optionnel)..."></textarea>
-<button class="btn-violet" onclick="confirmerPartage()">Partager sur mon fil</button>
-<button class="btn-grey" onclick="fermerPartage()">Annuler</button>
+<button style="background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff" onclick="confirmerPartage()">Partager sur mon fil</button>
+<button style="background:#2A2A35;color:#fff" onclick="fermerPartage()">Annuler</button>
 </div></div>
 
 <script type="module">
@@ -153,14 +137,7 @@ const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index
 const monNom = localStorage.getItem('jasonbook_nom')||"Jason";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
 const avHtml = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
-const el2 = document.getElementById('myAvatar2'); if(el2) el2.innerHTML = avHtml;
-const elD = document.getElementById('drawerAvatar'); if(elD) elD.innerHTML = avHtml;
-const elN = document.getElementById('drawerNom'); if(elN) elN.innerText = monNom;
-if(elD) elD.onclick=()=>location.href='profil.html';
-window.ouvrirMenu=()=>{ document.getElementById('drawer').classList.add('open'); document.getElementById('overlay').classList.add('open'); };
-window.fermerMenu=()=>{ document.getElementById('drawer').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); };
-window.deconnecter=()=>{ if(!confirm("Tu veux te déconnecter ?")) return; localStorage.clear(); location.href='index.html'; };
-function setBadge(id,n){ const e=document.getElementById(id); if(!e) return; if(!n||n<=0){ e.style.display='none'; e.innerText=''; } else { e.style.display='block'; e.innerText = n>99 ? "99+" : n; } }
+['myAvatarTop','myAvatar2'].forEach(id=>{ const el=document.getElementById(id); if(el) el.innerHTML=avHtml; });
 let mesLikes=new Set(); let tousPosts=[]; let postAPartager=null; let commentairesParPost={};
 function rendrePosts(){
   const box=document.getElementById('list'); if(!box) return; box.innerHTML="";
@@ -173,7 +150,16 @@ function rendrePosts(){
     const div=document.createElement('div'); div.className='post';
     let comsHtml = coms.map(c=>`<div class="comment"><div class="avatar">${c.photoAuteur?`<img src="${c.photoAuteur}">`:(c.nomAuteur||"?").charAt(0)}</div><div class="bubble"><b>${c.nomAuteur||""}</b><span>${c.texte||""}</span><small>${c.date||""}</small></div></div>`).join('');
     if(!coms.length) comsHtml = `<p style="color:#A1A1AA;font-size:13px;text-align:center">Aucun commentaire. Sois le premier !</p>`;
-    div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${p.auteurUid}'">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div class="info"><b>${p.nomAuteur||""}</b><br><small>${p.date||""} ${p.partageDe?`• Partagé de ${p.partageDeNom||""}`:""}</small></div>${p.auteurUid===uid?`<button style="border:none;background:none;font-size:18px;cursor:pointer;color:#fff" onclick="supprimerPost('${p.id}')">🗑️</button>`:""}</div><p>${p.texte||""}</p>${p.photoUrl?`<img class="pimg" src="${p.photoUrl}">`:""}${p.image?`<img class="pimg" src="${p.image}">`:""}${p.videoUrl?`<video controls preload="metadata" src="${p.videoUrl}"></video>`:""}<div class="actions"><button class="${liked?'liked':''}" onclick="liker('${p.id}',${p.likesCount||0})">👍 ${p.likesCount||0} J'aime</button><button onclick="toggleCommentaires('${p.id}')">💬 ${p.commentairesCount||0} Commenter</button><button onclick="ouvrirPartage('${p.id}')">↗️ ${p.partagesCount||0} Partager</button></div><div class="comments" id="com-${p.id}"><div id="listeCom-${p.id}">${comsHtml}</div><div class="comment-input"><input id="inputCom-${p.id}" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter') envoyerCommentaire('${p.id}')"><button onclick="envoyerCommentaire('${p.id}')">➤</button></div></div>`;
+    let mediaHtml = "";
+    if(p.photoUrl || p.image || p.videoUrl){
+      mediaHtml = `<div class="media">${p.photoUrl?`<img src="${p.photoUrl}">`:""}${p.image?`<img src="${p.image}">`:""}${p.videoUrl?`<video controls preload="metadata" src="${p.videoUrl}"></video>`:""}
+      <div class="side-actions">
+        <button class="${liked?'liked':''}" onclick="liker('${p.id}',${p.likesCount||0})">${liked?'❤️':'🤍'}</button><small>${p.likesCount||0}</small>
+        <button onclick="toggleCommentaires('${p.id}')">💬</button><small>${p.commentairesCount||0}</small>
+        <button onclick="ouvrirPartage('${p.id}')">↗️</button><small>${p.partagesCount||0}</small>
+      </div></div>`;
+    }
+    div.innerHTML=`<div class="post-head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${p.auteurUid}'">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div class="info"><b>${p.nomAuteur||""}</b><br><small>${p.date||""} ${p.partageDe?`• Partagé de ${p.partageDeNom||""}`:""}</small></div>${p.auteurUid===uid?`<button style="border:none;background:none;font-size:18px;cursor:pointer;color:#fff" onclick="supprimerPost('${p.id}')">🗑️</button>`:`<button class="follow">Suivre</button>`}</div><p class="txt">${p.texte||""}</p>${mediaHtml}${!p.photoUrl && !p.image && !p.videoUrl ? `<div style="display:flex;gap:10px;padding:0 14px 12px"><button onclick="liker('${p.id}',${p.likesCount||0})" style="flex:1;background:#2A2A35;border:none;color:#fff;padding:10px;border-radius:999px;font-weight:700">${liked?'❤️':'🤍'} ${p.likesCount||0}</button><button onclick="toggleCommentaires('${p.id}')" style="flex:1;background:#2A2A35;border:none;color:#fff;padding:10px;border-radius:999px;font-weight:700">💬 ${p.commentairesCount||0}</button><button onclick="ouvrirPartage('${p.id}')" style="flex:1;background:#2A2A35;border:none;color:#fff;padding:10px;border-radius:999px;font-weight:700">↗️ ${p.partagesCount||0}</button></div>`:""}<div class="comments" id="com-${p.id}"><div>${comsHtml}</div><div class="comment-input"><input id="inputCom-${p.id}" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter') envoyerCommentaire('${p.id}')"><button onclick="envoyerCommentaire('${p.id}')">➤</button></div></div>`;
     box.appendChild(div);
   });
 }
@@ -208,27 +194,15 @@ if(uid){
     if(d) Object.entries(d).forEach(([postId, coms])=>{ commentairesParPost[postId]=Object.values(coms).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0)); });
     rendrePosts();
   });
-  onValue(ref(db,'jasonbook/demandes/'+uid),s=>{ const d=s.val(); setBadge('badgeAmis', d?Object.keys(d).length:0); });
-  onValue(ref(db,'jasonbook/notifications/'+uid),s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(x=>{ if(!x.lu) n++; }); setBadge('badgeNotif', n); });
-  onValue(ref(db,'jasonbook/messages'),s=>{
-    const d=s.val(); let n=0;
-    if(d) Object.values(d).forEach(chat=>{
-      if(chat && typeof chat==='object') Object.values(chat).forEach(m=>{
-        if(m && m.destinataireUid===uid && !m.lu) n++;
-        if(m && m.pour===uid && !m.lu) n++;
-      });
-    });
-    setBadge('badgeMsg', n);
-  });
-  setBadge('badgeFeed', 0); setBadge('badgeVideos', 0);
+  onValue(ref(db,'jasonbook/notifications/'+uid),s=>{ const d=s.val(); let n=0; if(d) Object.values(d).forEach(x=>{ if(!x.lu) n++; }); const el=document.getElementById('badgeNotifTop'); if(el) el.innerText = n?`(${n})`:""; });
 }
 onValue(ref(db,'jasonbook/stories'),s=>{
   const d=s.val(); const now=Date.now(); const row=document.getElementById('storiesRow'); if(!row) return; row.innerHTML="";
-  const add=document.createElement('div'); add.className='s-card add'; add.onclick=()=>location.href='stories.html'; add.innerHTML=`<div class="plus">+</div><p>Créer une story</p>`; row.appendChild(add);
+  const add=document.createElement('div'); add.className='story'; add.onclick=()=>location.href='stories.html'; add.innerHTML=`<div class="c"><div>+</div></div><b>Toi</b>`; row.appendChild(add);
   if(!d) return;
   const parAuteur={};
   Object.values(d).filter(x=>(x.expire||0)>now).forEach(x=>{ if(!parAuteur[x.auteurUid]) parAuteur[x.auteurUid]=[]; parAuteur[x.auteurUid].push(x); });
-  Object.values(parAuteur).forEach(g=>{ const st=g[0]; const div=document.createElement('div'); div.className='s-card'; div.onclick=()=>location.href='stories.html'; div.innerHTML=`<img src="${st.media}"><div class="overlay2"></div><div class="av">${st.photoAuteur?`<img src="${st.photoAuteur}">`:(st.auteurNom||"?").charAt(0)}</div><div class="name">${st.auteurNom||""}</div>`; row.appendChild(div); });
+  Object.values(parAuteur).forEach(g=>{ const st=g[0]; const div=document.createElement('div'); div.className='story'; div.onclick=()=>location.href='stories.html'; div.innerHTML=`<div class="c"><div>${st.photoAuteur?`<img src="${st.photoAuteur}">`:(st.auteurNom||"?").charAt(0)}</div></div><b>${st.auteurNom||""}</b>`; row.appendChild(div); });
 });
 </script>
 </body>
