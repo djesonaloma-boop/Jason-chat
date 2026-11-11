@@ -6,11 +6,10 @@
 <meta name="theme-color" content="#0A0A0F">
 <title>JASONBOOK ✨ - Marketplace</title>
 <style>
-/* ✅ MÊMES COULEURS QUE feed.html */
 :root{--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--violet:#7C3AED;--violet2:#A855F7;--gold:#FFC107;--text:#fff;--muted:#A1A1AA;--line:#26262F;--green:#20c77a;--red:#ef5265}
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 html{overflow-x:hidden}
-body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:92px;padding-top:62px}
+body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:20px;padding-top:58px}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 header{position:fixed;top:0;left:0;right:0;z-index:30;background:#0A0A0F;border-bottom:1px solid var(--line)}
@@ -19,28 +18,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:30;background:#0A0A0F;border-
 .logo i{font-style:normal;color:var(--gold)}
 .logo small{display:block;font-size:8px;color:var(--muted);letter-spacing:1.2px;margin-top:1px}
 .logo-mark{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold),#FF9800);color:#111;font-size:22px;font-weight:900}
-.icon-top{width:39px;height:39px;border:1px solid var(--line);border-radius:10px;background:var(--card2);color:white;font-size:18px;display:grid;place-items:center}
-.icon-top.menu{background:linear-gradient(135deg,var(--violet),var(--gold));border:0}
-.nav-top{display:flex;justify-content:space-around;padding:3px 5px 7px}
-.nav-top a{flex:1;text-align:center;text-decoration:none;color:var(--muted);font-size:22px;padding:6px 1px;position:relative;border-bottom:2px solid transparent}
-.nav-top a.active{color:var(--gold);border-color:var(--gold)}
-.badge{display:none;position:absolute;top:0;right:18%;min-width:17px;padding:2px 5px;border-radius:20px;background:#E0245E;color:white;font-size:10px;font-weight:bold}
-.badge.or{background:var(--gold);color:#111}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:90;display:none}
-.overlay.open{display:block}
-.drawer{position:fixed;right:0;top:0;bottom:0;width:290px;max-width:88vw;background:#121218;z-index:100;transform:translateX(105%);transition:transform .22s ease;overflow-y:auto;display:flex;flex-direction:column;border-left:1px solid var(--line)}
-.drawer.open{transform:translateX(0)}
-.drawer-head{display:flex;align-items:center;gap:11px;padding:16px;border-bottom:1px solid var(--line)}
-.drawer-head .info{flex:1;min-width:0}
-.drawer-head b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.drawer-head small{color:var(--muted)}
-.drawer-close{width:34px;height:34px;border:0;border-radius:50%;background:var(--card2);color:white}
-.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--gold));display:grid;place-items:center;overflow:hidden;flex-shrink:0;font-weight:bold}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.drawer a{display:flex;align-items:center;gap:12px;padding:11px 16px;color:var(--text);text-decoration:none;border-bottom:1px solid #ffffff08;font-size:14px;font-weight:600}
-.drawer a span{width:25px;text-align:center;font-size:18px}
-.drawer .titre{padding:14px 16px 5px;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
-.logout{margin:14px 16px;padding:12px;border:1px solid #67303c;background:#351722;color:#ff8290;border-radius:10px;font-weight:bold}
+/* ✅ SUPPRIMÉ : loupe + menu en haut, barre 🏠👥💬🎥🔔🛒, et barre du bas */
 .wrap{max-width:1100px;margin:auto;padding:17px 13px 45px}
 .page-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}
 .page-top h1{font-size:22px}
@@ -95,11 +73,6 @@ header{position:fixed;top:0;left:0;right:0;z-index:30;background:#0A0A0F;border-
 .toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);background:#17171F;color:white;border:1px solid var(--line);padding:12px 17px;border-radius:12px;z-index:200;opacity:0;pointer-events:none;transition:.2s;font-size:13px;max-width:90%;text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .loading{text-align:center;padding:30px;color:var(--muted);font-size:13px}
-.bottom{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,10,15,.96);display:flex;justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
-.bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:10px;font-weight:700}
-.bottom button.active{color:var(--gold)}
-.bottom button span{font-size:22px}
-.bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
 @media(max-width:480px){.wrap{padding:14px 10px 35px}.page-top h1{font-size:19px}.page-top .btn{padding:10px;font-size:12px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.product-img{height:145px}.product-body{padding:9px}.product-body h3{font-size:13px}.price{font-size:15px}.product-actions{gap:5px}.product-actions button{font-size:11px;padding:9px 3px}}
 </style>
 </head>
@@ -107,60 +80,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:30;background:#0A0A0F;border-
 <header>
   <div class="top-bar">
     <div class="logo" onclick="location.href='feed.html'"><span class="logo-mark">J</span>JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
-    <button class="icon-top" onclick="location.href='recherche.html'">⌕</button>
-    <button class="icon-top menu" onclick="ouvrirMenu()">☰</button>
   </div>
-  <nav class="nav-top">
-    <a href="feed.html">🏠<span class="badge or" id="badgeFeed"></span></a>
-    <a href="amis.html">👥<span class="badge" id="badgeAmis"></span></a>
-    <a href="messages.html">💬<span class="badge" id="badgeMsg"></span></a>
-    <a href="videos.html">🎥<span class="badge or" id="badgeVideos"></span></a>
-    <a href="notifications.html">🔔<span class="badge" id="badgeNotif"></span></a>
-    <a href="marketplace.html" class="active">🛒<span class="badge" id="badgeMarket"></span></a>
-  </nav>
 </header>
-<div class="overlay" id="overlay" onclick="fermerMenu()"></div>
-<aside class="drawer" id="drawer">
-  <div class="drawer-head">
-    <div class="avatar" id="drawerAvatar">?</div>
-    <div class="info"><b id="drawerNom">Utilisateur</b><small>Voir ton profil</small></div>
-    <button class="drawer-close" onclick="fermerMenu()">✕</button>
-  </div>
-  <div class="titre">Principal</div>
-  <a href="feed.html"><span>🏠</span>Fil d'actualité</a>
-  <a href="profil.html"><span>👤</span>Mon profil</a>
-  <a href="amis.html"><span>👥</span>Amis</a>
-  <a href="messages.html"><span>💬</span>Messages</a>
-  <a href="notifications.html"><span>🔔</span>Notifications</a>
-  <a href="recherche.html"><span>🔍</span>Recherche</a>
-  <div class="titre">Publier et voir</div>
-  <a href="creer-post.html"><span>➕</span>Créer un post</a>
-  <a href="stories.html"><span>✨</span>Stories</a>
-  <a href="videos.html"><span>🎥</span>Vidéos</a>
-  <a href="photos.html"><span>🖼️</span>Photos</a>
-  <a href="lives.html"><span>🔴</span>Lives</a>
-  <a href="souvenirs.html"><span>🕰️</span>Souvenirs</a>
-  <div class="titre">Découvrir</div>
-  <a href="groupes.html"><span>👨‍👩‍👧</span>Groupes</a>
-  <a href="evenements.html"><span>📅</span>Événements</a>
-  <a href="anniversaires.html"><span>🎂</span>Anniversaires</a>
-  <a href="annonces.html"><span>📢</span>Annonces</a>
-  <a href="sondages.html"><span>📊</span>Sondages</a>
-  <a href="jeux.html"><span>🎮</span>Jeux</a>
-  <a href="musique.html"><span>🎵</span>Musique</a>
-  <a href="marketplace.html"><span>🛒</span>Marché</a>
-  <a href="marketplace.html"><span>🏪</span>Marketplace</a>
-  <a href="emploi.html"><span>💼</span>Emploi</a>
-  <a href="favoris.html"><span>⭐</span>Favoris</a>
-  <div class="titre">Paramètres et aide</div>
-  <a href="parametres.html"><span>⚙️</span>Paramètres</a>
-  <a href="aide.html"><span>❓</span>Aide</a>
-  <a href="signalements.html"><span>🚨</span>Signalements</a>
-  <a href="bloques.html"><span>🚫</span>Bloqués</a>
-  <a href="admin.html"><span>🛡️</span>Admin</a>
-  <a href="index.html"><span>🚪</span>Connexion / Accueil</a>
-  <button class="logout" onclick="deconnecter()">🚪 Se déconnecter</button>
-</aside>
 <main class="wrap">
   <div class="page-top"><div><h1>🛒 Marketplace</h1><p>Achète et vends avec la communauté JASONBOOK.</p></div><button class="btn btn-primary" onclick="ouvrirVendre()">＋ Vendre</button></div>
   <div class="search-box"><span>🔍</span><input id="searchInput" placeholder="Rechercher un article..." autocomplete="off"></div>
@@ -170,13 +91,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:30;background:#0A0A0F;border-
   <div class="grid" id="grid"></div>
   <div class="empty" id="emptyBox" style="display:none"><div class="big">🛒</div><h3>Aucun article trouvé</h3><p>Modifie ta recherche ou sois le premier à vendre un article !</p></div>
 </main>
-<div class="bottom">
-<button onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
-<button onclick="location.href='amis.html'"><span>👥</span>Amis</button>
-<button onclick="location.href='creer-post.html'"><span class="centre">+</span></button>
-<button onclick="location.href='messages.html'"><span>💬</span>Messages</button>
-<button class="active" onclick="location.href='marketplace.html'"><span>🛒</span>Boutique</button>
-</div>
+<!-- ✅ SUPPRIMÉ : barre du bas Accueil / Amis / + / Messages / Boutique -->
 <div class="modal" id="modalVendre"><div class="modal-box"><div class="modal-head"><h2>📦 Vendre un article</h2><button class="close-btn" onclick="fermerVendre()">✕</button></div><label>Titre de l'article *</label><input id="aTitre" maxlength="90" placeholder="Exemple : iPhone 12"><label>Prix *</label><input id="aPrix" maxlength="40" placeholder="Exemple : 150 $ ou 150000 FC"><label>Catégorie</label><select id="aCat"><option>Vêtements</option><option>Électronique</option><option>Véhicules</option><option>Maison</option><option>Beauté</option><option>Nourriture</option><option>Autre</option></select><label>Ville</label><input id="aVille" maxlength="60" placeholder="Exemple : Kinshasa"><label>Description</label><textarea id="aDesc" maxlength="1500" placeholder="Décris ton article, son état et les conditions de livraison..."></textarea><label>Photo de l'article</label><button class="btn btn-secondary" style="width:100%;margin-top:7px" onclick="document.getElementById('aPhoto').click()">📷 Choisir une photo</button><input type="file" id="aPhoto" accept="image/*" hidden><img id="aPreview" class="preview" alt="Aperçu de la photo"><div class="modal-buttons"><button class="btn btn-primary" id="publishBtn" onclick="publierArticle()">Publier l'article</button><button class="btn btn-secondary" onclick="fermerVendre()">Annuler</button></div></div></div>
 <div class="modal" id="modalDetail"><div class="modal-box"><div class="modal-head"><h2>📦 Détail de l'article</h2><button class="close-btn" onclick="fermerDetail()">✕</button></div><img id="dImg" class="detail-img" style="display:none" alt="Photo de l'article"><h2 id="dTitre"></h2><div id="dPrix" class="detail-price"></div><div id="dDesc" class="detail-desc"></div><div id="dMeta" class="detail-meta"></div><div class="modal-buttons"><button class="btn btn-primary" onclick="contacterVendeur()">💬 Contacter</button><button class="btn btn-danger" id="btnSupp" style="display:none" onclick="supprimerArticle()">🗑️ Supprimer</button></div></div></div>
 <div class="toast" id="toast"></div>
@@ -190,13 +105,6 @@ const monNom=localStorage.getItem("jasonbook_nom")||""; const maPhoto=localStora
 let tous=[]; let cat="Tout"; let photoArticle=""; let articleOuvert=null;
 const $=id=>document.getElementById(id);
 function toast(message){const el=$("toast"); el.textContent=message; el.classList.add("show"); clearTimeout(toast.timer); toast.timer=setTimeout(()=>el.classList.remove("show"),2600);}
-function setBadge(id,n){const el=$(id); if(!el)return; if(!n||n<=0){el.style.display="none"; el.textContent="";}else{el.style.display="block"; el.textContent=n>99?"99+":String(n);}}
-function safeImageUrl(url){if(typeof url!=="string")return ""; if(url.startsWith("data:image/"))return url; try{const u=new URL(url,location.href); return ["https:","http:"].includes(u.protocol)?u.href:"";}catch(e){return ""}}
-function afficherAvatar(){const el=$("drawerAvatar"); if(maPhoto){const img=document.createElement("img"); img.src=safeImageUrl(maPhoto); img.alt="Photo de profil"; el.replaceChildren(img);}else{el.textContent=monNom.charAt(0).toUpperCase()||"?";} $("drawerNom").textContent=monNom||"Utilisateur"; el.onclick=()=>location.href="profil.html";}
-afficherAvatar();
-window.ouvrirMenu=()=>{$("drawer").classList.add("open"); $("overlay").classList.add("open");};
-window.fermerMenu=()=>{$("drawer").classList.remove("open"); $("overlay").classList.remove("open");};
-window.deconnecter=()=>{if(!confirm("Tu veux vraiment te déconnecter ?"))return; localStorage.removeItem("jasonbook_uid"); localStorage.removeItem("jasonbook_nom"); localStorage.removeItem("jasonbook_photo"); localStorage.removeItem("jasonbook_ville"); location.href="index.html";};
 $("aVille").value=maVille;
 window.ouvrirVendre=()=>{$("modalVendre").classList.add("open");};
 window.fermerVendre=()=>{$("modalVendre").classList.remove("open");};
@@ -205,9 +113,9 @@ function emojiCat(c){const icons={"Vêtements":"👕","Électronique":"📱","V�
 $("filters").addEventListener("click",e=>{const btn=e.target.closest("button[data-cat]"); if(!btn)return; cat=btn.dataset.cat; document.querySelectorAll("#filters button").forEach(b=>{b.classList.toggle("active",b===btn);}); rendre();});
 let timerRecherche; $("searchInput").addEventListener("input",()=>{clearTimeout(timerRecherche); timerRecherche=setTimeout(rendre,120);});
 $("villeFilter").addEventListener("input",()=>{clearTimeout(timerRecherche); timerRecherche=setTimeout(rendre,120);});
-function creerCarte(a){const card=document.createElement("article"); card.className="a-card"; const imageBox=document.createElement("div"); imageBox.className="product-img"; const photo=safeImageUrl(a.photo); if(photo){const img=document.createElement("img"); img.src=photo; img.alt=a.titre||"Article"; img.loading="lazy"; img.decoding="async"; imageBox.appendChild(img);}else{imageBox.textContent=emojiCat(a.categorie);} const body=document.createElement("div"); body.className="product-body"; const title=document.createElement("h3"); title.textContent=a.titre||"Article sans titre"; const price=document.createElement("div"); price.className="price"; price.textContent=a.prix||"Prix à discuter"; const meta=document.createElement("div"); meta.className="product-meta"; meta.textContent=[a.categorie||"Autre",a.ville||"Ville non précisée",a.vendeurNom||"Vendeur"].join(" • "); const actions=document.createElement("div"); actions.className="product-actions"; const contact=document.createElement("button"); contact.className="btn btn-primary"; contact.textContent="💬 Contacter"; contact.addEventListener("click",e=>{e.stopPropagation(); contacterDepuisCarte(a.vendeurUid);}); actions.appendChild(contact); if(a.vendeurUid===uid){const del=document.createElement("button"); del.className="btn btn-danger"; del.textContent="🗑️"; del.addEventListener("click",e=>{e.stopPropagation(); supprimerArticleId(a.id);}); actions.appendChild(del);} body.append(title,price,meta,actions); card.append(imageBox,body); card.addEventListener("click",()=>ouvrirDetail(a)); return card;}
+function creerCarte(a){const card=document.createElement("article"); card.className="a-card"; const imageBox=document.createElement("div"); imageBox.className="product-img"; const photo=a.photo; if(photo){const img=document.createElement("img"); img.src=photo; img.alt=a.titre||"Article"; img.loading="lazy"; imageBox.appendChild(img);}else{imageBox.textContent=emojiCat(a.categorie);} const body=document.createElement("div"); body.className="product-body"; const title=document.createElement("h3"); title.textContent=a.titre||"Article sans titre"; const price=document.createElement("div"); price.className="price"; price.textContent=a.prix||"Prix à discuter"; const meta=document.createElement("div"); meta.className="product-meta"; meta.textContent=[a.categorie||"Autre",a.ville||"Ville non précisée",a.vendeurNom||"Vendeur"].join(" • "); const actions=document.createElement("div"); actions.className="product-actions"; const contact=document.createElement("button"); contact.className="btn btn-primary"; contact.textContent="💬 Contacter"; contact.addEventListener("click",e=>{e.stopPropagation(); contacterDepuisCarte(a.vendeurUid);}); actions.appendChild(contact); if(a.vendeurUid===uid){const del=document.createElement("button"); del.className="btn btn-danger"; del.textContent="🗑️"; del.addEventListener("click",e=>{e.stopPropagation(); supprimerArticleId(a.id);}); actions.appendChild(del);} body.append(title,price,meta,actions); card.append(imageBox,body); card.addEventListener("click",()=>ouvrirDetail(a)); return card;}
 window.rendre=()=>{const q=$("searchInput").value.trim().toLocaleLowerCase("fr"); const ville=$("villeFilter").value.trim().toLocaleLowerCase("fr"); const liste=tous.filter(a=>{const texte=[a.titre,a.description,a.categorie,a.vendeurNom,a.ville].join(" ").toLocaleLowerCase("fr"); return texte.includes(q)&&(cat==="Tout"||a.categorie===cat)&&(!ville||(a.ville||"").toLocaleLowerCase("fr").includes(ville));}); const fragment=document.createDocumentFragment(); liste.forEach(a=>fragment.appendChild(creerCarte(a))); $("grid").replaceChildren(fragment); $("emptyBox").style.display=liste.length?"none":"block";};
-window.ouvrirDetail=a=>{articleOuvert=a; $("dTitre").textContent=a.titre||"Article"; $("dPrix").textContent=a.prix||"Prix à discuter"; $("dDesc").textContent=a.description||"Aucune description."; $("dMeta").textContent=[a.categorie||"Autre",a.ville||"Ville non précisée","Vendeur : "+(a.vendeurNom||"Inconnu"),a.date||""].filter(Boolean).join(" • "); const img=$("dImg"); const photo=safeImageUrl(a.photo); if(photo){img.src=photo; img.style.display="block";}else{img.removeAttribute("src"); img.style.display="none";} $("btnSupp").style.display=a.vendeurUid===uid?"block":"none"; $("modalDetail").classList.add("open");};
+window.ouvrirDetail=a=>{articleOuvert=a; $("dTitre").textContent=a.titre||"Article"; $("dPrix").textContent=a.prix||"Prix à discuter"; $("dDesc").textContent=a.description||"Aucune description."; $("dMeta").textContent=[a.categorie||"Autre",a.ville||"Ville non précisée","Vendeur : "+(a.vendeurNom||"Inconnu"),a.date||""].filter(Boolean).join(" • "); const img=$("dImg"); const photo=a.photo; if(photo){img.src=photo; img.style.display="block";}else{img.removeAttribute("src"); img.style.display="none";} $("btnSupp").style.display=a.vendeurUid===uid?"block":"none"; $("modalDetail").classList.add("open");};
 window.contacterVendeur=()=>{if(!articleOuvert)return; if(!articleOuvert.vendeurUid){toast("Vendeur introuvable."); return;} location.href="messages.html?uid="+encodeURIComponent(articleOuvert.vendeurUid);};
 window.contacterDepuisCarte=vendeurUid=>{if(!vendeurUid){toast("Vendeur introuvable."); return;} location.href="messages.html?uid="+encodeURIComponent(vendeurUid);};
 window.supprimerArticle=async()=>{if(!articleOuvert)return; if(articleOuvert.vendeurUid!==uid){toast("Tu ne peux pas supprimer cet article."); return;} if(!confirm("Supprimer définitivement cet article ?"))return; try{await remove(ref(db,"jasonbook/marketplace/"+articleOuvert.id)); fermerDetail(); toast("Article supprimé.");}catch(e){console.error(e); toast("Impossible de supprimer l'article.");}};
@@ -217,10 +125,6 @@ $("aPhoto").addEventListener("change",async e=>{const file=e.target.files?.[0]; 
 window.publierArticle=async()=>{const titre=$("aTitre").value.trim(); const prix=$("aPrix").value.trim(); const ville=$("aVille").value.trim(); const description=$("aDesc").value.trim(); if(!titre||!prix){toast("Le titre et le prix sont obligatoires."); return;} const btn=$("publishBtn"); if(btn.disabled)return; btn.disabled=true; btn.textContent="Publication..."; try{const nouvelleRef=push(ref(db,"jasonbook/marketplace")); await set(nouvelleRef,{id:nouvelleRef.key,titre,prix,categorie:$("aCat").value,ville,description,photo:photoArticle||"",vendeurUid:uid,vendeurNom:monNom,date:new Date().toLocaleString("fr-FR"),timestamp:Date.now()}); $("aTitre").value=""; $("aPrix").value=""; $("aDesc").value=""; $("aVille").value=maVille; $("aPhoto").value=""; $("aPreview").removeAttribute("src"); $("aPreview").style.display="none"; photoArticle=""; fermerVendre(); toast("Article publié avec succès ! 🎉");}catch(e){console.error(e); toast("Publication impossible. Vérifie ta connexion.");}finally{btn.disabled=false; btn.textContent="Publier l'article";}};
 $("loading").style.display="block";
 onValue(ref(db,"jasonbook/marketplace"),snapshot=>{const data=snapshot.val(); tous=data?Object.entries(data).map(([id,a])=>({id,...a})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; $("loading").style.display="none"; rendre();},error=>{console.error(error); $("loading").textContent="Impossible de charger les articles. Vérifie ta connexion.";});
-onValue(ref(db,"jasonbook/demandes/"+uid),snapshot=>{const data=snapshot.val(); setBadge("badgeAmis",data?Object.keys(data).length:0);});
-onValue(ref(db,"jasonbook/notifications/"+uid),snapshot=>{const data=snapshot.val(); let n=0; if(data){Object.values(data).forEach(item=>{if(item&&!item.lu)n++;});} setBadge("badgeNotif",n);});
-onValue(ref(db,"jasonbook/messages"),snapshot=>{const data=snapshot.val(); let n=0; if(data){Object.values(data).forEach(chat=>{if(!chat||typeof chat!=="object")return; Object.values(chat).forEach(message=>{if(!message)return; if((message.destinataireUid===uid||message.pour===uid)&&!message.lu){n++;}});});} setBadge("badgeMsg",n);});
-setBadge("badgeMarket",0); setBadge("badgeFeed",0); setBadge("badgeVideos",0);
 ["modalVendre","modalDetail"].forEach(id=>{$(id).addEventListener("click",e=>{if(e.target!==$(id))return; $(id).classList.remove("open");});});
 </script>
 </body>
