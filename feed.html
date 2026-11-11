@@ -55,6 +55,12 @@ button{cursor:pointer}
 .actions-text button.liked{color:var(--gold)}
 .loading{text-align:center;color:var(--gold);padding:20px;font-size:13px}
 .empty{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px 10px;color:var(--muted)}
+/* ✅ SKELETON - PAS DE CLIGNOTEMENT */
+.skeleton{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:13px;margin:10px 0;animation:pulse 1.2s infinite}
+.skeleton .line{height:14px;background:#2A2A35;border-radius:8px;margin:10px 0}
+.skeleton .line.short{width:60%}
+.skeleton .line.img{height:180px}
+@keyframes pulse{0%{opacity:.6}50%{opacity:1}100%{opacity:.6}}
 .comments{border-top:1px solid var(--line);margin-top:10px;padding-top:10px;display:none}
 .comments.open{display:block}
 .comment{display:flex;gap:8px;margin-bottom:9px;align-items:flex-start}
@@ -106,10 +112,14 @@ button{cursor:pointer}
 <div class="btns"><button onclick="location.href='creer-post.html'">🖼️ Photo</button><button onclick="location.href='creer-post.html'">🎥 Vidéo</button><button onclick="location.href='creer-post.html'">✍️ Publier</button></div>
 </div>
 
-<div class="loading" id="loading">⏳ Chargement du fil...</div>
+<!-- ✅ SKELETON AU LIEU DE "AUCUNE PUBLICATION" -->
+<div id="skeletonBox">
+<div class="skeleton"><div class="line short"></div><div class="line img"></div><div class="line"></div></div>
+<div class="skeleton"><div class="line short"></div><div class="line"></div></div>
+</div>
+
 <div id="list"></div>
 <div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication</h3><p>Sois le premier à publier.</p><br><button onclick="location.href='creer-post.html'" style="background:var(--violet);border:0;padding:12px 20px;border-radius:999px;color:#fff;font-weight:800">➕ Créer le premier post</button></div>
-<div id="moreLoading" style="display:none;text-align:center;color:#FFC107;padding:15px">Chargement...</div>
 <button id="btnPlus" onclick="chargerPlus()" style="display:none;width:100%;padding:13px;border:0;border-radius:999px;background:#1F1F2E;color:#fff;font-weight:800;margin:10px 0">Voir plus ⬇️</button>
 </main>
 
@@ -137,20 +147,28 @@ $("myAvatar2").innerHTML=avatarHTML(maPhoto,monNom); $("myAvatarTop").innerHTML=
 function setBadgeTop(id,n){const e=$(id); if(!e) return; e.textContent=n>0?`(${n})`:"";}
 
 let mesLikes=new Set(); let tousPosts=[]; let commentairesParPost={}; let postAPartager=null; let limite=12;
+let dejaCharge=false; // ✅ LE FIX : on ne dit "Aucune publication" que si on a VRAIMENT fini de charger
 
-// ===== ⚡ VITESSE 1 : CACHE - AFFICHE TOUT DE SUITE =====
+// Cache : si on a déjà des posts, on cache le skeleton direct
 try{
   const cache = JSON.parse(localStorage.getItem("jasonbook_feed_cache")||"null");
   if(cache && cache.length){
     tousPosts = cache;
-    $("loading").style.display="none";
+    $("skeletonBox").style.display="none";
+    dejaCharge = true; // on a déjà quelque chose, on peut afficher
     rendrePosts();
   }
 }catch(e){}
 
 function rendrePosts(){
-  const box=$("list"); if(!box) return; box.innerHTML=""; $("loading").style.display="none";
-  if(!tousPosts.length){$("emptyBox").style.display="block"; $("btnPlus").style.display="none"; return;} $("emptyBox").style.display="none";
+  const box=$("list"); if(!box) return; box.innerHTML="";
+  // ✅ On ne touche à emptyBox QUE si on a fini de charger
+  if(!tousPosts.length){
+    if(dejaCharge){ $("skeletonBox").style.display="none"; $("emptyBox").style.display="block"; }
+    $("btnPlus").style.display="none";
+    return;
+  }
+  $("skeletonBox").style.display="none"; $("emptyBox").style.display="none";
   $("btnPlus").style.display = tousPosts.length>=limite ? "block" : "none";
   const fragment=document.createDocumentFragment();
   tousPosts.slice(0,limite).forEach(p=>{
@@ -166,7 +184,7 @@ function rendrePosts(){
     }
     let actionsText="";
     if(!photo && !video){
-      actionsText=`<div class="actions-text"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"} ${Number(p.likesCount)||0}</button><button onclick="toggleCommentaires('${id}')">💬 ${Number(p.commentairesCount)||0}</button><button onclick="ouvrirPartage('${id}')">↗️ ${Number(p.partagesCount)||0}</button></div>`;
+      actionsText=`<div class="actions-text"><button class="${liked?"liked":""}" onclick="liker('${id}')"> ${liked?"❤️":"🤍"} ${Number(p.likesCount)||0}</button><button onclick="toggleCommentaires('${id}')">💬 ${Number(p.commentairesCount)||0}</button><button onclick="ouvrirPartage('${id}')">↗️ ${Number(p.partagesCount)||0}</button></div>`;
     }
     div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${auteur}'">${avatarHTML(p.photoAuteur,p.nomAuteur)}</div><div class="info"><b>${nom}</b><br><small>${escapeHTML(p.date||"")}${p.partageDe?` • Partagé de ${escapeHTML(p.partageDeNom||"")}`:""}</small></div>${p.auteurUid===uid?`<button style="border:0;background:none;font-size:18px;color:#fff" onclick="supprimerPost('${id}')">🗑️</button>`:`<button style="border:1px solid var(--gold);background:none;color:var(--gold);padding:6px 12px;border-radius:999px;font-weight:800;font-size:12px">Suivre</button>`}</div>${p.texte?`<p>${escapeHTML(p.texte)}</p>`:""}${mediaHtml}${actionsText}<div class="comments" id="com-${id}"><div>${comsHtml}</div><div class="comment-input"><input id="inputCom-${id}" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter')envoyerCommentaire('${id}')"><button onclick="envoyerCommentaire('${id}')">➤</button></div></div>`;
     fragment.appendChild(div);
@@ -177,20 +195,16 @@ window.chargerPlus=()=>{ limite+=12; rendrePosts(); };
 window.toggleCommentaires=async id=>{
   const el=$("com-"+id); if(!el) return;
   el.classList.toggle("open");
-  // ⚡ Commentaires seulement quand on ouvre, pas pour tous les posts !
   if(el.classList.contains("open") && !commentairesParPost[id]){
     try{
       const s=await get(query(ref(db,"jasonbook/commentaires/"+id),orderByChild("timestamp"),limitToLast(20)));
       const d=s.val(); commentairesParPost[id]=d?Object.entries(d).map(([cid,c])=>({id:cid,...c})).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0)):[];
-      rendrePosts();
-      // Rouvrir après re-rendu
-      const el2=$("com-"+id); if(el2) el2.classList.add("open");
+      rendrePosts(); const el2=$("com-"+id); if(el2) el2.classList.add("open");
     }catch(e){}
   }
 };
 window.liker=async id=>{
   const p=tousPosts.find(x=>x.id===id); if(!p) return;
-  // ⚡ Optimiste : change tout de suite, pas d'attente Firebase
   const deja = mesLikes.has(id);
   if(deja){ mesLikes.delete(id); p.likesCount=Math.max(0,(Number(p.likesCount)||0)-1); } else { mesLikes.add(id); p.likesCount=(Number(p.likesCount)||0)+1; }
   rendrePosts();
@@ -224,25 +238,22 @@ window.confirmerPartage=async()=>{
 };
 window.supprimerPost=async id=>{ if(!confirm("Supprimer cette publication ?")) return; try{ await remove(ref(db,"jasonbook/posts/"+id)); tousPosts=tousPosts.filter(p=>p.id!==id); rendrePosts(); }catch(e){ alert("Impossible de supprimer."); } };
 
-// ===== ⚡ VITESSE 2 : 1 SEUL get(), PAS 7 onValue() =====
 async function chargerFil(){
   try{
     const s=await get(query(ref(db,"jasonbook/posts"),orderByChild("timestamp"),limitToLast(30)));
     const d=s.val(); tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[];
-    // Sauvegarde pour la prochaine ouverture = INSTANTANÉ
-    try{ localStorage.setItem("jasonbook_feed_cache", JSON.stringify(tousPosts.slice(0,12).map(p=>({...p, photoUrl: p.photoUrl ? p.photoUrl.slice(0,200000) : p.photoUrl})))); }catch(e){}
+    dejaCharge=true; // ✅ Maintenant on a VRAIMENT fini, on peut dire "Aucune publication" si vide
+    try{ localStorage.setItem("jasonbook_feed_cache", JSON.stringify(tousPosts.slice(0,12).map(p=>({...p, photoUrl: p.photoUrl && p.photoUrl.length>200000 ? "" : p.photoUrl})))); }catch(e){}
     rendrePosts();
-  }catch(e){ $("loading").textContent="Erreur de chargement."; }
+  }catch(e){ dejaCharge=true; $("skeletonBox").style.display="none"; $("emptyBox").style.display="block"; }
   try{
     const s2=await get(ref(db,"jasonbook/likes/"+uid)); const d2=s2.val(); mesLikes=new Set(d2?Object.keys(d2):[]); rendrePosts();
   }catch(e){}
-  // Badges en 1 fois, pas en boucle
   try{
     const [dem, notif] = await Promise.all([ get(ref(db,"jasonbook/demandes/"+uid)), get(ref(db,"jasonbook/notifications/"+uid)) ]);
     const dd=dem.val(); setBadgeTop("badgeAmisTop", dd?Object.keys(dd).length:0);
     const nn=notif.val(); let n=0; if(nn) Object.values(nn).forEach(x=>{ if(!x.lu) n++; }); setBadgeTop("badgeNotifTop", n);
   }catch(e){}
-  // Stories : 1 fois, pas en live
   try{
     const s3=await get(query(ref(db,"jasonbook/stories"),orderByChild("expire"),limitToLast(20)));
     const d=s3.val(); const now=Date.now(); const row=$("storiesRow"); row.innerHTML="";
