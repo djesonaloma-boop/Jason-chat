@@ -12,37 +12,41 @@ html{overflow-x:hidden}
 body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:92px;-webkit-tap-highlight-color:transparent}
 button,a{touch-action:manipulation}
 button{cursor:pointer}
-.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
-.logo{font-size:21px;font-weight:900;white-space:nowrap;flex:1}
+/* ===== HEADER ===== */
+.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:10px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px}
+.logo{font-size:20px;font-weight:900;white-space:nowrap;flex:1;line-height:1}
 .logo i{color:var(--gold);font-style:normal}
-.logo small{display:block;font-size:8px;color:var(--muted);letter-spacing:1.2px}
-.search-top{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:9px 14px;display:flex;gap:6px;align-items:center;color:var(--muted);font-size:13px;cursor:pointer}
-/* ✅ 3 TRAITS A LA PLACE DE TA PHOTO */
-.btn-menu{width:42px;height:42px;min-width:42px;background:var(--card2);border:1px solid var(--line);border-radius:12px;color:#fff;font-size:22px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.logo small{display:block;font-size:8px;color:var(--muted);letter-spacing:1.2px;margin-top:1px}
+.search-top{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:8px 12px;display:flex;gap:6px;align-items:center;color:var(--muted);font-size:12px;cursor:pointer}
+/* ✅ BOUTON 3 TRAITS - PETIT PRO */
+.btn-menu{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;font-weight:400;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
 .btn-menu:active{background:var(--violet)}
-/* ===== MENU 3 TRAITS ===== */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;display:none}
+/* ===== MENU PRO - PETIT COMPACT ===== */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:none}
 .overlay.open{display:block}
-.menu{position:fixed;top:0;right:0;bottom:0;width:300px;max-width:85vw;background:#16161F;z-index:101;transform:translateX(100%);transition:.25s;overflow-y:auto;border-left:1px solid var(--line);padding-bottom:20px}
+.menu{position:fixed;top:0;right:0;bottom:0;width:264px;max-width:82vw;background:#121218;z-index:101;transform:translateX(100%);transition:.22s ease;overflow-y:auto;border-left:1px solid var(--line);padding:0 0 14px}
 .menu.open{transform:translateX(0)}
-.menu-top{display:flex;align-items:center;gap:10px;padding:16px;border-bottom:1px solid var(--line)}
-.menu-top .m-ava{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;overflow:hidden;flex-shrink:0;cursor:pointer}
+.menu-top{display:flex;align-items:center;gap:10px;padding:14px 14px 12px;border-bottom:1px solid var(--line)}
+.menu-top .m-ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .menu-top .m-ava img{width:100%;height:100%;object-fit:cover}
-.menu-top b{font-size:16px;display:block;word-break:break-word}
-.menu-top small{color:var(--muted);font-size:12px}
-.menu-top button{margin-left:auto;background:var(--card2);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer}
-.menu-sec{padding:10px 12px 2px;font-size:11px;color:var(--muted);letter-spacing:1px;font-weight:800}
-.menu-item{display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;color:#fff;text-align:left;padding:12px;border-radius:12px;cursor:pointer;font-size:14px;font-weight:700}
+.menu-top b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu-top small{color:var(--muted);font-size:11px}
+.menu-top button{margin-left:auto;background:var(--card2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;font-size:14px;cursor:pointer;flex-shrink:0}
+.menu-sec{padding:14px 14px 4px;font-size:10px;color:var(--muted);letter-spacing:1px;font-weight:800}
+.menu-item{display:flex;align-items:center;gap:10px;width:100%;background:none;border:none;color:#EDEDEF;text-align:left;padding:8px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600}
 .menu-item:active{background:var(--card2)}
-.menu-item .ico{width:36px;height:36px;min-width:36px;background:var(--card2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
-.menu-item.profil{border:1px solid var(--gold);background:#2A220A}
-.menu-item.profil .ico{background:linear-gradient(135deg,var(--gold),#FF9800);color:#111}
-.menu-item.booster{border:1px solid var(--violet);background:#221A35}
-.menu-item.booster .ico{background:linear-gradient(135deg,var(--violet),var(--violet2))}
+.menu-item .ico{width:30px;height:30px;min-width:30px;background:var(--card2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.menu-item small{color:var(--muted);font-weight:400;font-size:11px;margin-left:-4px}
+.menu-item .fleche{margin-left:auto;color:var(--muted);font-size:12px}
+.menu-item.profil{background:#1E1A0A;border:1px solid rgba(255,193,7,.35)}
+.menu-item.profil .ico{background:var(--gold);color:#111}
+.menu-item.booster{background:#1A1526;border:1px solid rgba(124,58,237,.4)}
+.menu-item.booster .ico{background:var(--violet)}
 .menu-item.live .ico{background:#E0245E}
 .menu-item.danger .ico{background:#E0245E}
-.menu-item.danger{color:#FF6B81}
-.hr{height:1px;background:var(--line);margin:10px 12px}
+.menu-item.danger{color:#FF8A9A}
+.hr{height:1px;background:var(--line);margin:12px 14px}
+/* ===== CONTENU ===== */
 .wrap{width:100%;max-width:650px;margin:10px auto;padding:0 10px 10px}
 .tabs{display:flex;gap:7px;overflow-x:auto;padding:6px 2px 10px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
@@ -113,11 +117,10 @@ button{cursor:pointer}
 <div class="top">
 <div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
 <div class="search-top" onclick="location.href='recherche.html'">🔍 <span>Chercher...</span></div>
-<!-- ✅ PLUS DE PHOTO - JUSTE LES 3 TRAITS -->
 <button class="btn-menu" onclick="ouvrirMenu()">☰</button>
 </div>
 
-<!-- ===== MENU 3 TRAITS - 14 BOUTONS ===== -->
+<!-- ===== MENU 3 TRAITS - PETIT PRO - 14 BOUTONS ===== -->
 <div class="overlay" id="overlay" onclick="fermerMenu()"></div>
 <aside class="menu" id="menu">
   <div class="menu-top">
@@ -126,13 +129,13 @@ button{cursor:pointer}
     <button onclick="fermerMenu()">✕</button>
   </div>
   <div class="menu-sec">MON COMPTE</div>
-  <button class="menu-item profil" onclick="location.href='profil.html'"><span class="ico">👤</span> Mon Profil <span style="margin-left:auto;color:#FFC107">›</span></button>
+  <button class="menu-item profil" onclick="location.href='profil.html'"><span class="ico">👤</span> Mon Profil <span class="fleche">›</span></button>
   <button class="menu-item" onclick="location.href='profil.html?edit=1'"><span class="ico">✏️</span> Modifier mon profil</button>
   <div class="menu-sec">JASONBOOK</div>
-  <button class="menu-item" onclick="location.href='feed.html'"><span class="ico">📰</span> Fil <span style="margin-left:auto;color:#FFC107">›</span></button>
-  <button class="menu-item" onclick="location.href='favoris.html'"><span class="ico">⭐</span> Favoris <span style="margin-left:auto;color:#FFC107">›</span></button>
-  <button class="menu-item booster" onclick="location.href='booster.html'"><span class="ico">🚀</span> Booster <small style="color:#A1A1AA;font-weight:400">Likes • Com • Partages</small> <span style="margin-left:auto;color:#FFC107">›</span></button>
-  <button class="menu-item live" onclick="location.href='live.html'"><span class="ico">🔴</span> Aller en Live <span style="margin-left:auto">›</span></button>
+  <button class="menu-item" onclick="location.href='feed.html'"><span class="ico">📰</span> Fil <span class="fleche">›</span></button>
+  <button class="menu-item" onclick="location.href='favoris.html'"><span class="ico">⭐</span> Favoris <span class="fleche">›</span></button>
+  <button class="menu-item booster" onclick="location.href='booster.html'"><span class="ico">🚀</span> Booster <small>Likes • Com • Partages</small> <span class="fleche">›</span></button>
+  <button class="menu-item live" onclick="location.href='live.html'"><span class="ico">🔴</span> Aller en Live <span class="fleche">›</span></button>
   <button class="menu-item" onclick="location.href='recherche.html'"><span class="ico">🔍</span> Recherche</button>
   <button class="menu-item" onclick="location.href='boutique.html'"><span class="ico">🛒</span> Boutique</button>
   <button class="menu-item" onclick="location.href='anniversaires.html'"><span class="ico">🎂</span> Anniversaires</button>
@@ -152,18 +155,14 @@ button{cursor:pointer}
 <button onclick="location.href='favoris.html'">⭐ Favoris</button>
 <button onclick="location.href='booster.html'">🚀 Booster</button>
 </div>
-
 <div class="stories" id="storiesRow"></div>
-
 <div class="create">
 <div class="top"><div class="avatar" id="myAvatar2">?</div><input placeholder="Quoi de neuf ?" onclick="location.href='creer-post.html'" readonly></div>
 <div class="btns"><button onclick="location.href='creer-post.html'">🖼️ Photo</button><button onclick="location.href='creer-post.html'">🎥 Vidéo</button><button onclick="location.href='creer-post.html'">✍️ Publier</button></div>
 </div>
-
 <div class="loading" id="loading">⏳ Chargement du fil...</div>
 <div id="list"></div>
 <div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication</h3><p>Sois le premier à publier.</p><br><button onclick="location.href='creer-post.html'" style="background:var(--violet);border:0;padding:12px 20px;border-radius:999px;color:#fff;font-weight:800">➕ Créer le premier post</button></div>
-<div id="moreLoading" style="display:none;text-align:center;color:#FFC107;padding:15px">Chargement...</div>
 </main>
 
 <div class="bottom">
@@ -189,7 +188,6 @@ function avatarHTML(photo,nom){return photo?`<img loading="lazy" decoding="async
 $("myAvatar2").innerHTML=avatarHTML(maPhoto,monNom);
 $("menuNom").innerText=monNom; $("menuAvatar").innerHTML=avatarHTML(maPhoto,monNom);
 get(ref(db,'jasonbook/users/'+uid)).then(s=>{ const u=s.val()||{}; $("menuVille").innerText=(u.ville||"")+" "+(u.pays?"• "+u.pays:""); });
-// ===== MENU =====
 window.ouvrirMenu=()=>{ $("menu").classList.add('open'); $("overlay").classList.add('open'); };
 window.fermerMenu=()=>{ $("menu").classList.remove('open'); $("overlay").classList.remove('open'); };
 window.changerCompte=()=>{
@@ -230,12 +228,11 @@ fragment.appendChild(div);
 box.appendChild(fragment);
 }
 window.toggleCommentaires=id=>{const el=$("com-"+id); if(el) el.classList.toggle("open");};
-// ✅ FAVORIS
 window.toggleFavori=async id=>{
   const favRef=ref(db,"jasonbook/favoris/"+uid+"/"+id);
   try{
     if(mesFavoris.has(id)){ await remove(favRef); alert("Retiré des favoris ⭐"); }
-    else { await set(favRef,{postId:id,timestamp:Date.now()}); alert("Ajouté aux favoris ⭐ Va voir dans Menu > Favoris"); }
+    else { await set(favRef,{postId:id,timestamp:Date.now()}); alert("Ajouté aux favoris ⭐"); }
   }catch(e){ console.error(e); alert("Erreur favoris."); }
 };
 window.liker=async id=>{const p=tousPosts.find(x=>x.id===id); if(!p) return; const likeRef=ref(db,"jasonbook/likes/"+uid+"/"+id); try{if(mesLikes.has(id)){await remove(likeRef);}else{await set(likeRef,true); if(p.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"like",texte:monNom+" a aimé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});}}}catch(e){console.error("Erreur like:",e); alert("Impossible de modifier le like.");}};
