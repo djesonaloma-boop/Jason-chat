@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,92 +6,157 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0A0A0F">
 <title>JASONBOOK ✨ - Profil Ami</title>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#0F0F14;color:#fff;min-height:100vh;width:100%;overflow-x:hidden}
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+body{background:#0F0F14;color:#fff;min-height:100vh}
 :root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--carte:#1C1C24;--gris:#A1A1AA;--ligne:#2A2A35}
+
 header{background:#111;display:flex;align-items:center;padding:10px 12px;border-bottom:2px solid var(--or);position:sticky;top:0;z-index:20}
 .logo{display:flex;align-items:center;gap:6px;font-weight:900;font-size:19px;cursor:pointer;white-space:nowrap}
 .logo span{width:32px;height:32px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px}
 .logo i{color:var(--or);font-style:normal}
 .logo small{display:block;font-size:8px;color:var(--gris);letter-spacing:1.2px}
+
 .cover-wrap{background:var(--carte);max-width:520px;width:calc(100% - 16px);margin:10px auto 0;padding-bottom:12px;border-radius:16px;border:1px solid var(--ligne);overflow:hidden;text-align:center}
 .cover{height:120px;background:linear-gradient(135deg,var(--violet),var(--violet2),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;cursor:pointer;position:relative}
 .cover img{width:100%;height:100%;object-fit:cover}
 .cover .hint{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.6);padding:4px 8px;border-radius:999px;font-size:10px}
+
 .profile-row{padding:0 12px;margin-top:-42px;position:relative;z-index:5}
 .big-avatar{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));border:4px solid #111;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;overflow:hidden;margin:0 auto;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.4)}
 .big-avatar img{width:100%;height:100%;object-fit:cover}
 .profile-info h1{font-size:20px;margin-top:6px;line-height:1.2}
 .profile-info p{color:var(--gris);font-size:12px;margin-top:3px;line-height:1.4}
+
 .stats{display:flex;background:#2A2A35;border:1px solid var(--ligne);border-radius:12px;overflow:hidden;margin:10px auto 0;max-width:360px;width:100%}
 .stats div{flex:1;text-align:center;padding:8px 2px}
 .stats div+div{border-left:1px solid var(--ligne)}
 .stats b{display:block;font-size:16px;color:var(--or)}
 .stats span{font-size:10px;color:var(--gris)}
+
 .profile-btns{display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap}
 .profile-btns button{padding:9px 14px;border:none;border-radius:999px;font-weight:800;cursor:pointer;font-size:12px;white-space:nowrap}
-.btn-blue{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}.btn-grey{background:#2A2A35;color:#fff}.btn-green{background:#22C55E;color:#fff}
+.btn-blue{background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff}
+.btn-grey{background:#2A2A35;color:#fff}
+.btn-green{background:#22C55E;color:#fff}
+
 .share-box{display:flex;gap:6px;margin:10px 12px 0}
 .share-box button{flex:1;border:1px solid var(--ligne);background:#2A2A35;color:#fff;border-radius:10px;padding:9px 4px;font-size:11px;font-weight:800;cursor:pointer}
 .share-box button:active{background:var(--violet)}
-.layout{max-width:520px;width:100%;margin:10px auto;padding:0 8px 30px}
-.card{background:var(--carte);border-radius:14px;padding:12px;margin-bottom:10px;border:1px solid var(--ligne)}
+
+.layout{max-width:520px;width:100%;margin:10px auto;padding:0 8px 30px;min-width:0}
+.card{background:var(--carte);border-radius:14px;padding:12px;margin-bottom:10px;border:1px solid var(--ligne);min-width:0;max-width:100%;overflow:hidden}
 .card h3{margin-bottom:8px;font-size:14px}
 .info-row{display:flex;gap:8px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--ligne);word-break:break-word}
-.post-head{display:flex;gap:8px;align-items:center}
+
+/* EN-TÊTE PUBLICATION */
+.post-head{display:flex;gap:8px;align-items:center;min-width:0}
 .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0}
 .avatar img{width:100%;height:100%;object-fit:cover}
-.post-text{margin:8px 0;font-size:14px;white-space:pre-wrap;line-height:1.5;word-break:break-word}
-/* ✅ MODIFIÉ : PHOTO PETITE SANS CLIQUER */
-.post img.main{width:100%;border-radius:10px;max-height:200px;object-fit:contain;background:#111;cursor:pointer;display:block;margin:0 auto}
+.post-head>div:last-child{min-width:0;overflow-wrap:anywhere}
+
+.post-text{margin:8px 0;font-size:14px;white-space:pre-wrap;line-height:1.5;word-break:break-word;overflow-wrap:anywhere}
+
+/* CORRECTION PRINCIPALE : PHOTOS DES PUBLICATIONS */
+.card img.main{
+    display:block;
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    height:auto;
+    max-height:65vh;
+    object-fit:contain;
+    object-position:center;
+    border-radius:10px;
+    background:#111;
+    cursor:pointer;
+    margin:8px auto;
+}
+
+/* VIDÉOS RESPONSIVES */
+.card video{
+    display:block;
+    width:100%;
+    max-width:100%;
+    height:auto;
+    max-height:65vh;
+    object-fit:contain;
+    border-radius:10px;
+    background:#000;
+    margin:8px auto;
+}
+
+/* ACTIONS */
 .actions{display:flex;justify-content:space-around;border-top:1px solid var(--ligne);padding-top:6px;margin-top:6px}
-.actions button{border:none;background:none;font-weight:700;color:var(--gris);cursor:pointer;padding:6px;font-size:12px;flex:1}
+.actions button{border:none;background:none;font-weight:700;color:var(--gris);cursor:pointer;padding:6px;font-size:12px;flex:1;min-width:0}
 .actions button.actif{color:var(--or)}
+
 .comment-box{display:none;margin-top:8px;gap:6px}
 .comment-box.show{display:flex}
 .comment-box input{flex:1;min-width:0;background:#2A2A35;border:none;padding:9px 10px;border-radius:999px;color:#fff;outline:none;font-size:12px}
 .comment-box button{background:var(--violet);border:none;color:#fff;padding:9px 12px;border-radius:999px;font-weight:800;cursor:pointer}
-.viewer{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;display:none;flex-direction:column}
+
+/* VISUALISEUR PHOTO */
+.viewer{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;display:none;flex-direction:column;overflow:hidden}
 .viewer.open{display:flex}
-.viewer-top{display:flex;justify-content:space-between;align-items:center;padding:12px}
+.viewer-top{display:flex;justify-content:space-between;align-items:center;padding:12px;flex-shrink:0}
 .viewer-top button{background:#2A2A35;border:none;color:#fff;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer}
-.viewer-img{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:0 10px}
-.viewer-img img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px}
-.viewer-actions{display:flex;justify-content:space-around;padding:12px;border-top:1px solid #333;background:#111}
+.viewer-img{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;min-width:0;padding:10px;overflow:hidden}
+.viewer-img img{display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;border-radius:10px}
+.viewer-actions{display:flex;justify-content:space-around;padding:12px;border-top:1px solid #333;background:#111;flex-shrink:0}
 .viewer-actions button{border:none;background:none;color:#fff;font-weight:800;font-size:13px;cursor:pointer;padding:8px}
 .viewer-actions button.actif{color:var(--or)}
-.viewer-comments{max-height:160px;overflow-y:auto;padding:0 12px 8px;background:#111}
-.viewer-comment-box{display:flex;gap:6px;padding:10px;background:#111;border-top:1px solid #333}
+.viewer-comments{max-height:160px;overflow-y:auto;padding:0 12px 8px;background:#111;flex-shrink:0}
+.viewer-comment-box{display:flex;gap:6px;padding:10px;background:#111;border-top:1px solid #333;flex-shrink:0}
 .viewer-comment-box input{flex:1;min-width:0;background:#2A2A35;border:none;padding:10px;border-radius:999px;color:#fff;outline:none}
 .viewer-comment-box button{background:var(--violet);border:none;color:#fff;padding:10px 14px;border-radius:999px;font-weight:800}
+
+/* PETITS ÉCRANS */
+@media(max-width:380px){
+    .share-box{gap:4px;margin-left:6px;margin-right:6px}
+    .share-box button{font-size:10px;padding:8px 2px}
+    .profile-btns button{padding:8px 11px}
+    .viewer-actions{padding:8px 2px}
+    .viewer-actions button{font-size:11px;padding:6px 3px}
+}
 </style>
 </head>
+
 <body>
 
 <header>
-<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i><small>MADE IN KINSHASA</small></div>
+<div class="logo" onclick="location.href='feed.html'">
+<span>J</span>JASON<i>BOOK</i>
+<small>MADE IN KINSHASA</small>
+</div>
 </header>
 
 <div class="cover-wrap">
 <div class="cover" id="coverDiv" onclick="ouvrirPhoto('cover')">Chargement...</div>
+
 <div class="profile-row">
 <div class="big-avatar" id="bigAvatar" onclick="ouvrirPhoto('profil')">?</div>
+
 <div class="profile-info">
 <h1 id="nomAffiche">Chargement...</h1>
 <p id="bioAffiche"></p>
 <p id="metaAffiche"></p>
 <p id="amisCount"></p>
 </div>
+
 <div class="stats">
-  <div><b id="nbAmis">0</b><span>👥 Amis</span></div>
-  <div><b id="nbLikes">0</b><span>❤️ J'aime</span></div>
-  <div><b id="nbPubs">0</b><span>📝 Publications</span></div>
+<div><b id="nbAmis">0</b><span>👥 Amis</span></div>
+<div><b id="nbLikes">0</b><span>❤️ J'aime</span></div>
+<div><b id="nbPubs">0</b><span>📝 Publications</span></div>
 </div>
+
 <div class="profile-btns">
 <button class="btn-blue" id="btnAmi" onclick="actionAmi()">➕ Ajouter</button>
 <button class="btn-grey" id="btnMsg" onclick="allerMessage()">💬 Message</button>
 </div>
+
 <div class="share-box">
 <button onclick="copierLienProfil()">🔗 Copier le lien</button>
 <button onclick="telechargerPhotoProfil()">⬇️ Photo profil</button>
@@ -100,262 +166,694 @@ header{background:#111;display:flex;align-items:center;padding:10px 12px;border-
 </div>
 
 <div class="layout">
-<div class="card"><h3>Intro</h3><div id="introList"></div></div>
-<div class="card"><h3>Photos</h3><div id="photosGrid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px"></div><p id="noPhotos" style="color:#A1A1AA;font-size:12px">Aucune photo</p></div>
-<div class="card"><p style="font-weight:700;font-size:14px">Publications de <span id="nomPost">cette personne</span></p></div>
+
+<div class="card">
+<h3>Intro</h3>
+<div id="introList"></div>
+</div>
+
+<div class="card">
+<h3>Photos</h3>
+<div id="photosGrid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px"></div>
+<p id="noPhotos" style="color:#A1A1AA;font-size:12px">Aucune photo</p>
+</div>
+
+<div class="card">
+<p style="font-weight:700;font-size:14px">Publications de <span id="nomPost">cette personne</span></p>
+</div>
+
 <div id="postsList"></div>
-<div class="card" id="noPosts" style="display:none"><p style="text-align:center;color:#A1A1AA">Aucune publication pour le moment</p></div>
+
+<div class="card" id="noPosts" style="display:none">
+<p style="text-align:center;color:#A1A1AA">Aucune publication pour le moment</p>
+</div>
+
 </div>
 
 <div class="viewer" id="viewer">
-  <div class="viewer-top"><b id="viewerTitre">Photo de profil</b><button onclick="fermerPhoto()">✕</button></div>
-  <div class="viewer-img"><img id="viewerImg" src=""></div>
-  <div class="viewer-actions">
-    <button id="btnViewerLike" onclick="aimerPhotoViewer()">❤️ <span id="viewerLikeCount">0</span></button>
-    <button onclick="document.getElementById('viewerInput').focus()">💬 <span id="viewerComCount">0</span></button>
-    <button onclick="partagerPhotoViewer()">↗️ <span id="viewerPartageCount">0</span> Partager</button>
-    <button onclick="telechargerPhotoViewer()">⬇️ Télécharger</button>
-  </div>
-  <div class="viewer-comments" id="viewerComments"></div>
-  <div class="viewer-comment-box"><input id="viewerInput" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter') commenterPhotoViewer()"><button onclick="commenterPhotoViewer()">➤</button></div>
+<div class="viewer-top">
+<b id="viewerTitre">Photo de profil</b>
+<button onclick="fermerPhoto()">✕</button>
+</div>
+
+<div class="viewer-img">
+<img id="viewerImg" src="">
+</div>
+
+<div class="viewer-actions">
+<button id="btnViewerLike" onclick="aimerPhotoViewer()">❤️ <span id="viewerLikeCount">0</span></button>
+<button onclick="document.getElementById('viewerInput').focus()">💬 <span id="viewerComCount">0</span></button>
+<button onclick="partagerPhotoViewer()">↗️ <span id="viewerPartageCount">0</span> Partager</button>
+<button onclick="telechargerPhotoViewer()">⬇️ Télécharger</button>
+</div>
+
+<div class="viewer-comments" id="viewerComments"></div>
+
+<div class="viewer-comment-box">
+<input id="viewerInput" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter') commenterPhotoViewer()">
+<button onclick="commenterPhotoViewer()">➤</button>
+</div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, onValue, get, set, remove, push, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
-const app = initializeApp(firebaseConfig); const db = getDatabase(app);
-const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
+
+const firebaseConfig = {
+apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",
+authDomain: "starlink-investit.firebaseapp.com",
+databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com",
+projectId: "starlink-investit",
+storageBucket: "starlink-investit.firebasestorage.app",
+messagingSenderId: "807081599583",
+appId: "1:807081599583:web:e00ec3959bc4acdae031ea"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const uid = localStorage.getItem('jasonbook_uid');
+if(!uid) location.href='index.html';
+
 const monNom = localStorage.getItem('jasonbook_nom')||"";
 const maPhoto = localStorage.getItem('jasonbook_photo')||"";
 const cibleUid = new URLSearchParams(location.search).get('uid');
+
 if(!cibleUid) location.href='feed.html';
 if(cibleUid===uid) location.href='profil.html';
-let profilCible=null, statut="inconnu", vraiUid=cibleUid, photoTypeActuel='profil', photoData={profil:{likes:{},comments:{},partages:0},cover:{likes:{},comments:{},partages:0}};
+
+let profilCible=null;
+let statut="inconnu";
+let vraiUid=cibleUid;
+let photoTypeActuel='profil';
+
+let photoData={
+profil:{likes:{},comments:{},partages:0},
+cover:{likes:{},comments:{},partages:0}
+};
+
 window.copierLienProfil=async ()=>{
-  const lien = location.origin + location.pathname + '?uid=' + encodeURIComponent(cibleUid) + '&nom=' + encodeURIComponent(document.getElementById('nomAffiche').innerText||"");
-  try{ await navigator.clipboard.writeText(lien); alert("Lien copié ✅\n"+lien); }catch(e){ prompt("Copie ce lien :", lien); }
+const lien=location.origin+location.pathname+'?uid='+encodeURIComponent(cibleUid)+'&nom='+encodeURIComponent(document.getElementById('nomAffiche').innerText||"");
+try{
+await navigator.clipboard.writeText(lien);
+alert("Lien copié ✅\n"+lien);
+}catch(e){
+prompt("Copie ce lien :",lien);
+}
 };
-function telechargerImage(url, nomFichier){
-  if(!url){ alert("Pas de photo à télécharger"); return; }
-  const a=document.createElement('a'); a.href=url; a.download=nomFichier; a.target="_blank"; document.body.appendChild(a); a.click(); a.remove();
+
+function telechargerImage(url,nomFichier){
+if(!url){alert("Pas de photo à télécharger");return;}
+const a=document.createElement('a');
+a.href=url;
+a.download=nomFichier;
+a.target="_blank";
+document.body.appendChild(a);
+a.click();
+a.remove();
 }
-window.telechargerPhotoProfil=()=>{ telechargerImage(profilCible?.photoProfil||"", "photo-profil-"+(profilCible?.nomComplet||"ami")+".jpg"); };
-window.telechargerCouverture=()=>{ telechargerImage(profilCible?.photoCouverture||"", "couverture-"+(profilCible?.nomComplet||"ami")+".jpg"); };
-window.telechargerPhotoViewer=()=>{ const img=document.getElementById('viewerImg').src; telechargerImage(img, "photo-jasonbook.jpg"); };
-async function envoyerNotif(destUid, type, texte, extra={}){
-  if(!destUid || destUid===uid) return;
-  try{ const nRef=push(ref(db,'jasonbook/notifications/'+destUid)); await set(nRef,{type, texte, deUid:uid, deNom:monNom, dePhoto:maPhoto||"", date:new Date().toLocaleString(), timestamp:Date.now(), lu:false, ...extra}); }catch(e){}
+
+window.telechargerPhotoProfil=()=>{
+telechargerImage(profilCible?.photoProfil||"","photo-profil-"+(profilCible?.nomComplet||"ami")+".jpg");
+};
+
+window.telechargerCouverture=()=>{
+telechargerImage(profilCible?.photoCouverture||"","couverture-"+(profilCible?.nomComplet||"ami")+".jpg");
+};
+
+window.telechargerPhotoViewer=()=>{
+const img=document.getElementById('viewerImg').src;
+telechargerImage(img,"photo-jasonbook.jpg");
+};
+
+async function envoyerNotif(destUid,type,texte,extra={}){
+if(!destUid||destUid===uid)return;
+try{
+const nRef=push(ref(db,'jasonbook/notifications/'+destUid));
+await set(nRef,{
+type,
+texte,
+deUid:uid,
+deNom:monNom,
+dePhoto:maPhoto||"",
+date:new Date().toLocaleString(),
+timestamp:Date.now(),
+lu:false,
+...extra
+});
+}catch(e){}
 }
+
 function majBouton(){
-  const b=document.getElementById('btnAmi');
-  if(statut==='ami'){ b.innerText="✅ Ami"; b.className="btn-green"; }
-  else if(statut==='demande_envoyee'){ b.innerText="En attente..."; b.className="btn-grey"; }
-  else if(statut==='demande_recue'){ b.innerText="✅ Accepter"; b.className="btn-green"; }
-  else { b.innerText="➕ Ajouter"; b.className="btn-blue"; }
+const b=document.getElementById('btnAmi');
+if(statut==='ami'){
+b.innerText="✅ Ami";
+b.className="btn-green";
+}else if(statut==='demande_envoyee'){
+b.innerText="En attente...";
+b.className="btn-grey";
+}else if(statut==='demande_recue'){
+b.innerText="✅ Accepter";
+b.className="btn-green";
+}else{
+b.innerText="➕ Ajouter";
+b.className="btn-blue";
 }
-window.allerMessage=()=> location.href='messages.html?uid='+cibleUid;
+}
+
+window.allerMessage=()=>location.href='messages.html?uid='+cibleUid;
+
 window.actionAmi=async()=>{
-  if(statut==='inconnu'){
-    await set(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid), { deUid:uid, deNom:monNom, date:new Date().toLocaleString() });
-    await set(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid), { versUid:cibleUid, date:new Date().toLocaleString() });
-    await envoyerNotif(cibleUid, "demande", monNom+" t'a envoyé une demande d'ami");
-    statut='demande_envoyee'; majBouton();
-  } else if(statut==='demande_envoyee'){
-    await remove(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid));
-    await remove(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid));
-    statut='inconnu'; majBouton();
-  } else if(statut==='demande_recue'){
-    await set(ref(db,'jasonbook/amis/'+uid+'/'+cibleUid), true);
-    await set(ref(db,'jasonbook/amis/'+cibleUid+'/'+uid), true);
-    if(vraiUid!==cibleUid){ await set(ref(db,'jasonbook/amis/'+uid+'/'+vraiUid), true); await set(ref(db,'jasonbook/amis/'+vraiUid+'/'+uid), true); }
-    await remove(ref(db,'jasonbook/demandes/'+uid+'/'+cibleUid));
-    await remove(ref(db,'jasonbook/demandesEnvoyees/'+cibleUid+'/'+uid));
-    statut='ami'; majBouton();
-  } else if(statut==='ami'){
-    if(!confirm("Retirer cet ami ?")) return;
-    await remove(ref(db,'jasonbook/amis/'+uid+'/'+cibleUid));
-    await remove(ref(db,'jasonbook/amis/'+cibleUid+'/'+uid));
-    if(vraiUid!==cibleUid){ await remove(ref(db,'jasonbook/amis/'+uid+'/'+vraiUid)); await remove(ref(db,'jasonbook/amis/'+vraiUid+'/'+uid)); }
-    statut='inconnu'; majBouton();
-  }
+if(statut==='inconnu'){
+await set(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid),{
+deUid:uid,deNom:monNom,date:new Date().toLocaleString()
+});
+await set(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid),{
+versUid:cibleUid,date:new Date().toLocaleString()
+});
+await envoyerNotif(cibleUid,"demande",monNom+" t'a envoyé une demande d'ami");
+statut='demande_envoyee';
+majBouton();
+
+}else if(statut==='demande_envoyee'){
+await remove(ref(db,'jasonbook/demandes/'+cibleUid+'/'+uid));
+await remove(ref(db,'jasonbook/demandesEnvoyees/'+uid+'/'+cibleUid));
+statut='inconnu';
+majBouton();
+
+}else if(statut==='demande_recue'){
+await set(ref(db,'jasonbook/amis/'+uid+'/'+cibleUid),true);
+await set(ref(db,'jasonbook/amis/'+cibleUid+'/'+uid),true);
+
+if(vraiUid!==cibleUid){
+await set(ref(db,'jasonbook/amis/'+uid+'/'+vraiUid),true);
+await set(ref(db,'jasonbook/amis/'+vraiUid+'/'+uid),true);
+}
+
+await remove(ref(db,'jasonbook/demandes/'+uid+'/'+cibleUid));
+await remove(ref(db,'jasonbook/demandesEnvoyees/'+cibleUid+'/'+uid));
+statut='ami';
+majBouton();
+
+}else if(statut==='ami'){
+if(!confirm("Retirer cet ami ?"))return;
+
+await remove(ref(db,'jasonbook/amis/'+uid+'/'+cibleUid));
+await remove(ref(db,'jasonbook/amis/'+cibleUid+'/'+uid));
+
+if(vraiUid!==cibleUid){
+await remove(ref(db,'jasonbook/amis/'+uid+'/'+vraiUid));
+await remove(ref(db,'jasonbook/amis/'+vraiUid+'/'+uid));
+}
+
+statut='inconnu';
+majBouton();
+}
 };
+
 function afficherProfil(u){
-  profilCible=u;
-  const lettre=(u.prenom||u.nomComplet||"?").charAt(0).toUpperCase();
-  document.getElementById('bigAvatar').innerHTML = u.photoProfil ? `<img src="${u.photoProfil}">` : lettre;
-  const nomFinal = u.nomComplet || u.nom || "Ami";
-  document.getElementById('nomAffiche').innerText=nomFinal;
-  document.getElementById('nomPost').innerText=nomFinal;
-  document.getElementById('bioAffiche').innerText=u.bio||"";
-  document.getElementById('metaAffiche').innerText=[u.activite,u.ville,u.pays].filter(Boolean).join(" • ");
-  document.getElementById('introList').innerHTML=`
-    <div class="info-row">💼 ${u.activite||"Non précisée"}</div>
-    <div class="info-row">📍 ${u.ville||""} ${u.pays? "- "+u.pays:""}</div>
-    <div class="info-row">📅 Membre depuis ${u.dateInscription||""}</div>`;
-  document.getElementById('coverDiv').innerHTML = u.photoCouverture ? `<img src="${u.photoCouverture}"><span class="hint">👆 Appuie pour voir</span>` : nomFinal;
-  ecouterPhotoStats();
+profilCible=u;
+
+const lettre=(u.prenom||u.nomComplet||"?").charAt(0).toUpperCase();
+
+document.getElementById('bigAvatar').innerHTML=
+u.photoProfil?`<img src="${u.photoProfil}">`:lettre;
+
+const nomFinal=u.nomComplet||u.nom||"Ami";
+
+document.getElementById('nomAffiche').innerText=nomFinal;
+document.getElementById('nomPost').innerText=nomFinal;
+document.getElementById('bioAffiche').innerText=u.bio||"";
+
+document.getElementById('metaAffiche').innerText=
+[u.activite,u.ville,u.pays].filter(Boolean).join(" • ");
+
+document.getElementById('introList').innerHTML=`
+<div class="info-row">💼 ${u.activite||"Non précisée"}</div>
+<div class="info-row">📍 ${u.ville||""} ${u.pays? "- "+u.pays:""}</div>
+<div class="info-row">📅 Membre depuis ${u.dateInscription||""}</div>`;
+
+document.getElementById('coverDiv').innerHTML=
+u.photoCouverture
+?`<img src="${u.photoCouverture}"><span class="hint">👆 Appuie pour voir</span>`
+:nomFinal;
+
+ecouterPhotoStats();
 }
+
 async function chargerProfil(){
-  const nomUrl=new URLSearchParams(location.search).get('nom');
-  if(nomUrl){ document.getElementById('nomAffiche').innerText=decodeURIComponent(nomUrl); document.getElementById('nomPost').innerText=decodeURIComponent(nomUrl); }
-  let snap = await get(ref(db,'jasonbook/users/'+cibleUid));
-  if(snap.val()){ vraiUid=cibleUid; afficherProfil({uid:cibleUid, ...snap.val()}); chargerPosts(); return; }
-  const tous = await get(ref(db,'jasonbook/users'));
-  const d = tous.val()||{};
-  for(const [key,u] of Object.entries(d)){
-    if(key===cibleUid || u.uid===cibleUid || u.id===cibleUid){ vraiUid=key; afficherProfil({uid:key, ...u}); chargerPosts(); return; }
-  }
-  let nomTrouve=nomUrl?decodeURIComponent(nomUrl):"";
-  if(!nomTrouve){
-    const dem = await get(ref(db,'jasonbook/demandes/'+uid+'/'+cibleUid));
-    if(dem.val() && dem.val().deNom) nomTrouve=dem.val().deNom;
-  }
-  if(!nomTrouve){
-    const notifs = await get(ref(db,'jasonbook/notifications/'+uid));
-    if(notifs.val()){ for(const n of Object.values(notifs.val())){ if(n.deUid===cibleUid && n.deNom){ nomTrouve=n.deNom; break; } } }
-  }
-  if(nomTrouve){
-    for(const [key,u] of Object.entries(d)){
-      const nomU = (u.nomComplet||"").toLowerCase().trim();
-      if(nomU && nomU===nomTrouve.toLowerCase().trim()){ vraiUid=key; afficherProfil({uid:key, ...u}); chargerPosts(); return; }
-    }
-  }
-  vraiUid=cibleUid;
-  afficherProfil({uid:cibleUid, nomComplet: nomTrouve || "Ami", prenom: nomTrouve ? nomTrouve.split(' ')[0] : "?", photoProfil:"", bio:"Ce compte a été créé 2 fois. Son profil est sous un autre identifiant, mais tu peux lui écrire.", activite:"", ville:"", pays:"", dateInscription:""});
-  chargerPosts();
+const nomUrl=new URLSearchParams(location.search).get('nom');
+
+if(nomUrl){
+document.getElementById('nomAffiche').innerText=nomUrl;
+document.getElementById('nomPost').innerText=nomUrl;
 }
+
+let snap=await get(ref(db,'jasonbook/users/'+cibleUid));
+
+if(snap.val()){
+vraiUid=cibleUid;
+afficherProfil({uid:cibleUid,...snap.val()});
+chargerPosts();
+return;
+}
+
+const tous=await get(ref(db,'jasonbook/users'));
+const d=tous.val()||{};
+
+for(const [key,u] of Object.entries(d)){
+if(key===cibleUid||u.uid===cibleUid||u.id===cibleUid){
+vraiUid=key;
+afficherProfil({uid:key,...u});
+chargerPosts();
+return;
+}
+}
+
+let nomTrouve=nomUrl||"";
+
+if(!nomTrouve){
+const dem=await get(ref(db,'jasonbook/demandes/'+uid+'/'+cibleUid));
+if(dem.val()&&dem.val().deNom)nomTrouve=dem.val().deNom;
+}
+
+if(!nomTrouve){
+const notifs=await get(ref(db,'jasonbook/notifications/'+uid));
+if(notifs.val()){
+for(const n of Object.values(notifs.val())){
+if(n.deUid===cibleUid&&n.deNom){
+nomTrouve=n.deNom;
+break;
+}
+}
+}
+}
+
+if(nomTrouve){
+for(const [key,u] of Object.entries(d)){
+const nomU=(u.nomComplet||"").toLowerCase().trim();
+
+if(nomU&&nomU===nomTrouve.toLowerCase().trim()){
+vraiUid=key;
+afficherProfil({uid:key,...u});
+chargerPosts();
+return;
+}
+}
+}
+
+vraiUid=cibleUid;
+
+afficherProfil({
+uid:cibleUid,
+nomComplet:nomTrouve||"Ami",
+prenom:nomTrouve?nomTrouve.split(' ')[0]:"?",
+photoProfil:"",
+bio:"Ce compte a été créé 2 fois. Son profil est sous un autre identifiant, mais tu peux lui écrire.",
+activite:"",
+ville:"",
+pays:"",
+dateInscription:""
+});
+
+chargerPosts();
+}
+
 chargerProfil();
-onValue(ref(db,'jasonbook/amis/'+uid), s=>{ const d=s.val(); if(d && (d[cibleUid] || d[vraiUid])) statut='ami'; else if(statut==='ami') statut='inconnu'; majBouton(); });
-onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_envoyee'; majBouton(); });
-onValue(ref(db,'jasonbook/demandes/'+uid), s=>{ const d=s.val(); if(d && d[cibleUid] && statut!=='ami') statut='demande_recue'; majBouton(); });
-onValue(ref(db,'jasonbook/amis/'+cibleUid), s=>{ const d=s.val(); const n=d?Object.keys(d).length:0; document.getElementById('nbAmis').innerText=n; if(n) document.getElementById('amisCount').innerText=n+" ami"+(n>1?"s":""); });
-function photoPath(type){ return 'jasonbook/photos/'+cibleUid+'_'+type; }
+
+onValue(ref(db,'jasonbook/amis/'+uid),s=>{
+const d=s.val();
+
+if(d&&(d[cibleUid]||d[vraiUid]))statut='ami';
+else if(statut==='ami')statut='inconnu';
+
+majBouton();
+});
+
+onValue(ref(db,'jasonbook/demandesEnvoyees/'+uid),s=>{
+const d=s.val();
+
+if(d&&d[cibleUid]&&statut!=='ami')statut='demande_envoyee';
+
+majBouton();
+});
+
+onValue(ref(db,'jasonbook/demandes/'+uid),s=>{
+const d=s.val();
+
+if(d&&d[cibleUid]&&statut!=='ami')statut='demande_recue';
+
+majBouton();
+});
+
+onValue(ref(db,'jasonbook/amis/'+cibleUid),s=>{
+const d=s.val();
+const n=d?Object.keys(d).length:0;
+
+document.getElementById('nbAmis').innerText=n;
+
+if(n){
+document.getElementById('amisCount').innerText=n+" ami"+(n>1?"s":"");
+}
+});
+
+function photoPath(type){
+return 'jasonbook/photos/'+cibleUid+'_'+type;
+}
+
 function ecouterPhotoStats(){
-  ['profil','cover'].forEach(type=>{
-    onValue(ref(db, photoPath(type)), s=>{
-      const d=s.val()||{likes:{},comments:{},partages:0};
-      photoData[type]=d;
-      if(photoTypeActuel===type) majViewer();
-    });
-  });
+['profil','cover'].forEach(type=>{
+onValue(ref(db,photoPath(type)),s=>{
+const d=s.val()||{likes:{},comments:{},partages:0};
+photoData[type]=d;
+
+if(photoTypeActuel===type)majViewer();
+});
+});
 }
+
 window.ouvrirPhoto=(type)=>{
-  photoTypeActuel=type;
-  const img = type==='profil' ? (profilCible?.photoProfil||"") : (profilCible?.photoCouverture||"");
-  if(!img){ alert("Elle n'a pas encore mis de photo ici."); return; }
-  document.getElementById('viewerTitre').innerText = type==='profil' ? "Photo de profil - "+(profilCible?.nomComplet||"") : "Photo de couverture - "+(profilCible?.nomComplet||"");
-  document.getElementById('viewerImg').src=img;
-  document.getElementById('viewer').classList.add('open');
-  majViewer();
+photoTypeActuel=type;
+
+const img=type==='profil'
+?(profilCible?.photoProfil||"")
+:(profilCible?.photoCouverture||"");
+
+if(!img){
+alert("Elle n'a pas encore mis de photo ici.");
+return;
+}
+
+document.getElementById('viewerTitre').innerText=
+type==='profil'
+?"Photo de profil - "+(profilCible?.nomComplet||"")
+:"Photo de couverture - "+(profilCible?.nomComplet||"");
+
+document.getElementById('viewerImg').src=img;
+document.getElementById('viewer').classList.add('open');
+majViewer();
 };
-window.fermerPhoto=()=> document.getElementById('viewer').classList.remove('open');
+
+window.fermerPhoto=()=>{
+document.getElementById('viewer').classList.remove('open');
+};
+
 function majViewer(){
-  const d=photoData[photoTypeActuel]||{likes:{},comments:{},partages:0};
-  const nLike=Object.keys(d.likes||{}).length;
-  const nCom=Object.keys(d.comments||{}).length;
-  document.getElementById('viewerLikeCount').innerText=nLike;
-  document.getElementById('viewerComCount').innerText=nCom;
-  document.getElementById('viewerPartageCount').innerText=d.partages||0;
-  document.getElementById('btnViewerLike').classList.toggle('actif', !!(d.likes && d.likes[uid]));
-  const box=document.getElementById('viewerComments'); box.innerHTML="";
-  Object.values(d.comments||{}).forEach(c=>{
-    const div=document.createElement('div'); div.style.cssText="display:flex;gap:8px;margin-top:8px;font-size:13px";
-    div.innerHTML=`<div class="avatar" style="width:28px;height:28px;font-size:12px">${(c.nom||"?").charAt(0)}</div><div><b>${c.nom||""}</b> <span>${c.texte||""}</span><br><small style="color:#888">${c.date||""}</small></div>`;
-    box.appendChild(div);
-  });
+const d=photoData[photoTypeActuel]||{likes:{},comments:{},partages:0};
+
+const nLike=Object.keys(d.likes||{}).length;
+const nCom=Object.keys(d.comments||{}).length;
+
+document.getElementById('viewerLikeCount').innerText=nLike;
+document.getElementById('viewerComCount').innerText=nCom;
+document.getElementById('viewerPartageCount').innerText=d.partages||0;
+
+document.getElementById('btnViewerLike').classList.toggle(
+'actif',!!(d.likes&&d.likes[uid])
+);
+
+const box=document.getElementById('viewerComments');
+box.innerHTML="";
+
+Object.values(d.comments||{}).forEach(c=>{
+const div=document.createElement('div');
+div.style.cssText="display:flex;gap:8px;margin-top:8px;font-size:13px";
+
+div.innerHTML=`
+<div class="avatar" style="width:28px;height:28px;font-size:12px">${(c.nom||"?").charAt(0)}</div>
+<div><b>${c.nom||""}</b> <span>${c.texte||""}</span><br><small style="color:#888">${c.date||""}</small></div>`;
+
+box.appendChild(div);
+});
 }
-window.aimerPhotoViewer=async ()=>{
-  const p=photoPath(photoTypeActuel);
-  const snap=await get(ref(db,p+'/likes/'+uid));
-  if(snap.val()){ await remove(ref(db,p+'/likes/'+uid)); }
-  else { await set(ref(db,p+'/likes/'+uid), {nom:monNom, date:new Date().toLocaleString()}); await envoyerNotif(vraiUid, "like", monNom+" a aimé ta photo de "+(photoTypeActuel==='profil'?"profil":"couverture")+" ❤️"); }
+
+window.aimerPhotoViewer=async()=>{
+const p=photoPath(photoTypeActuel);
+const snap=await get(ref(db,p+'/likes/'+uid));
+
+if(snap.val()){
+await remove(ref(db,p+'/likes/'+uid));
+}else{
+await set(ref(db,p+'/likes/'+uid),{
+nom:monNom,date:new Date().toLocaleString()
+});
+
+await envoyerNotif(vraiUid,"like",monNom+" a aimé ta photo de "+(photoTypeActuel==='profil'?"profil":"couverture")+" ❤️");
+}
 };
-window.commenterPhotoViewer=async ()=>{
-  const inp=document.getElementById('viewerInput'); const txt=inp.value.trim(); if(!txt) return;
-  const r=push(ref(db, photoPath(photoTypeActuel)+'/comments'));
-  await set(r, {auteurUid:uid, nom:monNom, texte:txt, date:new Date().toLocaleString()});
-  await envoyerNotif(vraiUid, "commentaire", monNom+" a commenté ta photo 💬", {commentaireTexte:txt});
-  inp.value="";
+
+window.commenterPhotoViewer=async()=>{
+const inp=document.getElementById('viewerInput');
+const txt=inp.value.trim();
+
+if(!txt)return;
+
+const r=push(ref(db,photoPath(photoTypeActuel)+'/comments'));
+
+await set(r,{
+auteurUid:uid,
+nom:monNom,
+texte:txt,
+date:new Date().toLocaleString()
+});
+
+await envoyerNotif(vraiUid,"commentaire",monNom+" a commenté ta photo 💬",{commentaireTexte:txt});
+
+inp.value="";
 };
-window.partagerPhotoViewer=async ()=>{
-  const p=photoPath(photoTypeActuel);
-  const snap=await get(ref(db,p+'/partages'));
-  await set(ref(db,p+'/partages'), (snap.val()||0)+1);
-  const img = photoTypeActuel==='profil' ? profilCible?.photoProfil : profilCible?.photoCouverture;
-  const r=push(ref(db,'jasonbook/posts'));
-  await set(r, {auteurUid:uid, nomAuteur:monNom, photoAuteur:maPhoto, texte: monNom+" a partagé la photo de "+(profilCible?.nomComplet||""), photoUrl:img, date:new Date().toLocaleString(), timestamp:Date.now(), likesCount:0, commentairesCount:0, partagesCount:0});
-  await envoyerNotif(vraiUid, "partage", monNom+" a partagé ta photo ↗️", {postId:r.key});
-  alert("Partagé ✅");
-  chargerPosts();
+
+window.partagerPhotoViewer=async()=>{
+const p=photoPath(photoTypeActuel);
+const snap=await get(ref(db,p+'/partages'));
+
+await set(ref(db,p+'/partages'),(snap.val()||0)+1);
+
+const img=photoTypeActuel==='profil'
+?profilCible?.photoProfil
+:profilCible?.photoCouverture;
+
+const r=push(ref(db,'jasonbook/posts'));
+
+await set(r,{
+auteurUid:uid,
+nomAuteur:monNom,
+photoAuteur:maPhoto,
+texte:monNom+" a partagé la photo de "+(profilCible?.nomComplet||""),
+photoUrl:img,
+date:new Date().toLocaleString(),
+timestamp:Date.now(),
+likesCount:0,
+commentairesCount:0,
+partagesCount:0
+});
+
+await envoyerNotif(vraiUid,"partage",monNom+" a partagé ta photo ↗️",{postId:r.key});
+
+alert("Partagé ✅");
+chargerPosts();
 };
+
 async function chargerPosts(){
-  const box=document.getElementById('postsList'); const grid=document.getElementById('photosGrid'); box.innerHTML=""; grid.innerHTML="";
-  const snap=await get(ref(db,'jasonbook/posts'));
-  const data=snap.val();
-  if(!data){ document.getElementById('noPosts').style.display="block"; document.getElementById('nbPubs').innerText="0"; document.getElementById('nbLikes').innerText="0"; return; }
-  const siens=Object.entries(data).filter(([id,p])=>p.auteurUid===cibleUid || p.auteurUid===vraiUid).reverse();
-  // ✅ Si le profil dit "Ami" mais le post dit "Jean Mvuanda", on prend le nom du post
-  const nomActuel=document.getElementById('nomAffiche').innerText;
-  if((nomActuel==="Ami" || nomActuel==="Chargement..." || !nomActuel) && siens.length && siens[0][1].nomAuteur){
-    const vraiNom=siens[0][1].nomAuteur;
-    document.getElementById('nomAffiche').innerText=vraiNom;
-    document.getElementById('nomPost').innerText=vraiNom;
-    if(profilCible) profilCible.nomComplet=vraiNom;
-  }
-  document.getElementById('nbPubs').innerText=siens.length;
-  const totalLikes=siens.reduce((s,[id,p])=>s+Number(p.likesCount||p.likes||0),0);
-  document.getElementById('nbLikes').innerText=totalLikes;
-  if(!siens.length){ document.getElementById('noPosts').style.display="block"; return; }
-  document.getElementById('noPosts').style.display="none";
-  siens.forEach(([id,p])=>{
-    const div=document.createElement('div'); div.className='card';
-    const dejaLike = p.likes && p.likes[uid];
-    div.innerHTML=`<div class="post-head"><div class="avatar">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div><div><b>${p.nomAuteur}</b><br><small style="color:#A1A1AA">${p.date||""}</small></div></div><div class="post-text">${p.texte||""}</div>${p.photoUrl?`<img class="main" src="${p.photoUrl}" onclick="ouvrirPostPhoto('${p.photoUrl}')">`:""}${p.videoUrl?`<video controls style="width:100%;border-radius:10px;max-height:200px" src="${p.videoUrl}"></video>`:""}<div class="actions"><button class="${dejaLike?'actif':''}" onclick="aimerPost('${id}', this)">❤️ ${p.likesCount||0}</button><button onclick="toggleComPost(this)">💬 ${p.commentairesCount||0}</button><button onclick="partagerPost('${id}')">↗️ ${p.partagesCount||0}</button></div><div class="comment-box"><input placeholder="Écris un commentaire..."><button onclick="envoyerComPost('${id}', this)">➤</button></div><div class="comments-list"></div>`;
-    box.appendChild(div);
-    if(p.photoUrl) grid.innerHTML+=`<img src="${p.photoUrl}" style="width:100%;height:70px;object-fit:cover;border-radius:8px" onclick="ouvrirPostPhoto('${p.photoUrl}')">`;
-  });
-  if(!grid.innerHTML) document.getElementById('noPhotos').style.display="block"; else document.getElementById('noPhotos').style.display="none";
+const box=document.getElementById('postsList');
+const grid=document.getElementById('photosGrid');
+
+box.innerHTML="";
+grid.innerHTML="";
+
+document.getElementById('noPhotos').style.display="block";
+
+const snap=await get(ref(db,'jasonbook/posts'));
+const data=snap.val();
+
+if(!data){
+document.getElementById('noPosts').style.display="block";
+document.getElementById('nbPubs').innerText="0";
+document.getElementById('nbLikes').innerText="0";
+return;
 }
+
+const siens=Object.entries(data)
+.filter(([id,p])=>p.auteurUid===cibleUid||p.auteurUid===vraiUid)
+.reverse();
+
+const nomActuel=document.getElementById('nomAffiche').innerText;
+
+if((nomActuel==="Ami"||nomActuel==="Chargement..."||!nomActuel)&&siens.length&&siens[0][1].nomAuteur){
+const vraiNom=siens[0][1].nomAuteur;
+
+document.getElementById('nomAffiche').innerText=vraiNom;
+document.getElementById('nomPost').innerText=vraiNom;
+
+if(profilCible)profilCible.nomComplet=vraiNom;
+}
+
+document.getElementById('nbPubs').innerText=siens.length;
+
+const totalLikes=siens.reduce((s,[id,p])=>s+Number(p.likesCount||p.likes||0),0);
+document.getElementById('nbLikes').innerText=totalLikes;
+
+if(!siens.length){
+document.getElementById('noPosts').style.display="block";
+return;
+}
+
+document.getElementById('noPosts').style.display="none";
+
+siens.forEach(([id,p])=>{
+const div=document.createElement('div');
+div.className='card';
+
+const dejaLike=p.likes&&p.likes[uid];
+
+div.innerHTML=`
+<div class="post-head">
+<div class="avatar">${p.photoAuteur?`<img src="${p.photoAuteur}">`:(p.nomAuteur||"?").charAt(0)}</div>
+<div><b>${p.nomAuteur||"Utilisateur"}</b><br><small style="color:#A1A1AA">${p.date||""}</small></div>
+</div>
+
+<div class="post-text">${p.texte||""}</div>
+
+${p.photoUrl?`<img class="main" src="${p.photoUrl}" onclick="ouvrirPostPhoto(this.src)" loading="lazy">`:""}
+
+${p.videoUrl?`<video controls playsinline preload="metadata" src="${p.videoUrl}"></video>`:""}
+
+<div class="actions">
+<button class="${dejaLike?'actif':''}" onclick="aimerPost('${id}', this)">❤️ ${p.likesCount||0}</button>
+<button onclick="toggleComPost(this)">💬 ${p.commentairesCount||0}</button>
+<button onclick="partagerPost('${id}')">↗️ ${p.partagesCount||0}</button>
+</div>
+
+<div class="comment-box">
+<input placeholder="Écris un commentaire...">
+<button onclick="envoyerComPost('${id}', this)">➤</button>
+</div>
+
+<div class="comments-list"></div>
+`;
+
+box.appendChild(div);
+
+if(p.photoUrl){
+const thumb=document.createElement('img');
+thumb.src=p.photoUrl;
+thumb.loading="lazy";
+thumb.alt="Photo de publication";
+thumb.style.cssText="width:100%;height:70px;max-width:100%;object-fit:cover;border-radius:8px;cursor:pointer";
+thumb.onclick=()=>ouvrirPostPhoto(p.photoUrl);
+grid.appendChild(thumb);
+}
+});
+
+document.getElementById('noPhotos').style.display=
+grid.children.length?"none":"block";
+}
+
 window.ouvrirPostPhoto=(url)=>{
-  photoTypeActuel='profil';
-  document.getElementById('viewerTitre').innerText="Photo";
-  document.getElementById('viewerImg').src=url;
-  document.getElementById('viewer').classList.add('open');
+photoTypeActuel='profil';
+
+document.getElementById('viewerTitre').innerText="Photo";
+document.getElementById('viewerImg').src=url;
+document.getElementById('viewer').classList.add('open');
 };
-window.aimerPost=async (postId, btn)=>{
-  const snap=await get(ref(db,'jasonbook/posts/'+postId));
-  const p=snap.val()||{}; const likes=p.likes||{};
-  const deja=!!likes[uid];
-  if(deja){ delete likes[uid]; } else { likes[uid]={nom:monNom}; }
-  await update(ref(db,'jasonbook/posts/'+postId), {likes:likes, likesCount:Object.keys(likes).length});
-  btn.classList.toggle('actif', !likes[uid]);
-  btn.innerText="❤️ "+Object.keys(likes).length;
-  if(!deja) await envoyerNotif(p.auteurUid, "like", monNom+" a aimé ta publication ❤️", {postId});
+
+window.aimerPost=async(postId,btn)=>{
+const snap=await get(ref(db,'jasonbook/posts/'+postId));
+const p=snap.val()||{};
+const likes=p.likes||{};
+const deja=!!likes[uid];
+
+if(deja){
+delete likes[uid];
+}else{
+likes[uid]={nom:monNom};
+}
+
+await update(ref(db,'jasonbook/posts/'+postId),{
+likes:likes,
+likesCount:Object.keys(likes).length
+});
+
+btn.classList.toggle('actif',!likes[uid]);
+btn.innerText="❤️ "+Object.keys(likes).length;
+
+if(!deja){
+await envoyerNotif(p.auteurUid,"like",monNom+" a aimé ta publication ❤️",{postId});
+}
 };
+
 window.toggleComPost=(btn)=>{
-  const card=btn.closest('.card'); const box=card.querySelector('.comment-box'); box.classList.toggle('show'); box.querySelector('input').focus();
+const card=btn.closest('.card');
+const box=card.querySelector('.comment-box');
+
+box.classList.toggle('show');
+box.querySelector('input').focus();
 };
-window.envoyerComPost=async (postId, btn)=>{
-  const box=btn.closest('.comment-box'); const inp=box.querySelector('input'); const txt=inp.value.trim(); if(!txt) return;
-  const r=push(ref(db,'jasonbook/posts/'+postId+'/commentaires'));
-  await set(r,{auteurUid:uid,nom:monNom,texte:txt,date:new Date().toLocaleString()});
-  const snap=await get(ref(db,'jasonbook/posts/'+postId));
-  const p=snap.val()||{};
-  await update(ref(db,'jasonbook/posts/'+postId),{commentairesCount:(p.commentairesCount||0)+1});
-  await envoyerNotif(p.auteurUid, "commentaire", monNom+" a commenté ta publication 💬", {postId, commentaireTexte:txt});
-  inp.value=""; alert("Commentaire ajouté ✅");
-  chargerPosts();
+
+window.envoyerComPost=async(postId,btn)=>{
+const box=btn.closest('.comment-box');
+const inp=box.querySelector('input');
+const txt=inp.value.trim();
+
+if(!txt)return;
+
+const r=push(ref(db,'jasonbook/posts/'+postId+'/commentaires'));
+
+await set(r,{
+auteurUid:uid,
+nom:monNom,
+texte:txt,
+date:new Date().toLocaleString()
+});
+
+const snap=await get(ref(db,'jasonbook/posts/'+postId));
+const p=snap.val()||{};
+
+await update(ref(db,'jasonbook/posts/'+postId),{
+commentairesCount:(p.commentairesCount||0)+1
+});
+
+await envoyerNotif(p.auteurUid,"commentaire",monNom+" a commenté ta publication 💬",{
+postId,
+commentaireTexte:txt
+});
+
+inp.value="";
+alert("Commentaire ajouté ✅");
+chargerPosts();
 };
-window.partagerPost=async (postId)=>{
-  const snap=await get(ref(db,'jasonbook/posts/'+postId)); const p=snap.val(); if(!p) return;
-  await update(ref(db,'jasonbook/posts/'+postId),{partagesCount:(p.partagesCount||0)+1});
-  const r=push(ref(db,'jasonbook/posts'));
-  await set(r,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:monNom+" a partagé : "+(p.texte||""),photoUrl:p.photoUrl||"",videoUrl:p.videoUrl||"",date:new Date().toLocaleString(),timestamp:Date.now(),likesCount:0,commentairesCount:0,partagesCount:0});
-  await envoyerNotif(p.auteurUid, "partage", monNom+" a partagé ta publication ↗️", {postId});
-  alert("Partagé ✅");
-  chargerPosts();
+
+window.partagerPost=async(postId)=>{
+const snap=await get(ref(db,'jasonbook/posts/'+postId));
+const p=snap.val();
+
+if(!p)return;
+
+await update(ref(db,'jasonbook/posts/'+postId),{
+partagesCount:(p.partagesCount||0)+1
+});
+
+const r=push(ref(db,'jasonbook/posts'));
+
+await set(r,{
+auteurUid:uid,
+nomAuteur:monNom,
+photoAuteur:maPhoto,
+texte:monNom+" a partagé : "+(p.texte||""),
+photoUrl:p.photoUrl||"",
+videoUrl:p.videoUrl||"",
+date:new Date().toLocaleString(),
+timestamp:Date.now(),
+likesCount:0,
+commentairesCount:0,
+partagesCount:0
+});
+
+await envoyerNotif(p.auteurUid,"partage",monNom+" a partagé ta publication ↗️",{postId});
+
+alert("Partagé ✅");
+chargerPosts();
 };
+
 </script>
 </body>
 </html>
