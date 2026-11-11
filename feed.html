@@ -13,11 +13,15 @@ body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;p
 button,a{touch-action:manipulation}
 button{cursor:pointer}
 /* ===== HEADER ===== */
-.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:10px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px}
+.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:10px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
 .logo{font-size:20px;font-weight:900;white-space:nowrap;flex:1;line-height:1}
 .logo i{color:var(--gold);font-style:normal}
 .logo small{display:block;font-size:8px;color:var(--muted);letter-spacing:1.2px;margin-top:1px}
 .search-top{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:8px 12px;display:flex;gap:6px;align-items:center;color:var(--muted);font-size:12px;cursor:pointer}
+/* ✅ BOUTON NOTIF EN HAUT */
+.btn-notif{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
+.btn-notif:active{background:var(--violet)}
+.btn-notif .dot{position:absolute;top:-5px;right:-5px;background:#E0245E;color:#fff;font-size:10px;font-weight:900;min-width:18px;height:18px;border-radius:999px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid #0A0A0F}
 /* ✅ BOUTON 3 TRAITS - PETIT PRO */
 .btn-menu{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;font-weight:400;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
 .btn-menu:active{background:var(--violet)}
@@ -117,6 +121,9 @@ button{cursor:pointer}
 <div class="top">
 <div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
 <div class="search-top" onclick="location.href='recherche.html'">🔍 <span>Chercher...</span></div>
+<!-- ✅ BOUTON NOTIFICATION EN HAUT -->
+<button class="btn-notif" onclick="location.href='notifications.html'">🔔<span class="dot" id="dotNotifTop">0</span></button>
+<!-- ✅ BOUTON 3 TRAITS PETIT -->
 <button class="btn-menu" onclick="ouvrirMenu()">☰</button>
 </div>
 
@@ -149,11 +156,13 @@ button{cursor:pointer}
 </aside>
 
 <main class="wrap">
+<!-- ✅ ONGLETS EN HAUT COMME AVANT -->
 <div class="tabs">
 <button class="active">✨ Pour Toi</button>
-<button onclick="location.href='recherche.html'">🔍 Recherche</button>
-<button onclick="location.href='favoris.html'">⭐ Favoris</button>
-<button onclick="location.href='booster.html'">🚀 Booster</button>
+<button onclick="location.href='amis.html'">👥 Amis <span id="badgeAmisTop"></span></button>
+<button onclick="location.href='videos.html'">🎥 Vidéos</button>
+<button onclick="location.href='notifications.html'">🔔 Notifs <span id="badgeNotifTop"></span></button>
+<button onclick="location.href='messages.html'">💬 Messages <span id="badgeMsgTop"></span></button>
 </div>
 <div class="stories" id="storiesRow"></div>
 <div class="create">
@@ -165,11 +174,12 @@ button{cursor:pointer}
 <div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication</h3><p>Sois le premier à publier.</p><br><button onclick="location.href='creer-post.html'" style="background:var(--violet);border:0;padding:12px 20px;border-radius:999px;color:#fff;font-weight:800">➕ Créer le premier post</button></div>
 </main>
 
+<!-- ✅ BARRE DU BAS COMME AVANT -->
 <div class="bottom">
 <button class="active" onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
-<button onclick="location.href='recherche.html'"><span>🔍</span>Recherche</button>
+<button onclick="location.href='amis.html'"><span>👥</span>Amis</button>
 <button onclick="location.href='creer-post.html'"><span class="centre">+</span></button>
-<button onclick="location.href='favoris.html'"><span>⭐</span>Favoris</button>
+<button onclick="location.href='messages.html'"><span>💬</span>Messages</button>
 <button onclick="location.href='profil.html'"><span>👤</span>Moi</button>
 </div>
 
@@ -201,6 +211,7 @@ window.seDeconnecter=()=>{
   localStorage.removeItem('jasonbook_uid'); localStorage.removeItem('jasonbook_nom'); localStorage.removeItem('jasonbook_photo');
   sessionStorage.clear(); location.href='index.html';
 };
+function setBadgeTop(id,n){const e=$(id); if(!e) return; e.textContent=n>0?`(${n})`:"";}
 let mesLikes=new Set(); let mesFavoris=new Set(); let tousPosts=[]; let commentairesParPost={}; let postAPartager=null; let renduProgramme=false;
 function rendrePostsRapide(){if(renduProgramme)return; renduProgramme=true; requestAnimationFrame(()=>{renduProgramme=false; rendrePosts();});}
 function rendrePosts(){
@@ -252,6 +263,14 @@ Object.keys(commentaireRefs).forEach(id=>{if(!ids.has(id)){const item=commentair
 tousPosts.forEach(p=>{if(commentaireRefs[p.id]) return; const commentaireQuery=query(ref(db,"jasonbook/commentaires/"+p.id),orderByChild("timestamp"),limitToLast(20)); const callback=onValue(commentaireQuery,s=>{const d=s.val(); commentairesParPost[p.id]=d?Object.entries(d).map(([id,c])=>({id,...c})).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0)):[]; rendrePostsRapide();},error=>console.error(error)); commentaireRefs[p.id]={unsubscribe:()=>callback()};});
 }
 onValue(postsQuery,()=>{actualiserEcouteursCommentaires();});
+onValue(ref(db,"jasonbook/demandes/"+uid),s=>{const d=s.val(); setBadgeTop("badgeAmisTop",d?Object.keys(d).length:0);});
+onValue(ref(db,"jasonbook/notifications/"+uid),s=>{
+  const d=s.val(); let n=0; if(d){Object.values(d).forEach(x=>{if(!x.lu)n++;});}
+  setBadgeTop("badgeNotifTop",n);
+  const dot=$("dotNotifTop");
+  if(dot){ if(n>0){ dot.style.display="flex"; dot.innerText=n>99?"99+":n; } else { dot.style.display="none"; } }
+});
+onValue(ref(db,"jasonbook/messages"),s=>{const d=s.val(); let n=0; if(d){Object.values(d).forEach(chat=>{if(chat&&typeof chat==="object"){Object.values(chat).forEach(m=>{if(m&&(m.destinataireUid===uid||m.pour===uid)&&!m.lu)n++;});}});} setBadgeTop("badgeMsgTop",n);});
 onValue(query(ref(db,"jasonbook/stories"),orderByChild("expire"),limitToLast(50)),s=>{
 const d=s.val(); const now=Date.now(); const row=$("storiesRow"); row.innerHTML="";
 const add=document.createElement("div"); add.className="story"; add.innerHTML=`<div class="c"><div>+</div></div><b>Toi</b>`; add.onclick=()=>location.href="stories.html"; row.appendChild(add);
