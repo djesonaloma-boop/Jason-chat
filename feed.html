@@ -78,11 +78,7 @@ button{cursor:pointer}
 .post .media{position:relative;border-radius:14px;overflow:hidden}
 .post img.pimg{width:100%;height:auto;max-height:420px;object-fit:cover;border-radius:14px;background:var(--card2);display:block}
 .post video{width:100%;max-height:420px;border-radius:14px;background:#000}
-.side-actions{position:absolute;right:10px;bottom:12px;display:flex;flex-direction:column;gap:8px;align-items:center;z-index:5}
-.side-actions button{width:48px;height:48px;border-radius:50%;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(6px);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.side-actions button.liked{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border-color:transparent}
-.side-actions button.fav{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border-color:transparent}
-.side-actions small{font-size:11px;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,.8);margin-top:-5px;color:#fff}
+/* ✅ SUPPRIMÉ : .side-actions - c'était ça que tu as entouré */
 .actions-text{display:flex;gap:8px;margin-top:10px}
 .actions-text button{flex:1;background:var(--card2);border:0;color:#fff;padding:10px;border-radius:999px;font-weight:700;font-size:12px}
 .actions-text button.liked{color:var(--gold)}
@@ -121,13 +117,10 @@ button{cursor:pointer}
 <div class="top">
 <div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
 <div class="search-top" onclick="location.href='recherche.html'">🔍 <span>Chercher...</span></div>
-<!-- ✅ BOUTON NOTIFICATION EN HAUT -->
 <button class="btn-notif" onclick="location.href='notifications.html'">🔔<span class="dot" id="dotNotifTop">0</span></button>
-<!-- ✅ BOUTON 3 TRAITS PETIT -->
 <button class="btn-menu" onclick="ouvrirMenu()">☰</button>
 </div>
 
-<!-- ===== MENU 3 TRAITS - PETIT PRO - 14 BOUTONS ===== -->
 <div class="overlay" id="overlay" onclick="fermerMenu()"></div>
 <aside class="menu" id="menu">
   <div class="menu-top">
@@ -156,7 +149,6 @@ button{cursor:pointer}
 </aside>
 
 <main class="wrap">
-<!-- ✅ ONGLETS EN HAUT COMME AVANT -->
 <div class="tabs">
 <button class="active">✨ Pour Toi</button>
 <button onclick="location.href='amis.html'">👥 Amis <span id="badgeAmisTop"></span></button>
@@ -174,7 +166,6 @@ button{cursor:pointer}
 <div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication</h3><p>Sois le premier à publier.</p><br><button onclick="location.href='creer-post.html'" style="background:var(--violet);border:0;padding:12px 20px;border-radius:999px;color:#fff;font-weight:800">➕ Créer le premier post</button></div>
 </main>
 
-<!-- ✅ BARRE DU BAS COMME AVANT -->
 <div class="bottom">
 <button class="active" onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
 <button onclick="location.href='amis.html'"><span>👥</span>Amis</button>
@@ -225,14 +216,13 @@ let comsHtml=coms.map(c=>`<div class="comment"><div class="avatar">${avatarHTML(
 if(!coms.length){comsHtml='<p style="color:#A1A1AA;font-size:13px;text-align:center">Aucun commentaire. Sois le premier !</p>';}
 const id=escapeHTML(p.id); const auteur=escapeHTML(p.auteurUid||""); const nom=escapeHTML(p.nomAuteur||"Utilisateur");
 const div=document.createElement("article"); div.className="post";
+// ✅ CORRIGÉ : plus de side-actions sur la photo, juste la photo / vidéo seule
 let mediaHtml="";
 if(photo || video){
-mediaHtml=`<div class="media">${photo?`<img class="pimg" loading="lazy" decoding="async" src="${escapeHTML(photo)}" alt="Publication">`:""}${video?`<video controls preload="none" playsinline><source src="${escapeHTML(video)}"></video>`:""}<div class="side-actions"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"}</button><small>${Number(p.likesCount)||0}</small><button onclick="toggleCommentaires('${id}')">💬</button><small>${Number(p.commentairesCount)||0}</small><button onclick="ouvrirPartage('${id}')">↗️</button><small>${Number(p.partagesCount)||0}</small><button class="${fav?"fav":""}" onclick="toggleFavori('${id}')">⭐</button><small>Favori</small></div></div>`;
+mediaHtml=`<div class="media">${photo?`<img class="pimg" loading="lazy" decoding="async" src="${escapeHTML(photo)}" alt="Publication">`:""}${video?`<video controls preload="none" playsinline><source src="${escapeHTML(video)}"></video>`:""}</div>`;
 }
-let actionsText="";
-if(!photo && !video){
-actionsText=`<div class="actions-text"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"} ${Number(p.likesCount)||0}</button><button onclick="toggleCommentaires('${id}')">💬 ${Number(p.commentairesCount)||0}</button><button onclick="ouvrirPartage('${id}')">↗️ ${Number(p.partagesCount)||0}</button><button class="${fav?"fav":""}" onclick="toggleFavori('${id}')">⭐ Favori</button></div>`;
-}
+// ✅ CORRIGÉ : maintenant actions-text pour TOUS les posts, même avec photo, comme avant pour les posts texte
+let actionsText=`<div class="actions-text"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"} ${Number(p.likesCount)||0}</button><button onclick="toggleCommentaires('${id}')">💬 ${Number(p.commentairesCount)||0}</button><button onclick="ouvrirPartage('${id}')">↗️ ${Number(p.partagesCount)||0}</button><button class="${fav?"fav":""}" onclick="toggleFavori('${id}')">⭐ Favori</button></div>`;
 div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${auteur}'">${avatarHTML(p.photoAuteur,p.nomAuteur)}</div><div class="info"><b>${nom}</b><br><small>${escapeHTML(p.date||"")}${p.partageDe?` • Partagé de ${escapeHTML(p.partageDeNom||"")}`:""}</small></div>${p.auteurUid===uid?`<button style="border:0;background:none;font-size:18px;color:#fff" onclick="supprimerPost('${id}')">🗑️</button>`:`<button style="border:1px solid var(--gold);background:none;color:var(--gold);padding:6px 12px;border-radius:999px;font-weight:800;font-size:12px">Suivre</button>`}</div>${p.texte?`<p>${escapeHTML(p.texte)}</p>`:""}${mediaHtml}${actionsText}<div class="comments" id="com-${id}"><div>${comsHtml}</div><div class="comment-input"><input id="inputCom-${id}" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter')envoyerCommentaire('${id}')"><button onclick="envoyerCommentaire('${id}')">➤</button></div></div>`;
 fragment.appendChild(div);
 });
@@ -246,8 +236,9 @@ window.toggleFavori=async id=>{
     else { await set(favRef,{postId:id,timestamp:Date.now()}); alert("Ajouté aux favoris ⭐"); }
   }catch(e){ console.error(e); alert("Erreur favoris."); }
 };
-window.liker=async id=>{const p=tousPosts.find(x=>x.id===id); if(!p) return; const likeRef=ref(db,"jasonbook/likes/"+uid+"/"+id); try{if(mesLikes.has(id)){await remove(likeRef);}else{await set(likeRef,true); if(p.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"like",texte:monNom+" a aimé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});}}}catch(e){console.error("Erreur like:",e); alert("Impossible de modifier le like.");}};
-window.envoyerCommentaire=async id=>{const input=$("inputCom-"+id); if(!input) return; const txt=input.value.trim(); if(!txt) return; const p=tousPosts.find(x=>x.id===id); if(!p) return; input.disabled=true; try{const newRef=push(ref(db,"jasonbook/commentaires/"+id)); await set(newRef,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:txt,date:new Date().toLocaleString(),timestamp:Date.now()}); if(p.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"commentaire",texte:monNom+" a commenté ta publication : "+txt,deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});} input.value="";}catch(e){console.error(e); alert("Erreur lors de l'envoi.");}finally{input.disabled=false;}};
+// ✅ CORRIGÉ : on met à jour likesCount sur le post, sinon ça reste toujours à 0
+window.liker=async id=>{const p=tousPosts.find(x=>x.id===id); if(!p) return; const likeRef=ref(db,"jasonbook/likes/"+uid+"/"+id); try{if(mesLikes.has(id)){await remove(likeRef); await set(ref(db,"jasonbook/posts/"+id+"/likesCount"), Math.max(0,(Number(p.likesCount)||0)-1));}else{await set(likeRef,true); await set(ref(db,"jasonbook/posts/"+id+"/likesCount"), (Number(p.likesCount)||0)+1); if(p.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"like",texte:monNom+" a aimé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});}}}catch(e){console.error("Erreur like:",e); alert("Impossible de modifier le like.");}};
+window.envoyerCommentaire=async id=>{const input=$("inputCom-"+id); if(!input) return; const txt=input.value.trim(); if(!txt) return; const p=tousPosts.find(x=>x.id===id); if(!p) return; input.disabled=true; try{const newRef=push(ref(db,"jasonbook/commentaires/"+id)); await set(newRef,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:txt,date:new Date().toLocaleString(),timestamp:Date.now()}); await set(ref(db,"jasonbook/posts/"+id+"/commentairesCount"), (Number(p.commentairesCount)||0)+1); if(p.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"commentaire",texte:monNom+" a commenté ta publication : "+txt,deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});} input.value="";}catch(e){console.error(e); alert("Erreur lors de l'envoi.");}finally{input.disabled=false;}};
 window.ouvrirPartage=id=>{postAPartager=tousPosts.find(x=>x.id===id); if(!postAPartager) return; $("partagePreview").textContent="Publication de "+postAPartager.nomAuteur+" : "+(postAPartager.texte||"").slice(0,80); $("partageTexte").value=""; $("modalPartage").classList.add("open");};
 window.fermerPartage=()=>{$("modalPartage").classList.remove("open"); postAPartager=null;};
 window.confirmerPartage=async()=>{if(!postAPartager) return; const original=postAPartager; const texte=$("partageTexte").value.trim(); const bouton=$("modalPartage").querySelector(".btn-violet"); bouton.disabled=true; bouton.textContent="Partage en cours..."; try{const newRef=push(ref(db,"jasonbook/posts")); await set(newRef,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:texte?texte+"\n\n--- Partagé ---\n"+(original.texte||""):(original.texte||""),photoUrl:original.photoUrl||original.image||"",videoUrl:original.videoUrl||"",date:new Date().toLocaleString(),timestamp:Date.now(),likesCount:0,commentairesCount:0,partagesCount:0,partageDe:original.id,partageDeNom:original.nomAuteur||""}); if(original.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+original.auteurUid)); await set(n,{type:"partage",texte:monNom+" a partagé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});} await set(ref(db,"jasonbook/posts/"+original.id+"/partagesCount"),(Number(original.partagesCount)||0)+1); fermerPartage(); alert("Publication partagée ! 🎉");}catch(e){console.error(e); alert("Erreur lors du partage.");}finally{bouton.disabled=false; bouton.textContent="Partager sur mon fil";}};
