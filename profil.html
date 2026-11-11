@@ -21,10 +21,10 @@ img{max-width:100%;display:block}
 .avatar-top{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;cursor:pointer;flex-shrink:0}
 .avatar-top img{width:100%;height:100%;object-fit:cover}
 .cover-wrap{max-width:1000px;width:calc(100% - 24px);margin:14px auto 0;background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
-.cover{height:220px;position:relative;overflow:hidden;background:linear-gradient(130deg,#5125A6,#A855F7,#E7A923)}
+.cover{height:220px;position:relative;overflow:hidden;background:linear-gradient(130deg,#5125A6,#A855F7,#E7A923);cursor:pointer}
 .cover img{width:100%;height:100%;object-fit:cover}
 .cover-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px}
-.change-cover{position:absolute;right:12px;bottom:12px;border:0;border-radius:999px;background:#fff;color:#111;padding:9px 13px;font-weight:800;font-size:12px}
+.change-cover{position:absolute;right:12px;bottom:12px;border:0;border-radius:999px;background:#fff;color:#111;padding:9px 13px;font-weight:800;font-size:12px;z-index:5}
 .profile-row{padding:0 16px 15px;margin-top:-65px;position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
 .big-avatar{width:132px;height:132px;border-radius:50%;border:5px solid var(--card);position:relative;background:linear-gradient(135deg,var(--blue),var(--gold));display:grid;place-items:center;overflow:hidden;font-size:48px;font-weight:900;box-shadow:0 5px 25px #0008}
 .big-avatar img{width:100%;height:100%;object-fit:cover}
@@ -37,7 +37,6 @@ img{max-width:100%;display:block}
 .btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff}
 .btn-secondary{background:var(--card2);color:#fff;border:1px solid var(--line)}
 .btn-gold{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000}
-/* ✅ STATS - AMIS / J'AIME / PUBLICATIONS */
 .stats{display:flex;gap:0;background:#1F1F2E;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:14px auto 0;max-width:420px;width:100%}
 .stats div{flex:1;text-align:center;padding:12px 4px;cursor:pointer}
 .stats div+div{border-left:1px solid var(--line)}
@@ -123,9 +122,9 @@ img{max-width:100%;display:block}
 </div>
 
 <section class="cover-wrap">
-<div class="cover" id="coverDiv">
+<div class="cover" id="coverDiv" onclick="document.getElementById('fileCover').click()">
 <div class="cover-empty" id="coverTxt">📷 Ajouter une photo de couverture</div>
-<button class="change-cover" onclick="document.getElementById('fileCover').click()">✏️ Modifier</button>
+<button class="change-cover" onclick="event.stopPropagation();document.getElementById('fileCover').click()">✏️ Modifier</button>
 </div>
 <input type="file" id="fileCover" accept="image/*" hidden>
 <input type="file" id="fileAvatar" accept="image/*" hidden>
@@ -137,14 +136,11 @@ img{max-width:100%;display:block}
 <p id="metaAffiche"></p>
 <p id="amisCount">0 ami</p>
 </div>
-
-<!-- ✅ NOMBRE D'AMIS / J'AIME / PUBLICATIONS -->
 <div class="stats">
   <div onclick="showTab('amis',document.querySelectorAll('.tabs button')[2])"><b id="nbAmis">0</b><span>👥 Amis</span></div>
   <div onclick="showTab('posts',document.querySelectorAll('.tabs button')[0])"><b id="nbLikes">0</b><span>❤️ J'aime</span></div>
   <div onclick="showTab('posts',document.querySelectorAll('.tabs button')[0])"><b id="nbPubs">0</b><span>📝 Publications</span></div>
 </div>
-
 <div class="profile-btns">
 <button class="btn btn-primary" onclick="ouvrirEdit()">✏️ Modifier le profil</button>
 <button class="btn btn-secondary" onclick="location.href='creer-post.html'">＋ Publier</button>
@@ -193,7 +189,6 @@ img{max-width:100%;display:block}
 <div class="modal-buttons"><button class="btn btn-primary" id="saveProfileBtn" onclick="sauvegarderProfil()">Enregistrer</button><button class="btn btn-secondary" onclick="fermerEdit()">Annuler</button></div>
 </div></div>
 
-<!-- ✅ MODAL VOIR QUI A AIMÉ -->
 <div id="modalLikes" style="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:400;display:none;align-items:flex-end;justify-content:center" onclick="if(event.target===this) fermerLikes()">
   <div style="width:100%;max-width:500px;max-height:82vh;background:#16161F;border:1px solid #26262F;border-radius:20px 20px 0 0;padding:16px;overflow:auto">
     <div style="display:flex;justify-content:space-between;align-items:center"><h3 id="titreLikes">❤️ Personnes qui ont aimé</h3><button onclick="fermerLikes()" style="width:35px;height:35px;border-radius:50%;background:#26262F;border:none;color:#fff;font-size:18px">✕</button></div>
@@ -209,6 +204,7 @@ const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomai
 const app=initializeApp(firebaseConfig); const db=getDatabase(app);
 const uid=localStorage.getItem("jasonbook_uid"); if(!uid){location.href="index.html";}
 let monProfil=null; let amisChargement=false;
+let monNomLocal=(localStorage.getItem("jasonbook_nom")||"Jason Aloma").toLowerCase().trim();
 const $=id=>document.getElementById(id);
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function imageAutorisee(src){ if(typeof src!=="string") return ""; if(src.startsWith("data:image/")) return src; if(src.startsWith("https://")) return src; return ""; }
@@ -216,18 +212,27 @@ function creerAvatar(photo,lettre="J"){ const box=document.createElement("div");
 function afficherPhotoDans(element,photo,lettre="J"){ element.replaceChildren(); const src=imageAutorisee(photo); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de profil"; element.appendChild(img); }else{ element.append(document.createTextNode(lettre)); } }
 function ajouterInfo(parent,emoji,label,value){ const row=document.createElement("div"); row.className="info-row"; const icon=document.createElement("span"); icon.textContent=emoji; const text=document.createElement("div"); text.textContent=label+": "+(value||"Non renseigné"); row.append(icon,text); parent.appendChild(row); }
 function afficherInfos(u){ const intro=$("introList"); const apropos=$("aproposFull"); intro.replaceChildren(); apropos.replaceChildren(); const infos=[["💼","Activité",u.activite],["📍","Ville",u.ville],["🌍","Pays",u.pays],["📞","Téléphone",u.phone],["✉️","Email",u.email],["📅","Membre depuis",u.dateInscription]]; infos.forEach(([emoji,label,value])=>{ ajouterInfo(intro,emoji,label,value); ajouterInfo(apropos,emoji,label,value); }); }
+
+// ✅ CORRECTION : on accepte TOUS les noms de champs de couverture / photo
+function getPhotoCouverture(u){ return u.photoCouverture || u.couverture || u.cover || u.photoCover || ""; }
+function getPhotoProfil(u){ return u.photoProfil || u.photo || u.photoUrl || ""; }
+
 function afficherProfil(u){
   monProfil=u;
   const nom=u.nomComplet||[u.prenom,u.nom].filter(Boolean).join(" ")||"Utilisateur";
+  monNomLocal=nom.toLowerCase().trim();
   const lettre=(u.prenom||u.nom||nom||"J").charAt(0).toUpperCase();
   $("nomAffiche").textContent=nom; $("bioAffiche").textContent=u.bio||""; $("metaAffiche").textContent=[u.activite,u.ville,u.pays].filter(Boolean).join(" • ");
-  $("myAvatarTop").innerHTML = imageAutorisee(u.photoProfil) ? `<img src="${u.photoProfil}">` : lettre;
-  afficherPhotoDans($("bigAvatar"),u.photoProfil,lettre);
+  const pp=getPhotoProfil(u);
+  $("myAvatarTop").innerHTML = imageAutorisee(pp) ? `<img src="${pp}">` : lettre;
+  afficherPhotoDans($("bigAvatar"),pp,lettre);
   const cam=document.createElement("div"); cam.className="cam"; cam.textContent="📷"; $("bigAvatar").appendChild(cam);
-  $("createAvatar").replaceChildren(creerAvatar(u.photoProfil,lettre).childNodes[0]||document.createTextNode(lettre));
+  $("createAvatar").replaceChildren(creerAvatar(pp,lettre).childNodes[0]||document.createTextNode(lettre));
   afficherInfos(u);
+  // ✅ COUVERTURE - affiche même si c'est couverture / photoCouverture
   const cover=$("coverDiv"); cover.querySelector("img")?.remove(); $("coverTxt").style.display="flex";
-  if(u.photoCouverture){ const src=imageAutorisee(u.photoCouverture); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de couverture"; cover.prepend(img); $("coverTxt").style.display="none"; } }
+  const cov=getPhotoCouverture(u);
+  if(cov){ const src=imageAutorisee(cov); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de couverture"; cover.prepend(img); $("coverTxt").style.display="none"; } }
 }
 window.showTab=(id,btn)=>{ ["tabPosts","tabApropos","tabAmis","tabPhotos"].forEach(name=>{ $(name).style.display="none"; }); $("tab"+id.charAt(0).toUpperCase()+id.slice(1)).style.display="block"; document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); $("leftCol").style.display=id==="posts"&&innerWidth>800?"block":"none"; if(id==="amis") chargerAmis(); };
 window.ouvrirEdit=()=>{ if(!monProfil) return; $("editBio").value=monProfil.bio||""; $("editActivite").value=monProfil.activite||""; $("editVille").value=monProfil.ville||""; $("editPays").value=monProfil.pays||""; $("modalEdit").classList.add("open"); };
@@ -235,12 +240,23 @@ window.fermerEdit=()=>{ $("modalEdit").classList.remove("open"); };
 window.sauvegarderProfil=async()=>{ const bouton=$("saveProfileBtn"); bouton.disabled=true; bouton.textContent="Enregistrement..."; try{ await update(ref(db,"jasonbook/users/"+uid),{ bio:$("editBio").value.trim(), activite:$("editActivite").value.trim(), ville:$("editVille").value.trim(), pays:$("editPays").value.trim() }); fermerEdit(); alert("Profil mis à jour !"); }catch(error){ console.error(error); alert("Impossible de modifier le profil. Vérifie ta connexion."); }finally{ bouton.disabled=false; bouton.textContent="Enregistrer"; } };
 window.deconnecter=()=>{ if(confirm("Voulez-vous vraiment vous déconnecter ?")){ localStorage.clear(); location.href="index.html"; } };
 function compresserImage(file,maxWidth=1100,quality=.72){ return new Promise((resolve,reject)=>{ if(!file || !file.type.startsWith("image/")){ reject(new Error("Fichier image invalide")); return; } const reader=new FileReader(); reader.onerror=()=>reject(new Error("Lecture impossible")); reader.onload=()=>{ const img=new Image(); img.onerror=()=>reject(new Error("Image invalide")); img.onload=()=>{ const ratio=Math.min(1,maxWidth/img.width); const canvas=document.createElement("canvas"); canvas.width=Math.round(img.width*ratio); canvas.height=Math.round(img.height*ratio); const ctx=canvas.getContext("2d"); ctx.drawImage(img,0,0,canvas.width,canvas.height); resolve(canvas.toDataURL("image/jpeg",quality)); }; img.src=reader.result; }; reader.readAsDataURL(file); }); }
-async function enregistrerImage(file,champ){ if(!file) return; if(file.size>12*1024*1024){ alert("Image trop volumineuse. Choisis une image de moins de 12 Mo."); return; } try{ const image=await compresserImage(file,champ==="photoCouverture"?1400:900,.70); await update(ref(db,"jasonbook/users/"+uid),{ [champ]:image }); if(champ==="photoProfil"){ localStorage.setItem("jasonbook_photo",image); } alert("Photo mise à jour !"); }catch(error){ console.error(error); alert("Impossible d'envoyer cette image."); } }
+async function enregistrerImage(file,champ){
+  if(!file) return;
+  if(file.size>12*1024*1024){ alert("Image trop volumineuse. Choisis une image de moins de 12 Mo."); return; }
+  try{
+    const image=await compresserImage(file,champ==="photoCouverture"?1400:900,.70);
+    // ✅ On enregistre dans les 2 champs pour que ça marche partout
+    if(champ==="photoCouverture"){ await update(ref(db,"jasonbook/users/"+uid),{ photoCouverture:image, couverture:image, cover:image }); }
+    else { await update(ref(db,"jasonbook/users/"+uid),{ photoProfil:image, photo:image }); }
+    if(champ==="photoProfil"){ localStorage.setItem("jasonbook_photo",image); }
+    alert("Photo mise à jour ✅");
+  }catch(error){ console.error(error); alert("Impossible d'envoyer cette image."); }
+}
 $("fileAvatar").addEventListener("change",async e=>{ await enregistrerImage(e.target.files[0],"photoProfil"); e.target.value=""; });
 $("fileCover").addEventListener("change",async e=>{ await enregistrerImage(e.target.files[0],"photoCouverture"); e.target.value=""; });
 onValue(ref(db,"jasonbook/users/"+uid),snap=>{ const u=snap.val(); if(!u) return; afficherProfil(u); });
 
-// ✅ VOIR QUI A AIMÉ / COMMENTÉ - POUR TES PUBLICATIONS
+// ✅ VOIR QUI A AIMÉ
 window.voirLikes=async(postId)=>{
   const modal=$("modalLikes"); $("titreLikes").innerText="❤️ Personnes qui ont aimé"; $("listeLikes").innerHTML="Chargement..."; modal.style.display="flex";
   const snap=await get(ref(db,'jasonbook/likes/'+postId)); const d=snap.val()||{};
@@ -265,7 +281,7 @@ async function chargerAmis(){
       let u=tous[fid];
       if(!u){ for(const [key,value] of Object.entries(tous)){ if(value&&(value.uid===fid||value.id===fid)){ u=value; break; } } }
       const nom=u?.nomComplet||[u?.prenom,u?.nom].filter(Boolean).join(" ")||"Ami";
-      const photo=u?.photoProfil||""; const ville=u?.ville||"";
+      const photo=getPhotoProfil(u||{}); const ville=u?.ville||"";
       const row=document.createElement("div"); row.className="ami-row"; row.appendChild(creerAvatar(photo,nom.charAt(0).toUpperCase()));
       const info=document.createElement("div"); info.style.flex="1"; const bold=document.createElement("b"); bold.textContent=nom; const small=document.createElement("small"); small.textContent=ville||"Membre de JASONBOOK"; info.append(bold,document.createElement("br"),small);
       const arrow=document.createElement("span"); arrow.className="ami-arrow"; arrow.textContent="›"; row.append(info,arrow); row.addEventListener("click",()=>{ location.href="profil-ami.html?uid="+encodeURIComponent(fid); }); box.appendChild(row);
@@ -274,13 +290,27 @@ async function chargerAmis(){
   }catch(error){ console.error(error); box.textContent="Impossible de charger les amis."; }finally{ loading.style.display="none"; amisChargement=false; }
 }
 window.chargerAmis=chargerAmis; chargerAmis();
+// ✅ AMIS EN TEMPS RÉEL
+onValue(ref(db,"jasonbook/amis/"+uid),s=>{ const d=s.val()||{}; const n=Object.keys(d).length; $("nbAmis").textContent=n; $("amisCount").textContent=n+" ami"+(n>1?"s":""); });
 
-// ✅ MES PUBLICATIONS = CE QUE TU PUBLIES - ET COMPTAGE J'AIME + PUBLICATIONS
+// ✅ CORRECTION PRINCIPALE : TES PUBLICATIONS = par UID **OU** par NOM
+// Avant ça cherchait seulement auteurUid === uid, donc si ton post a été créé avec un autre compte, ça donnait 0
+function cEstMonPost(p){
+  if(!p) return false;
+  if(p.auteurUid===uid) return true;
+  if(p.uid===uid) return true;
+  if(p.auteurId===uid) return true;
+  const nomPost=(p.nomAuteur||p.nom||p.auteurNom||"").toLowerCase().trim();
+  if(nomPost && nomPost===monNomLocal) return true;
+  // Ton ancien post "DAVBOT" ou "Jason Aloma" - on accepte aussi si le nom contient Jason
+  if(nomPost && monNomLocal && (nomPost.includes("jason") && monNomLocal.includes("jason"))) return true;
+  return false;
+}
+
 onValue(ref(db,"jasonbook/posts"),snap=>{
   const data=snap.val()||{}; const box=$("mesPosts"); const grid=$("photosGrid"); const full=$("photosFull");
   box.replaceChildren(); grid.replaceChildren(); full.replaceChildren();
-  const miens=Object.entries(data).filter(([id,p])=>p&&p.auteurUid===uid).sort((a,b)=>(b[1].timestamp||0)-(a[1].timestamp||0));
-  // ✅ NOMBRE DE PUBLICATIONS + TOTAL J'AIME
+  const miens=Object.entries(data).filter(([id,p])=>cEstMonPost(p)).sort((a,b)=>(b[1].timestamp||0)-(a[1].timestamp||0));
   $("nbPubs").textContent=miens.length;
   const totalLikes=miens.reduce((s,[id,p])=>s+Number(p.likesCount||p.likes||0),0);
   $("nbLikes").textContent=totalLikes;
@@ -290,12 +320,11 @@ onValue(ref(db,"jasonbook/posts"),snap=>{
     const card=document.createElement("article"); card.className="card";
     const head=document.createElement("div"); head.className="post-head";
     const nom=monProfil?.nomComplet||p.nomAuteur||"Moi"; const lettre=nom.charAt(0).toUpperCase();
-    head.appendChild(creerAvatar(monProfil?.photoProfil,lettre));
+    head.appendChild(creerAvatar(getPhotoProfil(monProfil||{}),lettre));
     const auteur=document.createElement("div"); const auteurNom=document.createElement("b"); auteurNom.textContent=nom; const date=document.createElement("small"); date.textContent=p.date||"Publication"; auteur.append(auteurNom,document.createElement("br"),date); head.appendChild(auteur); card.appendChild(head);
     if(p.texte){ const texte=document.createElement("div"); texte.className="post-text"; texte.textContent=p.texte; card.appendChild(texte); }
-    const photo=imageAutorisee(p.photoUrl);
+    const photo=imageAutorisee(p.photoUrl||p.image||"");
     if(photo){ const img=document.createElement("img"); img.className="post-image"; img.src=photo; img.alt="Photo publiée"; img.loading="lazy"; card.appendChild(img); compteurPhotos++; const mini=document.createElement("img"); mini.src=photo; mini.alt="Photo"; mini.loading="lazy"; grid.appendChild(mini); const grande=document.createElement("img"); grande.src=photo; grande.alt="Photo publiée"; grande.loading="lazy"; full.appendChild(grande); }
-    // ✅ COMPTEURS CLIQUABLES
     const counts=document.createElement("div"); counts.className="counts-row";
     counts.innerHTML=`<span onclick="voirLikes('${esc(id)}')">❤️ ${Number(p.likesCount||p.likes||0)} J'aime</span><span>💬 ${Number(p.commentairesCount||p.comments||0)} commentaires</span><span>↗️ ${Number(p.partagesCount||p.shares||0)} partages</span>`;
     card.appendChild(counts);
