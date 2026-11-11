@@ -2,174 +2,189 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>JASONBOOK - Stories</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>JASONBOOK ✨ - Statuts</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
-:root{--blue:#1877F2;--bg:#f0f2f5;--grey:#65676b;--line:#eef0f3}
-body{background:var(--bg);min-height:100vh}
-header{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;position:sticky;top:0;z-index:20;box-shadow:0 1px 8px rgba(0,0,0,.06)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:var(--blue);font-size:21px;cursor:pointer;letter-spacing:-.3px}
-.logo span{width:34px;height:34px;background:var(--blue);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.logo i{color:#FFD700;font-style:normal}
-header .search{flex:1;background:#f0f2f5;border:none;padding:11px 14px;border-radius:999px;font-size:14px;outline:none;cursor:pointer}
-.icons{display:flex;gap:6px;align-items:center}
-.icons a{width:38px;height:38px;background:#f0f2f5;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:18px}
-.avatar{width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.wrap{max-width:900px;margin:16px auto;padding:0 12px}
-.wrap h1{font-size:23px;letter-spacing:-.3px;margin-bottom:12px}
-.row{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
-.row::-webkit-scrollbar{display:none}
-.s-card{width:120px;flex-shrink:0;height:200px;border-radius:14px;overflow:hidden;position:relative;cursor:pointer;background:#ddd}
-.s-card img{width:100%;height:100%;object-fit:cover}
-.s-card .overlay{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.8))}
-.s-card .name{position:absolute;bottom:10px;left:8px;right:8px;color:#fff;font-weight:700;font-size:13px}
-.s-card .av{position:absolute;top:8px;left:8px;width:36px;height:36px;border-radius:50%;border:3px solid var(--blue);background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden}
-.s-card .av img{width:100%;height:100%;object-fit:cover}
-.s-card.add{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1.5px dashed #ccc}
-.s-card.add .plus{width:44px;height:44px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px}
-.s-card.add p{font-size:13px;font-weight:700;color:#555}
-.empty{text-align:center;color:var(--grey);padding:36px 10px;background:#fff;border-radius:12px;margin-top:14px;border:1px solid var(--line)}
-.empty .big{font-size:44px}
-.viewer{position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;padding:16px}
-.viewer.open{display:flex}
-.viewer .bars{display:flex;gap:4px;width:100%;max-width:400px;margin-bottom:12px}
-.viewer .bars .bar{flex:1;height:4px;background:rgba(255,255,255,.3);border-radius:4px;overflow:hidden}
-.viewer .bars .bar .fill{height:100%;background:#fff;width:0%}
-.viewer .bars .bar.done .fill{width:100%}
-.viewer img,.viewer video{max-width:100%;max-height:75vh;border-radius:12px;object-fit:contain}
-.viewer .topbar{width:100%;max-width:400px;display:flex;align-items:center;gap:10px;color:#fff;margin-bottom:12px}
-.viewer .topbar .info{flex:1}.viewer .topbar small{color:#ccc}
-.viewer .caption{color:#fff;margin-top:12px;text-align:center;max-width:400px;line-height:1.5}
-.viewer .close{position:absolute;top:14px;right:16px;color:#fff;font-size:28px;background:none;border:none;cursor:pointer}
-.viewer .nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.2);color:#fff;border:none;width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer}
-.viewer .prev{left:10px}.viewer .next{right:10px}
-.viewer .actions{display:flex;gap:10px;margin-top:14px}
-.viewer .actions button{border:none;padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;font-size:13px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:110;padding:16px}
-.modal.open{display:flex}
-.modal-box{background:#fff;width:100%;max-width:420px;border-radius:14px;padding:20px}
-.modal-box textarea{width:100%;padding:12px;border:1.5px solid #e4e6eb;border-radius:10px;margin-top:8px;font-size:14px;min-height:70px;outline:none;background:#f8f9fa}
-.modal-box textarea:focus{border-color:var(--blue);background:#fff}
-.modal-box img{width:100%;border-radius:10px;margin-top:10px;max-height:240px;object-fit:cover}
-.bottom-nav{display:none}
-@media(max-width:800px){.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:11px;box-shadow:0 -1px 8px rgba(0,0,0,.07);z-index:30}.bottom-nav a{text-decoration:none;font-size:22px}.wrap{padding-bottom:70px}}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+body{background:#000;color:#fff;min-height:100vh;overflow:hidden}
+.top{position:fixed;top:0;left:0;right:0;z-index:20;padding:10px 12px;background:linear-gradient(to bottom, rgba(0,0,0,.8), transparent);display:flex;flex-direction:column;gap:8px}
+.progress{display:flex;gap:4px}
+.progress div{flex:1;height:3px;background:rgba(255,255,255,.3);border-radius:999px;overflow:hidden}
+.progress div i{display:block;height:100%;background:#FFC107;width:0%}
+.head{display:flex;gap:10px;align-items:center}
+.head .ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#FFC107);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;overflow:hidden;flex-shrink:0}
+.head .ava img{width:100%;height:100%;object-fit:cover}
+.head b{font-size:15px}
+.head small{color:#ccc;font-size:11px;display:block}
+.head button{margin-left:auto;background:rgba(255,255,255,.2);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:16px}
+.viewer{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
+.viewer img, .viewer video{width:100%;height:100%;object-fit:contain;max-height:100vh}
+.viewer .texte{position:absolute;bottom:100px;left:16px;right:16px;text-align:center;font-size:18px;text-shadow:0 2px 8px #000;line-height:1.4}
+.zone-gauche,.zone-droite{position:fixed;top:0;bottom:80px;width:35%;z-index:10}
+.zone-gauche{left:0}
+.zone-droite{right:0}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:20;padding:12px;background:linear-gradient(to top, rgba(0,0,0,.8), transparent);display:flex;gap:8px;align-items:center}
+.bottom input{flex:1;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:11px 14px;color:#fff;outline:none}
+.bottom button{background:#FFC107;border:none;border-radius:50%;width:42px;height:42px;font-size:18px;font-weight:800;color:#111}
+.liste{position:fixed;inset:0;background:#0A0A0F;z-index:30;overflow-y:auto;padding:14px;display:none}
+.liste.open{display:block}
+.liste h2{font-size:20px;margin-bottom:12px}
+.user-row{display:flex;gap:10px;align-items:center;background:#16161F;border:1px solid #26262F;border-radius:14px;padding:10px;margin-bottom:8px}
+.user-row .ava{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#FFC107);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;overflow:hidden;flex-shrink:0}
+.user-row .ava img{width:100%;height:100%;object-fit:cover}
+.user-row b{font-size:14px}
+.user-row small{color:#A1A1AA;font-size:11px;display:block}
 </style>
-<link rel="stylesheet" href="assets/brand.css">
 </head>
 <body>
 
-<header>
-<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
-<input class="search" placeholder="🔍 Rechercher" onclick="location.href='recherche.html'" readonly>
-<div class="icons"><a href="notifications.html">🔔</a><a href="messages.html">💬</a><div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div></div>
-</header>
-
-<div class="wrap">
-<h1>✨ Stories</h1>
-<div class="row" id="row"></div>
-<div class="empty" id="emptyBox" style="display:none"><div class="big">✨</div><h3>Aucune story pour le moment</h3><p>Sois le premier à publier une story ! Elle disparaît après 24h.</p></div>
-</div>
-
-<nav class="bottom-nav"><a href="feed.html">🏠</a><a href="amis.html">👥</a><a href="creer-post.html">➕</a><a href="stories.html">✨</a><a href="profil.html">👤</a></nav>
-
 <div class="viewer" id="viewer">
-<button class="close" onclick="fermerViewer()">✕</button>
-<button class="nav prev" onclick="storyPrec()">‹</button>
-<div class="bars" id="bars"></div>
-<div class="topbar"><div class="avatar" id="vAv">?</div><div class="info"><b id="vNom"></b><br><small id="vDate"></small></div></div>
-<img id="vImg" style="display:none"><video id="vVideo" controls style="display:none"></video>
-<div class="caption" id="vCaption"></div>
-<div class="actions"><button onclick="repondreStory()">💬 Répondre</button><button id="btnDelStory" onclick="supprimerStory()">🗑️ Supprimer</button></div>
-<button class="nav next" onclick="storySuiv()">›</button>
+  <div style="text-align:center;color:#888">⏳ Chargement du statut...</div>
 </div>
 
-<div class="modal" id="modalAdd"><div class="modal-box">
-<h2>Nouvelle story</h2>
-<button style="width:100%;padding:12px;border:1.5px dashed #ccc;background:#fff;border-radius:10px;cursor:pointer;margin-top:10px;font-weight:700" onclick="document.getElementById('storyFile').click()">📷 Choisir photo / vidéo</button>
-<input type="file" id="storyFile" accept="image/*,video/*" style="display:none">
-<img id="storyPreview" style="display:none">
-<textarea id="storyText" placeholder="Ajoute un texte à ta story... (optionnel)"></textarea>
-<button style="width:100%;padding:13px;background:#1877F2;color:#fff;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin-top:10px" onclick="publierStory()">Publier la story</button>
-<button style="width:100%;padding:12px;background:#f0f2f5;border:none;border-radius:10px;font-weight:700;cursor:pointer;margin-top:8px" onclick="fermerAdd()">Annuler</button>
-</div></div>
+<div class="top">
+  <div class="progress" id="progress"></div>
+  <div class="head">
+    <div class="ava" id="ava">?</div>
+    <div style="flex:1"><b id="nom">...</b><small id="temps">...</small></div>
+    <button onclick="location.href='feed.html'">✕</button>
+  </div>
+</div>
+
+<div class="zone-gauche" onclick="precedent()"></div>
+<div class="zone-droite" onclick="suivant()"></div>
+
+<div class="bottom">
+  <input id="reponse" placeholder="Répondre à ce statut..." onkeydown="if(event.key==='Enter')repondre()">
+  <button onclick="repondre()">❤️</button>
+</div>
+
+<!-- Liste si on arrive sans auteur précis -->
+<div class="liste" id="liste">
+  <h2>📸 Statuts</h2>
+  <div id="listeUsers"></div>
+  <button onclick="location.href='feed.html'" style="width:100%;background:#26262F;border:none;color:#fff;padding:12px;border-radius:12px;margin-top:10px">← Retour</button>
+</div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, onValue, push, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
-const app = initializeApp(firebaseConfig); const db = getDatabase(app);
-const uid = localStorage.getItem('jasonbook_uid'); if(!uid) location.href='index.html';
-const monNom = localStorage.getItem('jasonbook_nom')||"";
-const maPhoto = localStorage.getItem('jasonbook_photo')||"";
-document.getElementById('myAvatar').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
-let stories=[], groupe=[], indexGroupe=0, indexStory=0, mediaTemp="", typeMediaTemp="photo", progressInt=null;
-function grouper(){
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {getDatabase,ref,onValue,get,push,set} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const cfg={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
+const db=getDatabase(initializeApp(cfg));
+const uid=localStorage.getItem("jasonbook_uid");
+const monNom=localStorage.getItem("jasonbook_nom")||"Moi";
+const maPhoto=localStorage.getItem("jasonbook_photo")||"";
+const params=new URLSearchParams(location.search);
+let auteurDemande=params.get('uid')||params.get('auteur')||"";
+let groupes=[]; // [{auteurUid, nom, photo, stories:[]}]
+let indexGroupe=0, indexStory=0;
+let usersCache={};
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function tempsDepuis(ts){ if(!ts) return ""; const d=Date.now()-ts; if(d<60000) return "À l'instant"; if(d<3600000) return Math.floor(d/60000)+" min"; if(d<86400000) return Math.floor(d/3600000)+" h"; return Math.floor(d/86400000)+" j"; }
+
+async function charger(){
+  const snap=await get(ref(db,'jasonbook/stories'));
+  const data=snap.val()||{};
+  const now=Date.now();
   const parAuteur={};
-  stories.forEach(s=>{ if(!parAuteur[s.auteurUid]) parAuteur[s.auteurUid]=[]; parAuteur[s.auteurUid].push(s); });
-  groupe=Object.values(parAuteur).sort((a,b)=>(b[0].timestamp||0)-(a[0].timestamp||0));
+  // ✅ On récupère aussi la photo du profil si le statut n'en a pas
+  const snapUsers=await get(ref(db,'jasonbook/users'));
+  usersCache=snapUsers.val()||{};
+
+  Object.entries(data).forEach(([id,s])=>{
+    if(!s || (s.expire||0) <= now) return;
+    if(!parAuteur[s.auteurUid]) parAuteur[s.auteurUid]=[];
+    parAuteur[s.auteurUid].push({id,...s});
+  });
+
+  groupes=Object.entries(parAuteur).map(([auteurUid, list])=>{
+    list.sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+    const premier=list[0];
+    // ✅ LA CORRECTION : si photoAuteur est vide, on prend la photo du profil de l'utilisateur
+    const profil=usersCache[auteurUid]||{};
+    const photo = premier.photoAuteur || premier.photo || profil.photo || profil.photoUrl || "";
+    const nom = premier.auteurNom || premier.nom || profil.nom || "Utilisateur";
+    return {auteurUid, nom, photo, stories:list};
+  });
+
+  // Si on a cliqué sur bety, on commence par elle
+  if(auteurDemande){
+    const idx=groupes.findIndex(g=>g.auteurUid===auteurDemande);
+    if(idx>=0) indexGroupe=idx;
+  }
+
+  if(!groupes.length){
+    document.getElementById('viewer').innerHTML='<div style="text-align:center;color:#888">Aucun statut pour le moment.<br><br><button onclick="location.href=\'feed.html\'" style="background:#FFC107;border:none;padding:12px 20px;border-radius:999px;font-weight:800">Retour</button></div>';
+    return;
+  }
+
+  // Si on arrive sans auteur, on montre la liste pour choisir
+  if(!auteurDemande){
+    afficherListe();
+  } else {
+    afficher();
+  }
 }
-function rendre(){
-  grouper(); const row=document.getElementById('row'); row.innerHTML="";
-  const add=document.createElement('div'); add.className='s-card add'; add.onclick=ouvrirAdd;
-  add.innerHTML=`<div class="plus">+</div><p>Ma story</p>`; row.appendChild(add);
-  document.getElementById('emptyBox').style.display=groupe.length?'none':'block';
-  groupe.forEach((g,gi)=>{
-    const s=g[0]; const div=document.createElement('div'); div.className='s-card'; div.onclick=()=>ouvrirViewer(gi,0);
-    const media=s.type==='video' ? `<video src="${s.media}" style="width:100%;height:100%;object-fit:cover"></video>` : `<img src="${s.media}">`;
-    div.innerHTML=`${media}<div class="overlay"></div><div class="av">${s.photoAuteur?`<img src="${s.photoAuteur}">`:(s.auteurNom||"?").charAt(0)}</div><div class="name">${s.auteurNom||""} • ${g.length} story${g.length>1?'s':''}</div>`;
-    row.appendChild(div);
+
+function afficherListe(){
+  const liste=document.getElementById('liste');
+  liste.classList.add('open');
+  const box=document.getElementById('listeUsers');
+  box.innerHTML="";
+  groupes.forEach((g,i)=>{
+    const div=document.createElement('div');
+    div.className='user-row';
+    div.innerHTML=`<div class="ava">${g.photo?`<img src="${esc(g.photo)}">`:esc(g.nom.charAt(0))}</div><div style="flex:1"><b>${esc(g.nom)}</b><small>${g.stories.length} statut(s) • ${tempsDepuis(g.stories[0].timestamp)}</small></div><span>›</span>`;
+    div.onclick=()=>{ auteurDemande=g.auteurUid; indexGroupe=i; indexStory=0; liste.classList.remove('open'); afficher(); };
+    box.appendChild(div);
   });
 }
-window.ouvrirAdd=()=>document.getElementById('modalAdd').classList.add('open');
-window.fermerAdd=()=>document.getElementById('modalAdd').classList.remove('open');
-document.getElementById('storyFile').addEventListener('change', e=>{
-  const f=e.target.files[0]; if(!f) return; typeMediaTemp=f.type.startsWith('video')?'video':'photo';
-  const r=new FileReader(); r.onload=ev=>{ mediaTemp=ev.target.result; const p=document.getElementById('storyPreview'); p.src=mediaTemp; p.style.display="block"; }; r.readAsDataURL(f);
-});
-window.publierStory=async()=>{
-  if(!mediaTemp){ alert("Choisis une photo ou vidéo"); return; }
-  const newRef=push(ref(db,'jasonbook/stories'));
-  await set(newRef,{ id:newRef.key, media:mediaTemp, type:typeMediaTemp, texte:document.getElementById('storyText').value, auteurUid:uid, auteurNom:monNom, photoAuteur:maPhoto||"", date:new Date().toLocaleString(), timestamp:Date.now(), expire:Date.now()+24*60*60*1000 });
-  fermerAdd(); mediaTemp=""; document.getElementById('storyText').value=""; document.getElementById('storyPreview').style.display="none";
-  alert("Story publiée ! ✨ Elle disparaît dans 24h.");
-};
-function afficherStory(){
-  const g=groupe[indexGroupe]; if(!g) return; const s=g[indexStory]; if(!s) return;
-  document.getElementById('bars').innerHTML=g.map((_,i)=>`<div class="bar ${i<indexStory?'done':''}"><div class="fill" id="bar-${i}"></div></div>`).join('');
-  document.getElementById('vAv').innerHTML=s.photoAuteur?`<img src="${s.photoAuteur}">`:(s.auteurNom||"?").charAt(0);
-  document.getElementById('vNom').innerText=s.auteurNom||"";
-  document.getElementById('vDate').innerText=s.date||"";
-  document.getElementById('vCaption').innerText=s.texte||"";
-  document.getElementById('btnDelStory').style.display=s.auteurUid===uid?'inline-block':'none';
-  const img=document.getElementById('vImg'), vid=document.getElementById('vVideo');
-  if(s.type==='video'){ img.style.display='none'; vid.style.display='block'; vid.src=s.media; vid.play(); }
-  else { vid.style.display='none'; vid.pause(); img.style.display='block'; img.src=s.media; }
-  clearInterval(progressInt); let w=0;
-  progressInt=setInterval(()=>{ w+=2; const b=document.getElementById('bar-'+indexStory); if(b) b.style.width=w+"%"; if(w>=100){ clearInterval(progressInt); storySuiv(); } },100);
+
+function afficher(){
+  const g=groupes[indexGroupe];
+  if(!g) return;
+  const s=g.stories[indexStory];
+  if(!s) return;
+  // Barre de progression
+  const prog=document.getElementById('progress');
+  prog.innerHTML=g.stories.map((_,i)=>`<div><i style="width:${i<indexStory?100:i===indexStory?100:0}%"></i></div>`).join("");
+  document.getElementById('ava').innerHTML = g.photo ? `<img src="${esc(g.photo)}">` : esc(g.nom.charAt(0));
+  document.getElementById('nom').innerText=g.nom;
+  document.getElementById('temps').innerText=tempsDepuis(s.timestamp);
+  const viewer=document.getElementById('viewer');
+  // ✅ C'EST ICI QU'ON VOIT LA PHOTO EN GRAND
+  const mediaUrl = s.photoUrl || s.image || s.photo || s.videoUrl || "";
+  if(s.videoUrl || s.video){
+    viewer.innerHTML=`<video src="${esc(mediaUrl)}" autoplay controls playsinline></video><div class="texte">${esc(s.texte||"")}</div>`;
+  } else if(mediaUrl){
+    viewer.innerHTML=`<img src="${esc(mediaUrl)}"><div class="texte">${esc(s.texte||"")}</div>`;
+  } else {
+    viewer.innerHTML=`<div style="padding:20px;text-align:center;font-size:22px">${esc(s.texte||"Aucune photo")}</div>`;
+  }
 }
-window.ouvrirViewer=(gi,si)=>{ indexGroupe=gi; indexStory=si; document.getElementById('viewer').classList.add('open'); afficherStory(); };
-window.fermerViewer=()=>{ document.getElementById('viewer').classList.remove('open'); clearInterval(progressInt); document.getElementById('vVideo').pause(); };
-window.storySuiv=()=>{
-  const g=groupe[indexGroupe]; if(!g) return;
-  if(indexStory<g.length-1){ indexStory++; afficherStory(); }
-  else if(indexGroupe<groupe.length-1){ indexGroupe++; indexStory=0; afficherStory(); }
-  else fermerViewer();
+
+window.suivant=()=>{
+  const g=groupes[indexGroupe];
+  if(indexStory < g.stories.length-1){ indexStory++; afficher(); }
+  else if(indexGroupe < groupes.length-1){ indexGroupe++; indexStory=0; afficher(); }
+  else { location.href='feed.html'; }
 };
-window.storyPrec=()=>{
-  if(indexStory>0){ indexStory--; afficherStory(); }
-  else if(indexGroupe>0){ indexGroupe--; indexStory=groupe[indexGroupe].length-1; afficherStory(); }
+window.precedent=()=>{
+  if(indexStory>0){ indexStory--; afficher(); }
+  else if(indexGroupe>0){ indexGroupe--; indexStory=groupes[indexGroupe].stories.length-1; afficher(); }
 };
-window.repondreStory=()=>{ const s=groupe[indexGroupe][indexStory]; location.href='messages.html?uid='+s.auteurUid; };
-window.supprimerStory=async()=>{ const s=groupe[indexGroupe][indexStory]; if(!confirm("Supprimer cette story ?")) return; await remove(ref(db,'jasonbook/stories/'+s.id)); fermerViewer(); };
-onValue(ref(db,'jasonbook/stories'), s=>{
-  const d=s.val(); const now=Date.now();
-  if(!d){ stories=[]; rendre(); return; }
-  stories=Object.entries(d).map(([id,x])=>({id,...x})).filter(x=> (x.expire||0) > now).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
-  rendre();
-});
+window.repondre=async ()=>{
+  const txt=document.getElementById('reponse').value.trim();
+  const g=groupes[indexGroupe];
+  if(!g) return;
+  if(g.auteurUid===uid){ alert("C'est ton propre statut"); return; }
+  const n=push(ref(db,'jasonbook/notifications/'+g.auteurUid));
+  await set(n,{type:"statut", texte:monNom+" a réagi à ton statut : "+(txt||"❤️"), deUid:uid, deNom:monNom, date:new Date().toLocaleString(), timestamp:Date.now(), lu:false});
+  document.getElementById('reponse').value="";
+  alert("Réponse envoyée à "+g.nom+" ❤️");
+};
+charger();
 </script>
 </body>
 </html>
