@@ -13,7 +13,6 @@ body{padding-bottom:92px}
 button,input,textarea{font:inherit}
 button{cursor:pointer}
 img{max-width:100%;display:block}
-/* HEADER PRO - SANS RECHERCHE */
 .top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
 .logo{font-size:21px;font-weight:900;white-space:nowrap;flex:1}
 .logo i{color:var(--gold);font-style:normal}
@@ -38,6 +37,12 @@ img{max-width:100%;display:block}
 .btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff}
 .btn-secondary{background:var(--card2);color:#fff;border:1px solid var(--line)}
 .btn-gold{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000}
+/* ✅ STATS - AMIS / J'AIME / PUBLICATIONS */
+.stats{display:flex;gap:0;background:#1F1F2E;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:14px auto 0;max-width:420px;width:100%}
+.stats div{flex:1;text-align:center;padding:12px 4px;cursor:pointer}
+.stats div+div{border-left:1px solid var(--line)}
+.stats b{display:block;font-size:19px;color:var(--gold);line-height:1.2}
+.stats span{font-size:11px;color:var(--grey)}
 .tabs{display:flex;gap:7px;padding:10px 12px;border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--card2);color:#fff;padding:9px 15px;border-radius:999px;font-weight:800;font-size:13px}
@@ -62,6 +67,8 @@ img{max-width:100%;display:block}
 .post-image{width:100%;max-height:520px;object-fit:contain;background:#111;border-radius:14px}
 .actions-text{display:flex;gap:8px;border-top:1px solid var(--line);margin-top:12px;padding-top:10px}
 .actions-text button{flex:1;border:0;background:var(--card2);color:#fff;padding:10px;border-radius:999px;font-weight:700;font-size:12px}
+.counts-row{display:flex;gap:14px;padding:8px 4px 2px;font-size:13px;color:#A1A1AA}
+.counts-row span{cursor:pointer}
 .ami-row{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}
 .ami-row:last-child{border-bottom:0}
 .ami-row .avatar-mini{width:48px;height:48px;min-width:48px}
@@ -130,6 +137,14 @@ img{max-width:100%;display:block}
 <p id="metaAffiche"></p>
 <p id="amisCount">0 ami</p>
 </div>
+
+<!-- ✅ NOMBRE D'AMIS / J'AIME / PUBLICATIONS -->
+<div class="stats">
+  <div onclick="showTab('amis',document.querySelectorAll('.tabs button')[2])"><b id="nbAmis">0</b><span>👥 Amis</span></div>
+  <div onclick="showTab('posts',document.querySelectorAll('.tabs button')[0])"><b id="nbLikes">0</b><span>❤️ J'aime</span></div>
+  <div onclick="showTab('posts',document.querySelectorAll('.tabs button')[0])"><b id="nbPubs">0</b><span>📝 Publications</span></div>
+</div>
+
 <div class="profile-btns">
 <button class="btn btn-primary" onclick="ouvrirEdit()">✏️ Modifier le profil</button>
 <button class="btn btn-secondary" onclick="location.href='creer-post.html'">＋ Publier</button>
@@ -178,6 +193,15 @@ img{max-width:100%;display:block}
 <div class="modal-buttons"><button class="btn btn-primary" id="saveProfileBtn" onclick="sauvegarderProfil()">Enregistrer</button><button class="btn btn-secondary" onclick="fermerEdit()">Annuler</button></div>
 </div></div>
 
+<!-- ✅ MODAL VOIR QUI A AIMÉ -->
+<div id="modalLikes" style="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:400;display:none;align-items:flex-end;justify-content:center" onclick="if(event.target===this) fermerLikes()">
+  <div style="width:100%;max-width:500px;max-height:82vh;background:#16161F;border:1px solid #26262F;border-radius:20px 20px 0 0;padding:16px;overflow:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h3 id="titreLikes">❤️ Personnes qui ont aimé</h3><button onclick="fermerLikes()" style="width:35px;height:35px;border-radius:50%;background:#26262F;border:none;color:#fff;font-size:18px">✕</button></div>
+    <p id="totalLikes" style="color:#A1A1AA;font-size:12px;margin:6px 0"></p>
+    <div id="listeLikes"></div>
+  </div>
+</div>
+
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import {getDatabase,ref,onValue,get,update} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -186,6 +210,7 @@ const app=initializeApp(firebaseConfig); const db=getDatabase(app);
 const uid=localStorage.getItem("jasonbook_uid"); if(!uid){location.href="index.html";}
 let monProfil=null; let amisChargement=false;
 const $=id=>document.getElementById(id);
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function imageAutorisee(src){ if(typeof src!=="string") return ""; if(src.startsWith("data:image/")) return src; if(src.startsWith("https://")) return src; return ""; }
 function creerAvatar(photo,lettre="J"){ const box=document.createElement("div"); box.className="avatar-mini"; const src=imageAutorisee(photo); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de profil"; img.loading="lazy"; box.appendChild(img); }else{ box.textContent=lettre||"J"; } return box; }
 function afficherPhotoDans(element,photo,lettre="J"){ element.replaceChildren(); const src=imageAutorisee(photo); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de profil"; element.appendChild(img); }else{ element.append(document.createTextNode(lettre)); } }
@@ -214,6 +239,18 @@ async function enregistrerImage(file,champ){ if(!file) return; if(file.size>12*1
 $("fileAvatar").addEventListener("change",async e=>{ await enregistrerImage(e.target.files[0],"photoProfil"); e.target.value=""; });
 $("fileCover").addEventListener("change",async e=>{ await enregistrerImage(e.target.files[0],"photoCouverture"); e.target.value=""; });
 onValue(ref(db,"jasonbook/users/"+uid),snap=>{ const u=snap.val(); if(!u) return; afficherProfil(u); });
+
+// ✅ VOIR QUI A AIMÉ / COMMENTÉ - POUR TES PUBLICATIONS
+window.voirLikes=async(postId)=>{
+  const modal=$("modalLikes"); $("titreLikes").innerText="❤️ Personnes qui ont aimé"; $("listeLikes").innerHTML="Chargement..."; modal.style.display="flex";
+  const snap=await get(ref(db,'jasonbook/likes/'+postId)); const d=snap.val()||{};
+  const arr=Object.entries(d).map(([k,l])=>{ if(l===true) return {nom:'Utilisateur',photo:'',date:''}; return l; });
+  $("totalLikes").innerText=arr.length+" personnes ont aimé";
+  if(!arr.length){ $("listeLikes").innerHTML='<p style="color:#A1A1AA">Aucune personne.</p>'; return; }
+  $("listeLikes").innerHTML=arr.map(l=>`<div style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #26262F"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FFC107,#7C3AED);display:flex;align-items:center;justify-content:center;overflow:hidden;font-weight:900">${l.photo?`<img src="${esc(l.photo)}" style="width:100%;height:100%;object-fit:cover">`:esc((l.nom||'?').charAt(0))}</div><div style="flex:1"><b>${esc(l.nom||'Fan')}</b><small style="display:block;color:#A1A1AA">${esc(l.date||'')}</small></div><span>❤️</span></div>`).join('');
+};
+window.fermerLikes=()=>{ $("modalLikes").style.display="none"; };
+
 async function chargerAmis(){
   if(amisChargement) return; amisChargement=true;
   const box=$("amisFull"); const boxLeft=$("amisList"); const loading=$("loadingAmis"); const noAmis=$("noAmisFull");
@@ -221,6 +258,7 @@ async function chargerAmis(){
   try{
     const snap=await get(ref(db,"jasonbook/amis/"+uid)); const data=snap.val()||{}; const ids=Object.keys(data);
     $("amisCount").textContent=ids.length+" ami"+(ids.length>1?"s":""); $("amisCount2").textContent=ids.length;
+    $("nbAmis").textContent=ids.length;
     if(!ids.length){ noAmis.style.display="block"; boxLeft.textContent="Aucun ami pour le moment"; boxLeft.style.color="var(--grey)"; return; }
     const tousSnap=await get(ref(db,"jasonbook/users")); const tous=tousSnap.val()||{};
     ids.forEach(fid=>{
@@ -236,10 +274,16 @@ async function chargerAmis(){
   }catch(error){ console.error(error); box.textContent="Impossible de charger les amis."; }finally{ loading.style.display="none"; amisChargement=false; }
 }
 window.chargerAmis=chargerAmis; chargerAmis();
+
+// ✅ MES PUBLICATIONS = CE QUE TU PUBLIES - ET COMPTAGE J'AIME + PUBLICATIONS
 onValue(ref(db,"jasonbook/posts"),snap=>{
   const data=snap.val()||{}; const box=$("mesPosts"); const grid=$("photosGrid"); const full=$("photosFull");
   box.replaceChildren(); grid.replaceChildren(); full.replaceChildren();
   const miens=Object.entries(data).filter(([id,p])=>p&&p.auteurUid===uid).sort((a,b)=>(b[1].timestamp||0)-(a[1].timestamp||0));
+  // ✅ NOMBRE DE PUBLICATIONS + TOTAL J'AIME
+  $("nbPubs").textContent=miens.length;
+  const totalLikes=miens.reduce((s,[id,p])=>s+Number(p.likesCount||p.likes||0),0);
+  $("nbLikes").textContent=totalLikes;
   $("noPosts").style.display=miens.length?"none":"block";
   let compteurPhotos=0;
   miens.forEach(([id,p])=>{
@@ -251,6 +295,10 @@ onValue(ref(db,"jasonbook/posts"),snap=>{
     if(p.texte){ const texte=document.createElement("div"); texte.className="post-text"; texte.textContent=p.texte; card.appendChild(texte); }
     const photo=imageAutorisee(p.photoUrl);
     if(photo){ const img=document.createElement("img"); img.className="post-image"; img.src=photo; img.alt="Photo publiée"; img.loading="lazy"; card.appendChild(img); compteurPhotos++; const mini=document.createElement("img"); mini.src=photo; mini.alt="Photo"; mini.loading="lazy"; grid.appendChild(mini); const grande=document.createElement("img"); grande.src=photo; grande.alt="Photo publiée"; grande.loading="lazy"; full.appendChild(grande); }
+    // ✅ COMPTEURS CLIQUABLES
+    const counts=document.createElement("div"); counts.className="counts-row";
+    counts.innerHTML=`<span onclick="voirLikes('${esc(id)}')">❤️ ${Number(p.likesCount||p.likes||0)} J'aime</span><span>💬 ${Number(p.commentairesCount||p.comments||0)} commentaires</span><span>↗️ ${Number(p.partagesCount||p.shares||0)} partages</span>`;
+    card.appendChild(counts);
     const actions=document.createElement("div"); actions.className="actions-text"; ["❤️ "+(p.likesCount||0),"💬 "+(p.commentairesCount||0),"↗️ "+(p.partagesCount||0)].forEach(label=>{ const button=document.createElement("button"); button.textContent=label; actions.appendChild(button); }); card.appendChild(actions); box.appendChild(card);
   });
   $("noPhotos").style.display=compteurPhotos?"none":"block"; $("noPhotosFull").style.display=compteurPhotos?"none":"block";
