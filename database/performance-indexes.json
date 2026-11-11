@@ -1,0 +1,17 @@
+{
+  "rules": {
+    "jasonbook": {
+      "posts": {
+        ".indexOn": ["timestamp"]
+      },
+      "stories": {
+        ".indexOn": ["expire"]
+      },
+      "commentaires": {
+        "$postId": {
+          ".indexOn": ["timestamp"]
+        }
+      }
+    }
+  }
+}
