@@ -9,19 +9,17 @@
 :root{--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--violet:#7C3AED;--violet2:#A855F7;--gold:#FFC107;--text:#fff;--muted:#A1A1AA;--line:#26262F}
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 html{overflow-x:hidden}
-body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:92px;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:92px;padding-top:62px;-webkit-tap-highlight-color:transparent}
 button,a{touch-action:manipulation}
 button{cursor:pointer}
-.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:10px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+/* ✅ SEUL CE HEADER RESTE EN HAUT - JASONBOOK + RECHARGER + NOTIF + 3 TRAITS */
+.header-fixe{position:fixed;top:0;left:0;right:0;z-index:999;background:#0A0A0F;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:10px 12px}
 .logo{font-size:20px;font-weight:900;white-space:nowrap;flex:1;line-height:1}
 .logo i{color:var(--gold);font-style:normal}
 .logo small{display:block;font-size:8px;color:var(--muted);letter-spacing:1.2px;margin-top:1px}
-.search-top{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:8px 12px;display:flex;gap:6px;align-items:center;color:var(--muted);font-size:12px;cursor:pointer}
-.btn-notif{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
-.btn-notif:active{background:var(--violet)}
-.btn-notif .dot{position:absolute;top:-5px;right:-5px;background:#E0245E;color:#fff;font-size:10px;font-weight:900;min-width:18px;height:18px;border-radius:999px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid #0A0A0F}
-.btn-menu{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;font-weight:400;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
-.btn-menu:active{background:var(--violet)}
+.btn-top{width:38px;height:38px;min-width:38px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
+.btn-top:active{background:var(--violet)}
+.btn-top .dot{position:absolute;top:-5px;right:-5px;background:#E0245E;color:#fff;font-size:10px;font-weight:900;min-width:18px;height:18px;border-radius:999px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid #0A0A0F}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:none}
 .overlay.open{display:block}
 .menu{position:fixed;top:0;right:0;bottom:0;width:264px;max-width:82vw;background:#121218;z-index:101;transform:translateX(100%);transition:.22s ease;overflow-y:auto;border-left:1px solid var(--line);padding:0 0 14px}
@@ -111,11 +109,12 @@ button{cursor:pointer}
 </head>
 <body>
 
-<div class="top">
-<div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
-<div class="search-top" onclick="location.href='recherche.html'">🔍 <span>Chercher...</span></div>
-<button class="btn-notif" onclick="location.href='notifications.html'">🔔<span class="dot" id="dotNotifTop">0</span></button>
-<button class="btn-menu" onclick="ouvrirMenu()">☰</button>
+<!-- ✅ JUSTE ÇA QUI RESTE EN HAUT -->
+<div class="header-fixe">
+  <div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
+  <button class="btn-top" onclick="location.reload()" title="Recharger">🔄</button>
+  <button class="btn-top" onclick="location.href='notifications.html'" title="Notifications">🔔<span class="dot" id="dotNotifTop">0</span></button>
+  <button class="btn-top" onclick="ouvrirMenu()" title="Menu">☰</button>
 </div>
 
 <div class="overlay" id="overlay" onclick="fermerMenu()"></div>
