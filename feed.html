@@ -9,31 +9,32 @@
 :root{--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--violet:#7C3AED;--violet2:#A855F7;--gold:#FFC107;--text:#fff;--muted:#A1A1AA;--line:#26262F}
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 html{overflow-x:hidden}
-body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:92px;padding-top:108px;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:92px;-webkit-tap-highlight-color:transparent}
 button,a{touch-action:manipulation}
 button{cursor:pointer}
-/* ✅ HEADER FIXE - NE DISPARAÎT JAMAIS */
-.header-fixe{position:fixed;top:0;left:0;right:0;z-index:999;background:#0A0A0F;border-bottom:1px solid var(--line)}
-.top{padding:10px 12px;display:flex;align-items:center;gap:8px}
+.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:10px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
 .logo{font-size:20px;font-weight:900;white-space:nowrap;flex:1;line-height:1}
 .logo i{color:var(--gold);font-style:normal}
 .logo small{display:block;font-size:8px;color:var(--muted);letter-spacing:1.2px;margin-top:1px}
 .search-top{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:8px 12px;display:flex;gap:6px;align-items:center;color:var(--muted);font-size:12px;cursor:pointer}
 .btn-notif{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
+.btn-notif:active{background:var(--violet)}
 .btn-notif .dot{position:absolute;top:-5px;right:-5px;background:#E0245E;color:#fff;font-size:10px;font-weight:900;min-width:18px;height:18px;border-radius:999px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid #0A0A0F}
-.btn-menu{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.btn-menu{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;font-weight:400;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+.btn-menu:active{background:var(--violet)}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:none}
 .overlay.open{display:block}
 .menu{position:fixed;top:0;right:0;bottom:0;width:264px;max-width:82vw;background:#121218;z-index:101;transform:translateX(100%);transition:.22s ease;overflow-y:auto;border-left:1px solid var(--line);padding:0 0 14px}
 .menu.open{transform:translateX(0)}
 .menu-top{display:flex;align-items:center;gap:10px;padding:14px 14px 12px;border-bottom:1px solid var(--line)}
-.menu-top .m-ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;overflow:hidden;cursor:pointer}
+.menu-top .m-ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .menu-top .m-ava img{width:100%;height:100%;object-fit:cover}
 .menu-top b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .menu-top small{color:var(--muted);font-size:11px}
-.menu-top button{margin-left:auto;background:var(--card2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;font-size:14px;cursor:pointer}
+.menu-top button{margin-left:auto;background:var(--card2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;font-size:14px;cursor:pointer;flex-shrink:0}
 .menu-sec{padding:14px 14px 4px;font-size:10px;color:var(--muted);letter-spacing:1px;font-weight:800}
 .menu-item{display:flex;align-items:center;gap:10px;width:100%;background:none;border:none;color:#EDEDEF;text-align:left;padding:8px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600}
+.menu-item:active{background:var(--card2)}
 .menu-item .ico{width:30px;height:30px;min-width:30px;background:var(--card2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px}
 .menu-item small{color:var(--muted);font-weight:400;font-size:11px;margin-left:-4px}
 .menu-item .fleche{margin-left:auto;color:var(--muted);font-size:12px}
@@ -44,11 +45,9 @@ button{cursor:pointer}
 .menu-item.live .ico{background:#E0245E}
 .menu-item.danger .ico{background:#E0245E}
 .menu-item.danger{color:#FF8A9A}
-.menu-item.actu .ico{background:#FFC107;color:#111}
-.menu-item.market .ico{background:#22C55E}
 .hr{height:1px;background:var(--line);margin:12px 14px}
 .wrap{width:100%;max-width:650px;margin:10px auto;padding:0 10px 10px}
-.tabs{display:flex;gap:7px;overflow-x:auto;padding:6px 12px 10px;scrollbar-width:none}
+.tabs{display:flex;gap:7px;overflow-x:auto;padding:6px 2px 10px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tabs button{border:1px solid var(--line);background:var(--card);color:#fff;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0}
 .tabs button.active{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border-color:transparent}
@@ -64,6 +63,7 @@ button{cursor:pointer}
 .avatar{width:40px;height:40px;flex-shrink:0;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:800}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .create input{flex:1;min-width:0;background:var(--card2);border:1px solid var(--line);padding:12px 15px;border-radius:999px;color:#fff;outline:none;cursor:pointer}
+.create input::placeholder{color:var(--muted)}
 .create .btns{display:flex;gap:7px;margin-top:10px}
 .create .btns button{flex:1;border:0;background:var(--card2);color:#eee;padding:10px 4px;border-radius:12px;font-weight:700;font-size:12px}
 .post{margin-bottom:14px;padding:13px;overflow:hidden;position:relative}
@@ -73,13 +73,13 @@ button{cursor:pointer}
 .post .media{position:relative;border-radius:14px;overflow:hidden}
 .post img.pimg{width:100%;height:auto;max-height:420px;object-fit:cover;border-radius:14px;background:var(--card2);display:block;cursor:zoom-in}
 .post video{width:100%;max-height:420px;border-radius:14px;background:#000}
-.post iframe{width:100%;height:230px;border-radius:14px;border:0;background:#000}
-.fb-embed{width:100%;min-height:380px;border:0;border-radius:14px;background:#fff}
 .actions-text{display:flex;gap:8px;margin-top:10px}
 .actions-text button{flex:1;background:var(--card2);border:0;color:#fff;padding:10px;border-radius:999px;font-weight:700;font-size:12px}
 .actions-text button.liked{color:var(--gold)}
+.actions-text button.fav{color:var(--gold)}
 .counts-row{display:flex;gap:14px;padding:8px 4px 2px;font-size:13px;color:#A1A1AA}
 .counts-row span{cursor:pointer}
+.counts-row span:active{color:#FFC107}
 .loading{text-align:center;color:var(--gold);padding:20px;font-size:13px}
 .empty{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px 10px;color:var(--muted)}
 .comments{border-top:1px solid var(--line);margin-top:10px;padding-top:10px;display:none}
@@ -106,32 +106,16 @@ button{cursor:pointer}
 .bottom button.active{color:var(--gold)}
 .bottom button span{font-size:22px}
 .bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
-.badge-fb{background:#1877F2;color:#fff;font-size:10px;padding:3px 8px;border-radius:999px;font-weight:800}
-.badge-yt{background:#FF0000;color:#fff;font-size:10px;padding:3px 8px;border-radius:999px;font-weight:800}
-.actu-add{background:var(--card);border:1px dashed var(--gold);border-radius:20px;padding:12px;margin:10px 0}
-.actu-add input{width:100%;background:var(--card2);border:1px solid var(--line);color:#fff;padding:11px;border-radius:12px;margin-top:8px}
-.actu-add button{width:100%;background:var(--gold);border:0;color:#000;padding:11px;border-radius:12px;font-weight:800;margin-top:8px}
 @media(max-width:360px){.wrap{padding-left:7px;padding-right:7px}.logo{font-size:18px}}
 </style>
 </head>
 <body>
 
-<!-- ✅ HEADER FIXE -->
-<div class="header-fixe">
-  <div class="top">
-    <div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
-    <div class="search-top" onclick="location.href='recherche.html'">🔍 <span>Chercher...</span></div>
-    <button class="btn-notif" onclick="location.href='notifications.html'">🔔<span class="dot" id="dotNotifTop">0</span></button>
-    <button class="btn-menu" onclick="ouvrirMenu()">☰</button>
-  </div>
-  <div class="tabs">
-    <button class="active" data-filtre="tout" onclick="setFiltre('tout',this)">✨ Pour Toi</button>
-    <button data-filtre="actus" onclick="setFiltre('actus',this)">📰 Actualités</button>
-    <button data-filtre="facebook" onclick="setFiltre('facebook',this)">📘 Facebook</button>
-    <button data-filtre="youtube" onclick="setFiltre('youtube',this)">▶️ YouTube</button>
-    <button onclick="location.href='amis.html'">👥 Amis <span id="badgeAmisTop"></span></button>
-    <button onclick="location.href='videos.html'">🎥 Vidéos</button>
-  </div>
+<div class="top">
+<div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
+<div class="search-top" onclick="location.href='recherche.html'">🔍 <span>Chercher...</span></div>
+<button class="btn-notif" onclick="location.href='notifications.html'">🔔<span class="dot" id="dotNotifTop">0</span></button>
+<button class="btn-menu" onclick="ouvrirMenu()">☰</button>
 </div>
 
 <div class="overlay" id="overlay" onclick="fermerMenu()"></div>
@@ -150,11 +134,7 @@ button{cursor:pointer}
   <button class="menu-item booster" onclick="location.href='booster.html'"><span class="ico">🚀</span> Booster <small>Likes • Com • Partages</small> <span class="fleche">›</span></button>
   <button class="menu-item live" onclick="location.href='live.html'"><span class="ico">🔴</span> Aller en Live <span class="fleche">›</span></button>
   <button class="menu-item" onclick="location.href='recherche.html'"><span class="ico">🔍</span> Recherche</button>
-  <button class="menu-item market" onclick="location.href='marketplace.html'"><span class="ico">🛒</span> Marketplace <small>Acheter • Vendre</small> <span class="fleche">›</span></button>
-  <div class="menu-sec">📰 ACTUALITÉS</div>
-  <button class="menu-item actu" onclick="fermerMenu();setFiltre('actus',document.querySelector('[data-filtre=actus]'))"><span class="ico">📰</span> Toutes les actualités <span class="fleche">›</span></button>
-  <button class="menu-item" onclick="fermerMenu();setFiltre('facebook',document.querySelector('[data-filtre=facebook]'))"><span class="ico">📘</span> Actualités Facebook</button>
-  <button class="menu-item" onclick="fermerMenu();setFiltre('youtube',document.querySelector('[data-filtre=youtube]'))"><span class="ico">▶️</span> Actualités YouTube</button>
+  <button class="menu-item" onclick="location.href='boutique.html'"><span class="ico">🛒</span> Boutique</button>
   <button class="menu-item" onclick="location.href='anniversaires.html'"><span class="ico">🎂</span> Anniversaires</button>
   <div class="menu-sec">RÉGLAGES</div>
   <button class="menu-item" onclick="location.href='parametres.html'"><span class="ico">⚙️</span> Paramètres</button>
@@ -166,23 +146,18 @@ button{cursor:pointer}
 </aside>
 
 <main class="wrap">
-<div class="stories" id="storiesRow"></div>
-
-<!-- ✅ AJOUTER UNE ACTUALITÉ FACEBOOK / YOUTUBE - ÇA S'AFFICHE DANS LE FIL -->
-<div class="actu-add">
-  <b style="font-size:14px">📰 Ajouter une actualité Facebook / YouTube dans le fil</b>
-  <p style="font-size:12px;color:#A1A1AA;margin-top:4px">Copie le lien Facebook ou YouTube, colle ici, tout le monde va le voir dans le fil.</p>
-  <input id="titreActu" placeholder="Titre - ex: Kinshasa aujourd'hui">
-  <input id="lienActu" placeholder="Colle le lien Facebook ou YouTube ici">
-  <button onclick="ajouterActu()">📢 Ajouter dans le fil</button>
+<div class="tabs">
+<button class="active">✨ Pour Toi</button>
+<button onclick="location.href='amis.html'">👥 Amis <span id="badgeAmisTop"></span></button>
+<button onclick="location.href='videos.html'">🎥 Vidéos</button>
+<button onclick="location.href='notifications.html'">🔔 Notifs <span id="badgeNotifTop"></span></button>
+<button onclick="location.href='messages.html'">💬 Messages <span id="badgeMsgTop"></span></button>
 </div>
-
+<div class="stories" id="storiesRow"></div>
 <div class="create">
 <div class="top"><div class="avatar" id="myAvatar2">?</div><input placeholder="Quoi de neuf ?" onclick="location.href='creer-post.html'" readonly></div>
 <div class="btns"><button onclick="location.href='creer-post.html'">🖼️ Photo</button><button onclick="location.href='creer-post.html'">🎥 Vidéo</button><button onclick="location.href='creer-post.html'">✍️ Publier</button></div>
 </div>
-
-<!-- ✅ ICI TOUT EST MÉLANGÉ : PUBLICATIONS + ACTUALITÉS FACEBOOK + YOUTUBE -->
 <div class="loading" id="loading">⏳ Chargement du fil...</div>
 <div id="list"></div>
 <div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication</h3><p>Sois le premier à publier.</p><br><button onclick="location.href='creer-post.html'" style="background:var(--violet);border:0;padding:12px 20px;border-radius:999px;color:#fff;font-weight:800">➕ Créer le premier post</button></div>
@@ -252,68 +227,27 @@ window.seDeconnecter=()=>{
   sessionStorage.clear(); location.href='index.html';
 };
 function setBadgeTop(id,n){const e=$(id); if(!e) return; e.textContent=n>0?`(${n})`:"";}
-let mesLikes=new Set(); let mesFavoris=new Set(); let tousPosts=[]; let toutesActus=[]; let commentairesParPost={}; let commentairesActu={}; let postAPartager=null; let renduProgramme=false;
-let filtreActuel="tout";
-window.setFiltre=(f,btn)=>{ filtreActuel=f; document.querySelectorAll(".tabs button[data-filtre]").forEach(b=>b.classList.remove("active")); if(btn) btn.classList.add("active"); rendrePostsRapide(); };
-function youtubeId(url){ if(!url) return ""; let m=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/|youtube\.com\/embed\/|youtube\.com\/live\/)([A-Za-z0-9_-]{6,})/); return m?m[1]:""; }
-function fbEmbed(url){ return `https://www.facebook.com/plugins/post.php?href=${encodeURIComponent(url)}&show_text=true&width=500`; }
+let mesLikes=new Set(); let mesFavoris=new Set(); let tousPosts=[]; let commentairesParPost={}; let postAPartager=null; let renduProgramme=false;
 function rendrePostsRapide(){if(renduProgramme)return; renduProgramme=true; requestAnimationFrame(()=>{renduProgramme=false; rendrePosts();});}
-
-// ✅ AJOUTER ACTUALITÉ FACEBOOK / YOUTUBE DANS LE FIL
-window.ajouterActu=async()=>{
-  let titre=$("titreActu").value.trim(); let lien=$("lienActu").value.trim();
-  if(!lien) return alert("Colle le lien Facebook ou YouTube");
-  if(!titre) titre="Actualité";
-  let source="facebook"; if(lien.includes("youtube")||lien.includes("youtu.be")) source="youtube";
-  let r=push(ref(db,"jasonbook/actualites"));
-  await set(r,{titre,lien,source,categorie:source,auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,date:new Date().toLocaleString(),timestamp:Date.now(),likesCount:0,commentairesCount:0,partagesCount:0});
-  $("titreActu").value=""; $("lienActu").value=""; alert("Actualité ajoutée dans le fil ✅");
-};
-
 function rendrePosts(){
 const box=$("list"); if(!box) return; box.innerHTML=""; $("loading").style.display="none";
-// ✅ ON MÉLANGE : publications + actualités, triées par date, comme Facebook
-let melange=[];
-tousPosts.forEach(p=>melange.push({type:"post",timestamp:p.timestamp||0,data:p}));
-toutesActus.forEach(a=>melange.push({type:"actu",timestamp:a.timestamp||0,data:a}));
-melange.sort((a,b)=>b.timestamp-a.timestamp);
-// ✅ FILTRE : tout / actus / facebook / youtube
-if(filtreActuel==="actus") melange=melange.filter(m=>m.type==="actu");
-if(filtreActuel==="facebook") melange=melange.filter(m=>m.type==="actu"&&m.data.source==="facebook");
-if(filtreActuel==="youtube") melange=melange.filter(m=>m.type==="actu"&&m.data.source==="youtube");
-if(!melange.length){$("emptyBox").style.display="block"; return;} $("emptyBox").style.display="none";
+if(!tousPosts.length){$("emptyBox").style.display="block"; return;} $("emptyBox").style.display="none";
 const fragment=document.createDocumentFragment();
-melange.forEach(item=>{
-  if(item.type==="actu"){
-    let a=item.data; let id="actu-"+a.id;
-    let coms=commentairesActu[a.id]||[];
-    let comsHtml=coms.map(c=>`<div class="comment"><div class="avatar">${avatarHTML(c.photo,c.nom)}</div><div class="bubble"><b>${escapeHTML(c.nom||"")}</b><span>${escapeHTML(c.texte||"")}</span><small>${escapeHTML(c.date||"")}</small></div></div>`).join("") || '<p style="color:#A1A1AA;font-size:13px;text-align:center">Aucun commentaire</p>';
-    let media="";
-    let yt=youtubeId(a.lien||"");
-    if(a.source==="youtube"&&yt) media=`<div class="media" style="margin-top:10px"><iframe src="https://www.youtube.com/embed/${yt}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`;
-    else if(a.lien&&a.lien.includes("facebook")) media=`<div style="margin-top:10px"><iframe class="fb-embed" src="${fbEmbed(a.lien)}" scrolling="no"></iframe><br><a href="${escapeHTML(a.lien)}" target="_blank" style="color:#1877F2;font-size:12px">📘 Ouvrir sur Facebook</a></div>`;
-    else if(a.lien) media=`<div style="margin-top:10px"><a href="${escapeHTML(a.lien)}" target="_blank" style="color:#FFC107">🔗 Voir l'actualité originale</a></div>`;
-    let badge=a.source==="youtube"?'<span class="badge-yt">▶️ YOUTUBE</span>':'<span class="badge-fb">📘 FACEBOOK</span>';
-    let div=document.createElement("article"); div.className="post"; div.style.border="1px solid rgba(255,193,7,.4)";
-    div.innerHTML=`<div class="head"><div class="avatar">${avatarHTML(a.photoAuteur,a.nomAuteur)}</div><div class="info"><b>📰 ${escapeHTML(a.titre||"Actualité")} ${badge}</b><br><small>${escapeHTML(a.date||"")} • Actualité</small></div></div><p>${escapeHTML(a.titre||"")}</p>${media}<div class="counts-row"><span>❤️ ${Number(a.likesCount||0)} J'aime</span><span>💬 ${Number(a.commentairesCount||0)} commentaires</span></div><div class="actions-text"><button onclick="likerActu('${escapeHTML(a.id)}')">❤️ J'aime</button><button onclick="toggleCommentaires('${id}')">💬 Commenter</button><button onclick="partagerActu('${escapeHTML(a.id)}')">↗️ Partager</button></div><div class="comments" id="com-${id}"><div>${comsHtml}</div><div class="comment-input"><input id="inputComActu-${escapeHTML(a.id)}" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter')envoyerCommentaireActu('${escapeHTML(a.id)}')"><button onclick="envoyerCommentaireActu('${escapeHTML(a.id)}')">➤</button></div></div>`;
-    fragment.appendChild(div);
-    return;
-  }
-  let p=item.data;
-  const liked=mesLikes.has(p.id); const fav=mesFavoris.has(p.id); const coms=commentairesParPost[p.id]||[];
-  const photo=p.photoUrl||p.image||""; const video=p.videoUrl||"";
-  let comsHtml=coms.map(c=>`<div class="comment"><div class="avatar">${avatarHTML(c.photoAuteur||c.photo,c.nomAuteur||c.nom)}</div><div class="bubble"><b>${escapeHTML(c.nomAuteur||c.nom||"")}</b><span>${escapeHTML(c.texte||"")}</span><small>${escapeHTML(c.date||"")}</small></div></div>`).join("");
-  if(!coms.length){comsHtml='<p style="color:#A1A1AA;font-size:13px;text-align:center">Aucun commentaire. Sois le premier !</p>';}
-  const id=escapeHTML(p.id); const auteur=escapeHTML(p.auteurUid||""); const nom=escapeHTML(p.nomAuteur||"Utilisateur");
-  const div=document.createElement("article"); div.className="post";
-  let mediaHtml="";
-  if(photo || video){
-    mediaHtml=`<div class="media">${photo?`<img class="pimg" loading="lazy" decoding="async" src="${escapeHTML(photo)}" alt="Publication" onclick="ouvrirPhoto('${id}')">`:""}${video?`<video controls preload="none" playsinline><source src="${escapeHTML(video)}"></video>`:""}</div>`;
-  }
-  let countsHtml=`<div class="counts-row"><span onclick="voirLikes('${id}')">❤️ ${Number(p.likesCount||p.likes||0)} J'aime</span><span onclick="voirCommentaires('${id}')">💬 ${Number(p.commentairesCount||p.comments||0)} commentaires</span><span>↗️ ${Number(p.partagesCount||p.shares||0)} partages</span></div>`;
-  let actionsText=`<div class="actions-text"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"} J'aime</button><button onclick="toggleCommentaires('${id}')">💬 Commenter</button><button onclick="ouvrirPartage('${id}')">↗️ Partager</button><button class="${fav?"fav":""}" onclick="toggleFavori('${id}')">⭐ Favori</button></div>`;
-  div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${auteur}'">${avatarHTML(p.photoAuteur,p.nomAuteur)}</div><div class="info"><b>${nom}</b><br><small>${escapeHTML(p.date||"")}${p.partageDe?` • Partagé de ${escapeHTML(p.partageDeNom||"")}`:""}</small></div>${p.auteurUid===uid?`<button style="border:0;background:none;font-size:18px;color:#fff" onclick="supprimerPost('${id}')">🗑️</button>`:`<button style="border:1px solid var(--gold);background:none;color:var(--gold);padding:6px 12px;border-radius:999px;font-weight:800;font-size:12px">Suivre</button>`}</div>${p.texte?`<p>${escapeHTML(p.texte)}</p>`:""}${mediaHtml}${countsHtml}${actionsText}<div class="comments" id="com-${id}"><div>${comsHtml}</div><div class="comment-input"><input id="inputCom-${id}" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter')envoyerCommentaire('${id}')"><button onclick="envoyerCommentaire('${id}')">➤</button></div></div>`;
-  fragment.appendChild(div);
+tousPosts.forEach(p=>{
+const liked=mesLikes.has(p.id); const fav=mesFavoris.has(p.id); const coms=commentairesParPost[p.id]||[];
+const photo=p.photoUrl||p.image||""; const video=p.videoUrl||"";
+let comsHtml=coms.map(c=>`<div class="comment"><div class="avatar">${avatarHTML(c.photoAuteur||c.photo,c.nomAuteur||c.nom)}</div><div class="bubble"><b>${escapeHTML(c.nomAuteur||c.nom||"")}</b><span>${escapeHTML(c.texte||"")}</span><small>${escapeHTML(c.date||"")}</small></div></div>`).join("");
+if(!coms.length){comsHtml='<p style="color:#A1A1AA;font-size:13px;text-align:center">Aucun commentaire. Sois le premier !</p>';}
+const id=escapeHTML(p.id); const auteur=escapeHTML(p.auteurUid||""); const nom=escapeHTML(p.nomAuteur||"Utilisateur");
+const div=document.createElement("article"); div.className="post";
+let mediaHtml="";
+if(photo || video){
+mediaHtml=`<div class="media">${photo?`<img class="pimg" loading="lazy" decoding="async" src="${escapeHTML(photo)}" alt="Publication" onclick="ouvrirPhoto('${id}')">`:""}${video?`<video controls preload="none" playsinline><source src="${escapeHTML(video)}"></video>`:""}</div>`;
+}
+let countsHtml=`<div class="counts-row"><span onclick="voirLikes('${id}')">❤️ ${Number(p.likesCount||p.likes||0)} J'aime</span><span onclick="voirCommentaires('${id}')">💬 ${Number(p.commentairesCount||p.comments||0)} commentaires</span><span>↗️ ${Number(p.partagesCount||p.shares||0)} partages</span></div>`;
+let actionsText=`<div class="actions-text"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"} J'aime</button><button onclick="toggleCommentaires('${id}')">💬 Commenter</button><button onclick="ouvrirPartage('${id}')">↗️ Partager</button><button class="${fav?"fav":""}" onclick="toggleFavori('${id}')">⭐ Favori</button></div>`;
+div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${auteur}'">${avatarHTML(p.photoAuteur,p.nomAuteur)}</div><div class="info"><b>${nom}</b><br><small>${escapeHTML(p.date||"")}${p.partageDe?` • Partagé de ${escapeHTML(p.partageDeNom||"")}`:""}</small></div>${p.auteurUid===uid?`<button style="border:0;background:none;font-size:18px;color:#fff" onclick="supprimerPost('${id}')">🗑️</button>`:`<button style="border:1px solid var(--gold);background:none;color:var(--gold);padding:6px 12px;border-radius:999px;font-weight:800;font-size:12px">Suivre</button>`}</div>${p.texte?`<p>${escapeHTML(p.texte)}</p>`:""}${mediaHtml}${countsHtml}${actionsText}<div class="comments" id="com-${id}"><div>${comsHtml}</div><div class="comment-input"><input id="inputCom-${id}" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter')envoyerCommentaire('${id}')"><button onclick="envoyerCommentaire('${id}')">➤</button></div></div>`;
+fragment.appendChild(div);
 });
 box.appendChild(fragment);
 }
@@ -325,29 +259,6 @@ window.toggleFavori=async id=>{
     else { await set(favRef,{postId:id,timestamp:Date.now()}); alert("Ajouté aux favoris ⭐"); }
   }catch(e){ console.error(e); alert("Erreur favoris."); }
 };
-// ✅ LIKER / COMMENTER UNE ACTUALITÉ DANS LE FIL
-window.likerActu=async id=>{
-  let a=toutesActus.find(x=>x.id===id); if(!a) return;
-  let rl=ref(db,"jasonbook/actualites_likes/"+id+"/"+uid);
-  let snap=await get(rl);
-  if(snap.val()){ await remove(rl); await update(ref(db,"jasonbook/actualites/"+id),{likesCount:Math.max(0,(a.likesCount||0)-1)}); }
-  else { await set(rl,{nom:monNom,timestamp:Date.now()}); await update(ref(db,"jasonbook/actualites/"+id),{likesCount:(a.likesCount||0)+1}); }
-};
-window.envoyerCommentaireActu=async id=>{
-  let inp=$("inputComActu-"+id); if(!inp) return; let txt=inp.value.trim(); if(!txt) return;
-  let r=push(ref(db,"jasonbook/actualites_commentaires/"+id));
-  await set(r,{nom:monNom,photo:maPhoto,texte:txt,date:new Date().toLocaleString(),timestamp:Date.now()});
-  let a=toutesActus.find(x=>x.id===id);
-  await update(ref(db,"jasonbook/actualites/"+id),{commentairesCount:(a.commentairesCount||0)+1});
-  inp.value="";
-};
-window.partagerActu=async id=>{
-  let a=toutesActus.find(x=>x.id===id); if(!a) return;
-  let r=push(ref(db,"jasonbook/posts"));
-  await set(r,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:"📰 J'ai partagé : "+a.titre+" - "+a.lien,date:new Date().toLocaleString(),timestamp:Date.now(),likesCount:0,commentairesCount:0,partagesCount:0});
-  await update(ref(db,"jasonbook/actualites/"+id),{partagesCount:(a.partagesCount||0)+1});
-  alert("Partagé ✅");
-};
 window.voirLikes = async (postId) => {
   const modal = document.getElementById('modalLikes');
   const liste = document.getElementById('listeLikes');
@@ -358,13 +269,20 @@ window.voirLikes = async (postId) => {
     const snap = await get(ref(db,'jasonbook/likes/'+postId));
     const d = snap.val()||{};
     const arr = Object.entries(d).map(([key,l])=>{
-      if(l===true) return {key, nom:'Utilisateur', photo:'', date:'', timestamp:0};
+      if(l===true) return {key, nom:'Utilisateur', photo:'', date:'', timestamp:0, auto:false, uid:key};
       if(typeof l==='object') return {key, ...l};
-      return {key, nom:'Utilisateur', photo:'', date:'', timestamp:0};
+      return {key, nom:'Utilisateur', photo:'', date:'', timestamp:0, auto:false};
     }).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
     document.getElementById('totalLikes').textContent = arr.length + ' personnes ont aimé';
     if(!arr.length){ liste.innerHTML = '<p style="color:#A1A1AA">Aucune personne pour le moment.</p>'; return; }
-    liste.innerHTML = arr.map(l=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #26262F"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FFC107,#7C3AED);display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;flex-shrink:0">${l.photo ? `<img src="${escapeHTML(l.photo)}" style="width:100%;height:100%;object-fit:cover">` : escapeHTML((l.nom||'?').charAt(0).toUpperCase())}</div><div style="flex:1"><b style="font-size:14px">${escapeHTML(l.nom||'Fan JASONBOOK')}</b><small style="display:block;color:#A1A1AA">${escapeHTML(l.date||'')}</small></div><span>❤️</span></div>`).join('');
+    liste.innerHTML = arr.map(l=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #26262F">
+        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FFC107,#7C3AED);display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;flex-shrink:0">
+          ${l.photo ? `<img src="${escapeHTML(l.photo)}" style="width:100%;height:100%;object-fit:cover">` : escapeHTML((l.nom||'?').charAt(0).toUpperCase())}
+        </div>
+        <div style="flex:1"><b style="font-size:14px">${escapeHTML(l.nom||'Fan JASONBOOK')}</b><small style="display:block;color:#A1A1AA">${escapeHTML(l.date||'')}</small></div>
+        <span>❤️</span>
+      </div>`).join('');
   }catch(e){ liste.innerHTML = 'Erreur : '+escapeHTML(e.message); }
 };
 window.voirCommentaires = async (postId) => {
@@ -379,7 +297,13 @@ window.voirCommentaires = async (postId) => {
     const arr = Object.entries(d).map(([key,c])=>({key,...c})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
     document.getElementById('totalLikes').textContent = arr.length + ' commentaires';
     if(!arr.length){ liste.innerHTML = '<p style="color:#A1A1AA">Aucun commentaire pour le moment.</p>'; return; }
-    liste.innerHTML = arr.map(c=>`<div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #26262F"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#A855F7);display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;flex-shrink:0">${c.photoAuteur||c.photo ? `<img src="${escapeHTML(c.photoAuteur||c.photo)}" style="width:100%;height:100%;object-fit:cover">` : escapeHTML((c.nomAuteur||c.nom||'?').charAt(0).toUpperCase())}</div><div style="flex:1"><b style="font-size:14px">${escapeHTML(c.nomAuteur||c.nom||'Fan JASONBOOK')}</b><small style="display:block;color:#A1A1AA">${escapeHTML(c.date||'')}</small><p style="margin-top:4px;font-size:14px;white-space:pre-wrap">${escapeHTML(c.texte||'')}</p></div></div>`).join('');
+    liste.innerHTML = arr.map(c=>`
+      <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #26262F">
+        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#A855F7);display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;flex-shrink:0">
+          ${c.photoAuteur||c.photo ? `<img src="${escapeHTML(c.photoAuteur||c.photo)}" style="width:100%;height:100%;object-fit:cover">` : escapeHTML((c.nomAuteur||c.nom||'?').charAt(0).toUpperCase())}
+        </div>
+        <div style="flex:1"><b style="font-size:14px">${escapeHTML(c.nomAuteur||c.nom||'Fan JASONBOOK')}</b><small style="display:block;color:#A1A1AA">${escapeHTML(c.date||'')}</small><p style="margin-top:4px;font-size:14px;white-space:pre-wrap">${escapeHTML(c.texte||'')}</p></div>
+      </div>`).join('');
   }catch(e){ liste.innerHTML = 'Erreur : '+escapeHTML(e.message); }
 };
 window.fermerLikes = () => { document.getElementById('modalLikes').style.display = 'none'; };
@@ -442,13 +366,6 @@ window.boosterPost=()=>{
 };
 const postsQuery=query(ref(db,"jasonbook/posts"),orderByChild("timestamp"),limitToLast(40));
 onValue(postsQuery,s=>{const d=s.val(); tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendrePostsRapide();},error=>{console.error(error); $("loading").textContent="Erreur de chargement des publications.";});
-onValue(ref(db,"jasonbook/actualites"),s=>{
-  const d=s.val()||{}; toutesActus=Object.entries(d).map(([id,v])=>({id,...v})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
-  toutesActus.forEach(a=>{
-    onValue(ref(db,"jasonbook/actualites_commentaires/"+a.id),cs=>{ let cd=cs.val()||{}; commentairesActu[a.id]=Object.values(cd).sort((x,y)=>(x.timestamp||0)-(y.timestamp||0)); rendrePostsRapide(); });
-  });
-  rendrePostsRapide();
-});
 onValue(ref(db,"jasonbook/likes/"+uid),s=>{const d=s.val(); mesLikes=new Set(d?Object.keys(d):[]); rendrePostsRapide();});
 onValue(ref(db,"jasonbook/favoris/"+uid),s=>{const d=s.val(); mesFavoris=new Set(d?Object.keys(d):[]); rendrePostsRapide();});
 const commentaireRefs={};
@@ -461,10 +378,11 @@ onValue(postsQuery,()=>{actualiserEcouteursCommentaires();});
 onValue(ref(db,"jasonbook/demandes/"+uid),s=>{const d=s.val(); setBadgeTop("badgeAmisTop",d?Object.keys(d).length:0);});
 onValue(ref(db,"jasonbook/notifications/"+uid),s=>{
   const d=s.val(); let n=0; if(d){Object.values(d).forEach(x=>{if(!x.lu)n++;});}
+  setBadgeTop("badgeNotifTop",n);
   const dot=$("dotNotifTop");
   if(dot){ if(n>0){ dot.style.display="flex"; dot.innerText=n>99?"99+":n; } else { dot.style.display="none"; } }
 });
-onValue(ref(db,"jasonbook/messages"),s=>{const d=s.val(); let n=0; if(d){Object.values(d).forEach(chat=>{if(chat&&typeof chat==="object"){Object.values(chat).forEach(m=>{if(m&&(m.destinataireUid===uid||m.pour===uid)&&!m.lu)n++;});}});} });
+onValue(ref(db,"jasonbook/messages"),s=>{const d=s.val(); let n=0; if(d){Object.values(d).forEach(chat=>{if(chat&&typeof chat==="object"){Object.values(chat).forEach(m=>{if(m&&(m.destinataireUid===uid||m.pour===uid)&&!m.lu)n++;});}});} setBadgeTop("badgeMsgTop",n);});
 function photoDuStory(s){
   if(!s) return "";
   const cles=["photoUrl","image","photo","imageUrl","mediaUrl","media","url","storyUrl","storyImage","file","src","photoURL","imageURL","videoUrl"];
