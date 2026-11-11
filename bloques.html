@@ -3,25 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>JASONBOOK - Bloqués</title>
+<meta name="theme-color" content="#0A0A0F">
+<title>JASONBOOK ✨ - Bloqués</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-/* ✅ MÊME SCROLL QUE LE PROFIL */
 html{overflow-x:clip!important;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch;width:100%;max-width:100vw}
 body{overflow-x:clip!important;overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch}
 img,video{max-width:100%}
-/* ✅ MÊMES COULEURS QUE LE PROFIL */
 :root{--blue:#7C3AED;--blue2:#A855F7;--or:#FFC107;--bg:#0F0F14;--card:#1C1C24;--grey:#A1A1AA;--line:#2A2A35}
 body{background:var(--bg);color:#fff;min-height:100vh}
 header{background:#111;display:flex;align-items:center;gap:12px;padding:12px 14px;position:sticky;top:0;z-index:20;border-bottom:2px solid var(--or)}
-.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:21px;cursor:pointer;letter-spacing:-.3px;white-space:nowrap}
+.logo{display:flex;align-items:center;gap:7px;font-weight:900;color:#fff;font-size:21px;cursor:pointer;letter-spacing:-.3px;white-space:nowrap;flex:1}
 .logo span{width:34px;height:34px;background:linear-gradient(135deg,var(--or),#FF9800);color:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
 .logo i{color:var(--or);font-style:normal}
+.logo small{display:block;font-size:8px;color:var(--grey);letter-spacing:1.2px}
 .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--or));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .wrap{max-width:650px;margin:16px auto;padding:0 12px 30px}
 .wrap h1{font-size:23px;letter-spacing:-.3px;color:#fff}
 .wrap .sub{color:var(--grey);margin:4px 0 14px;font-size:14px;line-height:1.5}
+.count{background:#2A220A;border:1px solid var(--or);border-radius:12px;padding:12px;text-align:center;font-size:14px;margin-bottom:12px}
+.count b{color:var(--or);font-size:18px}
 .search-box{width:100%;padding:12px 16px;border:none;border-radius:999px;outline:none;font-size:14px;margin-bottom:14px;background:#2A2A35;color:#fff}
 .search-box::placeholder{color:#888}
 .search-box:focus{box-shadow:0 0 0 3px rgba(124,58,237,.3)}
@@ -29,27 +31,31 @@ header{background:#111;display:flex;align-items:center;gap:12px;padding:12px 14p
 .b-card .info{flex:1;min-width:0}.b-card .info b{color:#fff}.b-card .info small{color:var(--grey);font-size:12.5px}
 .btn-blue{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border:none;padding:9px 16px;border-radius:999px;font-weight:700;cursor:pointer;font-size:13px;white-space:nowrap}
 .btn-grey{background:#2A2A35;color:#fff;border:none;padding:9px 16px;border-radius:999px;font-weight:700;cursor:pointer}
+.btn-red{background:#E0245E;color:#fff;border:none;padding:9px 16px;border-radius:999px;font-weight:700;cursor:pointer;font-size:13px;white-space:nowrap}
 .empty{text-align:center;color:var(--grey);padding:36px 10px;background:var(--card);border-radius:12px;border:1px solid var(--line)}
 .empty .big{font-size:44px}.empty h3{color:#fff}
 </style>
-<link rel="stylesheet" href="assets/brand.css">
 </head>
 <body>
 
-<!-- ✅ HEADER : JUSTE JASONBOOK, PLUS DE 🔍 🔔 💬 👤 -->
 <header>
-<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i></div>
+<div class="logo" onclick="location.href='feed.html'"><span>J</span>JASON<i>BOOK</i><small>MADE IN KINSHASA</small></div>
+<div class="avatar" id="myAvatar" onclick="location.href='profil.html'">?</div>
 </header>
 
 <div class="wrap">
-<h1>Personnes bloquées</h1>
+<h1>🚫 Personnes bloquées</h1>
 <p class="sub">Les personnes bloquées ne peuvent pas voir ton profil, tes posts, ni t'envoyer de messages.</p>
+
+<div class="count" id="countBox">Chargement...</div>
+
 <input class="search-box" id="searchInput" placeholder="🔍 Rechercher parmi les bloqués..." oninput="rendre()">
 <div id="list"></div>
 <div class="empty" id="emptyBox" style="display:none"><div class="big">✅</div><h3>Aucune personne bloquée</h3><p>Tu n'as bloqué personne pour le moment. C'est bien ! 😊</p></div>
-</div>
 
-<!-- ✅ PLUS DE BARRE EN BAS : SUPPRIMÉ 🏠 👥 ➕ 🚫 👤 -->
+<button class="btn-grey" style="width:100%;padding:13px;margin-top:12px" onclick="location.href='recherche.html'">🔍 Chercher quelqu'un à bloquer</button>
+<button class="btn-grey" style="width:100%;padding:13px;margin-top:8px" onclick="location.href='parametres.html'">← Retour aux Paramètres</button>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -66,30 +72,56 @@ async function chargerInfos(){
   const snap=await get(ref(db,'jasonbook/users'));
   usersMap=snap.val()||{}; rendre();
 }
+// ✅ CORRIGÉ : nomComplet + photoProfil (c'est comme ça dans toute l'app)
+function nomDe(u, fallback){
+  return u.nomComplet || u.nom || fallback || "Utilisateur";
+}
+function photoDe(u, fallback){
+  return u.photoProfil || u.photo || fallback || "";
+}
 function rendre(){
   const q=(document.getElementById('searchInput').value||"").toLowerCase();
   const box=document.getElementById('list'); box.innerHTML="";
   const liste=bloques.filter(b=>{
-    const u=usersMap[b.uidBloque]||{}; const nom=(u.nom||b.nom||"").toLowerCase();
+    const u=usersMap[b.uidBloque]||{};
+    const nom=nomDe(u, b.nom).toLowerCase();
     return nom.includes(q);
   });
   document.getElementById('emptyBox').style.display=liste.length?'none':'block';
+  document.getElementById('countBox').innerHTML = bloques.length ? `Tu as bloqué <b>${bloques.length}</b> personne${bloques.length>1?'s':''} 🚫` : `Tu n'as bloqué <b>personne</b> ✅`;
   liste.forEach(b=>{
     const u=usersMap[b.uidBloque]||{};
-    const nom=u.nom||b.nom||"Utilisateur";
-    const photo=u.photo||b.photo||"";
+    const nom=nomDe(u, b.nom);
+    const photo=photoDe(u, b.photo);
     const div=document.createElement('div'); div.className='b-card';
     div.innerHTML=`
-      <div class="avatar" style="width:48px;height:48px">${photo?`<img src="${photo}">`:nom.charAt(0).toUpperCase()}</div>
-      <div class="info"><b>${nom}</b><br><small>Bloqué(e) le ${b.date||""}</small></div>
-      <button class="btn-blue" onclick="debloquer('${b.uidBloque}','${nom}')">Débloquer</button>`;
+      <div class="avatar" style="width:48px;height:48px" onclick="location.href='profil-ami.html?uid=${b.uidBloque}'">${photo?`<img src="${photo}">`:nom.charAt(0).toUpperCase()}</div>
+      <div class="info"><b>${nom}</b><br><small>🚫 Bloqué(e) le ${b.date||"—"}</small><br><small style="color:#888">${u.ville||""} ${u.ville&&u.pays?"•":""} ${u.pays||""}</small></div>
+      <button class="btn-blue" onclick="debloquer('${b.uidBloque}','${nom.replace(/'/g,"")}')">Débloquer</button>`;
     box.appendChild(div);
   });
 }
 window.debloquer=async (uidBloque, nom)=>{
   if(!confirm("Débloquer "+nom+" ? Il/elle pourra à nouveau voir ton profil et t'écrire.")) return;
   await remove(ref(db,'jasonbook/bloques/'+uid+'/'+uidBloque));
+  // ✅ On enlève aussi de la liste locale tout de suite
+  bloques=bloques.filter(b=>b.uidBloque!==uidBloque);
+  rendre();
   alert(nom+" débloqué(e) ✅");
+};
+// ✅ Bloquer quelqu'un (à appeler depuis profil-ami.html aussi)
+window.bloquerPersonne=async (uidBloque, nom)=>{
+  if(!confirm("Bloquer "+nom+" ? Il/elle ne pourra plus voir ton profil ni t'écrire.")) return;
+  await remove(ref(db,'jasonbook/amis/'+uid+'/'+uidBloque));
+  await remove(ref(db,'jasonbook/amis/'+uidBloque+'/'+uid));
+  await remove(ref(db,'jasonbook/demandes/'+uid+'/'+uidBloque));
+  await remove(ref(db,'jasonbook/demandes/'+uidBloque+'/'+uid));
+  const { set, push } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js");
+  const r=push(ref(db,'jasonbook/bloques/'+uid));
+  // On n'utilise pas push, on veut la clé = uidBloque
+  const { set: set2 } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js");
+  await set2(ref(db,'jasonbook/bloques/'+uid+'/'+uidBloque), {uidBloque, nom, date:new Date().toLocaleString(), timestamp:Date.now()});
+  alert(nom+" bloqué(e) 🚫");
 };
 onValue(ref(db,'jasonbook/bloques/'+uid), s=>{
   const d=s.val();
