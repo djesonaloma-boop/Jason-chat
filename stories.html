@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>JASONBOOK ✨ - Statuts</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>JASONBOOK ✨ - Statut</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
 body{background:#000;color:#fff;min-height:100vh;overflow:hidden}
-.top{position:fixed;top:0;left:0;right:0;z-index:20;padding:10px 12px;background:linear-gradient(to bottom, rgba(0,0,0,.8), transparent);display:flex;flex-direction:column;gap:8px}
+.top{position:fixed;top:0;left:0;right:0;z-index:20;padding:10px 12px;background:linear-gradient(to bottom, rgba(0,0,0,.85), transparent);display:flex;flex-direction:column;gap:8px}
 .progress{display:flex;gap:4px}
 .progress div{flex:1;height:3px;background:rgba(255,255,255,.3);border-radius:999px;overflow:hidden}
 .progress div i{display:block;height:100%;background:#FFC107;width:0%}
@@ -17,31 +17,20 @@ body{background:#000;color:#fff;min-height:100vh;overflow:hidden}
 .head b{font-size:15px}
 .head small{color:#ccc;font-size:11px;display:block}
 .head button{margin-left:auto;background:rgba(255,255,255,.2);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:16px}
-.viewer{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
-.viewer img, .viewer video{width:100%;height:100%;object-fit:contain;max-height:100vh}
-.viewer .texte{position:absolute;bottom:100px;left:16px;right:16px;text-align:center;font-size:18px;text-shadow:0 2px 8px #000;line-height:1.4}
+.viewer{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;flex-direction:column}
+.viewer img,.viewer video{width:100%;height:100%;object-fit:contain}
+.viewer .texte{position:absolute;bottom:100px;left:16px;right:16px;text-align:center;font-size:20px;text-shadow:0 2px 8px #000;line-height:1.4}
 .zone-gauche,.zone-droite{position:fixed;top:0;bottom:80px;width:35%;z-index:10}
-.zone-gauche{left:0}
-.zone-droite{right:0}
-.bottom{position:fixed;bottom:0;left:0;right:0;z-index:20;padding:12px;background:linear-gradient(to top, rgba(0,0,0,.8), transparent);display:flex;gap:8px;align-items:center}
+.zone-gauche{left:0}.zone-droite{right:0}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:20;padding:12px;background:linear-gradient(to top, rgba(0,0,0,.85), transparent);display:flex;gap:8px}
 .bottom input{flex:1;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:11px 14px;color:#fff;outline:none}
-.bottom button{background:#FFC107;border:none;border-radius:50%;width:42px;height:42px;font-size:18px;font-weight:800;color:#111}
+.bottom button{background:#FFC107;border:none;border-radius:50%;width:42px;height:42px;font-size:18px;color:#111}
 .liste{position:fixed;inset:0;background:#0A0A0F;z-index:30;overflow-y:auto;padding:14px;display:none}
 .liste.open{display:block}
-.liste h2{font-size:20px;margin-bottom:12px}
-.user-row{display:flex;gap:10px;align-items:center;background:#16161F;border:1px solid #26262F;border-radius:14px;padding:10px;margin-bottom:8px}
-.user-row .ava{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#FFC107);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;overflow:hidden;flex-shrink:0}
-.user-row .ava img{width:100%;height:100%;object-fit:cover}
-.user-row b{font-size:14px}
-.user-row small{color:#A1A1AA;font-size:11px;display:block}
 </style>
 </head>
 <body>
-
-<div class="viewer" id="viewer">
-  <div style="text-align:center;color:#888">⏳ Chargement du statut...</div>
-</div>
-
+<div class="viewer" id="viewer"><div style="color:#888">⏳ Chargement...</div></div>
 <div class="top">
   <div class="progress" id="progress"></div>
   <div class="head">
@@ -50,140 +39,114 @@ body{background:#000;color:#fff;min-height:100vh;overflow:hidden}
     <button onclick="location.href='feed.html'">✕</button>
   </div>
 </div>
-
 <div class="zone-gauche" onclick="precedent()"></div>
 <div class="zone-droite" onclick="suivant()"></div>
-
 <div class="bottom">
   <input id="reponse" placeholder="Répondre à ce statut..." onkeydown="if(event.key==='Enter')repondre()">
   <button onclick="repondre()">❤️</button>
 </div>
-
-<!-- Liste si on arrive sans auteur précis -->
-<div class="liste" id="liste">
-  <h2>📸 Statuts</h2>
-  <div id="listeUsers"></div>
-  <button onclick="location.href='feed.html'" style="width:100%;background:#26262F;border:none;color:#fff;padding:12px;border-radius:12px;margin-top:10px">← Retour</button>
-</div>
+<div class="liste" id="liste"><h2>📸 Statuts</h2><div id="listeUsers"></div><button onclick="location.href='feed.html'" style="width:100%;background:#26262F;border:none;color:#fff;padding:12px;border-radius:12px;margin-top:10px">← Retour</button></div>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {getDatabase,ref,onValue,get,push,set} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import {getDatabase,ref,get,push,set} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const cfg={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
 const db=getDatabase(initializeApp(cfg));
 const uid=localStorage.getItem("jasonbook_uid");
 const monNom=localStorage.getItem("jasonbook_nom")||"Moi";
-const maPhoto=localStorage.getItem("jasonbook_photo")||"";
 const params=new URLSearchParams(location.search);
-let auteurDemande=params.get('uid')||params.get('auteur')||"";
-let groupes=[]; // [{auteurUid, nom, photo, stories:[]}]
-let indexGroupe=0, indexStory=0;
-let usersCache={};
-
+const auteurDemande=params.get('uid')||params.get('auteur')||params.get('auteurUid')||params.get('id')||"";
+let groupes=[]; let indexGroupe=0; let indexStory=0; let usersCache={};
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function tempsDepuis(ts){ if(!ts) return ""; const d=Date.now()-ts; if(d<60000) return "À l'instant"; if(d<3600000) return Math.floor(d/60000)+" min"; if(d<86400000) return Math.floor(d/3600000)+" h"; return Math.floor(d/86400000)+" j"; }
+function tempsDepuis(ts){if(!ts)return"";const d=Date.now()-ts;if(d<60000)return"À l'instant";if(d<3600000)return Math.floor(d/60000)+" min";if(d<86400000)return Math.floor(d/3600000)+" h";return Math.floor(d/86400000)+" j";}
 
-async function charger(){
-  const snap=await get(ref(db,'jasonbook/stories'));
-  const data=snap.val()||{};
-  const now=Date.now();
-  const parAuteur={};
-  // ✅ On récupère aussi la photo du profil si le statut n'en a pas
-  const snapUsers=await get(ref(db,'jasonbook/users'));
-  usersCache=snapUsers.val()||{};
-
-  Object.entries(data).forEach(([id,s])=>{
-    if(!s || (s.expire||0) <= now) return;
-    if(!parAuteur[s.auteurUid]) parAuteur[s.auteurUid]=[];
-    parAuteur[s.auteurUid].push({id,...s});
-  });
-
-  groupes=Object.entries(parAuteur).map(([auteurUid, list])=>{
-    list.sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
-    const premier=list[0];
-    // ✅ LA CORRECTION : si photoAuteur est vide, on prend la photo du profil de l'utilisateur
-    const profil=usersCache[auteurUid]||{};
-    const photo = premier.photoAuteur || premier.photo || profil.photo || profil.photoUrl || "";
-    const nom = premier.auteurNom || premier.nom || profil.nom || "Utilisateur";
-    return {auteurUid, nom, photo, stories:list};
-  });
-
-  // Si on a cliqué sur bety, on commence par elle
-  if(auteurDemande){
-    const idx=groupes.findIndex(g=>g.auteurUid===auteurDemande);
-    if(idx>=0) indexGroupe=idx;
+// ✅ FONCTION QUI TROUVE LA PHOTO PEU IMPORTE SON NOM DANS LA BASE
+function trouverMedia(s){
+  if(!s) return "";
+  // 1. Tous les noms possibles
+  const cles=["photoUrl","image","photo","videoUrl","video","mediaUrl","media","url","storyUrl","imageUrl","file","src","storyImage","imageURL","photoURL","content","lien"];
+  for(const k of cles){
+    const v=s[k];
+    if(v && typeof v==="string" && (v.startsWith("http") || v.startsWith("data:image") || v.startsWith("data:video") || v.startsWith("blob:"))) return v;
   }
-
-  if(!groupes.length){
-    document.getElementById('viewer').innerHTML='<div style="text-align:center;color:#888">Aucun statut pour le moment.<br><br><button onclick="location.href=\'feed.html\'" style="background:#FFC107;border:none;padding:12px 20px;border-radius:999px;font-weight:800">Retour</button></div>';
-    return;
+  // 2. Sinon, on cherche n'importe quelle valeur qui ressemble à une image / vidéo
+  for(const [k,v] of Object.entries(s)){
+    if(typeof v==="string" && v.length>100 && (v.startsWith("http") || v.startsWith("data:"))){
+      // On évite la photo de profil, on veut la photo du statut
+      if(k.toLowerCase().includes("auteur")) continue;
+      return v;
+    }
   }
-
-  // Si on arrive sans auteur, on montre la liste pour choisir
-  if(!auteurDemande){
-    afficherListe();
-  } else {
-    afficher();
-  }
+  return "";
+}
+function trouverTexte(s){
+  return s.texte||s.text||s.message||s.caption||s.legende||s.description||"";
 }
 
+async function charger(){
+  const [snapStories, snapUsers]=await Promise.all([get(ref(db,'jasonbook/stories')), get(ref(db,'jasonbook/users'))]);
+  const data=snapStories.val()||{}; usersCache=snapUsers.val()||{};
+  const now=Date.now(); const parAuteur={};
+  Object.entries(data).forEach(([id,s])=>{
+    if(!s || (s.expire||0)<=now) return;
+    const aUid=s.auteurUid||s.uid||s.auteurId||s.auteur||"";
+    if(!aUid) return;
+    if(!parAuteur[aUid]) parAuteur[aUid]=[];
+    parAuteur[aUid].push({id,...s, auteurUid:aUid});
+  });
+  groupes=Object.entries(parAuteur).map(([auteurUid,list])=>{
+    // ✅ On met le plus récent en premier, pour voir d'abord la photo de bety
+    list.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+    const premier=list[0]; const profil=usersCache[auteurUid]||{};
+    const photo=premier.photoAuteur||premier.photo||profil.photo||profil.photoUrl||"";
+    const nom=premier.auteurNom||premier.nom||profil.nom||"Utilisateur";
+    return {auteurUid, nom, photo, stories:list};
+  });
+  if(!groupes.length){ document.getElementById('viewer').innerHTML='<div style="text-align:center;color:#888">Aucun statut.<br><br><button onclick="location.href=\'feed.html\'" style="background:#FFC107;border:none;padding:12px 20px;border-radius:999px;font-weight:800">Retour</button></div>'; return; }
+  if(auteurDemande){
+    const idx=groupes.findIndex(g=>g.auteurUid===auteurDemande);
+    if(idx>=0){ indexGroupe=idx; indexStory=0; afficher(); return; }
+  }
+  afficherListe();
+}
 function afficherListe(){
-  const liste=document.getElementById('liste');
-  liste.classList.add('open');
-  const box=document.getElementById('listeUsers');
-  box.innerHTML="";
+  const liste=document.getElementById('liste'); liste.classList.add('open');
+  const box=document.getElementById('listeUsers'); box.innerHTML="";
   groupes.forEach((g,i)=>{
-    const div=document.createElement('div');
-    div.className='user-row';
-    div.innerHTML=`<div class="ava">${g.photo?`<img src="${esc(g.photo)}">`:esc(g.nom.charAt(0))}</div><div style="flex:1"><b>${esc(g.nom)}</b><small>${g.stories.length} statut(s) • ${tempsDepuis(g.stories[0].timestamp)}</small></div><span>›</span>`;
-    div.onclick=()=>{ auteurDemande=g.auteurUid; indexGroupe=i; indexStory=0; liste.classList.remove('open'); afficher(); };
+    const div=document.createElement('div'); div.style.cssText="display:flex;gap:10px;align-items:center;background:#16161F;border:1px solid #26262F;border-radius:14px;padding:10px;margin-bottom:8px";
+    div.innerHTML=`<div style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#FFC107);display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden">${g.photo?`<img src="${esc(g.photo)}" style="width:100%;height:100%;object-fit:cover">`:esc(g.nom.charAt(0))}</div><div style="flex:1"><b>${esc(g.nom)}</b><br><small style="color:#A1A1AA">${g.stories.length} statut(s)</small></div><span>›</span>`;
+    div.onclick=()=>{ indexGroupe=i; indexStory=0; liste.classList.remove('open'); afficher(); };
     box.appendChild(div);
   });
 }
-
 function afficher(){
-  const g=groupes[indexGroupe];
-  if(!g) return;
-  const s=g.stories[indexStory];
-  if(!s) return;
-  // Barre de progression
-  const prog=document.getElementById('progress');
-  prog.innerHTML=g.stories.map((_,i)=>`<div><i style="width:${i<indexStory?100:i===indexStory?100:0}%"></i></div>`).join("");
-  document.getElementById('ava').innerHTML = g.photo ? `<img src="${esc(g.photo)}">` : esc(g.nom.charAt(0));
+  const g=groupes[indexGroupe]; if(!g) return; const s=g.stories[indexStory]; if(!s) return;
+  document.getElementById('progress').innerHTML=g.stories.map((_,i)=>`<div><i style="width:${i<indexStory?100:i===indexStory?100:0}%"></i></div>`).join("");
+  document.getElementById('ava').innerHTML=g.photo?`<img src="${esc(g.photo)}">`:esc(g.nom.charAt(0));
   document.getElementById('nom').innerText=g.nom;
   document.getElementById('temps').innerText=tempsDepuis(s.timestamp);
   const viewer=document.getElementById('viewer');
-  // ✅ C'EST ICI QU'ON VOIT LA PHOTO EN GRAND
-  const mediaUrl = s.photoUrl || s.image || s.photo || s.videoUrl || "";
-  if(s.videoUrl || s.video){
-    viewer.innerHTML=`<video src="${esc(mediaUrl)}" autoplay controls playsinline></video><div class="texte">${esc(s.texte||"")}</div>`;
-  } else if(mediaUrl){
-    viewer.innerHTML=`<img src="${esc(mediaUrl)}"><div class="texte">${esc(s.texte||"")}</div>`;
+  const mediaUrl=trouverMedia(s);
+  const texte=trouverTexte(s);
+  // ✅ DEBUG : pour voir ce que bety a vraiment envoyé - tu me fais une capture de cette ligne si ça ne marche toujours pas
+  console.log("STORY BETY :", s);
+  if(mediaUrl){
+    if(mediaUrl.includes("video") || s.videoUrl || s.video || mediaUrl.endsWith(".mp4")){
+      viewer.innerHTML=`<video src="${esc(mediaUrl)}" autoplay controls playsinline></video><div class="texte">${esc(texte)}</div>`;
+    } else {
+      viewer.innerHTML=`<img src="${esc(mediaUrl)}"><div class="texte">${esc(texte)}</div>`;
+    }
+  } else if(texte){
+    // Si c'est un statut texte seulement, on l'affiche en grand, pas "Aucune photo"
+    viewer.innerHTML=`<div style="padding:30px;text-align:center;font-size:26px;line-height:1.4">${esc(texte)}</div>`;
   } else {
-    viewer.innerHTML=`<div style="padding:20px;text-align:center;font-size:22px">${esc(s.texte||"Aucune photo")}</div>`;
+    // ✅ DERNIER SECOURS : on montre la photo de profil de bety, jamais un écran noir vide
+    viewer.innerHTML = g.photo ? `<img src="${esc(g.photo)}"><div class="texte">Statut de ${esc(g.nom)}</div>` : `<div style="padding:30px;text-align:center">Statut de ${esc(g.nom)}<br><br><small style="color:#888;font-size:12px">Pas de photo dans ce statut<br>Clique à droite pour voir le suivant</small></div>`;
   }
 }
-
-window.suivant=()=>{
-  const g=groupes[indexGroupe];
-  if(indexStory < g.stories.length-1){ indexStory++; afficher(); }
-  else if(indexGroupe < groupes.length-1){ indexGroupe++; indexStory=0; afficher(); }
-  else { location.href='feed.html'; }
-};
-window.precedent=()=>{
-  if(indexStory>0){ indexStory--; afficher(); }
-  else if(indexGroupe>0){ indexGroupe--; indexStory=groupes[indexGroupe].stories.length-1; afficher(); }
-};
-window.repondre=async ()=>{
-  const txt=document.getElementById('reponse').value.trim();
-  const g=groupes[indexGroupe];
-  if(!g) return;
-  if(g.auteurUid===uid){ alert("C'est ton propre statut"); return; }
-  const n=push(ref(db,'jasonbook/notifications/'+g.auteurUid));
-  await set(n,{type:"statut", texte:monNom+" a réagi à ton statut : "+(txt||"❤️"), deUid:uid, deNom:monNom, date:new Date().toLocaleString(), timestamp:Date.now(), lu:false});
-  document.getElementById('reponse').value="";
-  alert("Réponse envoyée à "+g.nom+" ❤️");
-};
+window.suivant=()=>{ const g=groupes[indexGroupe]; if(indexStory<g.stories.length-1){indexStory++; afficher();} else if(indexGroupe<groupes.length-1){indexGroupe++; indexStory=0; afficher();} else location.href='feed.html'; };
+window.precedent=()=>{ if(indexStory>0){indexStory--; afficher();} else if(indexGroupe>0){indexGroupe--; indexStory=groupes[indexGroupe].stories.length-1; afficher();} };
+window.repondre=async ()=>{ const txt=document.getElementById('reponse').value.trim(); const g=groupes[indexGroupe]; if(!g) return; const n=push(ref(db,'jasonbook/notifications/'+g.auteurUid)); await set(n,{type:"statut",texte:monNom+" a réagi à ton statut : "+(txt||"❤️"),deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false}); document.getElementById('reponse').value=""; alert("Réponse envoyée à "+g.nom+" ❤️"); };
 charger();
 </script>
 </body>
