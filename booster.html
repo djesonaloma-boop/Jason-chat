@@ -1,1 +1,316 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><title>JASONBOOK Booster</title><link rel="stylesheet" href="assets/brand.css"><style>*{box-sizing:border-box}body{margin:0;background:#0F0F14;color:#fff;font-family:Arial}.top{padding:15px;background:#111;border-bottom:2px solid #FFC107;font-weight:900}.wrap{max-width:650px;margin:20px auto;padding:12px}.card{background:#1C1C24;border:1px solid #2A2A35;border-radius:16px;padding:18px;margin-bottom:12px}.muted{color:#A1A1AA;font-size:13px}label{display:block;font-size:13px;margin:12px 0 6px}input,select{width:100%;padding:13px;background:#2A2A35;color:#fff;border:1px solid #444;border-radius:10px}button{width:100%;padding:14px;border:0;border-radius:10px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-weight:900;margin-top:14px}.notice{font-size:12px;color:#ffe08a;line-height:1.5}</style></head><body><header class="top">🚀 JASONBOOK BOOSTER</header><main class="wrap"><div class="card"><h2>Développe ta communauté</h2><p class="muted">Demande une promotion de ton profil ou publication. Validation manuelle par l'administration ; aucun nombre d'abonnés n'est garanti.</p><label>Type de boost</label><select id="type"><option value="profil">Visibilité du profil</option><option value="publication">Booster une publication</option><option value="abonnes">Campagne abonnés</option></select><label>Lien ou ID</label><input id="target" placeholder="Lien ou identifiant"><label>Budget (FC)</label><select id="amount"><option value="1000">1 000 FC</option><option value="2500">2 500 FC</option><option value="5000">5 000 FC</option><option value="10000">10 000 FC</option></select><label>Contact Orange Money / Airtel Money / M-Pesa</label><input id="phone" placeholder="+243..."><button onclick="commander()">Envoyer la demande</button><p id="msg" class="muted"></p></div><div class="card"><b>Fonctionnement</b><p class="muted">1. Envoie la demande. 2. L'équipe confirme le paiement. 3. L'admin valide ou refuse la campagne.</p><p class="notice">Aucun paiement automatique n'est activé dans cette version. Attends la confirmation officielle avant tout transfert.</p></div><a href="profil.html" style="color:#FFC107">← Retour</a></main><script type="module">import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';import{getDatabase,ref,push,set}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';const c={apiKey:"AIzaSyA24pBo8mBiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};const db=getDatabase(initializeApp(c));window.commander=async()=>{const uid=localStorage.getItem('jasonbook_uid'),target=document.getElementById('target').value.trim(),phone=document.getElementById('phone').value.trim(),amount=Number(document.getElementById('amount').value),type=document.getElementById('type').value,msg=document.getElementById('msg');if(!uid){location.href='index.html';return}if(!target||!phone){msg.textContent='Complète le lien/ID et le contact.';return}try{const r=push(ref(db,'jasonbook/boostOrders'));await set(r,{id:r.key,uid,type,target,phone,amount,currency:'FC',status:'pending',createdAt:Date.now()});msg.textContent='Demande envoyée à l’administration.'}catch(e){msg.textContent='Erreur : '+e.message}}</script></body></html>
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0A0A0F">
+<title>JASONBOOK ✨ - Booster</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:#0A0A0F;color:#fff;min-height:100vh;padding-bottom:20px}
+.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:12px 14px;border-bottom:1px solid #26262F;display:flex;align-items:center;gap:10px}
+.logo{font-size:21px;font-weight:900;flex:1;cursor:pointer}
+.logo i{color:#FFC107;font-style:normal}
+.logo small{display:block;font-size:8px;color:#A1A1AA;letter-spacing:1.2px}
+.avatar-top{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FFC107,#7C3AED);display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;cursor:pointer}
+.avatar-top img{width:100%;height:100%;object-fit:cover}
+.wrap{max-width:650px;margin:14px auto;padding:0 12px}
+.card{background:#16161F;border:1px solid #26262F;border-radius:20px;padding:18px;margin-bottom:12px}
+.card h2{font-size:20px}
+.muted{color:#A1A1AA;font-size:13px;line-height:1.5}
+label{display:block;font-size:13px;font-weight:800;margin:14px 0 6px}
+input,select{width:100%;padding:13px;background:#1F1F2E;color:#fff;border:1px solid #2A2A35;border-radius:12px;outline:none;font-size:14px}
+input:focus,select:focus{border-color:#7C3AED}
+button{width:100%;padding:14px;border:0;border-radius:12px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-weight:900;margin-top:14px;cursor:pointer;font-size:14px}
+button:disabled{opacity:.6}
+.btn-gold{background:linear-gradient(135deg,#FFC107,#FF9800);color:#000}
+.btn-green{background:#25D366;color:#fff}
+.btn-grey{background:#1F1F2E;color:#fff;border:1px solid #26262F}
+.btn-red{background:#E0245E;color:#fff}
+.notice{font-size:12px;color:#ffe08a;line-height:1.5;background:#2A220A;border:1px solid #FFC107;border-radius:12px;padding:12px;margin-top:12px}
+/* CHOIX BOOST */
+.boost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.boost-opt{background:#1F1F2E;border:2px solid #26262F;border-radius:14px;padding:12px 6px;text-align:center;cursor:pointer}
+.boost-opt.active{border-color:#FFC107;background:#2A220A}
+.boost-opt .emoji{font-size:26px}
+.boost-opt b{display:block;font-size:12px;margin-top:4px}
+.boost-opt small{font-size:10px;color:#A1A1AA}
+/* PACKS */
+.pack{background:#1F1F2E;border:2px solid #26262F;border-radius:14px;padding:13px;margin-top:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pack.active{border-color:#7C3AED;background:#221A35}
+.pack b{font-size:14px}
+.pack small{display:block;color:#A1A1AA;font-size:11px;margin-top:2px}
+.pack .prix{color:#FFC107;font-weight:900;font-size:16px;white-space:nowrap}
+.total-box{background:linear-gradient(135deg,#1C1C24,#2A1A4A);border:1px solid #7C3AED;border-radius:14px;padding:14px;margin-top:14px;display:flex;justify-content:space-between;align-items:center}
+.total-box b{font-size:16px}
+.total-box span{color:#FFC107;font-size:20px;font-weight:900}
+/* DEPOT */
+.depot-box{background:#0A2A15;border:1px solid #25D366;border-radius:14px;padding:14px;margin-top:12px;text-align:center}
+.depot-box .num{font-size:22px;font-weight:900;color:#25D366;letter-spacing:1px}
+.depot-box p{font-size:12px;color:#A1A1AA;margin-top:4px}
+/* COMMANDES */
+.order{background:#1F1F2E;border:1px solid #26262F;border-radius:14px;padding:13px;margin-top:10px}
+.order b{font-size:14px}
+.order p{font-size:12px;color:#A1A1AA;margin-top:4px;line-height:1.5}
+.badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:800}
+.badge.pending{background:#FFC107;color:#000}
+.badge.confirmed{background:#22C55E;color:#fff}
+.badge.rejected{background:#E0245E;color:#fff}
+.badge.boosting{background:#7C3AED;color:#fff}
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tabs button{flex:1;margin:0;padding:11px}
+.tabs button.active{background:linear-gradient(135deg,#FFC107,#FF9800);color:#000}
+.admin-row{display:flex;gap:8px;margin-top:10px}
+.admin-row button{margin:0;padding:10px;font-size:12px}
+</style>
+</head>
+<body>
+
+<div class="top">
+<div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
+<div class="avatar-top" id="myAvatar" onclick="location.href='profil.html'">?</div>
+</div>
+
+<main class="wrap">
+<div class="tabs" id="tabsTop">
+<button id="btnTabClient" class="active" onclick="showTab('client')">🚀 Booster</button>
+<button id="btnTabMesCommandes" onclick="showTab('mescommandes')">📦 Mes commandes</button>
+<button id="btnTabAdmin" style="display:none" onclick="showTab('admin')">🛡️ Admin</button>
+</div>
+
+<!-- ============ CLIENT ============ -->
+<div id="tabClient">
+<div class="card">
+<h2>🚀 Booster sur JASONBOOK</h2>
+<p class="muted">Boost tes likes, commentaires et partages. <b style="color:#FFC107">Minimum 2000 FC.</b> Paiement par dépôt Mobile Money, validation par Jason Aloma.</p>
+
+<label>1. Qu'est-ce que tu veux booster ?</label>
+<div class="boost-grid">
+<div class="boost-opt active" id="opt-like" onclick="choisirBoost('like')"> <div class="emoji">❤️</div><b>Likes</b><small>20 FC / like</small></div>
+<div class="boost-opt" id="opt-commentaire" onclick="choisirBoost('commentaire')"> <div class="emoji">💬</div><b>Commentaires</b><small>50 FC / com</small></div>
+<div class="boost-opt" id="opt-partage" onclick="choisirBoost('partage')"> <div class="emoji">↗️</div><b>Partages</b><small>50 FC / partage</small></div>
+</div>
+
+<label>2. Quelle publication ?</label>
+<select id="mesPosts"><option value="">Chargement de tes publications...</option></select>
+<input id="target" placeholder="Ou colle le lien / ID de la publication" style="margin-top:8px">
+
+<label>3. Choisis ton pack (Minimum 2000 FC)</label>
+<div id="packsBox"></div>
+
+<div class="total-box"><div><b id="totalLabel">100 Likes</b><br><small style="color:#A1A1AA" id="totalDetail">100 x 20 FC</small></div><span id="totalPrix">2 000 FC</span></div>
+
+<label>4. Fais ton dépôt</label>
+<div class="depot-box">
+<div style="font-size:13px">📱 Envoie <b id="depotMontant" style="color:#FFC107">2 000 FC</b> à :</div>
+<div class="num">+243 847 500 590</div>
+<p>Jason Aloma - Orange Money / Airtel Money / M-Pesa<br>Motif : <b style="color:#fff">BOOST JASONBOOK</b></p>
+<button class="btn-green" style="margin-top:10px" onclick="window.open('https://wa.me/243847500590?text=Bonjour%20Jason%2C%20je%20veux%20booster%20sur%20JASONBOOK','_blank')">💬 Contacter Jason sur WhatsApp</button>
+</div>
+
+<label>5. Confirme ton dépôt</label>
+<input id="phone" placeholder="Ton numéro qui a envoyé l'argent ex: +243...">
+<input id="transId" placeholder="ID de transaction / Code SMS reçu (ex: OM123...)" style="margin-top:8px">
+<p class="muted" style="margin-top:6px">⚠️ Sans ID de transaction, ta commande ne sera pas confirmée.</p>
+
+<button onclick="commander()" id="btnCommander">🚀 Envoyer ma demande de Boost</button>
+<p id="msg" class="muted"></p>
+
+<div class="notice">✅ <b>Comment ça marche ?</b><br>
+1. Tu choisis Like / Commentaire / Partage.<br>
+2. Tu envoies le dépôt à <b>+243847500590</b>.<br>
+3. Tu mets ton ID de transaction.<br>
+4. <b>Jason Aloma confirme depuis l'espace Admin</b> si tu as vraiment payé.<br>
+5. Ton boost démarre. Aucun paiement automatique, tout est vérifié à la main.</div>
+</div>
+</div>
+
+<!-- ============ MES COMMANDES ============ -->
+<div id="tabMesCommandes" style="display:none">
+<div class="card"><h2>📦 Mes commandes de Boost</h2><p class="muted">Suis l'état de tes boosts. En attente = Jason n'a pas encore vérifié ton dépôt.</p><div id="mesCommandesList"></div></div>
+</div>
+
+<!-- ============ ADMIN - JASON SEUL ============ -->
+<div id="tabAdmin" style="display:none">
+<div class="card"><h2>🛡️ Espace Admin - Jason Aloma</h2><p class="muted">Tu es le seul à voir ça. Vérifie si le client a vraiment fait le dépôt à <b>+243847500590</b> avant de confirmer.</p>
+<div style="display:flex;gap:8px;margin-top:10px">
+<button class="btn-grey" style="margin:0" onclick="chargerAdmin('pending')">⏳ En attente</button>
+<button class="btn-grey" style="margin:0" onclick="chargerAdmin('confirmed')">✅ Confirmées</button>
+<button class="btn-grey" style="margin:0" onclick="chargerAdmin('all')">📦 Toutes</button>
+</div>
+<div id="adminList"></div>
+</div>
+</div>
+
+<a href="profil.html" style="color:#FFC107;text-decoration:none;font-weight:800">← Retour au profil</a>
+</main>
+
+<script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import {getDatabase,ref,push,set,get,update,onValue} from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+const c={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
+const db=getDatabase(initializeApp(c));
+const uid=localStorage.getItem('jasonbook_uid'); if(!uid){location.href='index.html';}
+const monNom=localStorage.getItem('jasonbook_nom')||"";
+const maPhoto=localStorage.getItem('jasonbook_photo')||"";
+document.getElementById('myAvatar').innerHTML=maPhoto?`<img src="${maPhoto}">`:monNom.charAt(0).toUpperCase();
+
+// ✅ ADMIN = JASON ALOMA SEUL - Tu peux changer ton nom ici si besoin
+const EST_ADMIN = monNom.toLowerCase().includes('jason aloma') || monNom.toLowerCase().includes('jason') && monNom.toLowerCase().includes('aloma');
+if(EST_ADMIN) document.getElementById('btnTabAdmin').style.display='block';
+
+let typeBoost='like';
+const PRIX={like:20, commentaire:50, partage:50};
+const NOMS={like:'Likes ❤️', commentaire:'Commentaires 💬', partage:'Partages ↗️'};
+
+function showTab(t){
+  document.getElementById('tabClient').style.display=t==='client'?'block':'none';
+  document.getElementById('tabMesCommandes').style.display=t==='mescommandes'?'block':'none';
+  document.getElementById('tabAdmin').style.display=t==='admin'?'block':'none';
+  document.getElementById('btnTabClient').classList.toggle('active',t==='client');
+  document.getElementById('btnTabMesCommandes').classList.toggle('active',t==='mescommandes');
+  document.getElementById('btnTabAdmin').classList.toggle('active',t==='admin');
+  if(t==='mescommandes') chargerMesCommandes();
+  if(t==='admin') chargerAdmin('pending');
+}
+window.showTab=showTab;
+
+let packChoisi=null;
+function rendrePacks(){
+  const box=document.getElementById('packsBox');
+  let packs=[];
+  if(typeBoost==='like') packs=[{q:100,p:2000,label:'100 Likes'},{q:250,p:5000,label:'250 Likes'},{q:500,p:10000,label:'500 Likes'},{q:1000,p:20000,label:'1000 Likes ⭐ Populaire'},{q:2500,p:50000,label:'2500 Likes 🔥 VIP'}];
+  if(typeBoost==='commentaire') packs=[{q:40,p:2000,label:'40 Commentaires'},{q:100,p:5000,label:'100 Commentaires'},{q:200,p:10000,label:'200 Commentaires ⭐'},{q:500,p:25000,label:'500 Commentaires 🔥'}];
+  if(typeBoost==='partage') packs=[{q:40,p:2000,label:'40 Partages'},{q:100,p:5000,label:'100 Partages'},{q:200,p:10000,label:'200 Partages ⭐'},{q:500,p:25000,label:'500 Partages 🔥'}];
+  packChoisi=packs[0];
+  box.innerHTML=packs.map((p,i)=>`<div class="pack ${i===0?'active':''}" onclick="choisirPack(${i})"><div><b>${p.label}</b><small>${p.q} x ${PRIX[typeBoost]} FC</small></div><div class="prix">${p.p.toLocaleString()} FC</div></div>`).join("");
+  window._packs=packs;
+  majTotal();
+}
+window.choisirPack=(i)=>{
+  packChoisi=window._packs[i];
+  document.querySelectorAll('.pack').forEach((el,idx)=>el.classList.toggle('active',idx===i));
+  majTotal();
+};
+function majTotal(){
+  if(!packChoisi) return;
+  document.getElementById('totalLabel').textContent=packChoisi.label;
+  document.getElementById('totalDetail').textContent=packChoisi.q+" x "+PRIX[typeBoost]+" FC";
+  document.getElementById('totalPrix').textContent=packChoisi.p.toLocaleString()+" FC";
+  document.getElementById('depotMontant').textContent=packChoisi.p.toLocaleString()+" FC";
+}
+window.choisirBoost=(t)=>{
+  typeBoost=t;
+  ['like','commentaire','partage'].forEach(x=>document.getElementById('opt-'+x).classList.toggle('active',x===t));
+  rendrePacks();
+};
+rendrePacks();
+
+// Charger mes posts
+async function chargerMesPosts(){
+  try{
+    const snap=await get(ref(db,'jasonbook/posts'));
+    const d=snap.val()||{};
+    const miens=Object.entries(d).filter(([id,p])=>p.auteurUid===uid).sort((a,b)=>(b[1].timestamp||0)-(a[1].timestamp||0));
+    const sel=document.getElementById('mesPosts');
+    if(!miens.length){ sel.innerHTML='<option value="">Aucune publication - colle le lien ci-dessous</option>'; return; }
+    sel.innerHTML='<option value="">-- Choisis une de tes publications --</option>'+miens.map(([id,p])=>`<option value="${id}">${(p.texte||'Photo / Vidéo').slice(0,60)} - ${p.date||''}</option>`).join("");
+  }catch(e){ document.getElementById('mesPosts').innerHTML='<option value="">Erreur de chargement</option>'; }
+}
+chargerMesPosts();
+
+window.commander=async()=>{
+  const selPost=document.getElementById('mesPosts').value;
+  const target=document.getElementById('target').value.trim()||selPost;
+  const phone=document.getElementById('phone').value.trim();
+  const transId=document.getElementById('transId').value.trim();
+  const msg=document.getElementById('msg');
+  if(!target){ msg.textContent='❌ Choisis une publication ou colle son lien.'; return; }
+  if(!phone){ msg.textContent='❌ Mets ton numéro qui a envoyé le dépôt.'; return; }
+  if(!transId){ msg.textContent='❌ Mets ton ID de transaction. Sans ça Jason ne peut pas vérifier.'; return; }
+  if(!packChoisi || packChoisi.p<2000){ msg.textContent='❌ Minimum 2000 FC.'; return; }
+  const btn=document.getElementById('btnCommander'); btn.disabled=true; btn.textContent='Envoi...';
+  try{
+    const r=push(ref(db,'jasonbook/boostOrders'));
+    await set(r,{id:r.key,uid, nom:monNom, photo:maPhoto, type:typeBoost, typeLabel:NOMS[typeBoost], quantite:packChoisi.q, target, phone, transId, amount:packChoisi.p, currency:'FC', depotNumero:'+243847500590', status:'pending', createdAt:Date.now(), date:new Date().toLocaleString()});
+    // Notif pour Jason Admin
+    const nRef=push(ref(db,'jasonbook/notifications/'+uid)); // on ne notifie pas le client, on crée une notif admin via boostOrders
+    msg.textContent='✅ Demande envoyée ! Jason va vérifier ton dépôt de '+packChoisi.p.toLocaleString()+' FC sur +243847500590. Tu seras notifié quand il confirme.';
+    msg.style.color='#22C55E';
+    document.getElementById('transId').value='';
+    showTab('mescommandes');
+  }catch(e){ msg.textContent='Erreur : '+e.message; }
+  finally{ btn.disabled=false; btn.textContent='🚀 Envoyer ma demande de Boost'; }
+};
+
+async function chargerMesCommandes(){
+  const box=document.getElementById('mesCommandesList');
+  box.innerHTML='Chargement...';
+  try{
+    const snap=await get(ref(db,'jasonbook/boostOrders'));
+    const d=snap.val()||{};
+    const miennes=Object.entries(d).filter(([id,o])=>o.uid===uid).sort((a,b)=>(b[1].createdAt||0)-(a[1].createdAt||0));
+    if(!miennes.length){ box.innerHTML='<p class="muted">Aucune commande pour le moment.</p>'; return; }
+    box.innerHTML=miennes.map(([id,o])=>{
+      let badge='<span class="badge pending">⏳ En attente de vérification</span>';
+      if(o.status==='confirmed') badge='<span class="badge confirmed">✅ Confirmé - Boost en cours</span>';
+      if(o.status==='boosting') badge='<span class="badge boosting">🚀 En cours de boost</span>';
+      if(o.status==='done') badge='<span class="badge confirmed">🎉 Terminé</span>';
+      if(o.status==='rejected') badge='<span class="badge rejected">❌ Refusé - Dépôt non trouvé</span>';
+      return `<div class="order">${badge}<br><b style="margin-top:6px;display:block">${o.typeLabel} - ${o.quantite}</b><p>Montant : <b style="color:#FFC107">${o.amount} FC</b> • Dépôt vers +243847500590<br>Transaction : ${o.transId}<br>Post : ${o.target}<br>Date : ${o.date||''}${o.adminNote?`<br>Note de Jason : ${o.adminNote}`:''}</p></div>`;
+    }).join("");
+  }catch(e){ box.innerHTML='Erreur : '+e.message; }
+}
+
+async function chargerAdmin(filtre='pending'){
+  const box=document.getElementById('adminList');
+  box.innerHTML='Chargement...';
+  try{
+    const snap=await get(ref(db,'jasonbook/boostOrders'));
+    const d=snap.val()||{};
+    let list=Object.entries(d).sort((a,b)=>(b[1].createdAt||0)-(a[1].createdAt||0));
+    if(filtre==='pending') list=list.filter(([id,o])=>o.status==='pending');
+    if(filtre==='confirmed') list=list.filter(([id,o])=>o.status==='confirmed'||o.status==='boosting');
+    if(!list.length){ box.innerHTML='<p class="muted">Aucune commande dans ce filtre.</p>'; return; }
+    box.innerHTML=list.map(([id,o])=>`
+      <div class="order">
+        <span class="badge ${o.status==='pending'?'pending':o.status==='rejected'?'rejected':'confirmed'}">${o.status}</span>
+        <b style="display:block;margin-top:6px">${o.nom} - ${o.typeLabel} x ${o.quantite}</b>
+        <p>💰 <b style="color:#FFC107">${o.amount} FC</b> - Dépôt vers +243847500590<br>
+        📱 Numéro client : ${o.phone}<br>
+        🧾 Transaction ID : <b style="color:#fff">${o.transId}</b><br>
+        📝 Post : ${o.target}<br>
+        📅 ${o.date||''}<br>
+        👤 UID : ${o.uid}</p>
+        <p style="color:#ffe08a">👉 Vérifie dans ton Orange Money / Airtel Money / M-Pesa si <b>${o.amount} FC</b> de <b>${o.phone}</b> avec ID <b>${o.transId}</b> est vraiment arrivé.</p>
+        <div class="admin-row">
+          <button class="btn-green" style="background:#22C55E" onclick="adminConfirmer('${id}','${o.uid}')">✅ J'ai reçu le dépôt - Confirmer</button>
+          <button class="btn-red" onclick="adminRefuser('${id}','${o.uid}')">❌ Pas reçu - Refuser</button>
+        </div>
+        <div class="admin-row">
+          <button class="btn-grey" onclick="adminStatut('${id}','${o.uid}','boosting')">🚀 Marquer En cours</button>
+          <button class="btn-grey" onclick="adminStatut('${id}','${o.uid}','done')">🎉 Marquer Terminé</button>
+        </div>
+      </div>`).join("");
+  }catch(e){ box.innerHTML='Erreur : '+e.message; }
+}
+window.chargerAdmin=chargerAdmin;
+window.adminConfirmer=async(id, clientUid)=>{
+  if(!confirm("Tu confirmes que tu as VRAIMENT reçu le dépôt ? Vérifie ton Mobile Money.")) return;
+  await update(ref(db,'jasonbook/boostOrders/'+id),{status:'confirmed', adminNote:'Dépôt confirmé par Jason Aloma', confirmedAt:Date.now()});
+  const nRef=push(ref(db,'jasonbook/notifications/'+clientUid));
+  await set(nRef,{type:'boost', deNom:'JASONBOOK', texte:'✅ Ton Boost est confirmé ! Jason a vérifié ton dépôt. Ton boost démarre.', date:new Date().toLocaleString(), timestamp:Date.now(), lu:false});
+  alert("✅ Confirmé ! Le client est notifié.");
+  chargerAdmin('pending');
+};
+window.adminRefuser=async(id, clientUid)=>{
+  const raison=prompt("Pourquoi refuser ? (ex: Dépôt non trouvé)"); if(raison===null) return;
+  await update(ref(db,'jasonbook/boostOrders/'+id),{status:'rejected', adminNote:raison});
+  const nRef=push(ref(db,'jasonbook/notifications/'+clientUid));
+  await set(nRef,{type:'boost', deNom:'JASONBOOK', texte:'❌ Ton Boost a été refusé : '+raison+'. Contacte Jason sur WhatsApp +243847500590', date:new Date().toLocaleString(), timestamp:Date.now(), lu:false});
+  alert("Refusé.");
+  chargerAdmin('pending');
+};
+window.adminStatut=async(id, clientUid, statut)=>{
+  await update(ref(db,'jasonbook/boostOrders/'+id),{status:statut});
+  chargerAdmin('all');
+};
+</script></body></html>
