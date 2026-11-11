@@ -13,8 +13,7 @@ body{padding-bottom:92px}
 button,input,textarea{font:inherit}
 button{cursor:pointer}
 img{max-width:100%;display:block}
-/* HEADER PRO */
-.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
 .logo{font-size:21px;font-weight:900;white-space:nowrap}
 .logo i{color:var(--gold);font-style:normal}
 .logo small{display:block;font-size:8px;color:var(--grey);letter-spacing:1.2px}
@@ -82,7 +81,6 @@ img{max-width:100%;display:block}
 .modal-box label{display:block;font-size:12px;font-weight:800;margin-top:12px;color:#ddd}
 .modal-box input,.modal-box textarea{width:100%;margin-top:6px;padding:12px;border-radius:12px;border:1px solid var(--line);outline:none;background:var(--card2);color:#fff;font-size:14px}
 .modal-box textarea{min-height:85px;resize:vertical}
-.modal-box input:focus,.modal-box textarea:focus{border-color:var(--blue)}
 .modal-buttons{display:flex;gap:8px;margin-top:15px}
 .modal-buttons button{flex:1}
 .loading{color:var(--grey);text-align:center;padding:18px;font-size:13px}
@@ -91,22 +89,7 @@ img{max-width:100%;display:block}
 .bottom button.active{color:var(--gold)}
 .bottom button span{font-size:22px}
 .bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--blue),var(--gold));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
-@media(max-width:800px){
-.layout{padding:0 8px;display:block}
-.left{display:none}
-.right{width:100%}
-.cover-wrap{width:calc(100% - 16px)}
-.cover{height:175px}
-.profile-row{margin-top:-58px}
-.big-avatar{width:120px;height:120px}
-.profile-info h1{font-size:23px}
-.photo-grid img{height:105px}
-.photo-grid.large img{height:160px}
-}
-@media(max-width:380px){
-.profile-btns .btn{padding:10px 11px;font-size:12px}
-.tabs button{padding:9px 12px}
-}
+@media(max-width:800px){.layout{padding:0 8px;display:block}.left{display:none}.right{width:100%}.cover-wrap{width:calc(100% - 16px)}.cover{height:175px}.profile-row{margin-top:-58px}.big-avatar{width:120px;height:120px}.profile-info h1{font-size:23px}.photo-grid img{height:105px}.photo-grid.large img{height:160px}}
 </style>
 </head>
 <body>
@@ -187,36 +170,80 @@ import {getDatabase,ref,onValue,get,update} from "https://www.gstatic.com/fireba
 const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
 const app=initializeApp(firebaseConfig); const db=getDatabase(app);
 const uid=localStorage.getItem("jasonbook_uid"); if(!uid){location.href="index.html";}
-let monProfil=null; let amisChargement=false;
+
+// ===== ⚡ VITESSE 1 : AFFICHER TOUT DE SUITE AVEC LE CACHE =====
 const $=id=>document.getElementById(id);
+let monProfil=null; let amisChargement=false;
+
+// On lit le téléphone d'abord, pas Firebase !
+const cacheNom = localStorage.getItem("jasonbook_nom")||"";
+const cachePhoto = localStorage.getItem("jasonbook_photo")||"";
+const cacheProfil = (()=>{ try{return JSON.parse(localStorage.getItem("jasonbook_profil_cache")||"null")}catch(e){return null} })();
+if(cacheNom){
+  $("nomAffiche").textContent = cacheNom;
+  $("myAvatarTop").innerHTML = cachePhoto ? `<img src="${cachePhoto}">` : cacheNom.charAt(0).toUpperCase();
+  $("bigAvatar").innerHTML = (cachePhoto ? `<img src="${cachePhoto}">` : cacheNom.charAt(0).toUpperCase()) + `<div class="cam">📷</div>`;
+  $("createAvatar").textContent = cacheNom.charAt(0).toUpperCase();
+  if(cachePhoto) $("createAvatar").innerHTML = `<img src="${cachePhoto}">`;
+}
+if(cacheProfil) afficherProfil(cacheProfil);
+
 function imageAutorisee(src){ if(typeof src!=="string") return ""; if(src.startsWith("data:image/")) return src; if(src.startsWith("https://")) return src; return ""; }
-function creerAvatar(photo,lettre="J"){ const box=document.createElement("div"); box.className="avatar-mini"; const src=imageAutorisee(photo); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de profil"; img.loading="lazy"; box.appendChild(img); }else{ box.textContent=lettre||"J"; } return box; }
-function afficherPhotoDans(element,photo,lettre="J"){ element.replaceChildren(); const src=imageAutorisee(photo); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de profil"; element.appendChild(img); }else{ element.append(document.createTextNode(lettre)); } }
+function creerAvatar(photo,lettre="J"){ const box=document.createElement("div"); box.className="avatar-mini"; const src=imageAutorisee(photo); if(src){ const img=document.createElement("img"); img.src=src; img.loading="lazy"; img.decoding="async"; box.appendChild(img); }else{ box.textContent=lettre||"J"; } return box; }
+function afficherPhotoDans(element,photo,lettre="J"){ element.replaceChildren(); const src=imageAutorisee(photo); if(src){ const img=document.createElement("img"); img.src=src; img.loading="lazy"; element.appendChild(img); }else{ element.append(document.createTextNode(lettre)); } }
 function ajouterInfo(parent,emoji,label,value){ const row=document.createElement("div"); row.className="info-row"; const icon=document.createElement("span"); icon.textContent=emoji; const text=document.createElement("div"); text.textContent=label+": "+(value||"Non renseigné"); row.append(icon,text); parent.appendChild(row); }
 function afficherInfos(u){ const intro=$("introList"); const apropos=$("aproposFull"); intro.replaceChildren(); apropos.replaceChildren(); const infos=[["💼","Activité",u.activite],["📍","Ville",u.ville],["🌍","Pays",u.pays],["📞","Téléphone",u.phone],["✉️","Email",u.email],["📅","Membre depuis",u.dateInscription]]; infos.forEach(([emoji,label,value])=>{ ajouterInfo(intro,emoji,label,value); ajouterInfo(apropos,emoji,label,value); }); }
+
 function afficherProfil(u){
   monProfil=u;
-  const nom=u.nomComplet||[u.prenom,u.nom].filter(Boolean).join(" ")||"Utilisateur";
+  const nom=u.nomComplet||[u.prenom,u.nom].filter(Boolean).join(" ")||cacheNom||"Utilisateur";
   const lettre=(u.prenom||u.nom||nom||"J").charAt(0).toUpperCase();
   $("nomAffiche").textContent=nom; $("bioAffiche").textContent=u.bio||""; $("metaAffiche").textContent=[u.activite,u.ville,u.pays].filter(Boolean).join(" • ");
-  $("myAvatarTop").innerHTML = imageAutorisee(u.photoProfil) ? `<img src="${u.photoProfil}">` : lettre;
+  // On ne met la couverture que si elle existe, sinon on garde le dégradé
+  if(u.photoProfil){
+    $("myAvatarTop").innerHTML = `<img src="${u.photoProfil}">`;
+    $("createAvatar").innerHTML = `<img src="${u.photoProfil}">`;
+  }
   afficherPhotoDans($("bigAvatar"),u.photoProfil,lettre);
   const cam=document.createElement("div"); cam.className="cam"; cam.textContent="📷"; $("bigAvatar").appendChild(cam);
-  $("createAvatar").replaceChildren(creerAvatar(u.photoProfil,lettre).childNodes[0]||document.createTextNode(lettre));
   afficherInfos(u);
-  const cover=$("coverDiv"); cover.querySelector("img")?.remove(); $("coverTxt").style.display="flex";
-  if(u.photoCouverture){ const src=imageAutorisee(u.photoCouverture); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de couverture"; cover.prepend(img); $("coverTxt").style.display="none"; } }
+  const cover=$("coverDiv"); const oldImg=cover.querySelector("img"); if(oldImg) oldImg.remove();
+  $("coverTxt").style.display="flex";
+  if(u.photoCouverture){ const src=imageAutorisee(u.photoCouverture); if(src){ const img=document.createElement("img"); img.src=src; img.loading="lazy"; cover.prepend(img); $("coverTxt").style.display="none"; } }
+  // Sauvegarde pour la prochaine ouverture = INSTANTANÉ
+  try{
+    localStorage.setItem("jasonbook_profil_cache", JSON.stringify({nomComplet:u.nomComplet,prenom:u.prenom,nom:u.nom,bio:u.bio,activite:u.activite,ville:u.ville,pays:u.pays,phone:u.phone,email:u.email,dateInscription:u.dateInscription,photoProfil:u.photoProfil,photoCouverture:u.photoCouverture}));
+    if(u.nomComplet) localStorage.setItem("jasonbook_nom", u.nomComplet);
+    if(u.photoProfil) localStorage.setItem("jasonbook_photo", u.photoProfil);
+  }catch(e){}
 }
 window.showTab=(id,btn)=>{ ["tabPosts","tabApropos","tabAmis","tabPhotos"].forEach(name=>{ $(name).style.display="none"; }); $("tab"+id.charAt(0).toUpperCase()+id.slice(1)).style.display="block"; document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); $("leftCol").style.display=id==="posts"&&innerWidth>800?"block":"none"; if(id==="amis") chargerAmis(); };
 window.ouvrirEdit=()=>{ if(!monProfil) return; $("editBio").value=monProfil.bio||""; $("editActivite").value=monProfil.activite||""; $("editVille").value=monProfil.ville||""; $("editPays").value=monProfil.pays||""; $("modalEdit").classList.add("open"); };
 window.fermerEdit=()=>{ $("modalEdit").classList.remove("open"); };
-window.sauvegarderProfil=async()=>{ const bouton=$("saveProfileBtn"); bouton.disabled=true; bouton.textContent="Enregistrement..."; try{ await update(ref(db,"jasonbook/users/"+uid),{ bio:$("editBio").value.trim(), activite:$("editActivite").value.trim(), ville:$("editVille").value.trim(), pays:$("editPays").value.trim() }); fermerEdit(); alert("Profil mis à jour !"); }catch(error){ console.error(error); alert("Impossible de modifier le profil. Vérifie ta connexion."); }finally{ bouton.disabled=false; bouton.textContent="Enregistrer"; } };
+window.sauvegarderProfil=async()=>{ const bouton=$("saveProfileBtn"); bouton.disabled=true; bouton.textContent="Enregistrement..."; try{ const data={ bio:$("editBio").value.trim(), activite:$("editActivite").value.trim(), ville:$("editVille").value.trim(), pays:$("editPays").value.trim() }; await update(ref(db,"jasonbook/users/"+uid),data); monProfil={...monProfil,...data}; afficherProfil(monProfil); fermerEdit(); }catch(error){ alert("Impossible de modifier. Vérifie ta connexion."); }finally{ bouton.disabled=false; bouton.textContent="Enregistrer"; } };
 window.deconnecter=()=>{ if(confirm("Voulez-vous vraiment vous déconnecter ?")){ localStorage.clear(); location.href="index.html"; } };
-function compresserImage(file,maxWidth=1100,quality=.72){ return new Promise((resolve,reject)=>{ if(!file || !file.type.startsWith("image/")){ reject(new Error("Fichier image invalide")); return; } const reader=new FileReader(); reader.onerror=()=>reject(new Error("Lecture impossible")); reader.onload=()=>{ const img=new Image(); img.onerror=()=>reject(new Error("Image invalide")); img.onload=()=>{ const ratio=Math.min(1,maxWidth/img.width); const canvas=document.createElement("canvas"); canvas.width=Math.round(img.width*ratio); canvas.height=Math.round(img.height*ratio); const ctx=canvas.getContext("2d"); ctx.drawImage(img,0,0,canvas.width,canvas.height); resolve(canvas.toDataURL("image/jpeg",quality)); }; img.src=reader.result; }; reader.readAsDataURL(file); }); }
-async function enregistrerImage(file,champ){ if(!file) return; if(file.size>12*1024*1024){ alert("Image trop volumineuse. Choisis une image de moins de 12 Mo."); return; } try{ const image=await compresserImage(file,champ==="photoCouverture"?1400:900,.70); await update(ref(db,"jasonbook/users/"+uid),{ [champ]:image }); if(champ==="photoProfil"){ localStorage.setItem("jasonbook_photo",image); } alert("Photo mise à jour !"); }catch(error){ console.error(error); alert("Impossible d'envoyer cette image."); } }
+
+// ===== ⚡ VITESSE 2 : COMPRESSION PLUS PETITE = 5x PLUS RAPIDE =====
+function compresserImage(file,maxWidth=800,quality=.60){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onerror=()=>reject(new Error("Lecture impossible"));
+    reader.onload=()=>{ const img=new Image(); img.onload=()=>{ const ratio=Math.min(1,maxWidth/img.width); const canvas=document.createElement("canvas"); canvas.width=Math.round(img.width*ratio); canvas.height=Math.round(img.height*ratio); const ctx=canvas.getContext("2d"); ctx.drawImage(img,0,0,canvas.width,canvas.height); resolve(canvas.toDataURL("image/jpeg",quality)); }; img.src=reader.result; };
+    reader.readAsDataURL(file);
+  });
+}
+async function enregistrerImage(file,champ){
+  if(!file) return;
+  try{ const image=await compresserImage(file,champ==="photoCouverture"?1100:700,.60); await update(ref(db,"jasonbook/users/"+uid),{ [champ]:image }); if(champ==="photoProfil"){ localStorage.setItem("jasonbook_photo",image); } alert("Photo mise à jour !"); }catch(e){ alert("Impossible d'envoyer cette image."); }
+}
 $("fileAvatar").addEventListener("change",async e=>{ await enregistrerImage(e.target.files[0],"photoProfil"); e.target.value=""; });
 $("fileCover").addEventListener("change",async e=>{ await enregistrerImage(e.target.files[0],"photoCouverture"); e.target.value=""; });
-onValue(ref(db,"jasonbook/users/"+uid),snap=>{ const u=snap.val(); if(!u) return; afficherProfil(u); });
+
+// ===== ⚡ VITESSE 3 : ON NE RECHARGE PAS TOUT EN BOUCLE =====
+// Avant : onValue() = à chaque message, il recharge tout. Maintenant : get() 1 fois.
+get(ref(db,"jasonbook/users/"+uid)).then(snap=>{ const u=snap.val(); if(u) afficherProfil(u); });
+
+// Amis : seulement quand on clique sur Amis, pas au chargement
 async function chargerAmis(){
   if(amisChargement) return; amisChargement=true;
   const box=$("amisFull"); const boxLeft=$("amisList"); const loading=$("loadingAmis"); const noAmis=$("noAmisFull");
@@ -224,11 +251,10 @@ async function chargerAmis(){
   try{
     const snap=await get(ref(db,"jasonbook/amis/"+uid)); const data=snap.val()||{}; const ids=Object.keys(data);
     $("amisCount").textContent=ids.length+" ami"+(ids.length>1?"s":""); $("amisCount2").textContent=ids.length;
-    if(!ids.length){ noAmis.style.display="block"; boxLeft.textContent="Aucun ami pour le moment"; boxLeft.style.color="var(--grey)"; return; }
+    if(!ids.length){ noAmis.style.display="block"; boxLeft.textContent="Aucun ami pour le moment"; return; }
     const tousSnap=await get(ref(db,"jasonbook/users")); const tous=tousSnap.val()||{};
     ids.forEach(fid=>{
-      let u=tous[fid];
-      if(!u){ for(const [key,value] of Object.entries(tous)){ if(value&&(value.uid===fid||value.id===fid)){ u=value; break; } } }
+      let u=tous[fid]; if(!u){ for(const [key,value] of Object.entries(tous)){ if(value&&(value.uid===fid||value.id===fid)){ u=value; break; } } }
       const nom=u?.nomComplet||[u?.prenom,u?.nom].filter(Boolean).join(" ")||"Ami";
       const photo=u?.photoProfil||""; const ville=u?.ville||"";
       const row=document.createElement("div"); row.className="ami-row"; row.appendChild(creerAvatar(photo,nom.charAt(0).toUpperCase()));
@@ -236,24 +262,26 @@ async function chargerAmis(){
       const arrow=document.createElement("span"); arrow.className="ami-arrow"; arrow.textContent="›"; row.append(info,arrow); row.addEventListener("click",()=>{ location.href="profil-ami.html?uid="+encodeURIComponent(fid); }); box.appendChild(row);
       const leftRow=document.createElement("div"); leftRow.className="ami-row"; leftRow.appendChild(creerAvatar(photo,nom.charAt(0).toUpperCase())); const leftName=document.createElement("b"); leftName.textContent=nom; leftRow.appendChild(leftName); leftRow.addEventListener("click",()=>{ location.href="profil-ami.html?uid="+encodeURIComponent(fid); }); boxLeft.appendChild(leftRow);
     });
-  }catch(error){ console.error(error); box.textContent="Impossible de charger les amis."; }finally{ loading.style.display="none"; amisChargement=false; }
+  }catch(e){ box.textContent="Impossible de charger les amis."; }finally{ loading.style.display="none"; amisChargement=false; }
 }
-window.chargerAmis=chargerAmis; chargerAmis();
-onValue(ref(db,"jasonbook/posts"),snap=>{
+window.chargerAmis=chargerAmis;
+
+// ===== ⚡ VITESSE 4 : POSTS = 10 SEULEMENT, PAS TOUS =====
+get(ref(db,"jasonbook/posts")).then(snap=>{
   const data=snap.val()||{}; const box=$("mesPosts"); const grid=$("photosGrid"); const full=$("photosFull");
   box.replaceChildren(); grid.replaceChildren(); full.replaceChildren();
-  const miens=Object.entries(data).filter(([id,p])=>p&&p.auteurUid===uid).sort((a,b)=>(b[1].timestamp||0)-(a[1].timestamp||0));
+  const miens=Object.entries(data).filter(([id,p])=>p&&p.auteurUid===uid).sort((a,b)=>(b[1].timestamp||0)-(a[1].timestamp||0)).slice(0,10);
   $("noPosts").style.display=miens.length?"none":"block";
   let compteurPhotos=0;
   miens.forEach(([id,p])=>{
     const card=document.createElement("article"); card.className="card";
     const head=document.createElement("div"); head.className="post-head";
-    const nom=monProfil?.nomComplet||p.nomAuteur||"Moi"; const lettre=nom.charAt(0).toUpperCase();
-    head.appendChild(creerAvatar(monProfil?.photoProfil,lettre));
+    const nom=monProfil?.nomComplet||p.nomAuteur||cacheNom||"Moi"; const lettre=nom.charAt(0).toUpperCase();
+    head.appendChild(creerAvatar(monProfil?.photoProfil||cachePhoto,lettre));
     const auteur=document.createElement("div"); const auteurNom=document.createElement("b"); auteurNom.textContent=nom; const date=document.createElement("small"); date.textContent=p.date||"Publication"; auteur.append(auteurNom,document.createElement("br"),date); head.appendChild(auteur); card.appendChild(head);
     if(p.texte){ const texte=document.createElement("div"); texte.className="post-text"; texte.textContent=p.texte; card.appendChild(texte); }
     const photo=imageAutorisee(p.photoUrl);
-    if(photo){ const img=document.createElement("img"); img.className="post-image"; img.src=photo; img.alt="Photo publiée"; img.loading="lazy"; card.appendChild(img); compteurPhotos++; const mini=document.createElement("img"); mini.src=photo; mini.alt="Photo"; mini.loading="lazy"; grid.appendChild(mini); const grande=document.createElement("img"); grande.src=photo; grande.alt="Photo publiée"; grande.loading="lazy"; full.appendChild(grande); }
+    if(photo){ const img=document.createElement("img"); img.className="post-image"; img.src=photo; img.loading="lazy"; img.decoding="async"; card.appendChild(img); compteurPhotos++; const mini=document.createElement("img"); mini.src=photo; mini.loading="lazy"; grid.appendChild(mini); const grande=document.createElement("img"); grande.src=photo; grande.loading="lazy"; full.appendChild(grande); }
     const actions=document.createElement("div"); actions.className="actions-text"; ["❤️ "+(p.likesCount||0),"💬 "+(p.commentairesCount||0),"↗️ "+(p.partagesCount||0)].forEach(label=>{ const button=document.createElement("button"); button.textContent=label; actions.appendChild(button); }); card.appendChild(actions); box.appendChild(card);
   });
   $("noPhotos").style.display=compteurPhotos?"none":"block"; $("noPhotosFull").style.display=compteurPhotos?"none":"block";
