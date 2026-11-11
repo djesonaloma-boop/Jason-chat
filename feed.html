@@ -3,273 +3,179 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#0A0A0F">
-<title>JASONBOOK ✨ - Fil</title>
+<title>JASONBOOK ✨ - Accueil</title>
 <style>
-:root{--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--violet:#7C3AED;--violet2:#A855F7;--gold:#FFC107;--text:#fff;--muted:#A1A1AA;--line:#26262F}
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-html{overflow-x:hidden}
-body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:92px;-webkit-tap-highlight-color:transparent}
-button,a{touch-action:manipulation}
-button{cursor:pointer}
-.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:10px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
-.logo{font-size:20px;font-weight:900;white-space:nowrap;flex:1;line-height:1}
+:root{--bg:#0A0A0F;--card:#16161F;--card2:#1F1F2E;--violet:#7C3AED;--gold:#FFC107;--muted:#A1A1AA;--line:#26262F;--red:#E0245E}
+body{background:var(--bg);color:#fff;min-height:100vh;padding-bottom:92px;overflow-x:hidden}
+.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);padding:8px;display:flex;gap:6px;align-items:center;border-bottom:1px solid var(--line)}
+.logo{font-size:16px;font-weight:900;white-space:nowrap;flex-shrink:0}
 .logo i{color:var(--gold);font-style:normal}
-.logo small{display:block;font-size:8px;color:var(--muted);letter-spacing:1.2px;margin-top:1px}
-.search-top{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:8px 12px;display:flex;gap:6px;align-items:center;color:var(--muted);font-size:12px;cursor:pointer}
-.btn-notif{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
-.btn-notif:active{background:var(--violet)}
-.btn-notif .dot{position:absolute;top:-5px;right:-5px;background:#E0245E;color:#fff;font-size:10px;font-weight:900;min-width:18px;height:18px;border-radius:999px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid #0A0A0F}
-.btn-menu{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:18px;font-weight:400;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
-.btn-menu:active{background:var(--violet)}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:none}
-.overlay.open{display:block}
-.menu{position:fixed;top:0;right:0;bottom:0;width:264px;max-width:82vw;background:#121218;z-index:101;transform:translateX(100%);transition:.22s ease;overflow-y:auto;border-left:1px solid var(--line);padding:0 0 14px}
-.menu.open{transform:translateX(0)}
-.menu-top{display:flex;align-items:center;gap:10px;padding:14px 14px 12px;border-bottom:1px solid var(--line)}
-.menu-top .m-ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;overflow:hidden;flex-shrink:0;cursor:pointer}
-.menu-top .m-ava img{width:100%;height:100%;object-fit:cover}
-.menu-top b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.menu-top small{color:var(--muted);font-size:11px}
-.menu-top button{margin-left:auto;background:var(--card2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;font-size:14px;cursor:pointer;flex-shrink:0}
-.menu-sec{padding:14px 14px 4px;font-size:10px;color:var(--muted);letter-spacing:1px;font-weight:800}
-.menu-item{display:flex;align-items:center;gap:10px;width:100%;background:none;border:none;color:#EDEDEF;text-align:left;padding:8px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600}
-.menu-item:active{background:var(--card2)}
-.menu-item .ico{width:30px;height:30px;min-width:30px;background:var(--card2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px}
-.menu-item small{color:var(--muted);font-weight:400;font-size:11px;margin-left:-4px}
-.menu-item .fleche{margin-left:auto;color:var(--muted);font-size:12px}
-.menu-item.profil{background:#1E1A0A;border:1px solid rgba(255,193,7,.35)}
-.menu-item.profil .ico{background:var(--gold);color:#111}
-.menu-item.booster{background:#1A1526;border:1px solid rgba(124,58,237,.4)}
-.menu-item.booster .ico{background:var(--violet)}
-.menu-item.live .ico{background:#E0245E}
-.menu-item.danger .ico{background:#E0245E}
-.menu-item.danger{color:#FF8A9A}
-.hr{height:1px;background:var(--line);margin:12px 14px}
-.wrap{width:100%;max-width:650px;margin:10px auto;padding:0 10px 10px}
-.tabs{display:flex;gap:7px;overflow-x:auto;padding:6px 2px 10px;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tabs button{border:1px solid var(--line);background:var(--card);color:#fff;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0}
-.tabs button.active{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border-color:transparent}
-.stories{display:flex;gap:12px;overflow-x:auto;padding:3px 2px 10px;scrollbar-width:none}
-.stories::-webkit-scrollbar{display:none}
-.story{flex-shrink:0;width:72px;text-align:center;cursor:pointer}
-.story .c{width:64px;height:64px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--gold),var(--violet),#FF2D55);margin:0 auto}
-.story .c div{width:100%;height:100%;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;border:3px solid #0A0A0F}
-.story .c img{width:100%;height:100%;object-fit:cover}
-.story b{font-size:11px;display:block;margin-top:5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.create,.post{background:var(--card);border:1px solid var(--line);border-radius:20px;margin:10px 0;padding:12px;width:100%}
-.create .top,.post .head{display:flex;gap:10px;align-items:center}
-.avatar{width:40px;height:40px;flex-shrink:0;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:800}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.create input{flex:1;min-width:0;background:var(--card2);border:1px solid var(--line);padding:12px 15px;border-radius:999px;color:#fff;outline:none;cursor:pointer}
-.create input::placeholder{color:var(--muted)}
-.create .btns{display:flex;gap:7px;margin-top:10px}
-.create .btns button{flex:1;border:0;background:var(--card2);color:#eee;padding:10px 4px;border-radius:12px;font-weight:700;font-size:12px}
-.post{margin-bottom:14px;padding:13px;overflow:hidden;position:relative}
-.post .head .info{flex:1;min-width:0}
-.post .head small{color:var(--muted);font-size:11px}
-.post p{margin:10px 0;white-space:pre-wrap;line-height:1.5;font-size:14px;overflow-wrap:anywhere;color:#E8E8EF}
-.post .media{position:relative;border-radius:14px;overflow:hidden}
-.post img.pimg{width:100%;height:auto;max-height:420px;object-fit:cover;border-radius:14px;background:var(--card2);display:block}
-.post video{width:100%;max-height:420px;border-radius:14px;background:#000}
-.side-actions{position:absolute;right:10px;bottom:12px;display:flex;flex-direction:column;gap:8px;align-items:center;z-index:5}
-.side-actions button{width:48px;height:48px;border-radius:50%;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(6px);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.side-actions button.liked{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border-color:transparent}
-.side-actions button.fav{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border-color:transparent}
-.side-actions small{font-size:11px;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,.8);margin-top:-5px;color:#fff}
-.actions-text{display:flex;gap:8px;margin-top:10px}
-.actions-text button{flex:1;background:var(--card2);border:0;color:#fff;padding:10px;border-radius:999px;font-weight:700;font-size:12px}
-.actions-text button.liked{color:var(--gold)}
-.actions-text button.fav{color:var(--gold)}
-.loading{text-align:center;color:var(--gold);padding:20px;font-size:13px}
-.empty{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px 10px;color:var(--muted)}
-.comments{border-top:1px solid var(--line);margin-top:10px;padding-top:10px;display:none}
-.comments.open{display:block}
-.comment{display:flex;gap:8px;margin-bottom:9px;align-items:flex-start}
-.comment .avatar{width:32px;height:32px;font-size:12px}
-.comment .bubble{background:var(--card2);padding:9px 12px;border-radius:14px;flex:1;min-width:0}
-.comment .bubble b{font-size:12px}
-.comment .bubble span{display:block;font-size:13px;margin-top:3px;overflow-wrap:anywhere}
-.comment .bubble small{color:var(--muted);font-size:10px}
-.comment-input{display:flex;gap:7px;margin-top:10px}
-.comment-input input{flex:1;min-width:0;background:var(--card2);border:1px solid var(--line);padding:11px;border-radius:999px;color:#fff;outline:none}
-.comment-input button{width:40px;height:40px;border:0;border-radius:50%;background:var(--violet);color:#fff;font-size:17px}
-.modal{position:fixed;inset:0;background:#000B;display:none;align-items:center;justify-content:center;z-index:200;padding:15px}
-.modal.open{display:flex}
-.modal-box{width:100%;max-width:420px;background:#17171F;border:1px solid var(--line);border-radius:18px;padding:18px}
-.modal-box h3{margin-bottom:12px}
-.modal-box textarea{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px;color:#fff;min-height:85px;outline:none;resize:vertical}
-.modal-box button{width:100%;padding:12px;margin-top:9px;border:0;border-radius:12px;font-weight:800}
-.btn-violet{background:var(--violet);color:#fff}
-.btn-grey{background:var(--card2);color:#fff}
-.bottom{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,10,15,.96);display:flex;justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
-.bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:10px;font-weight:700}
+.logo small{display:block;font-size:7px;color:var(--muted);letter-spacing:.8px}
+.search-top{flex:1;min-width:0;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:8px 10px;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn-notif,.btn-menu{width:34px;height:34px;min-width:34px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font-size:17px;display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0}
+.wrap{max-width:650px;margin:0 auto;padding:10px 10px}
+.creer{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.creer .ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;overflow:hidden}
+.creer .ava img{width:100%;height:100%;object-fit:cover}
+.creer input{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:10px 12px;color:#fff;outline:none;font-size:13px}
+.post{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:12px}
+.post-head{display:flex;gap:10px;align-items:center;padding:12px 12px 8px}
+.post-head .ava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;overflow:hidden;flex-shrink:0}
+.post-head .ava img{width:100%;height:100%;object-fit:cover}
+.post-head .info{flex:1;min-width:0}
+.post-head b{font-size:15px}
+.post-head small{color:var(--muted);font-size:12px;display:block}
+.btn-suivre{background:transparent;border:1.5px solid var(--gold);color:var(--gold);padding:7px 14px;border-radius:999px;font-weight:800;font-size:13px;flex-shrink:0}
+.btn-suivre.suit{background:var(--gold);color:#111}
+.post-texte{padding:2px 12px 10px;font-size:15px;line-height:1.4;white-space:pre-wrap;word-break:break-word}
+.post-img{width:100%;display:block;max-height:520px;object-fit:cover;background:#000}
+/* ✅ BARRE D'ACTIONS EN BAS - COMME TES AUTRES POSTS, PLUS RIEN SUR LA PHOTO */
+.actions{display:flex;align-items:center;gap:6px;padding:10px 8px;border-top:1px solid var(--line)}
+.actions button{flex:1;background:var(--card2);border:1px solid var(--line);color:#fff;padding:9px 4px;border-radius:999px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:5px}
+.actions button.active-like{background:rgba(224,36,94,.18);border-color:var(--red);color:#FF6B9D}
+.actions button.active-fav{background:rgba(255,193,7,.18);border-color:var(--gold);color:var(--gold)}
+.actions button span{font-size:15px}
+.commentaires{background:#0F0F16;padding:10px 12px;border-top:1px solid var(--line);display:none}
+.commentaires.open{display:block}
+.com-item{display:flex;gap:8px;margin-bottom:8px}
+.com-item .c-ava{width:28px;height:28px;border-radius:50%;background:var(--violet);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;overflow:hidden}
+.com-item .c-ava img{width:100%;height:100%;object-fit:cover}
+.com-item .c-box{background:var(--card2);border-radius:12px;padding:7px 10px;flex:1}
+.com-item b{font-size:12px}
+.com-item p{font-size:13px;margin-top:2px}
+.com-form{display:flex;gap:6px;margin-top:8px}
+.com-form input{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:9px 12px;color:#fff;outline:none;font-size:13px}
+.com-form button{background:var(--gold);border:none;border-radius:999px;padding:9px 14px;font-weight:800;color:#111}
+.empty{text-align:center;color:var(--muted);padding:30px;background:var(--card);border-radius:16px;border:1px solid var(--line)}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(10,10,15,.98);display:flex;justify-content:space-around;align-items:center;padding:8px 4px calc(8px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+.bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:700;flex:1}
 .bottom button.active{color:var(--gold)}
 .bottom button span{font-size:22px}
-.bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
-@media(max-width:360px){.wrap{padding-left:7px;padding-right:7px}.logo{font-size:18px}}
+.bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F;flex:none}
 </style>
 </head>
 <body>
 
 <div class="top">
 <div class="logo" onclick="location.href='feed.html'">JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA</small></div>
-<div class="search-top" onclick="location.href='recherche.html'">🔍 <span>Chercher...</span></div>
-<button class="btn-notif" onclick="location.href='notifications.html'">🔔<span class="dot" id="dotNotifTop">0</span></button>
-<button class="btn-menu" onclick="ouvrirMenu()">☰</button>
+<div class="search-top" onclick="location.href='recherche.html'">🔍 Chercher...</div>
+<button class="btn-notif" onclick="location.href='notifications.html'">🔔</button>
+<button class="btn-menu" onclick="location.href='profil.html'">☰</button>
 </div>
 
-<div class="overlay" id="overlay" onclick="fermerMenu()"></div>
-<aside class="menu" id="menu">
-  <div class="menu-top">
-    <div class="m-ava" id="menuAvatar" onclick="location.href='profil.html'">?</div>
-    <div style="flex:1;min-width:0"><b id="menuNom">Chargement...</b><small id="menuVille"></small></div>
-    <button onclick="fermerMenu()">✕</button>
-  </div>
-  <div class="menu-sec">MON COMPTE</div>
-  <button class="menu-item profil" onclick="location.href='profil.html'"><span class="ico">👤</span> Mon Profil <span class="fleche">›</span></button>
-  <button class="menu-item" onclick="location.href='profil.html?edit=1'"><span class="ico">✏️</span> Modifier mon profil</button>
-  <div class="menu-sec">JASONBOOK</div>
-  <button class="menu-item" onclick="location.href='feed.html'"><span class="ico">📰</span> Fil <span class="fleche">›</span></button>
-  <button class="menu-item" onclick="location.href='favoris.html'"><span class="ico">⭐</span> Favoris <span class="fleche">›</span></button>
-  <button class="menu-item booster" onclick="location.href='booster.html'"><span class="ico">🚀</span> Booster <small>Likes • Com • Partages</small> <span class="fleche">›</span></button>
-  <!-- ✅ CORRIGÉ : lives.html avec S -->
-  <button class="menu-item live" onclick="location.href='lives.html'"><span class="ico">🔴</span> Aller en Live <span class="fleche">›</span></button>
-  <button class="menu-item" onclick="location.href='recherche.html'"><span class="ico">🔍</span> Recherche</button>
-  <button class="menu-item" onclick="location.href='boutique.html'"><span class="ico">🛒</span> Boutique</button>
-  <button class="menu-item" onclick="location.href='anniversaires.html'"><span class="ico">🎂</span> Anniversaires</button>
-  <div class="menu-sec">RÉGLAGES</div>
-  <button class="menu-item" onclick="location.href='parametres.html'"><span class="ico">⚙️</span> Paramètres</button>
-  <button class="menu-item" onclick="location.href='bloques.html'"><span class="ico">🚫</span> Personnes bloquées</button>
-  <button class="menu-item" onclick="location.href='aide.html'"><span class="ico">❓</span> Aide</button>
-  <div class="hr"></div>
-  <button class="menu-item" onclick="changerCompte()"><span class="ico">🔄</span> Changer de compte</button>
-  <button class="menu-item danger" onclick="seDeconnecter()"><span class="ico">🚪</span> Se déconnecter</button>
-</aside>
-
-<main class="wrap">
-<div class="tabs">
-<button class="active">✨ Pour Toi</button>
-<button onclick="location.href='amis.html'">👥 Amis <span id="badgeAmisTop"></span></button>
-<button onclick="location.href='videos.html'">🎥 Vidéos</button>
-<button onclick="location.href='notifications.html'">🔔 Notifs <span id="badgeNotifTop"></span></button>
-<button onclick="location.href='messages.html'">💬 Messages <span id="badgeMsgTop"></span></button>
+<div class="wrap">
+<div class="creer">
+<div class="ava" id="monAva">J</div>
+<input readonly placeholder="Quoi de neuf, publie quelque chose..." onclick="location.href='creer-post.html'">
 </div>
-<div class="stories" id="storiesRow"></div>
-<div class="create">
-<div class="top"><div class="avatar" id="myAvatar2">?</div><input placeholder="Quoi de neuf ?" onclick="location.href='creer-post.html'" readonly></div>
-<div class="btns"><button onclick="location.href='creer-post.html'">🖼️ Photo</button><button onclick="location.href='creer-post.html'">🎥 Vidéo</button><button onclick="location.href='creer-post.html'">✍️ Publier</button></div>
+<div id="feed"></div>
+<div class="empty" id="emptyBox" style="display:none">Aucune publication pour le moment.<br>Sois le premier à publier ! ✨</div>
 </div>
-<div class="loading" id="loading">⏳ Chargement du fil...</div>
-<div id="list"></div>
-<div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication</h3><p>Sois le premier à publier.</p><br><button onclick="location.href='creer-post.html'" style="background:var(--violet);border:0;padding:12px 20px;border-radius:999px;color:#fff;font-weight:800">➕ Créer le premier post</button></div>
-</main>
 
 <div class="bottom">
-<button class="active" onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
+<button class="active"><span>🏠</span>Accueil</button>
 <button onclick="location.href='amis.html'"><span>👥</span>Amis</button>
 <button onclick="location.href='creer-post.html'"><span class="centre">+</span></button>
 <button onclick="location.href='messages.html'"><span>💬</span>Messages</button>
 <button onclick="location.href='profil.html'"><span>👤</span>Moi</button>
 </div>
 
-<div class="modal" id="modalPartage"><div class="modal-box"><h3>↗️ Partager ce post</h3><p id="partagePreview" style="color:#A1A1AA;font-size:13px;margin-bottom:8px"></p><textarea id="partageTexte" placeholder="Ajoute un mot (optionnel)..."></textarea><button class="btn-violet" onclick="confirmerPartage()">Partager sur mon fil</button><button class="btn-grey" onclick="fermerPartage()">Annuler</button></div></div>
-
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {getDatabase,ref,onValue,set,remove,push,get,query,orderByChild,limitToLast} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import {getDatabase,ref,onValue,set,remove,push,get} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
 const app=initializeApp(firebaseConfig); const db=getDatabase(app);
-const uid=localStorage.getItem("jasonbook_uid"); if(!uid){location.href="index.html"; throw new Error("Utilisateur non connecté");}
-const monNom=localStorage.getItem("jasonbook_nom")||"Jason"; const maPhoto=localStorage.getItem("jasonbook_photo")||"";
-const $=id=>document.getElementById(id);
-function escapeHTML(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function avatarHTML(photo,nom){return photo?`<img loading="lazy" decoding="async" src="${escapeHTML(photo)}">`:escapeHTML((nom||"?").charAt(0).toUpperCase());}
-$("myAvatar2").innerHTML=avatarHTML(maPhoto,monNom);
-$("menuNom").innerText=monNom; $("menuAvatar").innerHTML=avatarHTML(maPhoto,monNom);
-get(ref(db,'jasonbook/users/'+uid)).then(s=>{ const u=s.val()||{}; $("menuVille").innerText=(u.ville||"")+" "+(u.pays?"• "+u.pays:""); });
-window.ouvrirMenu=()=>{ $("menu").classList.add('open'); $("overlay").classList.add('open'); };
-window.fermerMenu=()=>{ $("menu").classList.remove('open'); $("overlay").classList.remove('open'); };
-window.changerCompte=()=>{
-  if(!confirm("Changer de compte ?")) return;
-  try{ let comptes=JSON.parse(localStorage.getItem('jasonbook_comptes')||"[]"); if(!comptes.find(c=>c.uid===uid)) comptes.push({uid,nom:monNom,photo:maPhoto}); localStorage.setItem('jasonbook_comptes',JSON.stringify(comptes)); }catch(e){}
-  localStorage.removeItem('jasonbook_uid'); localStorage.removeItem('jasonbook_nom'); localStorage.removeItem('jasonbook_photo');
-  location.href='index.html?changer=1';
+const uid=localStorage.getItem("jasonbook_uid");
+const monNom=localStorage.getItem("jasonbook_nom")||"Moi";
+const maPhoto=localStorage.getItem("jasonbook_photo")||"";
+if(!uid) location.href="index.html";
+document.getElementById('monAva').innerHTML = maPhoto ? `<img src="${maPhoto}">` : monNom.charAt(0).toUpperCase();
+let posts={}, likes={}, commentaires={}, favoris={}, suivis=new Set();
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function rendre(){
+  const box=document.getElementById('feed'); box.innerHTML="";
+  let liste=Object.entries(posts).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+  document.getElementById('emptyBox').style.display=liste.length?"none":"block";
+  liste.forEach(p=>{
+    // ✅ CORRIGÉ : on compte VRAIMENT les likes, commentaires, partages
+    const nbLikes = likes[p.id] ? Object.keys(likes[p.id]).length : (p.likes || 0);
+    const nbComs = commentaires[p.id] ? Object.keys(commentaires[p.id]).length : (p.nbCommentaires || 0);
+    const nbPartages = p.partages || 0;
+    const jaiLike = likes[p.id] && likes[p.id][uid];
+    const estFav = favoris[p.id] ? true : false;
+    const jeSuis = suivis.has(p.auteurUid);
+    const div=document.createElement('div'); div.className='post';
+    div.innerHTML=`
+      <div class="post-head">
+        <div class="ava">${p.photoAuteur?`<img src="${esc(p.photoAuteur)}" loading="lazy">`:esc((p.nomAuteur||"?").charAt(0).toUpperCase())}</div>
+        <div class="info"><b>${esc(p.nomAuteur||"Utilisateur")}</b><small>${esc(p.date||"")}</small></div>
+        ${p.auteurUid!==uid?`<button class="btn-suivre ${jeSuis?'suit':''}" onclick="toggleSuivre('${p.auteurUid}',this)">${jeSuis?'✓ Suivi':'Suivre'}</button>`:''}
+      </div>
+      ${p.texte?`<div class="post-texte">${esc(p.texte)}</div>`:''}
+      ${p.image?`<img class="post-img" src="${esc(p.image)}" loading="lazy">`:''}
+      ${p.video?`<video class="post-img" src="${esc(p.video)}" controls preload="none"></video>`:''}
+      <!-- ✅ PLUS DE BARRE VERTICALE SUR LA PHOTO, TOUT EST ICI EN BAS -->
+      <div class="actions">
+        <button class="${jaiLike?'active-like':''}" onclick="toggleLike('${p.id}',this)"><span>${jaiLike?'❤️':'🤍'}</span> ${nbLikes}</button>
+        <button onclick="toggleComs('${p.id}')"><span>💬</span> ${nbComs}</button>
+        <button onclick="partager('${p.id}')"><span>↗️</span> ${nbPartages}</button>
+        <button class="${estFav?'active-fav':''}" onclick="toggleFav('${p.id}',this)"><span>⭐</span> ${estFav?'Favori':'Favori'}</button>
+      </div>
+      <div class="commentaires" id="coms-${p.id}">
+        <div id="liste-coms-${p.id}"></div>
+        <div class="com-form"><input id="input-${p.id}" placeholder="Écrire un commentaire..."><button onclick="envoyerCom('${p.id}')">Envoyer</button></div>
+      </div>
+    `;
+    box.appendChild(div);
+    // Remplir les commentaires de ce post
+    const cBox=document.getElementById(`liste-coms-${p.id}`);
+    if(cBox){
+      const coms=commentaires[p.id]||{};
+      Object.values(coms).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0)).forEach(c=>{
+        const cdiv=document.createElement('div'); cdiv.className='com-item';
+        cdiv.innerHTML=`<div class="c-ava">${c.photo?`<img src="${esc(c.photo)}">`:esc((c.nom||"?").charAt(0))}</div><div class="c-box"><b>${esc(c.nom||"")}</b><p>${esc(c.texte||"")}</p></div>`;
+        cBox.appendChild(cdiv);
+      });
+    }
+  });
+}
+window.toggleLike=async (postId,btn)=>{
+  const likeRef=ref(db,'jasonbook/likes/'+postId+'/'+uid);
+  const snap=await get(likeRef);
+  if(snap.exists()){ await remove(likeRef); }
+  else { await set(likeRef,{uid, nom:monNom, timestamp:Date.now()}); }
 };
-window.seDeconnecter=()=>{
-  if(!confirm("Se déconnecter de JASONBOOK ?")) return;
-  localStorage.removeItem('jasonbook_uid'); localStorage.removeItem('jasonbook_nom'); localStorage.removeItem('jasonbook_photo');
-  sessionStorage.clear(); location.href='index.html';
+window.toggleFav=async (postId,btn)=>{
+  const favRef=ref(db,'jasonbook/favoris/'+uid+'/'+postId);
+  const snap=await get(favRef);
+  if(snap.exists()){ await remove(favRef); }
+  else { await set(favRef,{postId, timestamp:Date.now()}); }
 };
-function setBadgeTop(id,n){const e=$(id); if(!e) return; e.textContent=n>0?`(${n})`:"";}
-let mesLikes=new Set(); let mesFavoris=new Set(); let tousPosts=[]; let commentairesParPost={}; let postAPartager=null; let renduProgramme=false;
-function rendrePostsRapide(){if(renduProgramme)return; renduProgramme=true; requestAnimationFrame(()=>{renduProgramme=false; rendrePosts();});}
-function rendrePosts(){
-const box=$("list"); if(!box) return; box.innerHTML=""; $("loading").style.display="none";
-if(!tousPosts.length){$("emptyBox").style.display="block"; return;} $("emptyBox").style.display="none";
-const fragment=document.createDocumentFragment();
-tousPosts.forEach(p=>{
-const liked=mesLikes.has(p.id); const fav=mesFavoris.has(p.id); const coms=commentairesParPost[p.id]||[];
-const photo=p.photoUrl||p.image||""; const video=p.videoUrl||"";
-let comsHtml=coms.map(c=>`<div class="comment"><div class="avatar">${avatarHTML(c.photoAuteur,c.nomAuteur)}</div><div class="bubble"><b>${escapeHTML(c.nomAuteur||"")}</b><span>${escapeHTML(c.texte||"")}</span><small>${escapeHTML(c.date||"")}</small></div></div>`).join("");
-if(!coms.length){comsHtml='<p style="color:#A1A1AA;font-size:13px;text-align:center">Aucun commentaire. Sois le premier !</p>';}
-const id=escapeHTML(p.id); const auteur=escapeHTML(p.auteurUid||""); const nom=escapeHTML(p.nomAuteur||"Utilisateur");
-const div=document.createElement("article"); div.className="post";
-let mediaHtml="";
-if(photo || video){
-mediaHtml=`<div class="media">${photo?`<img class="pimg" loading="lazy" decoding="async" src="${escapeHTML(photo)}" alt="Publication">`:""}${video?`<video controls preload="none" playsinline><source src="${escapeHTML(video)}"></video>`:""}<div class="side-actions"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"}</button><small>${Number(p.likesCount)||0}</small><button onclick="toggleCommentaires('${id}')">💬</button><small>${Number(p.commentairesCount)||0}</small><button onclick="ouvrirPartage('${id}')">↗️</button><small>${Number(p.partagesCount)||0}</small><button class="${fav?"fav":""}" onclick="toggleFavori('${id}')">⭐</button><small>Favori</small></div></div>`;
-}
-let actionsText="";
-if(!photo && !video){
-actionsText=`<div class="actions-text"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"} ${Number(p.likesCount)||0}</button><button onclick="toggleCommentaires('${id}')">💬 ${Number(p.commentairesCount)||0}</button><button onclick="ouvrirPartage('${id}')">↗️ ${Number(p.partagesCount)||0}</button><button class="${fav?"fav":""}" onclick="toggleFavori('${id}')">⭐ Favori</button></div>`;
-}
-div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${auteur}'">${avatarHTML(p.photoAuteur,p.nomAuteur)}</div><div class="info"><b>${nom}</b><br><small>${escapeHTML(p.date||"")}${p.partageDe?` • Partagé de ${escapeHTML(p.partageDeNom||"")}`:""}</small></div>${p.auteurUid===uid?`<button style="border:0;background:none;font-size:18px;color:#fff" onclick="supprimerPost('${id}')">🗑️</button>`:`<button style="border:1px solid var(--gold);background:none;color:var(--gold);padding:6px 12px;border-radius:999px;font-weight:800;font-size:12px">Suivre</button>`}</div>${p.texte?`<p>${escapeHTML(p.texte)}</p>`:""}${mediaHtml}${actionsText}<div class="comments" id="com-${id}"><div>${comsHtml}</div><div class="comment-input"><input id="inputCom-${id}" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter')envoyerCommentaire('${id}')"><button onclick="envoyerCommentaire('${id}')">➤</button></div></div>`;
-fragment.appendChild(div);
-});
-box.appendChild(fragment);
-}
-window.toggleCommentaires=id=>{const el=$("com-"+id); if(el) el.classList.toggle("open");};
-window.toggleFavori=async id=>{
-  const favRef=ref(db,"jasonbook/favoris/"+uid+"/"+id);
-  try{
-    if(mesFavoris.has(id)){ await remove(favRef); alert("Retiré des favoris ⭐"); }
-    else { await set(favRef,{postId:id,timestamp:Date.now()}); alert("Ajouté aux favoris ⭐"); }
-  }catch(e){ console.error(e); alert("Erreur favoris."); }
+window.toggleComs=(postId)=>{ document.getElementById('coms-'+postId).classList.toggle('open'); };
+window.envoyerCom=async (postId)=>{
+  const inp=document.getElementById('input-'+postId);
+  const texte=inp.value.trim(); if(!texte) return;
+  const n=push(ref(db,'jasonbook/commentaires/'+postId));
+  await set(n,{auteurUid:uid, nom:monNom, photo:maPhoto, texte, timestamp:Date.now(), date:new Date().toLocaleString()});
+  inp.value="";
 };
-window.liker=async id=>{const p=tousPosts.find(x=>x.id===id); if(!p) return; const likeRef=ref(db,"jasonbook/likes/"+uid+"/"+id); try{if(mesLikes.has(id)){await remove(likeRef);}else{await set(likeRef,true); if(p.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"like",texte:monNom+" a aimé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});}}}catch(e){console.error("Erreur like:",e); alert("Impossible de modifier le like.");}};
-window.envoyerCommentaire=async id=>{const input=$("inputCom-"+id); if(!input) return; const txt=input.value.trim(); if(!txt) return; const p=tousPosts.find(x=>x.id===id); if(!p) return; input.disabled=true; try{const newRef=push(ref(db,"jasonbook/commentaires/"+id)); await set(newRef,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:txt,date:new Date().toLocaleString(),timestamp:Date.now()}); if(p.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"commentaire",texte:monNom+" a commenté ta publication : "+txt,deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});} input.value="";}catch(e){console.error(e); alert("Erreur lors de l'envoi.");}finally{input.disabled=false;}};
-window.ouvrirPartage=id=>{postAPartager=tousPosts.find(x=>x.id===id); if(!postAPartager) return; $("partagePreview").textContent="Publication de "+postAPartager.nomAuteur+" : "+(postAPartager.texte||"").slice(0,80); $("partageTexte").value=""; $("modalPartage").classList.add("open");};
-window.fermerPartage=()=>{$("modalPartage").classList.remove("open"); postAPartager=null;};
-window.confirmerPartage=async()=>{if(!postAPartager) return; const original=postAPartager; const texte=$("partageTexte").value.trim(); const bouton=$("modalPartage").querySelector(".btn-violet"); bouton.disabled=true; bouton.textContent="Partage en cours..."; try{const newRef=push(ref(db,"jasonbook/posts")); await set(newRef,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:texte?texte+"\n\n--- Partagé ---\n"+(original.texte||""):(original.texte||""),photoUrl:original.photoUrl||original.image||"",videoUrl:original.videoUrl||"",date:new Date().toLocaleString(),timestamp:Date.now(),likesCount:0,commentairesCount:0,partagesCount:0,partageDe:original.id,partageDeNom:original.nomAuteur||""}); if(original.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+original.auteurUid)); await set(n,{type:"partage",texte:monNom+" a partagé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});} await set(ref(db,"jasonbook/posts/"+original.id+"/partagesCount"),(Number(original.partagesCount)||0)+1); fermerPartage(); alert("Publication partagée ! 🎉");}catch(e){console.error(e); alert("Erreur lors du partage.");}finally{bouton.disabled=false; bouton.textContent="Partager sur mon fil";}};
-window.supprimerPost=async id=>{if(!confirm("Supprimer cette publication ?")) return; try{await remove(ref(db,"jasonbook/posts/"+id));}catch(e){alert("Impossible de supprimer cette publication."); console.error(e);}};
-const postsQuery=query(ref(db,"jasonbook/posts"),orderByChild("timestamp"),limitToLast(40));
-onValue(postsQuery,s=>{const d=s.val(); tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendrePostsRapide();},error=>{console.error(error); $("loading").textContent="Erreur de chargement des publications.";});
-onValue(ref(db,"jasonbook/likes/"+uid),s=>{const d=s.val(); mesLikes=new Set(d?Object.keys(d):[]); rendrePostsRapide();});
-onValue(ref(db,"jasonbook/favoris/"+uid),s=>{const d=s.val(); mesFavoris=new Set(d?Object.keys(d):[]); rendrePostsRapide();});
-const commentaireRefs={};
-function actualiserEcouteursCommentaires(){
-const ids=new Set(tousPosts.map(p=>p.id));
-Object.keys(commentaireRefs).forEach(id=>{if(!ids.has(id)){const item=commentaireRefs[id]; item.unsubscribe(); delete commentaireRefs[id]; delete commentairesParPost[id];}});
-tousPosts.forEach(p=>{if(commentaireRefs[p.id]) return; const commentaireQuery=query(ref(db,"jasonbook/commentaires/"+p.id),orderByChild("timestamp"),limitToLast(20)); const callback=onValue(commentaireQuery,s=>{const d=s.val(); commentairesParPost[p.id]=d?Object.entries(d).map(([id,c])=>({id,...c})).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0)):[]; rendrePostsRapide();},error=>console.error(error)); commentaireRefs[p.id]={unsubscribe:()=>callback()};});
-}
-onValue(postsQuery,()=>{actualiserEcouteursCommentaires();});
-onValue(ref(db,"jasonbook/demandes/"+uid),s=>{const d=s.val(); setBadgeTop("badgeAmisTop",d?Object.keys(d).length:0);});
-onValue(ref(db,"jasonbook/notifications/"+uid),s=>{
-  const d=s.val(); let n=0; if(d){Object.values(d).forEach(x=>{if(!x.lu)n++;});}
-  setBadgeTop("badgeNotifTop",n);
-  const dot=$("dotNotifTop");
-  if(dot){ if(n>0){ dot.style.display="flex"; dot.innerText=n>99?"99+":n; } else { dot.style.display="none"; } }
-});
-onValue(ref(db,"jasonbook/messages"),s=>{const d=s.val(); let n=0; if(d){Object.values(d).forEach(chat=>{if(chat&&typeof chat==="object"){Object.values(chat).forEach(m=>{if(m&&(m.destinataireUid===uid||m.pour===uid)&&!m.lu)n++;});}});} setBadgeTop("badgeMsgTop",n);});
-onValue(query(ref(db,"jasonbook/stories"),orderByChild("expire"),limitToLast(50)),s=>{
-const d=s.val(); const now=Date.now(); const row=$("storiesRow"); row.innerHTML="";
-const add=document.createElement("div"); add.className="story"; add.innerHTML=`<div class="c"><div>+</div></div><b>Toi</b>`; add.onclick=()=>location.href="stories.html"; row.appendChild(add);
-if(!d) return;
-const parAuteur={};
-Object.values(d).forEach(x=>{if((x.expire||0)<=now) return; if(!parAuteur[x.auteurUid]) parAuteur[x.auteurUid]=[]; parAuteur[x.auteurUid].push(x);});
-Object.values(parAuteur).forEach(g=>{const st=g[0]; const div=document.createElement("div"); div.className="story"; div.innerHTML=`<div class="c"><div>${st.photoAuteur?`<img src="${escapeHTML(st.photoAuteur)}">`:escapeHTML((st.auteurNom||"?").charAt(0))}</div></div><b>${escapeHTML(st.auteurNom||"")}</b>`; div.onclick=()=>location.href="stories.html"; row.appendChild(div);});
-},error=>console.error("Stories:",error));
+window.partager=async (postId)=>{
+  const p=posts[postId]; if(!p) return;
+  const texte=`${p.texte||""}`;
+  if(navigator.share){ try{ await navigator.share({title:'JASONBOOK', text:texte, url:location.href}); }catch(e){} }
+  else { await navigator.clipboard.writeText(texte); alert("Texte copié !"); }
+  await set(ref(db,'jasonbook/posts/'+postId+'/partages'), (p.partages||0)+1);
+};
+window.toggleSuivre=async (cibleUid,btn)=>{
+  if(suivis.has(cibleUid)){ await remove(ref(db,'jasonbook/suivis/'+uid+'/'+cibleUid)); }
+  else { await set(ref(db,'jasonbook/suivis/'+uid+'/'+cibleUid),{timestamp:Date.now()}); }
+};
+onValue(ref(db,'jasonbook/posts'),s=>{ posts=s.val()||{}; rendre(); });
+onValue(ref(db,'jasonbook/likes'),s=>{ likes=s.val()||{}; rendre(); });
+onValue(ref(db,'jasonbook/commentaires'),s=>{ commentaires=s.val()||{}; rendre(); });
+onValue(ref(db,'jasonbook/favoris/'+uid),s=>{ favoris=s.val()||{}; rendre(); });
+onValue(ref(db,'jasonbook/suivis/'+uid),s=>{ const d=s.val()||{}; suivis=new Set(Object.keys(d)); rendre(); });
 </script>
 </body>
 </html>
