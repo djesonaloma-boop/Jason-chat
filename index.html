@@ -205,11 +205,14 @@ window.motDePasseOublie=()=>{
     else alert("Aucun compte trouvé avec cet identifiant");
   });
 };
-onValue(ref(db,'jasonbook/users'), s=>{
-  const d=s.val(); const users=d?Object.values(d):[];
+// Compteurs publics : lecture ponctuelle, sans garder deux grands écouteurs actifs.
+get(ref(db,'jasonbook/users')).then(s=>{
+  const d=s.val(); const users=d?Object.keys(d):[];
   document.getElementById('statUsers').innerText=users.length||"0";
-});
-onValue(ref(db,'jasonbook/posts'), s=>{ const d=s.val(); document.getElementById('statPosts').innerText=d?Object.keys(d).length:"0"; });
+}).catch(e=>console.warn('Compteur utilisateurs indisponible',e));
+get(ref(db,'jasonbook/posts')).then(s=>{
+  const d=s.val(); document.getElementById('statPosts').innerText=d?Object.keys(d).length:"0";
+}).catch(e=>console.warn('Compteur publications indisponible',e));
 </script>
 </body>
 </html>

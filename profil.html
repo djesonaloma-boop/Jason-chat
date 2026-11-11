@@ -892,12 +892,8 @@ e.target.value="";
 
 function nombreLikes(postId,post){
 
-const likes=toutesLesLikes[postId];
-
-if(likes && typeof likes==="object"){
-return Object.keys(likes).length;
-}
-
+// Le compteur est déjà stocké dans la publication : pas besoin
+// de télécharger la branche complète jasonbook/likes.
 return Number(
 post.likesCount||
 (typeof post.likes==="number"?post.likes:0)||
@@ -932,8 +928,9 @@ modal.style.display="flex";
 
 try{
 
-const likes=toutesLesLikes[postId]||{};
-
+// On lit uniquement les personnes ayant aimé cette publication.
+const likesSnap=await get(ref(db,"jasonbook/likes/"+postId));
+const likes=likesSnap.val()||{};
 const entries=Object.entries(likes);
 
 $("totalLikes").textContent=
@@ -945,15 +942,17 @@ $("listeLikes").innerHTML=
 return;
 }
 
-const usersSnap=await get(ref(db,"jasonbook/users"));
-const users=usersSnap.val()||{};
-
 const box=$("listeLikes");
 box.replaceChildren();
 
-entries.forEach(([userId,like])=>{
+const profils=await Promise.all(entries.map(async([userId,like])=>{
+try{
+const userSnap=await get(ref(db,"jasonbook/users/"+userId));
+return [userId,userSnap.val()||like||{}];
+}catch(e){return [userId,like||{}];}
+}));
 
-const utilisateur=users[userId]||like||{};
+profils.forEach(([userId,utilisateur])=>{
 
 const nom=utilisateur.nomComplet||
 [utilisateur.prenom,utilisateur.nom].filter(Boolean).join(" ")||
@@ -1223,21 +1222,8 @@ $("mesPosts").innerHTML=
 }
 );
 
-/* FIREBASE : TOUS LES J'AIME */
-
-onValue(
-ref(db,"jasonbook/likes"),
-snap=>{
-
-toutesLesLikes=snap.val()||{};
-
-afficherPublications();
-
-},
-error=>{
-console.error("Erreur likes:",error);
-}
-);
+/* Les statistiques utilisent likesCount dans chaque publication.
+   Les détails des likes sont chargés uniquement à l'ouverture du modal. */
 
 /* AMIS */
 

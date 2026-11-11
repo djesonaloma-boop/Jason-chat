@@ -362,7 +362,12 @@ window.boosterPost=()=>{
   location.href="booster.html?post="+photoOuverteId;
 };
 const postsQuery=query(ref(db,"jasonbook/posts"),orderByChild("timestamp"),limitToLast(40));
-onValue(postsQuery,s=>{const d=s.val(); tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendrePostsRapide();},error=>{console.error(error); $("loading").textContent="Erreur de chargement des publications.";});
+onValue(postsQuery,s=>{
+  const d=s.val();
+  tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[];
+  actualiserEcouteursCommentaires();
+  rendrePostsRapide();
+},error=>{console.error(error); $("loading").textContent="Erreur de chargement des publications.";});
 onValue(ref(db,"jasonbook/likes/"+uid),s=>{const d=s.val(); mesLikes=new Set(d?Object.keys(d):[]); rendrePostsRapide();});
 onValue(ref(db,"jasonbook/favoris/"+uid),s=>{const d=s.val(); mesFavoris=new Set(d?Object.keys(d):[]); rendrePostsRapide();});
 const commentaireRefs={};
@@ -371,7 +376,6 @@ const ids=new Set(tousPosts.map(p=>p.id));
 Object.keys(commentaireRefs).forEach(id=>{if(!ids.has(id)){const item=commentaireRefs[id]; item.unsubscribe(); delete commentaireRefs[id]; delete commentairesParPost[id];}});
 tousPosts.forEach(p=>{if(commentaireRefs[p.id]) return; const commentaireQuery=query(ref(db,"jasonbook/commentaires/"+p.id),orderByChild("timestamp"),limitToLast(20)); const callback=onValue(commentaireQuery,s=>{const d=s.val(); commentairesParPost[p.id]=d?Object.entries(d).map(([id,c])=>({id,...c})).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0)):[]; rendrePostsRapide();},error=>console.error(error)); commentaireRefs[p.id]={unsubscribe:()=>callback()};});
 }
-onValue(postsQuery,()=>{actualiserEcouteursCommentaires();});
 onValue(ref(db,"jasonbook/demandes/"+uid),s=>{const d=s.val(); setBadgeTop("badgeAmisTop",d?Object.keys(d).length:0);});
 onValue(ref(db,"jasonbook/notifications/"+uid),s=>{
   const d=s.val(); let n=0; if(d){Object.values(d).forEach(x=>{if(!x.lu)n++;});}
