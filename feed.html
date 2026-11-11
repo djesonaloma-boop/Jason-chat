@@ -12,21 +12,18 @@ html{overflow-x:hidden}
 body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:92px;-webkit-tap-highlight-color:transparent}
 button,a{touch-action:manipulation}
 button{cursor:pointer}
-/* HEADER PRO - PAS FACEBOOK */
 .top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);backdrop-filter:blur(12px);padding:12px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
 .logo{font-size:21px;font-weight:900;white-space:nowrap}
 .logo i{color:var(--gold);font-style:normal}
 .logo small{display:block;font-size:8px;color:var(--muted);letter-spacing:1.2px}
-.search-top{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:9px 14px;display:flex;gap:6px;align-items:center;color:var(--muted);font-size:13px;cursor:pointer}
+.search-top{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:9px 14px;display:flex;gap:6px;align-items:center;color:var(--muted);font-size:13px;cursor:pointer;min-width:0}
 .avatar-top{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--violet));display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;cursor:pointer;flex-shrink:0}
 .avatar-top img{width:100%;height:100%;object-fit:cover}
 .wrap{width:100%;max-width:650px;margin:10px auto;padding:0 10px 10px}
-/* TABS TIKTOK */
 .tabs{display:flex;gap:7px;overflow-x:auto;padding:6px 2px 10px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tabs button{border:1px solid var(--line);background:var(--card);color:#fff;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0}
 .tabs button.active{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border-color:transparent}
-/* STORIES CERCLES - STYLE INSTA, PAS FACEBOOK */
 .stories{display:flex;gap:12px;overflow-x:auto;padding:3px 2px 10px;scrollbar-width:none}
 .stories::-webkit-scrollbar{display:none}
 .story{flex-shrink:0;width:72px;text-align:center;cursor:pointer}
@@ -49,12 +46,10 @@ button{cursor:pointer}
 .post .media{position:relative;border-radius:14px;overflow:hidden}
 .post img.pimg{width:100%;height:auto;max-height:420px;object-fit:cover;border-radius:14px;background:var(--card2);display:block}
 .post video{width:100%;max-height:420px;border-radius:14px;background:#000}
-/* ACTIONS A DROITE - COMME TIKTOK, PAS FACEBOOK */
 .side-actions{position:absolute;right:10px;bottom:12px;display:flex;flex-direction:column;gap:8px;align-items:center;z-index:5}
 .side-actions button{width:48px;height:48px;border-radius:50%;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(6px);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .side-actions button.liked{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border-color:transparent}
 .side-actions small{font-size:11px;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,.8);margin-top:-5px;color:#fff}
-/* ACTIONS TEXTE SEUL */
 .actions-text{display:flex;gap:8px;margin-top:10px}
 .actions-text button{flex:1;background:var(--card2);border:0;color:#fff;padding:10px;border-radius:999px;font-weight:700;font-size:12px}
 .actions-text button.liked{color:var(--gold)}
@@ -79,7 +74,6 @@ button{cursor:pointer}
 .modal-box button{width:100%;padding:12px;margin-top:9px;border:0;border-radius:12px;font-weight:800}
 .btn-violet{background:var(--violet);color:#fff}
 .btn-grey{background:var(--card2);color:#fff}
-/* BOTTOM NAV JASONBOOK */
 .bottom{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,10,15,.96);display:flex;justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
 .bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:10px;font-weight:700}
 .bottom button.active{color:var(--gold)}
@@ -116,6 +110,7 @@ button{cursor:pointer}
 <div id="list"></div>
 <div class="empty" id="emptyBox" style="display:none"><div style="font-size:42px">📝</div><h3>Aucune publication</h3><p>Sois le premier à publier.</p><br><button onclick="location.href='creer-post.html'" style="background:var(--violet);border:0;padding:12px 20px;border-radius:999px;color:#fff;font-weight:800">➕ Créer le premier post</button></div>
 <div id="moreLoading" style="display:none;text-align:center;color:#FFC107;padding:15px">Chargement...</div>
+<button id="btnPlus" onclick="chargerPlus()" style="display:none;width:100%;padding:13px;border:0;border-radius:999px;background:#1F1F2E;color:#fff;font-weight:800;margin:10px 0">Voir plus ⬇️</button>
 </main>
 
 <div class="bottom">
@@ -130,70 +125,132 @@ button{cursor:pointer}
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {getDatabase,ref,onValue,set,remove,push,get,query,orderByChild,limitToLast} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import {getDatabase,ref,get,set,remove,push,query,orderByChild,limitToLast} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const firebaseConfig={apiKey:"AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U",authDomain:"starlink-investit.firebaseapp.com",databaseURL:"https://starlink-investit-default-rtdb.firebaseio.com",projectId:"starlink-investit",storageBucket:"starlink-investit.firebasestorage.app",messagingSenderId:"807081599583",appId:"1:807081599583:web:e00ec3959bc4acdae031ea"};
 const app=initializeApp(firebaseConfig); const db=getDatabase(app);
-const uid=localStorage.getItem("jasonbook_uid"); if(!uid){location.href="index.html"; throw new Error("Utilisateur non connecté");}
+const uid=localStorage.getItem("jasonbook_uid"); if(!uid){location.href="index.html"; throw new Error("Non connecté");}
 const monNom=localStorage.getItem("jasonbook_nom")||"Jason"; const maPhoto=localStorage.getItem("jasonbook_photo")||"";
 const $=id=>document.getElementById(id);
-function escapeHTML(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function escapeHTML(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function avatarHTML(photo,nom){return photo?`<img loading="lazy" decoding="async" src="${escapeHTML(photo)}">`:escapeHTML((nom||"?").charAt(0).toUpperCase());}
 $("myAvatar2").innerHTML=avatarHTML(maPhoto,monNom); $("myAvatarTop").innerHTML=avatarHTML(maPhoto,monNom);
 function setBadgeTop(id,n){const e=$(id); if(!e) return; e.textContent=n>0?`(${n})`:"";}
-let mesLikes=new Set(); let tousPosts=[]; let commentairesParPost={}; let postAPartager=null; let renduProgramme=false;
-function rendrePostsRapide(){if(renduProgramme)return; renduProgramme=true; requestAnimationFrame(()=>{renduProgramme=false; rendrePosts();});}
+
+let mesLikes=new Set(); let tousPosts=[]; let commentairesParPost={}; let postAPartager=null; let limite=12;
+
+// ===== ⚡ VITESSE 1 : CACHE - AFFICHE TOUT DE SUITE =====
+try{
+  const cache = JSON.parse(localStorage.getItem("jasonbook_feed_cache")||"null");
+  if(cache && cache.length){
+    tousPosts = cache;
+    $("loading").style.display="none";
+    rendrePosts();
+  }
+}catch(e){}
+
 function rendrePosts(){
-const box=$("list"); if(!box) return; box.innerHTML=""; $("loading").style.display="none";
-if(!tousPosts.length){$("emptyBox").style.display="block"; return;} $("emptyBox").style.display="none";
-const fragment=document.createDocumentFragment();
-tousPosts.forEach(p=>{
-const liked=mesLikes.has(p.id); const coms=commentairesParPost[p.id]||[];
-const photo=p.photoUrl||p.image||""; const video=p.videoUrl||"";
-let comsHtml=coms.map(c=>`<div class="comment"><div class="avatar">${avatarHTML(c.photoAuteur,c.nomAuteur)}</div><div class="bubble"><b>${escapeHTML(c.nomAuteur||"")}</b><span>${escapeHTML(c.texte||"")}</span><small>${escapeHTML(c.date||"")}</small></div></div>`).join("");
-if(!coms.length){comsHtml='<p style="color:#A1A1AA;font-size:13px;text-align:center">Aucun commentaire. Sois le premier !</p>';}
-const id=escapeHTML(p.id); const auteur=escapeHTML(p.auteurUid||""); const nom=escapeHTML(p.nomAuteur||"Utilisateur");
-const div=document.createElement("article"); div.className="post";
-let mediaHtml="";
-if(photo || video){
-mediaHtml=`<div class="media">${photo?`<img class="pimg" loading="lazy" decoding="async" src="${escapeHTML(photo)}" alt="Publication">`:""}${video?`<video controls preload="none" playsinline><source src="${escapeHTML(video)}"></video>`:""}<div class="side-actions"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"}</button><small>${Number(p.likesCount)||0}</small><button onclick="toggleCommentaires('${id}')">💬</button><small>${Number(p.commentairesCount)||0}</small><button onclick="ouvrirPartage('${id}')">↗️</button><small>${Number(p.partagesCount)||0}</small></div></div>`;
+  const box=$("list"); if(!box) return; box.innerHTML=""; $("loading").style.display="none";
+  if(!tousPosts.length){$("emptyBox").style.display="block"; $("btnPlus").style.display="none"; return;} $("emptyBox").style.display="none";
+  $("btnPlus").style.display = tousPosts.length>=limite ? "block" : "none";
+  const fragment=document.createDocumentFragment();
+  tousPosts.slice(0,limite).forEach(p=>{
+    const liked=mesLikes.has(p.id); const coms=commentairesParPost[p.id]||[];
+    const photo=p.photoUrl||p.image||""; const video=p.videoUrl||"";
+    let comsHtml=coms.map(c=>`<div class="comment"><div class="avatar">${avatarHTML(c.photoAuteur,c.nomAuteur)}</div><div class="bubble"><b>${escapeHTML(c.nomAuteur||"")}</b><span>${escapeHTML(c.texte||"")}</span><small>${escapeHTML(c.date||"")}</small></div></div>`).join("");
+    if(!coms.length){comsHtml='<p style="color:#A1A1AA;font-size:13px;text-align:center">Aucun commentaire. Sois le premier !</p>';}
+    const id=escapeHTML(p.id); const auteur=escapeHTML(p.auteurUid||""); const nom=escapeHTML(p.nomAuteur||"Utilisateur");
+    const div=document.createElement("article"); div.className="post";
+    let mediaHtml="";
+    if(photo || video){
+      mediaHtml=`<div class="media">${photo?`<img class="pimg" loading="lazy" decoding="async" src="${escapeHTML(photo)}" alt="Publication">`:""}${video?`<video controls preload="none" playsinline><source src="${escapeHTML(video)}"></video>`:""}<div class="side-actions"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"}</button><small>${Number(p.likesCount)||0}</small><button onclick="toggleCommentaires('${id}')">💬</button><small>${Number(p.commentairesCount)||0}</small><button onclick="ouvrirPartage('${id}')">↗️</button><small>${Number(p.partagesCount)||0}</small></div></div>`;
+    }
+    let actionsText="";
+    if(!photo && !video){
+      actionsText=`<div class="actions-text"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"} ${Number(p.likesCount)||0}</button><button onclick="toggleCommentaires('${id}')">💬 ${Number(p.commentairesCount)||0}</button><button onclick="ouvrirPartage('${id}')">↗️ ${Number(p.partagesCount)||0}</button></div>`;
+    }
+    div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${auteur}'">${avatarHTML(p.photoAuteur,p.nomAuteur)}</div><div class="info"><b>${nom}</b><br><small>${escapeHTML(p.date||"")}${p.partageDe?` • Partagé de ${escapeHTML(p.partageDeNom||"")}`:""}</small></div>${p.auteurUid===uid?`<button style="border:0;background:none;font-size:18px;color:#fff" onclick="supprimerPost('${id}')">🗑️</button>`:`<button style="border:1px solid var(--gold);background:none;color:var(--gold);padding:6px 12px;border-radius:999px;font-weight:800;font-size:12px">Suivre</button>`}</div>${p.texte?`<p>${escapeHTML(p.texte)}</p>`:""}${mediaHtml}${actionsText}<div class="comments" id="com-${id}"><div>${comsHtml}</div><div class="comment-input"><input id="inputCom-${id}" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter')envoyerCommentaire('${id}')"><button onclick="envoyerCommentaire('${id}')">➤</button></div></div>`;
+    fragment.appendChild(div);
+  });
+  box.appendChild(fragment);
 }
-let actionsText="";
-if(!photo && !video){
-actionsText=`<div class="actions-text"><button class="${liked?"liked":""}" onclick="liker('${id}')">${liked?"❤️":"🤍"} ${Number(p.likesCount)||0}</button><button onclick="toggleCommentaires('${id}')">💬 ${Number(p.commentairesCount)||0}</button><button onclick="ouvrirPartage('${id}')">↗️ ${Number(p.partagesCount)||0}</button></div>`;
+window.chargerPlus=()=>{ limite+=12; rendrePosts(); };
+window.toggleCommentaires=async id=>{
+  const el=$("com-"+id); if(!el) return;
+  el.classList.toggle("open");
+  // ⚡ Commentaires seulement quand on ouvre, pas pour tous les posts !
+  if(el.classList.contains("open") && !commentairesParPost[id]){
+    try{
+      const s=await get(query(ref(db,"jasonbook/commentaires/"+id),orderByChild("timestamp"),limitToLast(20)));
+      const d=s.val(); commentairesParPost[id]=d?Object.entries(d).map(([cid,c])=>({id:cid,...c})).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0)):[];
+      rendrePosts();
+      // Rouvrir après re-rendu
+      const el2=$("com-"+id); if(el2) el2.classList.add("open");
+    }catch(e){}
+  }
+};
+window.liker=async id=>{
+  const p=tousPosts.find(x=>x.id===id); if(!p) return;
+  // ⚡ Optimiste : change tout de suite, pas d'attente Firebase
+  const deja = mesLikes.has(id);
+  if(deja){ mesLikes.delete(id); p.likesCount=Math.max(0,(Number(p.likesCount)||0)-1); } else { mesLikes.add(id); p.likesCount=(Number(p.likesCount)||0)+1; }
+  rendrePosts();
+  try{
+    const likeRef=ref(db,"jasonbook/likes/"+uid+"/"+id);
+    if(deja){ await remove(likeRef); } else { await set(likeRef,true); if(p.auteurUid!==uid){ const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"like",texte:monNom+" a aimé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),lu:false}); } }
+  }catch(e){}
+};
+window.envoyerCommentaire=async id=>{
+  const input=$("inputCom-"+id); if(!input) return; const txt=input.value.trim(); if(!txt) return;
+  const p=tousPosts.find(x=>x.id===id); if(!p) return; input.disabled=true;
+  try{
+    const newRef=push(ref(db,"jasonbook/commentaires/"+id)); await set(newRef,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:txt,date:new Date().toLocaleString(),timestamp:Date.now()});
+    if(!commentairesParPost[id]) commentairesParPost[id]=[];
+    commentairesParPost[id].push({auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:txt,date:"À l'instant"});
+    p.commentairesCount=(Number(p.commentairesCount)||0)+1;
+    rendrePosts(); const el2=$("com-"+id); if(el2) el2.classList.add("open");
+    if(p.auteurUid!==uid){ const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"commentaire",texte:monNom+" a commenté : "+txt,deUid:uid,deNom:monNom,date:new Date().toLocaleString(),lu:false}); }
+    input.value="";
+  }catch(e){ alert("Erreur lors de l'envoi."); }finally{ input.disabled=false; }
+};
+window.ouvrirPartage=id=>{ postAPartager=tousPosts.find(x=>x.id===id); if(!postAPartager) return; $("partagePreview").textContent="Publication de "+postAPartager.nomAuteur+" : "+(postAPartager.texte||"").slice(0,80); $("partageTexte").value=""; $("modalPartage").classList.add("open"); };
+window.fermerPartage=()=>{ $("modalPartage").classList.remove("open"); postAPartager=null; };
+window.confirmerPartage=async()=>{
+  if(!postAPartager) return; const original=postAPartager; const texte=$("partageTexte").value.trim(); const bouton=$("modalPartage").querySelector(".btn-violet"); bouton.disabled=true; bouton.textContent="Partage en cours...";
+  try{
+    const newRef=push(ref(db,"jasonbook/posts")); await set(newRef,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:texte?texte+"\n\n--- Partagé ---\n"+(original.texte||""):(original.texte||""),photoUrl:original.photoUrl||original.image||"",videoUrl:original.videoUrl||"",date:new Date().toLocaleString(),timestamp:Date.now(),likesCount:0,commentairesCount:0,partagesCount:0,partageDe:original.id,partageDeNom:original.nomAuteur||""});
+    if(original.auteurUid!==uid){ const n=push(ref(db,"jasonbook/notifications/"+original.auteurUid)); await set(n,{type:"partage",texte:monNom+" a partagé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),lu:false}); }
+    await set(ref(db,"jasonbook/posts/"+original.id+"/partagesCount"),(Number(original.partagesCount)||0)+1); fermerPartage(); alert("Publication partagée ! 🎉"); chargerFil();
+  }catch(e){ alert("Erreur lors du partage."); }finally{ bouton.disabled=false; bouton.textContent="Partager sur mon fil"; }
+};
+window.supprimerPost=async id=>{ if(!confirm("Supprimer cette publication ?")) return; try{ await remove(ref(db,"jasonbook/posts/"+id)); tousPosts=tousPosts.filter(p=>p.id!==id); rendrePosts(); }catch(e){ alert("Impossible de supprimer."); } };
+
+// ===== ⚡ VITESSE 2 : 1 SEUL get(), PAS 7 onValue() =====
+async function chargerFil(){
+  try{
+    const s=await get(query(ref(db,"jasonbook/posts"),orderByChild("timestamp"),limitToLast(30)));
+    const d=s.val(); tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[];
+    // Sauvegarde pour la prochaine ouverture = INSTANTANÉ
+    try{ localStorage.setItem("jasonbook_feed_cache", JSON.stringify(tousPosts.slice(0,12).map(p=>({...p, photoUrl: p.photoUrl ? p.photoUrl.slice(0,200000) : p.photoUrl})))); }catch(e){}
+    rendrePosts();
+  }catch(e){ $("loading").textContent="Erreur de chargement."; }
+  try{
+    const s2=await get(ref(db,"jasonbook/likes/"+uid)); const d2=s2.val(); mesLikes=new Set(d2?Object.keys(d2):[]); rendrePosts();
+  }catch(e){}
+  // Badges en 1 fois, pas en boucle
+  try{
+    const [dem, notif] = await Promise.all([ get(ref(db,"jasonbook/demandes/"+uid)), get(ref(db,"jasonbook/notifications/"+uid)) ]);
+    const dd=dem.val(); setBadgeTop("badgeAmisTop", dd?Object.keys(dd).length:0);
+    const nn=notif.val(); let n=0; if(nn) Object.values(nn).forEach(x=>{ if(!x.lu) n++; }); setBadgeTop("badgeNotifTop", n);
+  }catch(e){}
+  // Stories : 1 fois, pas en live
+  try{
+    const s3=await get(query(ref(db,"jasonbook/stories"),orderByChild("expire"),limitToLast(20)));
+    const d=s3.val(); const now=Date.now(); const row=$("storiesRow"); row.innerHTML="";
+    const add=document.createElement("div"); add.className="story"; add.innerHTML=`<div class="c"><div>+</div></div><b>Toi</b>`; add.onclick=()=>location.href="stories.html"; row.appendChild(add);
+    if(d){ const parAuteur={}; Object.values(d).forEach(x=>{ if((x.expire||0)<=now) return; if(!parAuteur[x.auteurUid]) parAuteur[x.auteurUid]=[]; parAuteur[x.auteurUid].push(x); }); Object.values(parAuteur).forEach(g=>{ const st=g[0]; const div=document.createElement("div"); div.className="story"; div.innerHTML=`<div class="c"><div>${st.photoAuteur?`<img src="${escapeHTML(st.photoAuteur)}">`:escapeHTML((st.auteurNom||"?").charAt(0))}</div></div><b>${escapeHTML(st.auteurNom||"")}</b>`; div.onclick=()=>location.href="stories.html"; row.appendChild(div); }); }
+  }catch(e){}
 }
-div.innerHTML=`<div class="head"><div class="avatar" onclick="location.href='profil-ami.html?uid=${auteur}'">${avatarHTML(p.photoAuteur,p.nomAuteur)}</div><div class="info"><b>${nom}</b><br><small>${escapeHTML(p.date||"")}${p.partageDe?` • Partagé de ${escapeHTML(p.partageDeNom||"")}`:""}</small></div>${p.auteurUid===uid?`<button style="border:0;background:none;font-size:18px;color:#fff" onclick="supprimerPost('${id}')">🗑️</button>`:`<button style="border:1px solid var(--gold);background:none;color:var(--gold);padding:6px 12px;border-radius:999px;font-weight:800;font-size:12px">Suivre</button>`}</div>${p.texte?`<p>${escapeHTML(p.texte)}</p>`:""}${mediaHtml}${actionsText}<div class="comments" id="com-${id}"><div>${comsHtml}</div><div class="comment-input"><input id="inputCom-${id}" placeholder="Écris un commentaire..." onkeydown="if(event.key==='Enter')envoyerCommentaire('${id}')"><button onclick="envoyerCommentaire('${id}')">➤</button></div></div>`;
-fragment.appendChild(div);
-});
-box.appendChild(fragment);
-}
-window.toggleCommentaires=id=>{const el=$("com-"+id); if(el) el.classList.toggle("open");};
-window.liker=async id=>{const p=tousPosts.find(x=>x.id===id); if(!p) return; const likeRef=ref(db,"jasonbook/likes/"+uid+"/"+id); try{if(mesLikes.has(id)){await remove(likeRef);}else{await set(likeRef,true); if(p.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"like",texte:monNom+" a aimé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),lu:false});}}}catch(e){console.error("Erreur like:",e); alert("Impossible de modifier le like.");}};
-window.envoyerCommentaire=async id=>{const input=$("inputCom-"+id); if(!input) return; const txt=input.value.trim(); if(!txt) return; const p=tousPosts.find(x=>x.id===id); if(!p) return; input.disabled=true; try{const newRef=push(ref(db,"jasonbook/commentaires/"+id)); await set(newRef,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:txt,date:new Date().toLocaleString(),timestamp:Date.now()}); if(p.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+p.auteurUid)); await set(n,{type:"commentaire",texte:monNom+" a commenté ta publication : "+txt,deUid:uid,deNom:monNom,date:new Date().toLocaleString(),lu:false});} input.value="";}catch(e){console.error(e); alert("Erreur lors de l'envoi.");}finally{input.disabled=false;}};
-window.ouvrirPartage=id=>{postAPartager=tousPosts.find(x=>x.id===id); if(!postAPartager) return; $("partagePreview").textContent="Publication de "+postAPartager.nomAuteur+" : "+(postAPartager.texte||"").slice(0,80); $("partageTexte").value=""; $("modalPartage").classList.add("open");};
-window.fermerPartage=()=>{$("modalPartage").classList.remove("open"); postAPartager=null;};
-window.confirmerPartage=async()=>{if(!postAPartager) return; const original=postAPartager; const texte=$("partageTexte").value.trim(); const bouton=$("modalPartage").querySelector(".btn-violet"); bouton.disabled=true; bouton.textContent="Partage en cours..."; try{const newRef=push(ref(db,"jasonbook/posts")); await set(newRef,{auteurUid:uid,nomAuteur:monNom,photoAuteur:maPhoto,texte:texte?texte+"\n\n--- Partagé ---\n"+(original.texte||""):(original.texte||""),photoUrl:original.photoUrl||original.image||"",videoUrl:original.videoUrl||"",date:new Date().toLocaleString(),timestamp:Date.now(),likesCount:0,commentairesCount:0,partagesCount:0,partageDe:original.id,partageDeNom:original.nomAuteur||""}); if(original.auteurUid!==uid){const n=push(ref(db,"jasonbook/notifications/"+original.auteurUid)); await set(n,{type:"partage",texte:monNom+" a partagé ta publication",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),lu:false});} await set(ref(db,"jasonbook/posts/"+original.id+"/partagesCount"),(Number(original.partagesCount)||0)+1); fermerPartage(); alert("Publication partagée ! 🎉");}catch(e){console.error(e); alert("Erreur lors du partage.");}finally{bouton.disabled=false; bouton.textContent="Partager sur mon fil";}};
-window.supprimerPost=async id=>{if(!confirm("Supprimer cette publication ?")) return; try{await remove(ref(db,"jasonbook/posts/"+id));}catch(e){alert("Impossible de supprimer cette publication."); console.error(e);}};
-const postsQuery=query(ref(db,"jasonbook/posts"),orderByChild("timestamp"),limitToLast(40));
-onValue(postsQuery,s=>{const d=s.val(); tousPosts=d?Object.entries(d).map(([id,p])=>({id,...p})).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)):[]; rendrePostsRapide();},error=>{console.error(error); $("loading").textContent="Erreur de chargement des publications.";});
-onValue(ref(db,"jasonbook/likes/"+uid),s=>{const d=s.val(); mesLikes=new Set(d?Object.keys(d):[]); rendrePostsRapide();});
-const commentaireRefs={};
-function actualiserEcouteursCommentaires(){
-const ids=new Set(tousPosts.map(p=>p.id));
-Object.keys(commentaireRefs).forEach(id=>{if(!ids.has(id)){const item=commentaireRefs[id]; item.unsubscribe(); delete commentaireRefs[id]; delete commentairesParPost[id];}});
-tousPosts.forEach(p=>{if(commentaireRefs[p.id]) return; const commentaireQuery=query(ref(db,"jasonbook/commentaires/"+p.id),orderByChild("timestamp"),limitToLast(20)); const callback=onValue(commentaireQuery,s=>{const d=s.val(); commentairesParPost[p.id]=d?Object.entries(d).map(([id,c])=>({id,...c})).sort((a,b)=>(a.timestamp||0)-(b.timestamp||0)):[]; rendrePostsRapide();},error=>console.error(error)); commentaireRefs[p.id]={unsubscribe:()=>callback()};});
-}
-onValue(postsQuery,()=>{actualiserEcouteursCommentaires();});
-onValue(ref(db,"jasonbook/demandes/"+uid),s=>{const d=s.val(); setBadgeTop("badgeAmisTop",d?Object.keys(d).length:0);});
-onValue(ref(db,"jasonbook/notifications/"+uid),s=>{const d=s.val(); let n=0; if(d){Object.values(d).forEach(x=>{if(!x.lu)n++;});} setBadgeTop("badgeNotifTop",n);});
-onValue(ref(db,"jasonbook/messages"),s=>{const d=s.val(); let n=0; if(d){Object.values(d).forEach(chat=>{if(chat&&typeof chat==="object"){Object.values(chat).forEach(m=>{if(m&&(m.destinataireUid===uid||m.pour===uid)&&!m.lu)n++;});}});} setBadgeTop("badgeMsgTop",n);});
-onValue(query(ref(db,"jasonbook/stories"),orderByChild("expire"),limitToLast(50)),s=>{
-const d=s.val(); const now=Date.now(); const row=$("storiesRow"); row.innerHTML="";
-const add=document.createElement("div"); add.className="story"; add.innerHTML=`<div class="c"><div>+</div></div><b>Toi</b>`; add.onclick=()=>location.href="stories.html"; row.appendChild(add);
-if(!d) return;
-const parAuteur={};
-Object.values(d).forEach(x=>{if((x.expire||0)<=now) return; if(!parAuteur[x.auteurUid]) parAuteur[x.auteurUid]=[]; parAuteur[x.auteurUid].push(x);});
-Object.values(parAuteur).forEach(g=>{const st=g[0]; const div=document.createElement("div"); div.className="story"; div.innerHTML=`<div class="c"><div>${st.photoAuteur?`<img src="${escapeHTML(st.photoAuteur)}">`:escapeHTML((st.auteurNom||"?").charAt(0))}</div></div><b>${escapeHTML(st.auteurNom||"")}</b>`; div.onclick=()=>location.href="stories.html"; row.appendChild(div);});
-},error=>console.error("Stories:",error));
+chargerFil();
 </script>
 </body>
 </html>
