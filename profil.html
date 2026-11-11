@@ -205,6 +205,7 @@ const app=initializeApp(firebaseConfig); const db=getDatabase(app);
 const uid=localStorage.getItem("jasonbook_uid"); if(!uid){location.href="index.html";}
 let monProfil=null; let amisChargement=false;
 let monNomLocal=(localStorage.getItem("jasonbook_nom")||"Jason Aloma").toLowerCase().trim();
+let maPhotoProfil=localStorage.getItem("jasonbook_photo")||"";
 const $=id=>document.getElementById(id);
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function imageAutorisee(src){ if(typeof src!=="string") return ""; if(src.startsWith("data:image/")) return src; if(src.startsWith("https://")) return src; return ""; }
@@ -212,15 +213,37 @@ function creerAvatar(photo,lettre="J"){ const box=document.createElement("div");
 function afficherPhotoDans(element,photo,lettre="J"){ element.replaceChildren(); const src=imageAutorisee(photo); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de profil"; element.appendChild(img); }else{ element.append(document.createTextNode(lettre)); } }
 function ajouterInfo(parent,emoji,label,value){ const row=document.createElement("div"); row.className="info-row"; const icon=document.createElement("span"); icon.textContent=emoji; const text=document.createElement("div"); text.textContent=label+": "+(value||"Non renseigné"); row.append(icon,text); parent.appendChild(row); }
 function afficherInfos(u){ const intro=$("introList"); const apropos=$("aproposFull"); intro.replaceChildren(); apropos.replaceChildren(); const infos=[["💼","Activité",u.activite],["📍","Ville",u.ville],["🌍","Pays",u.pays],["📞","Téléphone",u.phone],["✉️","Email",u.email],["📅","Membre depuis",u.dateInscription]]; infos.forEach(([emoji,label,value])=>{ ajouterInfo(intro,emoji,label,value); ajouterInfo(apropos,emoji,label,value); }); }
-
-// ✅ CORRECTION : on accepte TOUS les noms de champs de couverture / photo
 function getPhotoCouverture(u){ return u.photoCouverture || u.couverture || u.cover || u.photoCover || ""; }
 function getPhotoProfil(u){ return u.photoProfil || u.photo || u.photoUrl || ""; }
+
+// ✅ TOUS MES UID - sans DAVBOT
+// On ne met PLUS davbot, car le post à 102 likes est à DAVBOT, pas à toi
+function getMesUids(){
+  let uids=[uid];
+  let noms=[monNomLocal];
+  try{
+    const comptes=JSON.parse(localStorage.getItem("jasonbook_comptes")||"[]");
+    comptes.forEach(c=>{
+      // ✅ On ne prend que les comptes qui ont le même nom que toi (Jason Aloma)
+      // On ne prend PAS DAVBOT
+      const nomC=(c.nom||"").toLowerCase().trim();
+      if(nomC && (nomC.includes("jason") || nomC===monNomLocal)){
+        if(c.uid) uids.push(c.uid);
+        if(c.nom) noms.push(nomC);
+      }
+    });
+  }catch(e){}
+  return {uids:[...new Set(uids)], noms:[...new Set(noms)]};
+}
+let MES_UIDS=getMesUids().uids;
+let MES_NOMS=getMesUids().noms;
 
 function afficherProfil(u){
   monProfil=u;
   const nom=u.nomComplet||[u.prenom,u.nom].filter(Boolean).join(" ")||"Utilisateur";
   monNomLocal=nom.toLowerCase().trim();
+  maPhotoProfil=getPhotoProfil(u) || maPhotoProfil;
+  const maj=getMesUids(); MES_UIDS=maj.uids; MES_NOMS=[...new Set([...maj.noms, monNomLocal])];
   const lettre=(u.prenom||u.nom||nom||"J").charAt(0).toUpperCase();
   $("nomAffiche").textContent=nom; $("bioAffiche").textContent=u.bio||""; $("metaAffiche").textContent=[u.activite,u.ville,u.pays].filter(Boolean).join(" • ");
   const pp=getPhotoProfil(u);
@@ -229,7 +252,6 @@ function afficherProfil(u){
   const cam=document.createElement("div"); cam.className="cam"; cam.textContent="📷"; $("bigAvatar").appendChild(cam);
   $("createAvatar").replaceChildren(creerAvatar(pp,lettre).childNodes[0]||document.createTextNode(lettre));
   afficherInfos(u);
-  // ✅ COUVERTURE - affiche même si c'est couverture / photoCouverture
   const cover=$("coverDiv"); cover.querySelector("img")?.remove(); $("coverTxt").style.display="flex";
   const cov=getPhotoCouverture(u);
   if(cov){ const src=imageAutorisee(cov); if(src){ const img=document.createElement("img"); img.src=src; img.alt="Photo de couverture"; cover.prepend(img); $("coverTxt").style.display="none"; } }
@@ -245,7 +267,6 @@ async function enregistrerImage(file,champ){
   if(file.size>12*1024*1024){ alert("Image trop volumineuse. Choisis une image de moins de 12 Mo."); return; }
   try{
     const image=await compresserImage(file,champ==="photoCouverture"?1400:900,.70);
-    // ✅ On enregistre dans les 2 champs pour que ça marche partout
     if(champ==="photoCouverture"){ await update(ref(db,"jasonbook/users/"+uid),{ photoCouverture:image, couverture:image, cover:image }); }
     else { await update(ref(db,"jasonbook/users/"+uid),{ photoProfil:image, photo:image }); }
     if(champ==="photoProfil"){ localStorage.setItem("jasonbook_photo",image); }
@@ -272,7 +293,11 @@ async function chargerAmis(){
   const box=$("amisFull"); const boxLeft=$("amisList"); const loading=$("loadingAmis"); const noAmis=$("noAmisFull");
   loading.style.display="block"; noAmis.style.display="none"; box.replaceChildren(); boxLeft.replaceChildren();
   try{
-    const snap=await get(ref(db,"jasonbook/amis/"+uid)); const data=snap.val()||{}; const ids=Object.keys(data);
+    let tousIds=new Set();
+    for(let idUid of MES_UIDS){
+      const snap=await get(ref(db,"jasonbook/amis/"+idUid)); const data=snap.val()||{}; Object.keys(data).forEach(k=>tousIds.add(k));
+    }
+    const ids=[...tousIds];
     $("amisCount").textContent=ids.length+" ami"+(ids.length>1?"s":""); $("amisCount2").textContent=ids.length;
     $("nbAmis").textContent=ids.length;
     if(!ids.length){ noAmis.style.display="block"; boxLeft.textContent="Aucun ami pour le moment"; boxLeft.style.color="var(--grey)"; return; }
@@ -290,20 +315,26 @@ async function chargerAmis(){
   }catch(error){ console.error(error); box.textContent="Impossible de charger les amis."; }finally{ loading.style.display="none"; amisChargement=false; }
 }
 window.chargerAmis=chargerAmis; chargerAmis();
-// ✅ AMIS EN TEMPS RÉEL
-onValue(ref(db,"jasonbook/amis/"+uid),s=>{ const d=s.val()||{}; const n=Object.keys(d).length; $("nbAmis").textContent=n; $("amisCount").textContent=n+" ami"+(n>1?"s":""); });
+onValue(ref(db,"jasonbook/amis/"+uid),s=>{ const d=s.val()||{}; const n=Object.keys(d).length; if(n>0){ $("nbAmis").textContent=n; $("amisCount").textContent=n+" ami"+(n>1?"s":""); } });
 
-// ✅ CORRECTION PRINCIPALE : TES PUBLICATIONS = par UID **OU** par NOM
-// Avant ça cherchait seulement auteurUid === uid, donc si ton post a été créé avec un autre compte, ça donnait 0
+// ✅ CORRECTION : MES PUBLICATIONS = SEULEMENT MOI (Jason Aloma)
+// ❌ On ne compte PLUS DAVBOT - le post à 102 likes est à DAVBOT, pas à toi
+// ✅ Ton partage de DAVBOT, lui, sera compté comme à toi car son auteurUid = ton uid
 function cEstMonPost(p){
   if(!p) return false;
-  if(p.auteurUid===uid) return true;
-  if(p.uid===uid) return true;
-  if(p.auteurId===uid) return true;
+  // 1. Ton UID actuel + tes anciens UID qui ont le nom Jason
+  if(MES_UIDS.includes(p.auteurUid)) return true;
+  if(MES_UIDS.includes(p.uid)) return true;
+  if(MES_UIDS.includes(p.auteurId)) return true;
+  // 2. Ton nom exact : Jason Aloma
   const nomPost=(p.nomAuteur||p.nom||p.auteurNom||"").toLowerCase().trim();
-  if(nomPost && nomPost===monNomLocal) return true;
-  // Ton ancien post "DAVBOT" ou "Jason Aloma" - on accepte aussi si le nom contient Jason
-  if(nomPost && monNomLocal && (nomPost.includes("jason") && monNomLocal.includes("jason"))) return true;
+  if(nomPost && MES_NOMS.includes(nomPost)) return true;
+  // 3. Ta photo de profil - tes publications ont ta photo, celles de DAVBOT ont une autre photo
+  // On vérifie seulement si la photo est exactement la tienne ET que le nom n'est pas DAVBOT
+  if(nomPost==="davbot" || nomPost==="dav bot") return false;
+  if(maPhotoProfil && p.photoAuteur && p.photoAuteur===maPhotoProfil && nomPost!=="davbot") return true;
+  // 4. Sécurité : si le post a été créé avec un champ différent
+  if(p.auteurUid && p.auteurUid===uid) return true;
   return false;
 }
 
@@ -319,14 +350,17 @@ onValue(ref(db,"jasonbook/posts"),snap=>{
   miens.forEach(([id,p])=>{
     const card=document.createElement("article"); card.className="card";
     const head=document.createElement("div"); head.className="post-head";
-    const nom=monProfil?.nomComplet||p.nomAuteur||"Moi"; const lettre=nom.charAt(0).toUpperCase();
-    head.appendChild(creerAvatar(getPhotoProfil(monProfil||{}),lettre));
+    const nom=p.nomAuteur||monProfil?.nomComplet||"Moi"; const lettre=nom.charAt(0).toUpperCase();
+    head.appendChild(creerAvatar(p.photoAuteur||getPhotoProfil(monProfil||{}),lettre));
     const auteur=document.createElement("div"); const auteurNom=document.createElement("b"); auteurNom.textContent=nom; const date=document.createElement("small"); date.textContent=p.date||"Publication"; auteur.append(auteurNom,document.createElement("br"),date); head.appendChild(auteur); card.appendChild(head);
     if(p.texte){ const texte=document.createElement("div"); texte.className="post-text"; texte.textContent=p.texte; card.appendChild(texte); }
     const photo=imageAutorisee(p.photoUrl||p.image||"");
     if(photo){ const img=document.createElement("img"); img.className="post-image"; img.src=photo; img.alt="Photo publiée"; img.loading="lazy"; card.appendChild(img); compteurPhotos++; const mini=document.createElement("img"); mini.src=photo; mini.alt="Photo"; mini.loading="lazy"; grid.appendChild(mini); const grande=document.createElement("img"); grande.src=photo; grande.alt="Photo publiée"; grande.loading="lazy"; full.appendChild(grande); }
     const counts=document.createElement("div"); counts.className="counts-row";
+    // ✅ Si c'est un partage, on l'indique
+    const labelPartage=p.partageDe ? " • Partagé de "+(p.partageDeNom||"DAVBOT") : "";
     counts.innerHTML=`<span onclick="voirLikes('${esc(id)}')">❤️ ${Number(p.likesCount||p.likes||0)} J'aime</span><span>💬 ${Number(p.commentairesCount||p.comments||0)} commentaires</span><span>↗️ ${Number(p.partagesCount||p.shares||0)} partages</span>`;
+    if(labelPartage){ const sp=document.createElement("div"); sp.style.cssText="font-size:11px;color:#A1A1AA;padding:4px"; sp.textContent="↗️ Partagé de "+(p.partageDeNom||"DAVBOT"); card.appendChild(sp); }
     card.appendChild(counts);
     const actions=document.createElement("div"); actions.className="actions-text"; ["❤️ "+(p.likesCount||0),"💬 "+(p.commentairesCount||0),"↗️ "+(p.partagesCount||0)].forEach(label=>{ const button=document.createElement("button"); button.textContent=label; actions.appendChild(button); }); card.appendChild(actions); box.appendChild(card);
   });
