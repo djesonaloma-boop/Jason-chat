@@ -7,8 +7,19 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
 html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
-:root{--or:#FFC107;--or2:#FF9800;--violet:#7C3AED;--violet2:#A855F7;--noir:#0A0A0F;--gris:#16161F;--bord:#26262F;--txt:#fff;--txt2:#A1A1AA}
-body{background:var(--noir);min-height:100vh;color:var(--txt);background-image:radial-gradient(circle at 20% 0%, rgba(124,58,237,.28), transparent 40%),radial-gradient(circle at 90% 20%, rgba(255,193,7,.18), transparent 35%)}
+:root{
+  --or:#FFC107;
+  --or2:#FF9800;
+  --violet:#7C3AED;
+  --violet2:#A855F7;
+  --noir:#0A0A0F;
+  --gris:#16161F;
+  --bord:#26262F;
+  --txt:#fff;
+  --txt2:#A1A1AA;
+}
+body{background:var(--noir);min-height:100vh;color:var(--txt);background-image:radial-gradient(circle at 20% 0%, rgba(124,58,237,.28), transparent 40%),radial-gradient(circle at 90% 20%, rgba(255,193,7,.18), transparent 35%);}
+/* TOPBAR */
 .topbar{background:rgba(10,10,15,.92);backdrop-filter:blur(12px);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;border-bottom:1px solid var(--bord)}
 .logo{font-weight:900;color:#fff;font-size:22px;display:flex;align-items:center;gap:9px;cursor:pointer;letter-spacing:-.5px;line-height:1}
 .logo span{width:40px;height:40px;background:linear-gradient(135deg,var(--or),var(--or2));color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:0 4px 16px rgba(255,193,7,.4)}
@@ -18,12 +29,15 @@ body{background:var(--noir);min-height:100vh;color:var(--txt);background-image:r
 .topbar .links button{border:none;padding:10px 16px;border-radius:999px;font-weight:800;cursor:pointer;font-size:13px}
 .btn-login{background:var(--gris);color:#fff;border:1px solid var(--bord)!important}
 .btn-signup{background:linear-gradient(135deg,var(--or),var(--or2));color:#000}
+/* HERO */
 .hero{display:flex;gap:24px;max-width:1020px;margin:22px auto;padding:0 14px 30px;align-items:flex-start;flex-wrap:wrap;justify-content:center}
 .hero-left{flex:1;min-width:280px;max-width:500px;padding-top:10px}
 .hero-left .badge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,.18);border:1px solid rgba(168,85,247,.4);color:#D8B4FE;font-weight:800;font-size:12px;padding:8px 12px;border-radius:999px;margin-bottom:14px}
 .hero-left h1{font-size:42px;line-height:1.08;letter-spacing:-1px}
 .hero-left h1 span{background:linear-gradient(135deg,var(--or),var(--violet2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-left p{font-size:16px;color:var(--txt2);margin:14px 0;line-height:1.6}
+/* ✅ SUPPRIMÉ : .stats et .stat - plus de nombre d'utilisateurs */
+/* CARD */
 .hero-right{flex:1;min-width:300px;max-width:420px;position:sticky;top:76px}
 .card{background:var(--gris);border-radius:24px;padding:22px;box-shadow:0 16px 40px rgba(0,0,0,.5);border:1px solid var(--bord)}
 .card h2{text-align:center;margin-bottom:6px;font-size:22px}
@@ -36,16 +50,21 @@ body{background:var(--noir);min-height:100vh;color:var(--txt);background-image:r
 .btn-main{width:100%;padding:13px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--violet),var(--violet2));color:#fff;font-weight:800;font-size:16px;cursor:pointer}
 .btn-main:disabled{opacity:.6}
 .btn-green{width:100%;padding:13px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--or),var(--or2));color:#000;font-weight:800;font-size:16px;cursor:pointer;margin-top:12px}
-.btn-green:disabled{opacity:.6}
 .link{color:var(--or);text-align:center;display:block;margin-top:12px;cursor:pointer;font-size:14px;font-weight:700}
 .msg{text-align:center;font-size:13px;font-weight:700;min-height:18px;margin-top:8px}
-.sms-box{background:#0F0F16;border:1px solid #26262F;border-radius:14px;padding:12px;text-align:center;font-size:13px;color:#A1A1AA;line-height:1.5}
-.sms-box b{color:#fff}
-@media(max-width:760px){.hero{margin:14px auto}.hero-left{padding-top:0;text-align:center}.hero-left h1{font-size:30px}.hero-right{position:static;width:100%}.topbar .links button{padding:8px 12px;font-size:12px}.logo{font-size:19px}}
+@media(max-width:760px){
+  .hero{margin:14px auto}
+  .hero-left{padding-top:0;text-align:center}
+  .hero-left h1{font-size:30px}
+  .hero-right{position:static;width:100%}
+  .topbar .links button{padding:8px 12px;font-size:12px}
+  .logo{font-size:19px}
+}
 @media(max-width:420px){.hero-left h1{font-size:27px}}
 </style>
 </head>
 <body>
+
 <div class="topbar">
 <div class="logo" onclick="location.href='index.html'"><span>J</span><div>JASON<i>BOOK</i> ✨<small>MADE IN KINSHASA 🇨🇩</small></div></div>
 <div class="links"><button class="btn-login" onclick="showLogin()">Connexion</button><button class="btn-signup" onclick="showSignup()">Créer un compte</button></div>
@@ -56,6 +75,7 @@ body{background:var(--noir);min-height:100vh;color:var(--txt);background-image:r
 <span class="badge">✨ 100% Gratuit • Made à Kinshasa 🇨🇩</span>
 <h1>Connecte-toi avec le <span>monde entier</span> sur JASONBOOK 🌍</h1>
 <p>Retrouve tes amis, partage tes photos, discute en messages privés, crée des groupes, regarde des vidéos, des dessins animés, des mangas et des cours. Gratuit, pour toujours.</p>
+<!-- ✅ SUPPRIMÉ : les 3 cases Membres / Publications / 100% Gratuit -->
 </div>
 
 <div class="hero-right">
@@ -74,36 +94,214 @@ body{background:var(--noir);min-height:100vh;color:var(--txt);background-image:r
 <div class="card" id="boxSignup" style="display:none">
 <h2>Inscription <i>🚀</i></h2>
 <p class="sub">Rejoins JASONBOOK en 30 secondes 🚀</p>
-
-<!-- ÉTAPE 1 : INFOS + ENVOYER SMS -->
-<div id="etape1">
 <input id="insPrenom" placeholder="Prénom *">
 <input id="insNom" placeholder="Nom *">
-<input id="insBirth" type="date" required>
-<input id="insPhone" placeholder="Téléphone (ex: +243...) *" inputmode="tel">
+<input id="insBirth" type="date" aria-label="Date de naissance" required>
+<input id="insPhone" placeholder="Téléphone (ex: +243...)">
 <input id="insEmail" placeholder="Email (optionnel)">
 <select id="insPays">
 <option value="">Pays *</option>
-<option>🇦🇫 Afghanistan</option><option>🇿🇦 Afrique du Sud</option><option>🇦🇱 Albanie</option><option>🇩🇿 Algérie</option><option>🇩🇪 Allemagne</option><option>🇦🇩 Andorre</option><option>🇦🇴 Angola</option><option>🇦🇬 Antigua-et-Barbuda</option><option>🇸🇦 Arabie Saoudite</option><option>🇦🇷 Argentine</option><option>🇦🇲 Arménie</option><option>🇦🇺 Australie</option><option>🇦🇹 Autriche</option><option>🇦🇿 Azerbaïdjan</option><option>🇧🇸 Bahamas</option><option>🇧🇭 Bahreïn</option><option>🇧🇩 Bangladesh</option><option>🇧🇧 Barbade</option><option>🇧🇾 Biélorussie</option><option>🇧🇪 Belgique</option><option>🇧🇿 Belize</option><option>🇧🇯 Bénin</option><option>🇧🇹 Bhoutan</option><option>🇧🇴 Bolivie</option><option>🇧🇦 Bosnie-Herzégovine</option><option>🇧🇼 Botswana</option><option>🇧🇷 Brésil</option><option>🇧🇳 Brunei</option><option>🇧🇬 Bulgarie</option><option>🇧🇫 Burkina Faso</option><option>🇧🇮 Burundi</option><option>🇰🇭 Cambodge</option><option>🇨🇲 Cameroun</option><option>🇨🇦 Canada</option><option>🇨🇻 Cap-Vert</option><option>🇨🇫 République centrafricaine</option><option>🇨🇱 Chili</option><option>🇨🇳 Chine</option><option>🇨🇾 Chypre</option><option>🇨🇴 Colombie</option><option>🇰🇲 Comores</option><option>🇨🇬 Congo</option><option>🇨🇩 Congo (RDC)</option><option>🇰🇷 Corée du Sud</option><option>🇰🇵 Corée du Nord</option><option>🇨🇷 Costa Rica</option><option>🇨🇮 Côte d'Ivoire</option><option>🇭🇷 Croatie</option><option>🇨🇺 Cuba</option><option>🇩🇰 Danemark</option><option>🇩🇯 Djibouti</option><option>🇩🇴 République dominicaine</option><option>🇩🇲 Dominique</option><option>🇪🇬 Égypte</option><option>🇸🇻 El Salvador</option><option>🇦🇪 Émirats arabes unis</option><option>🇪🇨 Équateur</option><option>🇪🇷 Érythrée</option><option>🇪🇸 Espagne</option><option>🇪🇪 Estonie</option><option>🇸🇿 Eswatini</option><option>🇺🇸 États-Unis</option><option>🇪🇹 Éthiopie</option><option>🇫🇯 Fidji</option><option>🇫🇮 Finlande</option><option>🇫🇷 France</option><option>🇬🇦 Gabon</option><option>🇬🇲 Gambie</option><option>🇬🇪 Géorgie</option><option>🇬🇭 Ghana</option><option>🇬🇷 Grèce</option><option>🇬🇩 Grenade</option><option>🇬🇹 Guatemala</option><option>🇬🇳 Guinée</option><option>🇬🇼 Guinée-Bissau</option><option>🇬🇶 Guinée équatoriale</option><option>🇬🇾 Guyana</option><option>🇭🇹 Haïti</option><option>🇭🇳 Honduras</option><option>🇭🇺 Hongrie</option><option>🇮🇳 Inde</option><option>🇮🇩 Indonésie</option><option>🇮🇶 Irak</option><option>🇮🇷 Iran</option><option>🇮🇪 Irlande</option><option>🇮🇸 Islande</option><option>🇮🇱 Israël</option><option>🇮🇹 Italie</option><option>🇯🇲 Jamaïque</option><option>🇯🇵 Japon</option><option>🇯🇴 Jordanie</option><option>🇰🇿 Kazakhstan</option><option>🇰🇪 Kenya</option><option>🇰🇬 Kirghizistan</option><option>🇰🇮 Kiribati</option><option>🇰🇼 Koweït</option><option>🇱🇦 Laos</option><option>🇱🇸 Lesotho</option><option>🇱🇻 Lettonie</option><option>🇱🇧 Liban</option><option>🇱🇷 Libéria</option><option>🇱🇾 Libye</option><option>🇱🇮 Liechtenstein</option><option>🇱🇹 Lituanie</option><option>🇱🇺 Luxembourg</option><option>🇲🇬 Madagascar</option><option>🇲🇾 Malaisie</option><option>🇲🇼 Malawi</option><option>🇲🇻 Maldives</option><option>🇲🇱 Mali</option><option>🇲🇹 Malte</option><option>🇲🇦 Maroc</option><option>🇲🇭 Îles Marshall</option><option>🇲🇺 Maurice</option><option>🇲🇷 Mauritanie</option><option>🇲🇽 Mexique</option><option>🇫🇲 Micronésie</option><option>🇲🇩 Moldavie</option><option>🇲🇨 Monaco</option><option>🇲🇳 Mongolie</option><option>🇲🇪 Monténégro</option><option>🇲🇿 Mozambique</option><option>🇲🇲 Myanmar</option><option>🇳🇦 Namibie</option><option>🇳🇷 Nauru</option><option>🇳🇵 Népal</option><option>🇳🇮 Nicaragua</option><option>🇳🇪 Niger</option><option>🇳🇬 Nigeria</option><option>🇳🇴 Norvège</option><option>🇳🇿 Nouvelle-Zélande</option><option>🇴🇲 Oman</option><option>🇺🇬 Ouganda</option><option>🇺🇿 Ouzbékistan</option><option>🇵🇰 Pakistan</option><option>🇵🇼 Palaos</option><option>🇵🇦 Panama</option><option>🇵🇬 Papouasie-Nouvelle-Guinée</option><option>🇵🇾 Paraguay</option><option>🇳🇱 Pays-Bas</option><option>🇵🇪 Pérou</option><option>🇵🇭 Philippines</option><option>🇵🇱 Pologne</option><option>🇵🇹 Portugal</option><option>🇶🇦 Qatar</option><option>🇬🇧 Royaume-Uni</option><option>🇷🇴 Roumanie</option><option>🇷🇺 Russie</option><option>🇷🇼 Rwanda</option><option>🇰🇳 Saint-Christophe-et-Niévès</option><option>🇱🇨 Sainte-Lucie</option><option>🇸🇲 Saint-Marin</option><option>🇻🇨 Saint-Vincent-et-les-Grenadines</option><option>🇸🇧 Îles Salomon</option><option>🇼🇸 Samoa</option><option>🇸🇹 Sao Tomé-et-Principe</option><option>🇸🇳 Sénégal</option><option>🇷🇸 Serbie</option><option>🇸🇨 Seychelles</option><option>🇸🇱 Sierra Leone</option><option>🇸🇬 Singapour</option><option>🇸🇰 Slovaquie</option><option>🇸🇮 Slovénie</option><option>🇸🇴 Somalie</option><option>🇸🇩 Soudan</option><option>🇸🇸 Soudan du Sud</option><option>🇱🇰 Sri Lanka</option><option>🇸🇪 Suède</option><option>🇨🇭 Suisse</option><option>🇸🇷 Suriname</option><option>🇸🇾 Syrie</option><option>🇹🇯 Tadjikistan</option><option>🇹🇿 Tanzanie</option><option>🇹🇩 Tchad</option><option>🇹🇭 Thaïlande</option><option>🇹🇱 Timor oriental</option><option>🇹🇬 Togo</option><option>🇹🇴 Tonga</option><option>🇹🇹 Trinité-et-Tobago</option><option>🇹🇳 Tunisie</option><option>🇹🇲 Turkménistan</option><option>🇹🇷 Turquie</option><option>🇹🇻 Tuvalu</option><option>🇺🇦 Ukraine</option><option>🇺🇾 Uruguay</option><option>🇻🇺 Vanuatu</option><option>🇻🇦 Vatican</option><option>🇻🇪 Venezuela</option><option>🇻🇳 Vietnam</option><option>🇾🇪 Yémen</option><option>🇿🇲 Zambie</option><option>🇿🇼 Zimbabwe</option><option>🌍 Autre</option>
+<option>🇦🇫 Afghanistan</option>
+<option>🇿🇦 Afrique du Sud</option>
+<option>🇦🇱 Albanie</option>
+<option>🇩🇿 Algérie</option>
+<option>🇩🇪 Allemagne</option>
+<option>🇦🇩 Andorre</option>
+<option>🇦🇴 Angola</option>
+<option>🇦🇬 Antigua-et-Barbuda</option>
+<option>🇸🇦 Arabie Saoudite</option>
+<option>🇦🇷 Argentine</option>
+<option>🇦🇲 Arménie</option>
+<option>🇦🇺 Australie</option>
+<option>🇦🇹 Autriche</option>
+<option>🇦🇿 Azerbaïdjan</option>
+<option>🇧🇸 Bahamas</option>
+<option>🇧🇭 Bahreïn</option>
+<option>🇧🇩 Bangladesh</option>
+<option>🇧🇧 Barbade</option>
+<option>🇧🇾 Biélorussie</option>
+<option>🇧🇪 Belgique</option>
+<option>🇧🇿 Belize</option>
+<option>🇧🇯 Bénin</option>
+<option>🇧🇹 Bhoutan</option>
+<option>🇧🇴 Bolivie</option>
+<option>🇧🇦 Bosnie-Herzégovine</option>
+<option>🇧🇼 Botswana</option>
+<option>🇧🇷 Brésil</option>
+<option>🇧🇳 Brunei</option>
+<option>🇧🇬 Bulgarie</option>
+<option>🇧🇫 Burkina Faso</option>
+<option>🇧🇮 Burundi</option>
+<option>🇰🇭 Cambodge</option>
+<option>🇨🇲 Cameroun</option>
+<option>🇨🇦 Canada</option>
+<option>🇨🇻 Cap-Vert</option>
+<option>🇨🇫 République centrafricaine</option>
+<option>🇨🇱 Chili</option>
+<option>🇨🇳 Chine</option>
+<option>🇨🇾 Chypre</option>
+<option>🇨🇴 Colombie</option>
+<option>🇰🇲 Comores</option>
+<option>🇨🇬 Congo</option>
+<option>🇨🇩 Congo (RDC)</option>
+<option>🇰🇷 Corée du Sud</option>
+<option>🇰🇵 Corée du Nord</option>
+<option>🇨🇷 Costa Rica</option>
+<option>🇨🇮 Côte d'Ivoire</option>
+<option>🇭🇷 Croatie</option>
+<option>🇨🇺 Cuba</option>
+<option>🇩🇰 Danemark</option>
+<option>🇩🇯 Djibouti</option>
+<option>🇩🇴 République dominicaine</option>
+<option>🇩🇲 Dominique</option>
+<option>🇪🇬 Égypte</option>
+<option>🇸🇻 El Salvador</option>
+<option>🇦🇪 Émirats arabes unis</option>
+<option>🇪🇨 Équateur</option>
+<option>🇪🇷 Érythrée</option>
+<option>🇪🇸 Espagne</option>
+<option>🇪🇪 Estonie</option>
+<option>🇸🇿 Eswatini</option>
+<option>🇺🇸 États-Unis</option>
+<option>🇪🇹 Éthiopie</option>
+<option>🇫🇯 Fidji</option>
+<option>🇫🇮 Finlande</option>
+<option>🇫🇷 France</option>
+<option>🇬🇦 Gabon</option>
+<option>🇬🇲 Gambie</option>
+<option>🇬🇪 Géorgie</option>
+<option>🇬🇭 Ghana</option>
+<option>🇬🇷 Grèce</option>
+<option>🇬🇩 Grenade</option>
+<option>🇬🇹 Guatemala</option>
+<option>🇬🇳 Guinée</option>
+<option>🇬🇼 Guinée-Bissau</option>
+<option>🇬🇶 Guinée équatoriale</option>
+<option>🇬🇾 Guyana</option>
+<option>🇭🇹 Haïti</option>
+<option>🇭🇳 Honduras</option>
+<option>🇭🇺 Hongrie</option>
+<option>🇮🇳 Inde</option>
+<option>🇮🇩 Indonésie</option>
+<option>🇮🇶 Irak</option>
+<option>🇮🇷 Iran</option>
+<option>🇮🇪 Irlande</option>
+<option>🇮🇸 Islande</option>
+<option>🇮🇱 Israël</option>
+<option>🇮🇹 Italie</option>
+<option>🇯🇲 Jamaïque</option>
+<option>🇯🇵 Japon</option>
+<option>🇯🇴 Jordanie</option>
+<option>🇰🇿 Kazakhstan</option>
+<option>🇰🇪 Kenya</option>
+<option>🇰🇬 Kirghizistan</option>
+<option>🇰🇮 Kiribati</option>
+<option>🇰🇼 Koweït</option>
+<option>🇱🇦 Laos</option>
+<option>🇱🇸 Lesotho</option>
+<option>🇱🇻 Lettonie</option>
+<option>🇱🇧 Liban</option>
+<option>🇱🇷 Libéria</option>
+<option>🇱🇾 Libye</option>
+<option>🇱🇮 Liechtenstein</option>
+<option>🇱🇹 Lituanie</option>
+<option>🇱🇺 Luxembourg</option>
+<option>🇲🇬 Madagascar</option>
+<option>🇲🇾 Malaisie</option>
+<option>🇲🇼 Malawi</option>
+<option>🇲🇻 Maldives</option>
+<option>🇲🇱 Mali</option>
+<option>🇲🇹 Malte</option>
+<option>🇲🇦 Maroc</option>
+<option>🇲🇭 Îles Marshall</option>
+<option>🇲🇺 Maurice</option>
+<option>🇲🇷 Mauritanie</option>
+<option>🇲🇽 Mexique</option>
+<option>🇫🇲 Micronésie</option>
+<option>🇲🇩 Moldavie</option>
+<option>🇲🇨 Monaco</option>
+<option>🇲🇳 Mongolie</option>
+<option>🇲🇪 Monténégro</option>
+<option>🇲🇿 Mozambique</option>
+<option>🇲🇲 Myanmar</option>
+<option>🇳🇦 Namibie</option>
+<option>🇳🇷 Nauru</option>
+<option>🇳🇵 Népal</option>
+<option>🇳🇮 Nicaragua</option>
+<option>🇳🇪 Niger</option>
+<option>🇳🇬 Nigeria</option>
+<option>🇳🇴 Norvège</option>
+<option>🇳🇿 Nouvelle-Zélande</option>
+<option>🇴🇲 Oman</option>
+<option>🇺🇬 Ouganda</option>
+<option>🇺🇿 Ouzbékistan</option>
+<option>🇵🇰 Pakistan</option>
+<option>🇵🇼 Palaos</option>
+<option>🇵🇦 Panama</option>
+<option>🇵🇬 Papouasie-Nouvelle-Guinée</option>
+<option>🇵🇾 Paraguay</option>
+<option>🇳🇱 Pays-Bas</option>
+<option>🇵🇪 Pérou</option>
+<option>🇵🇭 Philippines</option>
+<option>🇵🇱 Pologne</option>
+<option>🇵🇹 Portugal</option>
+<option>🇶🇦 Qatar</option>
+<option>🇬🇧 Royaume-Uni</option>
+<option>🇷🇴 Roumanie</option>
+<option>🇷🇺 Russie</option>
+<option>🇷🇼 Rwanda</option>
+<option>🇰🇳 Saint-Christophe-et-Niévès</option>
+<option>🇱🇨 Sainte-Lucie</option>
+<option>🇸🇲 Saint-Marin</option>
+<option>🇻🇨 Saint-Vincent-et-les-Grenadines</option>
+<option>🇸🇧 Îles Salomon</option>
+<option>🇸🇻 El Salvador</option>
+<option>🇼🇸 Samoa</option>
+<option>🇸🇹 Sao Tomé-et-Principe</option>
+<option>🇸🇳 Sénégal</option>
+<option>🇷🇸 Serbie</option>
+<option>🇸🇨 Seychelles</option>
+<option>🇸🇱 Sierra Leone</option>
+<option>🇸🇬 Singapour</option>
+<option>🇸🇰 Slovaquie</option>
+<option>🇸🇮 Slovénie</option>
+<option>🇸🇴 Somalie</option>
+<option>🇸🇩 Soudan</option>
+<option>🇸🇸 Soudan du Sud</option>
+<option>🇱🇰 Sri Lanka</option>
+<option>🇸🇪 Suède</option>
+<option>🇨🇭 Suisse</option>
+<option>🇸🇷 Suriname</option>
+<option>🇸🇾 Syrie</option>
+<option>🇹🇯 Tadjikistan</option>
+<option>🇹🇿 Tanzanie</option>
+<option>🇹🇩 Tchad</option>
+<option>🇹🇭 Thaïlande</option>
+<option>🇹🇱 Timor oriental</option>
+<option>🇹🇬 Togo</option>
+<option>🇹🇴 Tonga</option>
+<option>🇹🇹 Trinité-et-Tobago</option>
+<option>🇹🇳 Tunisie</option>
+<option>🇹🇲 Turkménistan</option>
+<option>🇹🇷 Turquie</option>
+<option>🇹🇻 Tuvalu</option>
+<option>🇺🇦 Ukraine</option>
+<option>🇺🇾 Uruguay</option>
+<option>🇻🇺 Vanuatu</option>
+<option>🇻🇦 Vatican</option>
+<option>🇻🇪 Venezuela</option>
+<option>🇻🇳 Vietnam</option>
+<option>🇾🇪 Yémen</option>
+<option>🇿🇲 Zambie</option>
+<option>🇿🇼 Zimbabwe</option>
+<option>🌍 Autre</option>
 </select>
 <input id="insVille" placeholder="Ville *">
 <input id="insActivite" placeholder="Activité (Étudiant, Commerçant...)">
 <input type="password" id="insPass" placeholder="Mot de passe (6+ caractères) *">
 <input type="password" id="insPass2" placeholder="Confirmer le mot de passe *">
-<button class="btn-green" id="btnEnvoyerSMS" onclick="envoyerCodeSMS()">Envoyer le code par SMS 📱</button>
-<div id="recaptcha-container"></div>
+<button class="btn-green" id="btnSignup" onclick="sInscrire()">S'inscrire</button>
 <p class="msg" id="msgSignup"></p>
-</div>
-
-<!-- ÉTAPE 2 : VÉRIFIER LE CODE SMS -->
-<div id="etape2" style="display:none">
-<div class="sms-box">On a envoyé un code à <b id="numeroAffiche"></b><br>Va dans tes <b>SMS / Messages</b> 📩<br>et tape le code à 6 chiffres ici :</div>
-<input id="codeSMS" placeholder="Code à 6 chiffres *" inputmode="numeric" maxlength="6" style="margin-top:12px">
-<button class="btn-green" id="btnVerifier" onclick="verifierCodeSMS()">Vérifier le code ✅</button>
-<button class="btn-main" style="margin-top:8px;background:#16161F" onclick="retourEtape1()">← Modifier le numéro</button>
-<p class="msg" id="msgCode"></p>
-</div>
-
 <span class="link" onclick="showLogin()">Tu as déjà un compte ? Connecte-toi</span>
 </div>
 </div>
@@ -111,19 +309,13 @@ body{background:var(--noir);min-height:100vh;color:var(--txt);background-image:r
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getDatabase, ref, onValue, get, set, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
-const app = initializeApp(firebaseConfig); const db = getDatabase(app); const auth = getAuth(app);
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 if(localStorage.getItem('jasonbook_uid')) location.href='feed.html';
 window.showLogin=()=>{ document.getElementById('boxLogin').style.display="block"; document.getElementById('boxSignup').style.display="none"; };
 window.showSignup=()=>{ document.getElementById('boxLogin').style.display="none"; document.getElementById('boxSignup').style.display="block"; };
-window.retourEtape1=()=>{ document.getElementById('etape2').style.display="none"; document.getElementById('etape1').style.display="block"; };
-
-let confirmationResult = null;
-let infosInscription = null;
-
-window.envoyerCodeSMS = async () => {
+window.sInscrire=async()=>{
   const prenom=document.getElementById('insPrenom').value.trim();
   const nom=document.getElementById('insNom').value.trim();
   const dateNaissance=document.getElementById('insBirth').value;
@@ -137,74 +329,34 @@ window.envoyerCodeSMS = async () => {
   const msg=document.getElementById('msgSignup');
   if(!prenom || !nom || !dateNaissance || !pays || !ville){ msg.style.color="red"; msg.innerText="Prénom, nom, date de naissance, pays et ville sont obligatoires"; return; }
   const limiteAge=new Date(); limiteAge.setFullYear(limiteAge.getFullYear()-13);
-  if(new Date(dateNaissance)>limiteAge){ msg.style.color="red"; msg.innerText="Tu dois avoir au moins 13 ans"; return; }
-  if(!phone){ msg.style.color="red"; msg.innerText="Téléphone obligatoire pour recevoir le code SMS"; return; }
-  if(!phone.startsWith("+")){ msg.style.color="red"; msg.innerText="Mets ton numéro avec +243... Ex: +243900000000"; return; }
+  if(new Date(dateNaissance)>limiteAge){ msg.style.color="red"; msg.innerText="Tu dois avoir au moins 13 ans pour créer un compte"; return; }
+  if(!phone && !email){ msg.style.color="red"; msg.innerText="Téléphone ou Email obligatoire"; return; }
   if(pass.length<6){ msg.style.color="red"; msg.innerText="Mot de passe : 6 caractères minimum"; return; }
   if(pass!==pass2){ msg.style.color="red"; msg.innerText="Les mots de passe ne correspondent pas"; return; }
-  // Vérifie si le numéro existe déjà
+  document.getElementById('btnSignup').disabled=true; msg.style.color="#A1A1AA"; msg.innerText="Création du compte...";
   try{
     const snap=await get(ref(db,'jasonbook/users')); const users=snap.val()||{};
     for(const u of Object.values(users)){
-      if(u.phone===phone){ msg.style.color="red"; msg.innerText="Ce numéro est déjà utilisé"; return; }
-      if(email && u.email===email){ msg.style.color="red"; msg.innerText="Cet email est déjà utilisé"; return; }
+      if(phone && u.phone===phone){ msg.style.color="red"; msg.innerText="Ce téléphone est déjà utilisé"; document.getElementById('btnSignup').disabled=false; return; }
+      if(email && u.email===email){ msg.style.color="red"; msg.innerText="Cet email est déjà utilisé"; document.getElementById('btnSignup').disabled=false; return; }
     }
-  }catch(e){ msg.style.color="red"; msg.innerText="Erreur : "+e.message; return; }
-
-  infosInscription={prenom,nom,dateNaissance,phone,email,pays,ville,activite,pass};
-  const btn=document.getElementById('btnEnvoyerSMS'); btn.disabled=true; msg.style.color="#A1A1AA"; msg.innerText="Envoi du SMS... Patiente 10 secondes...";
-  try{
-    if(!window.recaptchaVerifier){
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
-    }
-    confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
-    document.getElementById('etape1').style.display="none";
-    document.getElementById('etape2').style.display="block";
-    document.getElementById('numeroAffiche').innerText = phone;
-    document.getElementById('msgCode').style.color="#4ADE80";
-    document.getElementById('msgCode').innerText="Code envoyé ✅ Va dans tes SMS";
-  }catch(e){
-    console.error(e);
-    msg.style.color="red";
-    if(e.code==='auth/invalid-phone-number') msg.innerText="Numéro invalide. Mets +243...";
-    else if(e.code==='auth/too-many-requests') msg.innerText="Trop de tentatives. Attends 1 heure.";
-    else msg.innerText="Erreur SMS : "+e.message;
-    btn.disabled=false;
-  }
-};
-
-window.verifierCodeSMS = async () => {
-  const code=document.getElementById('codeSMS').value.trim();
-  const msg=document.getElementById('msgCode');
-  if(code.length!==6){ msg.style.color="red"; msg.innerText="Le code fait 6 chiffres"; return; }
-  const btn=document.getElementById('btnVerifier'); btn.disabled=true; msg.style.color="#A1A1AA"; msg.innerText="Vérification du code...";
-  try{
-    await confirmationResult.confirm(code);
-    msg.style.color="#4ADE80"; msg.innerText="Numéro confirmé ✅ Création du compte...";
-    // ✅ CODE BON -> On crée le compte
-    const d=infosInscription;
     const uid='user_'+Date.now()+'_'+Math.floor(Math.random()*9999);
-    const nomComplet=d.prenom+" "+d.nom;
+    const nomComplet=prenom+" "+nom;
     await set(ref(db,'jasonbook/users/'+uid),{
-      uid:uid, prenom:d.prenom, nom:d.nom, nomComplet:nomComplet, dateNaissance:d.dateNaissance,
-      phone:d.phone, email:d.email, pays:d.pays, ville:d.ville, activite:d.activite||"Membre JASONBOOK",
+      uid:uid, prenom:prenom, nom:nom, nomComplet:nomComplet, dateNaissance:dateNaissance,
+      phone:phone, email:email, pays:pays, ville:ville, activite:activite||"Membre JASONBOOK",
       bio:"Salut ! Je suis sur JASONBOOK 🌍", photoProfil:"", photoCouverture:"",
-      password:d.pass, telephoneVerifie:true, dateInscription:new Date().toLocaleDateString(), timestamp:Date.now()
+      password:pass, dateInscription:new Date().toLocaleDateString(), timestamp:Date.now()
     });
     localStorage.setItem('jasonbook_uid', uid);
     localStorage.setItem('jasonbook_nom', nomComplet);
     localStorage.setItem('jasonbook_photo', "");
-    localStorage.setItem('jasonbook_pays', d.pays);
-    localStorage.setItem('jasonbook_ville', d.ville);
+    localStorage.setItem('jasonbook_pays', pays);
+    localStorage.setItem('jasonbook_ville', ville);
     msg.style.color="#4ADE80"; msg.innerText="Bienvenue sur JASONBOOK ! 🎉";
     setTimeout(()=> location.href='feed.html', 800);
-  }catch(e){
-    console.error(e);
-    msg.style.color="red"; msg.innerText="Code faux, vérifie tes SMS et réessaie";
-    btn.disabled=false;
-  }
+  }catch(e){ msg.style.color="red"; msg.innerText="Erreur : "+e.message; document.getElementById('btnSignup').disabled=false; }
 };
-
 window.seConnecter=async()=>{
   const ident=document.getElementById('loginId').value.trim().toLowerCase();
   const pass=document.getElementById('loginPass').value;
@@ -237,6 +389,7 @@ window.motDePasseOublie=()=>{
     else alert("Aucun compte trouvé avec cet identifiant");
   });
 };
+// ✅ SUPPRIMÉ : compteurs Membres / Publications - on ne compte plus les utilisateurs sur la page d'accueil
 </script>
 </body>
 </html>
