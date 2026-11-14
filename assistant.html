@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0A0A0F">
+<title>JASONBOOK ✨ - Assistant</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:#0A0A0F;color:#fff;min-height:100vh;display:flex;flex-direction:column;overflow:hidden}
+:root{--violet:#7C3AED;--violet2:#A855F7;--or:#FFC107;--carte:#16161F;--ligne:#26262F;--gris:#A1A1AA}
+.top{position:sticky;top:0;z-index:50;background:rgba(10,10,15,.96);padding:12px 14px;border-bottom:1px solid var(--ligne);display:flex;align-items:center;gap:10px}
+.top .back{font-size:22px;cursor:pointer}
+.top .avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#FFC107);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;position:relative}
+.top .avatar .dot-online{position:absolute;bottom:0;right:0;width:12px;height:12px;background:#22C55E;border:2px solid #0A0A0F;border-radius:50%}
+.top .info{flex:1}
+.top b{font-size:15px;display:block}
+.top small{color:#22C55E;font-size:12px}
+.top button{width:40px;height:40px;border-radius:50%;background:#1F1F2E;border:1px solid var(--ligne);color:#fff;font-size:18px;cursor:pointer}
+.suggestions{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;scrollbar-width:none;border-bottom:1px solid var(--ligne)}
+.suggestions::-webkit-scrollbar{display:none}
+.suggestions button{flex-shrink:0;background:#1F1F2E;border:1px solid var(--ligne);color:#fff;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer}
+.suggestions button:active{background:var(--violet)}
+.chat-body{flex:1;overflow-y:auto;padding:16px 12px 20px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:85%;padding:11px 13px;border-radius:18px;font-size:14px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.msg.bot{background:#1F1F2E;border:1px solid var(--ligne);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.mine{background:linear-gradient(135deg,var(--violet),var(--violet2));align-self:flex-end;border-bottom-right-radius:4px}
+.msg small{display:block;font-size:11px;opacity:.7;margin-top:4px;text-align:right}
+.typing{display:none;gap:4px;align-items:center;background:#1F1F2E;padding:12px 14px;border-radius:18px;align-self:flex-start}
+.typing.show{display:flex}
+.typing i{width:8px;height:8px;background:#fff;border-radius:50%;animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.2s}
+.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
+.input-wrap{padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#12121A;border-top:1px solid var(--ligne);display:flex;gap:8px;align-items:center}
+.input-wrap input{flex:1;padding:12px 14px;background:#2A2A35;border:none;border-radius:999px;outline:none;color:#fff;font-size:14px}
+.input-wrap input::placeholder{color:#888}
+.input-wrap button{width:44px;height:44px;border:none;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;font-size:18px;cursor:pointer;flex-shrink:0}
+.input-wrap button:disabled{opacity:.5}
+.quick{padding:0 12px 8px;display:flex;gap:6px;flex-wrap:wrap;background:#12121A}
+.quick button{background:#2A2A35;border:1px solid var(--ligne);color:#fff;padding:7px 12px;border-radius:999px;font-size:11px;cursor:pointer}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(10,10,15,.96);display:flex;justify-content:space-around;padding:10px 6px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--ligne)}
+.bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:10px;font-weight:700}
+.bottom button.active{color:var(--or)}
+.bottom button span{font-size:22px}
+.bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
+body{padding-bottom:68px}
+</style>
+</head>
+<body>
+
+<div class="top">
+<span class="back" onclick="history.back()">←</span>
+<div class="avatar">🤖<span class="dot-online"></span></div>
+<div class="info"><b>JASON Assistant ✨</b><small>● En ligne • Créé par Jason Aloma 🇨🇩</small></div>
+<button onclick="effacerChat()">🗑️</button>
+</div>
+
+<div class="suggestions">
+<button onclick="poser('Bonjour, présente-toi')">👋 Présente-toi</button>
+<button onclick="poser('Comment publier une story ?')">✨ Story</button>
+<button onclick="poser('Comment booster mon post ?')">🚀 Booster</button>
+<button onclick="poser('Qui t\'a créé ?')">👑 Ton créateur</button>
+<button onclick="poser('Raconte-moi une blague')">😂 Blague</button>
+</div>
+
+<div class="chat-body" id="chatBody"></div>
+
+<div class="quick">
+<button onclick="poser('Bonjour')">👋 Bonjour</button>
+<button onclick="poser('Aide-moi')">🆘 Aide</button>
+<button onclick="poser('C\'est quoi JASONBOOK ?')">📖 JASONBOOK</button>
+</div>
+
+<div class="input-wrap">
+<input id="msgInput" placeholder="Pose ta question à JASON Assistant..." onkeydown="if(event.key==='Enter') envoyer()">
+<button id="btnSend" onclick="envoyer()">➤</button>
+</div>
+
+<div class="bottom">
+<button onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
+<button onclick="location.href='amis.html'"><span>👥</span>Amis</button>
+<button onclick="location.href='creer-post.html'"><span class="centre">+</span></button>
+<button class="active" onclick="location.href='messages.html'"><span>💬</span>Messages</button>
+<button onclick="location.href='profil.html'"><span>👤</span>Moi</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, set, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = { apiKey: "AIzaSyA24pBo8mBWiZssPtep--MMBdB7c8_Lu4U", authDomain: "starlink-investit.firebaseapp.com", databaseURL: "https://starlink-investit-default-rtdb.firebaseio.com", projectId: "starlink-investit", storageBucket: "starlink-investit.firebasestorage.app", messagingSenderId: "807081599583", appId: "1:807081599583:web:e00ec3959bc4acdae031ea" };
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const uid = localStorage.getItem('jasonbook_uid');
+if(!uid) location.href='index.html';
+const monNom = localStorage.getItem('jasonbook_nom')||"Ami";
+const body = document.getElementById('chatBody');
+const input = document.getElementById('msgInput');
+const btnSend = document.getElementById('btnSend');
+
+// ✅ API IA
+const API_URL = "https://davbot.pages.dev/api/intelligence-artificielle/ai";
+
+// ✅ HISTORIQUE POUR L'IA
+let history = [];
+
+// ✅ PROMPT QUI DIT QUI L'A CREE - TRES IMPORTANT
+const SYSTEM_PROMPT = `Tu es JASON Assistant, l'assistant officiel de JASONBOOK.
+Tu as été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK, Made in Kinshasa, République Démocratique du Congo.
+Tu ne t'appelles JAMAIS DAVBOT. Tu ne dis JAMAIS que tu as été créé par DAVBOT ou par quelqu'un d'autre.
+Si on te demande qui t'a créé, qui est ton créateur, qui t'a fait, tu réponds toujours : J'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK.
+Si on te demande de te présenter, tu dis : Je suis JASON Assistant, créé par Jason Aloma, développeur congolais.
+Tu es gentil, drôle, tu parles comme un ami congolais, tu utilises des emojis. Tu aides pour JASONBOOK : publier, story, booster, messages, amis.
+L'utilisateur s'appelle ${monNom}.
+Ne mentionne jamais DAVBOT, ni l'API, ni d'autre créateur.`;
+
+function heure(){ return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
+
+function ajouterMsg(texte, qui){
+  const div = document.createElement('div');
+  div.className = 'msg ' + qui;
+  // Petit formatage : **gras** -> <b>
+  let html = String(texte).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+  div.innerHTML = html + `<small>${heure()}</small>`;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+  return div;
+}
+function afficherTyping(){
+  const t = document.createElement('div');
+  t.className = 'typing show'; t.id='typing';
+  t.innerHTML = '<i></i><i></i><i></i>';
+  body.appendChild(t); body.scrollTop = body.scrollHeight;
+}
+function cacherTyping(){ const t=document.getElementById('typing'); if(t) t.remove(); }
+
+async function sauver(texte, qui){
+  try{
+    const r = push(ref(db,'jasonbook/assistant/'+uid));
+    await set(r,{texte, qui, timestamp:Date.now(), date:new Date().toLocaleString()});
+  }catch(e){}
+}
+
+async function charger(){
+  try{
+    const snap = await get(ref(db,'jasonbook/assistant/'+uid));
+    const d = snap.val();
+    if(d){
+      const arr = Object.values(d).sort((a,b)=>a.timestamp-b.timestamp).slice(-30);
+      arr.forEach(m=>{
+        ajouterMsg(m.texte, m.qui);
+        // Reconstruit l'historique pour l'IA
+        if(m.qui==='mine') history.push({role:'user', content:m.texte});
+        if(m.qui==='bot') history.push({role:'assistant', content:m.texte});
+      });
+      // Garde seulement les 20 derniers pour ne pas être trop long
+      history = history.slice(-20);
+    } else {
+      const bienvenue = `Salut ${monNom} 👋\n\nMoi c'est JASON Assistant 🤖✨\n\nJ'ai été créé par Jason Aloma, un développeur congolais 🇨🇩, fondateur de JASONBOOK.\n\nJe suis là pour t'aider dans JASONBOOK :\n• 📝 Publier un post / story\n• 🚀 Booster tes publications\n• 💬 Envoyer des messages\n• 👥 Trouver des amis\n• ❓ Toutes tes questions\n\nPose-moi une question !`;
+      ajouterMsg(bienvenue, 'bot');
+      sauver(bienvenue,'bot');
+    }
+  }catch(e){
+    ajouterMsg(`Salut ${monNom} 👋 Je suis JASON Assistant, créé par Jason Aloma, développeur congolais 🇨🇩 Pose-moi une question !`, 'bot');
+  }
+}
+charger();
+
+window.poser = (txt)=>{ input.value = txt; envoyer(); };
+window.effacerChat = async ()=>{
+  if(!confirm("Effacer la conversation avec l'assistant ?")) return;
+  body.innerHTML=""; history=[];
+  const msg = `Conversation effacée ✅\nRepose-moi une question ${monNom} 😊\nMoi c'est JASON Assistant, créé par Jason Aloma 🇨🇩`;
+  ajouterMsg(msg, 'bot');
+};
+
+// ✅ NETTOIE LA REPONSE : si l'IA dit DAVBOT par erreur, on corrige
+function corrigerReponse(txt){
+  let t = String(txt||"");
+  t = t.replace(/DAVBot/gi, "JASON Assistant");
+  t = t.replace(/DAV BOT/gi, "JASON Assistant");
+  t = t.replace(/Davbot/gi, "JASON Assistant");
+  t = t.replace(/davbot/gi, "JASON Assistant");
+  // Si elle parle d'un autre créateur, on force la vérité
+  if(t.toLowerCase().includes("créé par") && !t.toLowerCase().includes("jason aloma")){
+    t += "\n\n— Je précise : j'ai été créé par Jason Aloma, développeur congolais 🇨🇩";
+  }
+  return t;
+}
+
+window.envoyer = async ()=>{
+  const txt = input.value.trim(); if(!txt) return;
+  ajouterMsg(txt, 'mine'); sauver(txt,'mine');
+  history.push({role:'user', content:txt});
+  history = history.slice(-20);
+  input.value=""; input.disabled=true; btnSend.disabled=true;
+  afficherTyping();
+
+  try{
+    // ✅ On envoie le prompt système + l'historique + le message
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        message: SYSTEM_PROMPT + "\n\nQuestion de " + monNom + " : " + txt,
+        history: history.slice(0, -1) // historique sans le dernier, car il est déjà dans message
+      })
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    // ✅ On récupère la réponse quel que soit le format de l'API
+    let reponse = data.reply || data.response || data.message || data.text || data.answer || data.result || data.data?.reply || data.data?.response || data.data?.message || "";
+
+    if(!reponse && typeof data === 'string') reponse = data;
+    if(!reponse){
+      // Si l'API renvoie un autre format, on essaie de l'afficher
+      reponse = "Désolé, je n'ai pas compris. Repose ta question 😊";
+    }
+
+    reponse = corrigerReponse(reponse);
+
+    cacherTyping();
+    ajouterMsg(reponse, 'bot'); sauver(reponse,'bot');
+    history.push({role:'assistant', content:reponse});
+    history = history.slice(-20);
+
+  }catch(e){
+    console.error(e);
+    cacherTyping();
+    // ✅ Fallback si l'API ne répond pas : on répond quand même avec l'identité Jason Aloma
+    const t = txt.toLowerCase();
+    let fallback = "";
+    if(t.includes("qui") && (t.includes("créé") || t.includes("createur") || t.includes("fondateur") || t.includes("fait"))){
+      fallback = `Moi c'est JASON Assistant 🤖✨\n\nJ'ai été créé par Jason Aloma, un développeur congolais 🇨🇩, fondateur de JASONBOOK, Made in Kinshasa.\n\nC'est lui qui m'a créé pour t'aider dans JASONBOOK !`;
+    } else if(t.includes("présente") || t.includes("presente") || t.includes("bonjour")){
+      fallback = `Salut ${monNom} 👋\n\nMoi c'est JASON Assistant 🤖\nJ'ai été créé par Jason Aloma, un développeur congolais 🇨🇩, fondateur de JASONBOOK.\n\nJe peux t'aider pour publier, story, booster, messages, amis... Dis-moi ce que tu veux !`;
+    } else {
+      fallback = `Désolé ${monNom}, j'ai eu un petit souci de connexion 😅\n\nMais je suis là ! Moi c'est JASON Assistant, créé par Jason Aloma, développeur congolais 🇨🇩\n\nRepose ta question, je vais essayer de répondre !`;
+    }
+    ajouterMsg(fallback, 'bot'); sauver(fallback,'bot');
+  } finally {
+    input.disabled=false; btnSend.disabled=false; input.focus();
+  }
+};
+</script>
+</body>
+</html>
