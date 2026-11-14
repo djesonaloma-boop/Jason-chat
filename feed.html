@@ -64,25 +64,16 @@ button{cursor:pointer}
 .viewer .bars .bar{flex:1;height:3px;background:rgba(255,255,255,.3);border-radius:999px;overflow:hidden}
 .viewer .bars .bar .fill{height:100%;background:#fff;width:0%}
 .viewer .bars .bar.done .fill{width:100%}
-.viewer img,.viewer video{max-width:100%;max-height:62vh;border-radius:14px;object-fit:contain}
+.viewer img,.viewer video{max-width:100%;max-height:72vh;border-radius:14px;object-fit:contain}
 .viewer .topbar{width:100%;max-width:420px;display:flex;align-items:center;gap:10px;color:#fff;margin-bottom:12px}
 .viewer .topbar .info{flex:1}.viewer .topbar small{color:#ccc}
-.viewer .caption{color:#fff;margin-top:10px;text-align:center;max-width:420px;line-height:1.5}
+.viewer .caption{color:#fff;margin-top:12px;text-align:center;max-width:420px;line-height:1.5}
 .viewer .close{position:absolute;top:14px;right:16px;color:#fff;font-size:22px;background:rgba(255,255,255,.18);border:none;cursor:pointer;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10}
 .viewer .nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.18);color:#fff;border:none;width:44px;height:44px;border-radius:50%;font-size:22px;cursor:pointer}
 .viewer .prev{left:10px}.viewer .next{right:10px}
-.viewer .actions{display:flex;gap:10px;margin-top:12px}
+.viewer .actions{display:flex;gap:10px;margin-top:14px}
 .viewer .actions button{border:none;padding:11px 18px;border-radius:999px;font-weight:700;cursor:pointer;background:#fff;color:#111}
 .viewer .actions button:last-child{background:rgba(255,255,255,.15);color:#fff}
-/* ✅ SEULEMENT REACTIONS STORY - RIEN SUR PUBLICATION */
-.story-reactions{width:100%;max-width:420px;margin-top:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:10px}
-.story-reactions .label{font-size:11px;color:#ccc;text-align:center;margin-bottom:6px}
-.story-reactions .row-emoji{display:flex;justify-content:space-between;gap:4px}
-.story-reactions .row-emoji button{flex:1;border:none;background:rgba(255,255,255,.1);border-radius:12px;padding:8px 2px;font-size:20px;cursor:pointer;position:relative}
-.story-reactions .row-emoji button:active{transform:scale(1.2)}
-.story-reactions .row-emoji button.selected{background:rgba(255,193,7,.4);box-shadow:0 0 0 2px #FFC107}
-.story-reactions .row-emoji button .cnt{position:absolute;top:-4px;right:2px;background:#FFC107;color:#000;font-size:10px;font-weight:900;min-width:16px;height:16px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 3px}
-.story-reactions .voir-btn{width:100%;margin-top:8px;background:#FFC107;color:#000;border:none;padding:10px;border-radius:999px;font-weight:800;font-size:13px;cursor:pointer}
 /* MODAL ADD STORY DANS FEED */
 .modal-add-story{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:600;padding:16px}
 .modal-add-story.open{display:flex}
@@ -137,10 +128,6 @@ button{cursor:pointer}
 .bottom button.active{color:var(--gold)}
 .bottom button span{font-size:22px}
 .bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
-.reac-tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 0;scrollbar-width:none}
-.reac-tabs::-webkit-scrollbar{display:none}
-.reac-tabs button{border:1px solid var(--line);background:var(--card2);color:#fff;padding:7px 12px;border-radius:999px;font-size:13px;white-space:nowrap}
-.reac-tabs button.active{background:var(--gold);color:#000;font-weight:800}
 @media(max-width:360px){.wrap{padding-left:7px;padding-right:7px}.logo{font-size:18px}}
 </style>
 </head>
@@ -214,12 +201,6 @@ button{cursor:pointer}
 <div class="topbar"><div class="avatar" id="vAv">?</div><div class="info"><b id="vNom"></b><br><small id="vDate"></small></div></div>
 <img id="vImg" style="display:none"><video id="vVideo" controls style="display:none"></video>
 <div class="caption" id="vCaption"></div>
-<!-- ✅ SEULEMENT ICI : REACTIONS STORY -->
-<div class="story-reactions" id="storyReactionsBox">
-  <div class="label" id="storyReacLabel">Réagis à cette story 👇 Tu peux mettre plusieurs</div>
-  <div class="row-emoji" id="storyReacRow"></div>
-  <button class="voir-btn" id="btnVoirReacStory" onclick="voirReactionsStory()" style="display:none">👀 Voir qui a réagi (0)</button>
-</div>
 <div class="actions"><button onclick="repondreStory()">💬 Répondre</button><button id="btnDelStory" onclick="supprimerStory()">🗑️ Supprimer</button></div>
 <button class="nav next" onclick="storySuiv()">›</button>
 </div>
@@ -261,19 +242,6 @@ button{cursor:pointer}
     </div>
     <p id="totalLikes" style="color:#A1A1AA;font-size:12px;margin:6px 0"></p>
     <div id="listeLikes"></div>
-  </div>
-</div>
-
-<!-- ✅ MODAL VOIR QUI A REAGI A MA STORY -->
-<div id="modalReactionsStory" style="position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:700;display:none;align-items:flex-end;justify-content:center" onclick="if(event.target===this) fermerReactionsStory()">
-  <div style="width:100%;max-width:500px;max-height:82vh;background:#16161F;border:1px solid #26262F;border-radius:20px 20px 0 0;padding:16px;overflow:auto">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <h3 id="titreReactionsStory" style="font-size:16px">😍 Qui a réagi à ma story ?</h3>
-      <button onclick="fermerReactionsStory()" style="width:35px;height:35px;border-radius:50%;background:#26262F;border:none;color:#fff;font-size:18px">✕</button>
-    </div>
-    <div class="reac-tabs" id="reacTabsStory"></div>
-    <p id="totalReactionsStory" style="color:#A1A1AA;font-size:12px;margin:6px 0"></p>
-    <div id="listeReactionsStory"></div>
   </div>
 </div>
 
@@ -465,7 +433,7 @@ onValue(ref(db,"jasonbook/notifications/"+uid),s=>{
 });
 onValue(ref(db,"jasonbook/messages"),s=>{const d=s.val(); let n=0; if(d){Object.values(d).forEach(chat=>{if(chat&&typeof chat==="object"){Object.values(chat).forEach(m=>{if(m&&(m.destinataireUid===uid||m.pour===uid)&&!m.lu)n++;});}});} setBadgeTop("badgeMsgTop",n);});
 
-// ===== STORIES INTEGREES DANS FEED - LOGIQUE (INCHANGEE) =====
+// ===== STORIES INTEGREES DANS FEED - LOGIQUE =====
 let stories=[], groupeStory=[], indexGroupeStory=0, indexStory=0, mediaTempStory="", typeMediaTempStory="photo", progressIntStory=null;
 function grouperStories(){
   const parAuteur={};
@@ -490,6 +458,7 @@ function photoDuStory(s){
   }
   return "";
 }
+// Ouvrir / Fermer modal ajout story
 window.ouvrirAddStory=()=>{ $("modalAddStory").classList.add('open'); };
 window.fermerAddStory=()=>{ $("modalAddStory").classList.remove('open'); };
 document.getElementById('storyFile').addEventListener('change', e=>{
@@ -505,7 +474,6 @@ window.publierStory=async()=>{
 };
 function afficherStory(){
   const g=groupeStory[indexGroupeStory]; if(!g) return; const s=g[indexStory]; if(!s) return;
-  storyIdCourant = s.id;
   $('barsStory').innerHTML=g.map((_,i)=>`<div class="bar ${i<indexStory?'done':''}"><div class="fill" id="barStory-${i}"></div></div>`).join('');
   $('vAv').innerHTML=s.photoAuteur?`<img src="${escapeHTML(s.photoAuteur)}">`:escapeHTML((s.auteurNom||"?").charAt(0));
   $('vNom').innerText=s.auteurNom||"";
@@ -515,7 +483,6 @@ function afficherStory(){
   const img=$('vImg'), vid=$('vVideo');
   if(s.type==='video'){ img.style.display='none'; vid.style.display='block'; vid.src=s.media; vid.play(); }
   else { vid.style.display='none'; vid.pause(); img.style.display='block'; img.src=s.media; }
-  ecouterReactionsStory(s.id);
   clearInterval(progressIntStory); let w=0;
   progressIntStory=setInterval(()=>{ w+=2; const b=document.getElementById('barStory-'+indexStory); if(b) b.style.width=w+"%"; if(w>=100){ clearInterval(progressIntStory); storySuiv(); } },100);
 }
@@ -533,83 +500,6 @@ window.storyPrec=()=>{
 };
 window.repondreStory=()=>{ const s=groupeStory[indexGroupeStory][indexStory]; location.href='messages.html?uid='+s.auteurUid; };
 window.supprimerStory=async()=>{ const s=groupeStory[indexGroupeStory][indexStory]; if(!confirm("Supprimer cette story ?")) return; await remove(ref(db,'jasonbook/stories/'+s.id)); fermerViewerStory(); };
-
-// ✅ SEULEMENT REACTIONS STORY - NOUVEAU, RIEN SUR PUBLICATION
-const EMOJIS_STORY = ["👍","❤️","🥰","😡","😭","😥","😲"];
-let reactionsStoryCourante = {};
-let mesReactionsStory = new Set();
-let storyIdCourant = "";
-let unsubscribeStoryReac = null;
-function rendreReactionsStory(){
-  const row = $('storyReacRow');
-  const btnVoir = $('btnVoirReacStory');
-  const label = $('storyReacLabel');
-  const s = groupeStory[indexGroupeStory] ? groupeStory[indexGroupeStory][indexStory] : null;
-  const estMienne = s && s.auteurUid===uid;
-  let total = 0; EMOJIS_STORY.forEach(e=>{ total += (reactionsStoryCourante[e]||[]).length; });
-  row.innerHTML = EMOJIS_STORY.map(e=>{
-    const cnt = (reactionsStoryCourante[e]||[]).length;
-    const sel = mesReactionsStory.has(e) ? "selected" : "";
-    return `<button class="${sel}" onclick="toggleReactionStory('${e}')">${e}${cnt>0?`<span class="cnt">${cnt}</span>`:""}</button>`;
-  }).join("");
-  if(estMienne){
-    label.textContent = total>0 ? `Ta story a ${total} réaction(s) 👇` : `Personne n'a encore réagi à ta story`;
-    btnVoir.style.display = total>0 ? "block" : "none";
-    btnVoir.textContent = `👀 Voir qui a réagi (${total})`;
-  } else {
-    label.textContent = mesReactionsStory.size>0 ? `Tu as réagi avec : ${[...mesReactionsStory].join(" ")} • Clique pour ajouter / enlever` : `Réagis à cette story 👇 Tu peux mettre plusieurs`;
-    btnVoir.style.display = "none";
-  }
-}
-function ecouterReactionsStory(storyId){
-  if(unsubscribeStoryReac) unsubscribeStoryReac();
-  const cb = onValue(ref(db, `jasonbook/story_reactions/${storyId}`), s=>{
-    const d = s.val() || {};
-    reactionsStoryCourante = {};
-    mesReactionsStory = new Set();
-    Object.entries(d).forEach(([emoji, users])=>{
-      reactionsStoryCourante[emoji] = Object.entries(users||{}).map(([k,v])=>({key:k, ...v}));
-      if(users && users[uid]) mesReactionsStory.add(emoji);
-    });
-    rendreReactionsStory();
-  });
-  unsubscribeStoryReac = ()=>cb();
-}
-window.toggleReactionStory=async(emoji)=>{
-  if(!storyIdCourant) return;
-  const deja = mesReactionsStory.has(emoji);
-  const s = groupeStory[indexGroupeStory][indexStory];
-  const refReac = ref(db, `jasonbook/story_reactions/${storyIdCourant}/${emoji}/${uid}`);
-  try{
-    if(deja){ await remove(refReac); }
-    else {
-      await set(refReac, {uid, nom:monNom, photo:maPhoto, emoji, date:new Date().toLocaleString(), timestamp:Date.now()});
-      if(s && s.auteurUid!==uid){
-        const n=push(ref(db,"jasonbook/notifications/"+s.auteurUid));
-        await set(n,{type:"reaction_story",texte:monNom+" a réagi "+emoji+" à ta story",deUid:uid,deNom:monNom,date:new Date().toLocaleString(),timestamp:Date.now(),lu:false});
-      }
-    }
-  }catch(e){ console.error(e); }
-};
-window.voirReactionsStory=async(filtre)=>{
-  const modal=document.getElementById('modalReactionsStory');
-  const tabs=document.getElementById('reacTabsStory');
-  const liste=document.getElementById('listeReactionsStory');
-  const totalEl=document.getElementById('totalReactionsStory');
-  const f = filtre || 'all';
-  modal.style.display='flex';
-  const r = reactionsStoryCourante;
-  let total=0; EMOJIS_STORY.forEach(e=>{ total += (r[e]||[]).length; });
-  let tabsHtml = `<button class="${f==='all'?'active':''}" onclick="voirReactionsStory('all')">✨ Tous (${total})</button>`;
-  EMOJIS_STORY.forEach(e=>{ const c=(r[e]||[]).length; if(c>0) tabsHtml += `<button class="${f===e?'active':''}" onclick="voirReactionsStory('${e}')">${e} ${c}</button>`; });
-  tabs.innerHTML = tabsHtml;
-  let arr=[];
-  if(f==='all'){ EMOJIS_STORY.forEach(e=>{ (r[e]||[]).forEach(u=> arr.push({...u, emoji:e})); }); arr.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)); totalEl.textContent = arr.length + " réactions sur ta story"; document.getElementById('titreReactionsStory').textContent = "😍 Qui a réagi à ma story ?"; }
-  else { arr = (r[f]||[]).sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)); totalEl.textContent = arr.length + " personne(s) ont réagi avec " + f; document.getElementById('titreReactionsStory').textContent = f + " Réactions sur ma story"; }
-  if(!arr.length){ liste.innerHTML='<p style="color:#A1A1AA">Personne n\'a encore réagi.</p>'; return; }
-  liste.innerHTML = arr.map(u=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #26262F"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FFC107,#7C3AED);display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;flex-shrink:0">${u.photo ? `<img src="${escapeHTML(u.photo)}" style="width:100%;height:100%;object-fit:cover">` : escapeHTML((u.nom||'?').charAt(0).toUpperCase())}</div><div style="flex:1"><b style="font-size:14px">${escapeHTML(u.nom||'Fan JASONBOOK')}</b><small style="display:block;color:#A1A1AA">${escapeHTML(u.date||'')}</small></div><span style="font-size:24px">${u.emoji||f}</span></div>`).join('');
-};
-window.fermerReactionsStory=()=>{ document.getElementById('modalReactionsStory').style.display='none'; };
 
 onValue(query(ref(db,"jasonbook/stories"),orderByChild("expire"),limitToLast(50)),async s=>{
 const d=s.val(); const now=Date.now(); const row=$("storiesRow"); row.innerHTML="";
@@ -635,6 +525,7 @@ Object.values(parAuteur).forEach(g=>{
   const photoRond = photoDuStory(st) || profil.photo || profil.photoUrl || st.photoAuteur || "";
   const div=document.createElement("div"); div.className="story";
   div.innerHTML=`<div class="c"><div>${photoRond?`<img src="${escapeHTML(photoRond)}">`:escapeHTML((nom||"?").charAt(0))}</div></div><b>${escapeHTML(nom)}</b>`;
+  // ✅ Plus de redirection vers stories.html, on ouvre dans le feed même
   const indexGroupe = groupeStory.findIndex(gg=> gg[0] && gg[0].auteurUid===st.auteurUid);
   div.onclick=()=>ouvrirViewerStory(indexGroupe, 0);
   row.appendChild(div);
