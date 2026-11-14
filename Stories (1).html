@@ -66,6 +66,9 @@ body{background:#0A0A0F;color:#fff;min-height:100vh;padding-bottom:92px;overflow
 .bottom button.active{color:var(--or)}
 .bottom button span{font-size:22px}
 .bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
+/* BOUTON FLOTTANT AJOUTER STORY - TOUJOURS VISIBLE */
+.fab-add{position:fixed;bottom:100px;right:16px;z-index:90;width:62px;height:62px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#7C3AED,#FFC107);color:#fff;font-size:30px;font-weight:900;box-shadow:0 8px 25px rgba(124,58,237,.6);display:flex;align-items:center;justify-content:center}
+.fab-add:active{transform:scale(.92)}
 </style>
 </head>
 <body>
@@ -92,6 +95,9 @@ body{background:#0A0A0F;color:#fff;min-height:100vh;padding-bottom:92px;overflow
 <button onclick="location.href='messages.html'"><span>💬</span>Messages</button>
 <button onclick="location.href='profil.html'"><span>👤</span>Moi</button>
 </div>
+
+<!-- BOUTON AJOUTER STORY FLOTTANT -->
+<button class="fab-add" onclick="ouvrirAdd()">+</button>
 
 <div class="viewer" id="viewer">
 <button class="close" onclick="fermerViewer()">✕</button>
