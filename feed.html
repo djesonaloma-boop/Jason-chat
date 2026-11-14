@@ -48,6 +48,7 @@ button{cursor:pointer}
 .tabs::-webkit-scrollbar{display:none}
 .tabs button{border:1px solid var(--line);background:var(--card);color:#fff;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0}
 .tabs button.active{background:linear-gradient(135deg,var(--gold),#FF9800);color:#000;border-color:transparent}
+/* STORIES DANS LE FEED - MELANGE */
 .stories{display:flex;gap:12px;overflow-x:auto;padding:3px 2px 10px;scrollbar-width:none}
 .stories::-webkit-scrollbar{display:none}
 .story{flex-shrink:0;width:72px;text-align:center;cursor:pointer}
@@ -55,6 +56,30 @@ button{cursor:pointer}
 .story .c div{width:100%;height:100%;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;border:3px solid #0A0A0F}
 .story .c img{width:100%;height:100%;object-fit:cover}
 .story b{font-size:11px;display:block;margin-top:5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.story.add .c{background:linear-gradient(135deg,var(--violet),var(--gold))}
+/* VIEWER STORY PLEIN ECRAN DANS FEED */
+.viewer{position:fixed;inset:0;background:#000;z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;padding:16px}
+.viewer.open{display:flex}
+.viewer .bars{display:flex;gap:4px;width:100%;max-width:420px;margin-bottom:12px}
+.viewer .bars .bar{flex:1;height:3px;background:rgba(255,255,255,.3);border-radius:999px;overflow:hidden}
+.viewer .bars .bar .fill{height:100%;background:#fff;width:0%}
+.viewer .bars .bar.done .fill{width:100%}
+.viewer img,.viewer video{max-width:100%;max-height:72vh;border-radius:14px;object-fit:contain}
+.viewer .topbar{width:100%;max-width:420px;display:flex;align-items:center;gap:10px;color:#fff;margin-bottom:12px}
+.viewer .topbar .info{flex:1}.viewer .topbar small{color:#ccc}
+.viewer .caption{color:#fff;margin-top:12px;text-align:center;max-width:420px;line-height:1.5}
+.viewer .close{position:absolute;top:14px;right:16px;color:#fff;font-size:22px;background:rgba(255,255,255,.18);border:none;cursor:pointer;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10}
+.viewer .nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.18);color:#fff;border:none;width:44px;height:44px;border-radius:50%;font-size:22px;cursor:pointer}
+.viewer .prev{left:10px}.viewer .next{right:10px}
+.viewer .actions{display:flex;gap:10px;margin-top:14px}
+.viewer .actions button{border:none;padding:11px 18px;border-radius:999px;font-weight:700;cursor:pointer;background:#fff;color:#111}
+.viewer .actions button:last-child{background:rgba(255,255,255,.15);color:#fff}
+/* MODAL ADD STORY DANS FEED */
+.modal-add-story{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:600;padding:16px}
+.modal-add-story.open{display:flex}
+.modal-add-story .box{background:#16161F;color:#fff;width:100%;max-width:420px;border-radius:20px;padding:22px;border:1px solid var(--line)}
+.modal-add-story textarea{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:12px;margin-top:10px;font-size:14px;min-height:70px;outline:none;background:#2A2A35;color:#fff;resize:none}
+.modal-add-story img{width:100%;border-radius:12px;margin-top:10px;max-height:240px;object-fit:cover}
 .create,.post{background:var(--card);border:1px solid var(--line);border-radius:20px;margin:10px 0;padding:12px;width:100%}
 .create .top,.post .head{display:flex;gap:10px;align-items:center}
 .avatar{width:40px;height:40px;flex-shrink:0;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,var(--violet),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:800}
@@ -129,10 +154,8 @@ button{cursor:pointer}
   <button class="menu-item" onclick="location.href='feed.html'"><span class="ico">📰</span> Fil <span class="fleche">›</span></button>
   <button class="menu-item" onclick="location.href='favoris.html'"><span class="ico">⭐</span> Favoris <span class="fleche">›</span></button>
   <button class="menu-item booster" onclick="location.href='booster.html'"><span class="ico">🚀</span> Booster <small>Likes • Com • Partages</small> <span class="fleche">›</span></button>
-  <!-- ✅ CORRIGÉ : live.html -> lives.html -->
   <button class="menu-item live" onclick="location.href='lives.html'"><span class="ico">🔴</span> Aller en Live <span class="fleche">›</span></button>
   <button class="menu-item" onclick="location.href='recherche.html'"><span class="ico">🔍</span> Recherche</button>
-  <!-- ✅ CORRIGÉ : boutique.html -> marketplace.html -->
   <button class="menu-item" onclick="location.href='marketplace.html'"><span class="ico">🛒</span> Boutique</button>
   <button class="menu-item" onclick="location.href='anniversaires.html'"><span class="ico">🎂</span> Anniversaires</button>
   <div class="menu-sec">RÉGLAGES</div>
@@ -169,6 +192,29 @@ button{cursor:pointer}
 <button onclick="location.href='messages.html'"><span>💬</span>Messages</button>
 <button onclick="location.href='profil.html'"><span>👤</span>Moi</button>
 </div>
+
+<!-- ✅ STORIES INTEGREES DANS FEED - VIEWER -->
+<div class="viewer" id="viewerStory">
+<button class="close" onclick="fermerViewerStory()">✕</button>
+<button class="nav prev" onclick="storyPrec()">‹</button>
+<div class="bars" id="barsStory"></div>
+<div class="topbar"><div class="avatar" id="vAv">?</div><div class="info"><b id="vNom"></b><br><small id="vDate"></small></div></div>
+<img id="vImg" style="display:none"><video id="vVideo" controls style="display:none"></video>
+<div class="caption" id="vCaption"></div>
+<div class="actions"><button onclick="repondreStory()">💬 Répondre</button><button id="btnDelStory" onclick="supprimerStory()">🗑️ Supprimer</button></div>
+<button class="nav next" onclick="storySuiv()">›</button>
+</div>
+
+<!-- ✅ STORIES INTEGREES DANS FEED - MODAL AJOUT -->
+<div class="modal-add-story" id="modalAddStory"><div class="box">
+<h2 style="text-align:center">✨ Nouvelle story</h2>
+<button style="width:100%;padding:13px;border:2px dashed #4A4A5A;background:#2A2A35;color:#fff;border-radius:12px;cursor:pointer;margin-top:14px;font-weight:700" onclick="document.getElementById('storyFile').click()">📷 Choisir photo / vidéo</button>
+<input type="file" id="storyFile" accept="image/*,video/*" style="display:none">
+<img id="storyPreview" style="display:none">
+<textarea id="storyText" placeholder="Ajoute un texte à ta story... (optionnel)"></textarea>
+<button style="width:100%;padding:13px;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;border:none;border-radius:999px;font-weight:800;cursor:pointer;margin-top:10px" onclick="publierStory()">Publier la story</button>
+<button style="width:100%;padding:12px;background:#2A2A35;color:#fff;border:none;border-radius:999px;font-weight:700;cursor:pointer;margin-top:8px" onclick="fermerAddStory()">Annuler</button>
+</div></div>
 
 <div class="modal" id="modalPartage"><div class="modal-box"><h3>↗️ Partager ce post</h3><p id="partagePreview" style="color:#A1A1AA;font-size:13px;margin-bottom:8px"></p><textarea id="partageTexte" placeholder="Ajoute un mot (optionnel)..."></textarea><button class="btn-violet" onclick="confirmerPartage()">Partager sur mon fil</button><button class="btn-grey" onclick="fermerPartage()">Annuler</button></div></div>
 
@@ -386,6 +432,14 @@ onValue(ref(db,"jasonbook/notifications/"+uid),s=>{
   if(dot){ if(n>0){ dot.style.display="flex"; dot.innerText=n>99?"99+":n; } else { dot.style.display="none"; } }
 });
 onValue(ref(db,"jasonbook/messages"),s=>{const d=s.val(); let n=0; if(d){Object.values(d).forEach(chat=>{if(chat&&typeof chat==="object"){Object.values(chat).forEach(m=>{if(m&&(m.destinataireUid===uid||m.pour===uid)&&!m.lu)n++;});}});} setBadgeTop("badgeMsgTop",n);});
+
+// ===== STORIES INTEGREES DANS FEED - LOGIQUE =====
+let stories=[], groupeStory=[], indexGroupeStory=0, indexStory=0, mediaTempStory="", typeMediaTempStory="photo", progressIntStory=null;
+function grouperStories(){
+  const parAuteur={};
+  stories.forEach(s=>{ if(!parAuteur[s.auteurUid]) parAuteur[s.auteurUid]=[]; parAuteur[s.auteurUid].push(s); });
+  groupeStory=Object.values(parAuteur).sort((a,b)=>(b[0].timestamp||0)-(a[0].timestamp||0));
+}
 function photoDuStory(s){
   if(!s) return "";
   const cles=["photoUrl","image","photo","imageUrl","mediaUrl","media","url","storyUrl","storyImage","file","src","photoURL","imageURL","videoUrl"];
@@ -404,9 +458,52 @@ function photoDuStory(s){
   }
   return "";
 }
+// Ouvrir / Fermer modal ajout story
+window.ouvrirAddStory=()=>{ $("modalAddStory").classList.add('open'); };
+window.fermerAddStory=()=>{ $("modalAddStory").classList.remove('open'); };
+document.getElementById('storyFile').addEventListener('change', e=>{
+  const f=e.target.files[0]; if(!f) return; typeMediaTempStory=f.type.startsWith('video')?'video':'photo';
+  const r=new FileReader(); r.onload=ev=>{ mediaTempStory=ev.target.result; const p=$('storyPreview'); p.src=mediaTempStory; p.style.display="block"; }; r.readAsDataURL(f);
+});
+window.publierStory=async()=>{
+  if(!mediaTempStory){ alert("Choisis une photo ou vidéo"); return; }
+  const newRef=push(ref(db,'jasonbook/stories'));
+  await set(newRef,{ id:newRef.key, media:mediaTempStory, type:typeMediaTempStory, texte:$('storyText').value, auteurUid:uid, auteurNom:monNom, photoAuteur:maPhoto||"", date:new Date().toLocaleString(), timestamp:Date.now(), expire:Date.now()+24*60*60*1000 });
+  fermerAddStory(); mediaTempStory=""; $('storyText').value=""; $('storyPreview').style.display="none";
+  alert("Story publiée ! ✨ Elle disparaît dans 24h.");
+};
+function afficherStory(){
+  const g=groupeStory[indexGroupeStory]; if(!g) return; const s=g[indexStory]; if(!s) return;
+  $('barsStory').innerHTML=g.map((_,i)=>`<div class="bar ${i<indexStory?'done':''}"><div class="fill" id="barStory-${i}"></div></div>`).join('');
+  $('vAv').innerHTML=s.photoAuteur?`<img src="${escapeHTML(s.photoAuteur)}">`:escapeHTML((s.auteurNom||"?").charAt(0));
+  $('vNom').innerText=s.auteurNom||"";
+  $('vDate').innerText=s.date||"";
+  $('vCaption').innerText=s.texte||"";
+  $('btnDelStory').style.display=s.auteurUid===uid?'inline-block':'none';
+  const img=$('vImg'), vid=$('vVideo');
+  if(s.type==='video'){ img.style.display='none'; vid.style.display='block'; vid.src=s.media; vid.play(); }
+  else { vid.style.display='none'; vid.pause(); img.style.display='block'; img.src=s.media; }
+  clearInterval(progressIntStory); let w=0;
+  progressIntStory=setInterval(()=>{ w+=2; const b=document.getElementById('barStory-'+indexStory); if(b) b.style.width=w+"%"; if(w>=100){ clearInterval(progressIntStory); storySuiv(); } },100);
+}
+window.ouvrirViewerStory=(gi,si)=>{ indexGroupeStory=gi; indexStory=si; $('viewerStory').classList.add('open'); afficherStory(); };
+window.fermerViewerStory=()=>{ $('viewerStory').classList.remove('open'); clearInterval(progressIntStory); $('vVideo').pause(); };
+window.storySuiv=()=>{
+  const g=groupeStory[indexGroupeStory]; if(!g) return;
+  if(indexStory<g.length-1){ indexStory++; afficherStory(); }
+  else if(indexGroupeStory<groupeStory.length-1){ indexGroupeStory++; indexStory=0; afficherStory(); }
+  else fermerViewerStory();
+};
+window.storyPrec=()=>{
+  if(indexStory>0){ indexStory--; afficherStory(); }
+  else if(indexGroupeStory>0){ indexGroupeStory--; indexStory=groupeStory[indexGroupeStory].length-1; afficherStory(); }
+};
+window.repondreStory=()=>{ const s=groupeStory[indexGroupeStory][indexStory]; location.href='messages.html?uid='+s.auteurUid; };
+window.supprimerStory=async()=>{ const s=groupeStory[indexGroupeStory][indexStory]; if(!confirm("Supprimer cette story ?")) return; await remove(ref(db,'jasonbook/stories/'+s.id)); fermerViewerStory(); };
+
 onValue(query(ref(db,"jasonbook/stories"),orderByChild("expire"),limitToLast(50)),async s=>{
 const d=s.val(); const now=Date.now(); const row=$("storiesRow"); row.innerHTML="";
-const add=document.createElement("div"); add.className="story"; add.innerHTML=`<div class="c"><div>+</div></div><b>Toi</b>`; add.onclick=()=>location.href="stories.html?uid="+uid; row.appendChild(add);
+const add=document.createElement("div"); add.className="story add"; add.innerHTML=`<div class="c"><div>+</div></div><b>Toi</b>`; add.onclick=()=>ouvrirAddStory(); row.appendChild(add);
 if(!d) return;
 let usersCache={};
 try{ const snapUsers=await get(ref(db,'jasonbook/users')); usersCache=snapUsers.val()||{}; }catch(e){}
@@ -418,6 +515,8 @@ Object.values(d).forEach(x=>{
   if(!parAuteur[aUid]) parAuteur[aUid]=[];
   parAuteur[aUid].push({...x, auteurUid:aUid});
 });
+stories=Object.values(parAuteur).flat().map(x=>({id:x.id||"", ...x}));
+grouperStories();
 Object.values(parAuteur).forEach(g=>{
   g.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
   const st=g[0];
@@ -426,7 +525,9 @@ Object.values(parAuteur).forEach(g=>{
   const photoRond = photoDuStory(st) || profil.photo || profil.photoUrl || st.photoAuteur || "";
   const div=document.createElement("div"); div.className="story";
   div.innerHTML=`<div class="c"><div>${photoRond?`<img src="${escapeHTML(photoRond)}">`:escapeHTML((nom||"?").charAt(0))}</div></div><b>${escapeHTML(nom)}</b>`;
-  div.onclick=()=>location.href="stories.html?uid="+st.auteurUid;
+  // ✅ Plus de redirection vers stories.html, on ouvre dans le feed même
+  const indexGroupe = groupeStory.findIndex(gg=> gg[0] && gg[0].auteurUid===st.auteurUid);
+  div.onclick=()=>ouvrirViewerStory(indexGroupe, 0);
   row.appendChild(div);
 });
 },error=>console.error("Stories:",error));
