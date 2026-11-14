@@ -33,16 +33,12 @@ body{background:#0A0A0F;color:#fff;height:100dvh;display:flex;flex-direction:col
 @keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
 .quick{flex-shrink:0;padding:6px 12px;display:flex;gap:6px;flex-wrap:wrap;background:#12121A;border-top:1px solid var(--ligne)}
 .quick button{background:#2A2A35;border:1px solid var(--ligne);color:#fff;padding:7px 12px;border-radius:999px;font-size:11px;cursor:pointer}
-.input-wrap{flex-shrink:0;padding:10px 12px;background:#12121A;border-top:1px solid var(--ligne);display:flex;gap:8px;align-items:center}
+.input-wrap{flex-shrink:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#12121A;border-top:1px solid var(--ligne);display:flex;gap:8px;align-items:center}
 .input-wrap input{flex:1;min-width:0;padding:12px 14px;background:#2A2A35;border:none;border-radius:999px;outline:none;color:#fff;font-size:14px}
 .input-wrap input::placeholder{color:#888}
 .input-wrap button{width:44px;height:44px;min-width:44px;border:none;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--or));color:#fff;font-size:18px;cursor:pointer;flex-shrink:0}
 .input-wrap button:disabled{opacity:.5}
-.bottom{flex-shrink:0;background:rgba(10,10,15,.96);display:flex;justify-content:space-around;padding:8px 6px calc(8px + env(safe-area-inset-bottom));border-top:1px solid var(--ligne)}
-.bottom button{background:none;border:none;color:#888;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-size:10px;font-weight:700}
-.bottom button.active{color:var(--or)}
-.bottom button span{font-size:22px}
-.bottom .centre{width:52px;height:52px;border-radius:50%;margin-top:-30px;background:linear-gradient(135deg,var(--violet),var(--or));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:4px solid #0A0A0F}
+/* ✅ BARRE DU BAS SUPPRIMEE - PLUS DE BOUTON ACCUEIL / AMIS / + / MESSAGES / MOI ICI */
 </style>
 </head>
 <body>
@@ -75,13 +71,7 @@ body{background:#0A0A0F;color:#fff;height:100dvh;display:flex;flex-direction:col
 <button id="btnSend" onclick="envoyer()">➤</button>
 </div>
 
-<div class="bottom">
-<button onclick="location.href='feed.html'"><span>🏠</span>Accueil</button>
-<button onclick="location.href='amis.html'"><span>👥</span>Amis</button>
-<button onclick="location.href='creer-post.html'"><span class="centre">+</span></button>
-<button class="active" onclick="location.href='messages.html'"><span>💬</span>Messages</button>
-<button onclick="location.href='profil.html'"><span>👤</span>Moi</button>
-</div>
+<!-- ✅ PLUS DE BARRE DU BAS ICI -->
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -105,7 +95,6 @@ Si on te demande de te présenter, tu dis : Je suis JASON Assistant, créé par 
 Tu es gentil, drôle, tu parles comme un ami congolais, tu utilises des emojis. Tu aides pour JASONBOOK : publier, story, booster, messages, amis.
 L'utilisateur s'appelle ${monNom}.
 Ne mentionne jamais DAVBOT, ni l'API, ni d'autre créateur.`;
-
 function heure(){ return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
 function ajouterMsg(texte, qui){
   const div = document.createElement('div');
@@ -159,11 +148,9 @@ function corrigerReponse(txt){
   }
   return t;
 }
-// ✅ CORRECTION PRINCIPALE : on cherche la réponse PARTOUT dans l'objet
 function extraireReponse(data){
   if(!data) return "";
   if(typeof data === 'string') return data;
-  // 1. Clés classiques
   const cles = ["reply","response","message","text","answer","result","output","content","reponse","ai_response","bot_response","completion"];
   for(const k of cles){
     if(typeof data[k] === 'string' && data[k].trim().length > 2) return data[k];
@@ -172,18 +159,15 @@ function extraireReponse(data){
       if(sous) return sous;
     }
   }
-  // 2. Format OpenAI : choices[0].message.content
   if(Array.isArray(data.choices) && data.choices[0]){
     const c = data.choices[0];
     if(c.message && typeof c.message.content === 'string') return c.message.content;
     if(typeof c.text === 'string') return c.text;
   }
-  // 3. data.data
   if(data.data) {
     const sous = extraireReponse(data.data);
     if(sous) return sous;
   }
-  // 4. Recherche récursive : la plus longue chaîne qui ressemble à une phrase
   let meilleur = "";
   function fouiller(obj){
     if(!obj || typeof obj !== 'object') return;
@@ -198,7 +182,6 @@ function extraireReponse(data){
   fouiller(data);
   return meilleur;
 }
-
 window.envoyer = async ()=>{
   const txt = input.value.trim(); if(!txt) return;
   ajouterMsg(txt, 'mine'); sauver(txt,'mine');
@@ -216,26 +199,17 @@ window.envoyer = async ()=>{
       })
     });
     const rawText = await response.text();
-    console.log("RAW API:", rawText);
     let data;
     try{ data = JSON.parse(rawText); }catch(e){ data = rawText; }
-    console.log("PARSED:", data);
     let reponse = extraireReponse(data);
-    if(!reponse){
-      // ✅ Si l'API renvoie du texte brut, on l'utilise
-      if(typeof rawText === 'string' && rawText.length > 5) reponse = rawText;
-      else reponse = "";
-    }
-    if(!reponse){
-      throw new Error("Réponse vide de l'API : " + rawText.slice(0,200));
-    }
+    if(!reponse && typeof rawText === 'string' && rawText.length > 5) reponse = rawText;
+    if(!reponse) throw new Error("Réponse vide");
     reponse = corrigerReponse(reponse);
     cacherTyping();
     ajouterMsg(reponse, 'bot'); sauver(reponse,'bot');
     history.push({role:'assistant', content:reponse});
     history = history.slice(-20);
   }catch(e){
-    console.error("ERREUR API:", e);
     cacherTyping();
     const t = txt.toLowerCase();
     let fallback = "";
