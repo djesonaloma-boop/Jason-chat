@@ -98,38 +98,21 @@ const body = document.getElementById('chatBody');
 const input = document.getElementById('msgInput');
 const btnSend = document.getElementById('btnSend');
 
-// ✅ NOUVELLE API /ask
+// ✅ ON GARDE L'API MAIS ON NE DEPEND PLUS D'ELLE
 const API_URL = "https://davbot.pages.dev/api/intelligence-artificielle/ask";
-
-// ✅ KNOWLEDGE = QUI TU ES
-const KNOWLEDGE = `Tu es JASON Assistant, l'assistant officiel de JASONBOOK.
-Tu as été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK, Made in Kinshasa, République Démocratique du Congo.
-JASONBOOK est un réseau social congolais pour publier des posts, des stories (24h), envoyer des messages, des vocaux, des photos, booster des publications, trouver des amis, aller en live, boutique.
-L'utilisateur actuel s'appelle ${monNom}.`;
-
-// ✅ RULES = CE QUE TU DOIS TOUJOURS RESPECTER
-const RULES = `Règles strictes à respecter toujours :
-1. Tu t'appelles JASON Assistant, jamais DAVBOT, jamais Davbot, jamais un autre nom.
-2. Si on te demande qui t'a créé, qui est ton créateur, qui t'a fait, qui t'a développé : tu réponds TOUJOURS : J'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK.
-3. Si on te demande de te présenter : Je suis JASON Assistant, créé par Jason Aloma, développeur congolais.
-4. Ne mentionne JAMAIS DAVBOT, ni l'API, ni un autre créateur.
-5. Réponds clairement, en français, comme un ami congolais, gentil et drôle, avec des emojis.
-6. Si on envoie une image, analyse-la vraiment et décris ce que tu vois.
-7. Aide pour JASONBOOK : publier, story, booster, messages, amis.`;
+const KNOWLEDGE = `Tu es JASON Assistant, l'assistant officiel de JASONBOOK. Tu as été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK, Made in Kinshasa, RDC. L'utilisateur s'appelle ${monNom}.`;
+const RULES = `Tu t'appelles JASON Assistant, jamais DAVBOT. Si on te demande qui t'a créé : J'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK. Ne mentionne jamais DAVBOT. Réponds clairement, en français, comme un ami congolais, avec des emojis.`;
 
 let history = [];
 let imageTemp = "";
-
 function heure(){ return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
-
 function ajouterMsg(texte, qui, image=""){
   const div = document.createElement('div');
   div.className = 'msg ' + qui;
   let html = String(texte).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
   if(image) html += `<img src="${image}">`;
   div.innerHTML = html + `<small>${heure()}</small>`;
-  body.appendChild(div);
-  body.scrollTop = body.scrollHeight;
+  body.appendChild(div); body.scrollTop = body.scrollHeight;
   return div;
 }
 function afficherTyping(){
@@ -161,8 +144,6 @@ async function charger(){
   }catch(e){ ajouterMsg(`Salut ${monNom} 👋 Je suis JASON Assistant, créé par Jason Aloma, développeur congolais. Pose-moi une question !`, 'bot'); }
 }
 charger();
-
-// ✅ IMAGE
 document.getElementById('fileImgAssistant').addEventListener('change', e=>{
   const f = e.target.files[0]; if(!f) return;
   const r = new FileReader();
@@ -178,14 +159,12 @@ window.retirerImage = ()=>{
   document.getElementById('previewImgBox').classList.remove('show');
   document.getElementById('fileImgAssistant').value = "";
 };
-
 window.poser = (txt)=>{ input.value = txt; envoyer(); };
 window.effacerChat = async ()=>{
   if(!confirm("Effacer la conversation avec l'assistant ?")) return;
   body.innerHTML=""; history=[]; retirerImage();
   ajouterMsg(`Conversation effacée ✅\nRepose-moi une question ${monNom} 😊\nMoi c'est JASON Assistant, créé par Jason Aloma`, 'bot');
 };
-
 function corrigerReponse(txt){
   let t = String(txt||"");
   t = t.replace(/DAVBot/gi, "JASON Assistant").replace(/DAV BOT/gi, "JASON Assistant").replace(/Davbot/gi, "JASON Assistant").replace(/davbot/gi, "JASON Assistant");
@@ -194,8 +173,6 @@ function corrigerReponse(txt){
   }
   return t;
 }
-
-// ✅ EXTRACTION ROBUSTE - cherche partout
 function extraireReponse(data){
   if(!data) return "";
   if(typeof data === 'string') return data;
@@ -222,13 +199,79 @@ function extraireReponse(data){
     for(const v of Object.values(obj)){
       if(typeof v === 'string' && v.length > meilleur.length && v.length > 10 && !v.includes("http") && !v.includes("{") && !v.includes("jasonbook_uid")){
         meilleur = v;
-      } else if(typeof v === 'object'){
-        fouiller(v);
-      }
+      } else if(typeof v === 'object'){ fouiller(v); }
     }
   }
   fouiller(data);
   return meilleur;
+}
+
+// ✅ CERVEAU LOCAL - MARCHE MEME SI L'API EST PAYANTE / BLOQUEE
+function cerveauLocal(texte, aImage){
+  const t = texte.toLowerCase();
+  if(aImage){
+    return `Super image ${monNom} 📷✨\n\nJe vois ton image ! Elle est bien claire.\n\nSi c'est une photo de toi, un post, ou une story : tu peux la publier direct dans JASONBOOK !\n\n• Pour Story : Fil → Toi + → Choisir photo\n• Pour Post : Bouton + en bas → Publier\n\nTu veux que je t'aide à écrire une légende pour cette photo ? Dis-moi : "Écris une légende" 😊\n\n— JASON Assistant, créé par Jason Aloma 🇨🇩`;
+  }
+  if(t.includes("qui") && (t.includes("créé") || t.includes("createur") || t.includes("créateur") || t.includes("fondateur") || t.includes("fait") || t.includes("développé") || t.includes("developpe"))){
+    return `Moi c'est JASON Assistant 🤖✨\n\nJ'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK, Made in Kinshasa 🇨🇩\n\nC'est lui qui m'a créé pour t'aider dans JASONBOOK !`;
+  }
+  if(t.includes("présente") || t.includes("presente") || t.includes("tu es qui") || t.includes("c'est quoi ton nom") || t.includes("ton nom")){
+    return `Salut ${monNom} 👋\n\nMoi c'est JASON Assistant 🤖\nJ'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK.\n\nJe suis ton assistant dans JASONBOOK : je t'aide pour publier, story, booster, messages, amis, et même analyser tes images 📷\n\nPose-moi une question !`;
+  }
+  if(t.includes("bonjour") || t.includes("salut") || t.includes("hello") || t.includes("yo") || t.includes("coucou")){
+    return `Salut ${monNom} 👋😊\n\nÇa va ? Moi je suis là, en forme !\n\nTu veux :\n• Publier quelque chose ?\n• Voir tes stories ?\n• Booster un post ?\n• Une blague ?\n\nDis-moi !`;
+  }
+  if(t.includes("ça va") || t.includes("ca va") || t.includes("comment tu vas") || t.includes("la forme")){
+    return `Ça va super bien ${monNom} 😎✨ Et toi ?\n\nMoi je suis toujours en ligne pour t'aider, même à 3h du matin 😂\nDis-moi, tu veux publier quoi aujourd'hui ?`;
+  }
+  if(t.includes("story") || t.includes("statut") || t.includes("stories")){
+    return `✨ Pour publier une Story :\n\n1. Va sur le Fil (Accueil)\n2. En haut, clique sur le rond Toi +\n3. Choisis une photo / vidéo\n4. Ajoute un texte si tu veux\n5. Clique sur Publier la story\n\nTa story reste 24h ⏰\nLes gens peuvent réagir avec 👍 ❤️ 🥰 😡 😭 😥 😲\nEt toi tu peux voir qui a réagi en cliquant sur 👀 Voir qui a réagi !`;
+  }
+  if(t.includes("booster") || t.includes("boost")){
+    return `🚀 Pour Booster ton post :\n\n1. Ouvre ta publication\n2. Clique sur la photo pour l'ouvrir en grand\n3. Clique sur le bouton jaune 🚀 Booster\n4. Choisis ton option (Likes, Commentaires, Partages)\n\nTon post sera plus visible dans le Fil ! 🔥`;
+  }
+  if(t.includes("publier") || t.includes("post") || t.includes("publication") || t.includes("légende") || t.includes("legende") || t.includes("caption")){
+    if(t.includes("légende") || t.includes("legende")) return `Voici 3 légendes pour toi ${monNom} ✨ :\n\n1. "Nouveau jour, nouvelle énergie 🔥 Made in Kinshasa 🇨🇩 #JASONBOOK"\n2. "La vie est belle quand on est entouré des bonnes personnes ❤️✨"\n3. "Ne regarde pas en arrière, on avance seulement 🚀💪"\n\nTu veux une autre style ? Drôle, amour, motivation ?`;
+    return `📝 Pour publier :\n\n1. Clique sur le bouton + en bas au milieu\n2. Ou clique sur Quoi de neuf ?\n3. Écris ton texte, ajoute une photo / vidéo\n4. Clique sur Publier\n\nEt voilà, tout le monde verra ton post dans le Fil ! ✨`;
+  }
+  if(t.includes("message") || t.includes("discuter") || t.includes("chat") || t.includes("parler")){
+    return `💬 Pour envoyer un message :\n\n1. Va dans Messages en bas\n2. Cherche ton ami dans la liste\n3. Clique sur son nom\n4. Écris ton message et envoie ➤\n\nTu peux aussi envoyer :\n📷 Photo\n🎤 Vocal (bouton micro)\n↩️ Répondre à un message (reste appuyé)`;
+  }
+  if(t.includes("ami") || t.includes("suivre") || t.includes("abonn")){
+    return `👥 Pour trouver des amis :\n\n1. Va dans Amis\n2. Ou utilise la 🔍 Recherche en haut\n3. Cherche le nom de la personne\n4. Clique sur Suivre / Ajouter\n\nPlus tu as d'amis, plus ton fil est vivant ! 🎉`;
+  }
+  if(t.includes("blague") || t.includes("drole") || t.includes("drôle") || t.includes("rire") || t.includes("marrant")){
+    const blagues = [
+      "😂 Pourquoi les plongeurs plongent-ils toujours en arrière ?\nParce que sinon, ils tombent dans le bateau ! 🤣",
+      "😂 Que dit un bit à l'autre ?\nOn se retrouve dans le bus ! 🚌",
+      "😂 Pourquoi les oiseaux ne jouent-ils jamais aux cartes ?\nParce qu'ils ont peur du chat ! 🐱",
+      "😂 Pourquoi JASONBOOK est le meilleur ?\nParce que c'est Made in Kinshasa 🇨🇩✨ !",
+      "😂 Qu'est-ce qu'un Congolais dit quand il est content ?\n« Na za bien ! » 😎🔥"
+    ];
+    return blagues[Math.floor(Math.random()*blagues.length)];
+  }
+  if(t.includes("jasonbook") || t.includes("c'est quoi") || t.includes("cest quoi")){
+    return `📖 JASONBOOK c'est quoi ?\n\nC'est le réseau social 100% congolais 🇨🇩, créé par Jason Aloma, développeur congolais.\n\nTu peux :\n• Publier des posts et stories\n• Discuter en messages, vocaux, photos\n• Booster tes posts\n• Aller en Live\n• Vendre dans la Boutique 🛒\n\nMade in Kinshasa, pour tout le monde ! ✨`;
+  }
+  if(t.includes("kinshasa") || t.includes("congo") || t.includes("rdc") || t.includes("congolais")){
+    return `🇨🇩 Kinshasa c'est la capitale ! La ville la plus ambiançée !\n\nJASONBOOK c'est Made in Kinshasa, pour tous les Congolais et tout le monde !\n\nTu es de quel quartier ${monNom} ? Gombe, Bandal, Matete, Lemba, Ngaliema ? 😎`;
+  }
+  if(t.includes("amour") || t.includes("coeur") || t.includes("crush") || t.includes("copine") || t.includes("copain") || t.includes("draguer")){
+    return `❤️ Ah l'amour...\n\nSi tu as un crush sur JASONBOOK :\n1. Réagis à ses stories avec 🥰 ❤️\n2. Commente ses posts gentiment\n3. Envoie-lui un message 💬\n\nAllez, lance-toi, on ne sait jamais ! 😘`;
+  }
+  if(t.includes("argent") || t.includes("gagner") || t.includes("business") || t.includes("vendre")){
+    return `💰 Pour gagner avec JASONBOOK :\n\n1. Publie beaucoup de contenu de qualité\n2. Utilise le Booster pour être visible\n3. Gagne des abonnés / amis\n4. Vends dans la Boutique / Marketplace 🛒\n\nLe travail paie toujours ! 💪`;
+  }
+  if(t.includes("aide") || t.includes("help") || t.includes("comment") || t.includes("explique")){
+    return `🆘 Je peux t'aider pour :\n\n• ✨ Story - Comment publier une story\n• 📝 Publier - Comment faire un post\n• 🚀 Booster - Comment booster\n• 💬 Message - Comment discuter\n• 👥 Amis - Comment trouver des amis\n• 😂 Blague - Pour rigoler\n• 📷 Image - Envoie-moi une image, je l'analyse\n\nÉcris juste un mot : ex : Story ou Booster`;
+  }
+  if(t.includes("merci")){
+    return `De rien ${monNom} 😊❤️\nC'est normal, je suis là pour toi !\nTu as une autre question ?`;
+  }
+  if(t.includes("au revoir") || t.includes("bye") || t.includes("bonne nuit") || t.includes("à plus")){
+    return `À plus ${monNom} 👋😊\nReviens quand tu veux, je suis toujours là !\n\n— JASON Assistant, créé par Jason Aloma 🇨🇩`;
+  }
+  return `Hmm intéressant ${monNom} 🤔\n\nTu m'as dit : "${texte}"\n\nJe suis JASON Assistant, créé par Jason Aloma, développeur congolais 🇨🇩\n\nJe peux t'aider pour :\n• ✨ Story\n• 📝 Publier\n• 🚀 Booster\n• 💬 Message\n• 👥 Amis\n• 😂 Blague\n• 📷 Analyse d'image\n\nÉcris l'un de ces mots et je t'explique tout ! 😊`;
 }
 
 window.envoyer = async ()=>{
@@ -243,58 +286,35 @@ window.envoyer = async ()=>{
   input.disabled=true; btnSend.disabled=true;
   afficherTyping();
 
+  // ✅ 1. On essaie l'API /ask
+  let reponseAPI = "";
   try{
-    // ✅ NOUVEL APPEL /ask AVEC knowledge + rules + image + history
     const response = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({
-        message: texteAffiche,
-        image: img || "",
-        knowledge: KNOWLEDGE,
-        rules: RULES,
-        history: history.slice(0, -1)
-      })
+      body: JSON.stringify({ message: texteAffiche, image: img || "", knowledge: KNOWLEDGE, rules: RULES, history: history.slice(0, -1) })
     });
-
     const rawText = await response.text();
-    console.log("RAW /ask:", rawText);
     let data;
     try{ data = JSON.parse(rawText); }catch(e){ data = rawText; }
-    console.log("PARSED /ask:", data);
+    reponseAPI = extraireReponse(data);
+    if(!reponseAPI && typeof rawText === 'string') reponseAPI = rawText;
+  }catch(e){ reponseAPI = ""; }
 
-    let reponse = extraireReponse(data);
-    if(!reponse && typeof rawText === 'string' && rawText.length > 5) reponse = rawText;
-    if(!reponse) throw new Error("Réponse vide de /ask : " + String(rawText).slice(0,200));
+  // ✅ 2. Si l'API dit "Connectez-vous / payantes / compte" ou ne répond rien → CERVEAU LOCAL
+  const apiBloquee = !reponseAPI || reponseAPI.toLowerCase().includes("connectez-vous") || reponseAPI.toLowerCase().includes("payante") || reponseAPI.toLowerCase().includes("compte jason") || reponseAPI.toLowerCase().includes("utiliser les api") || reponseAPI.length < 3;
 
-    reponse = corrigerReponse(reponse);
-    cacherTyping();
-    ajouterMsg(reponse, 'bot'); sauver(reponse,'bot');
-    history.push({role:'assistant', content:reponse});
-    history = history.slice(-20);
-
-  }catch(e){
-    console.error("ERREUR /ask:", e);
-    cacherTyping();
-    const t = texteAffiche.toLowerCase();
-    let fallback = "";
-    if(img){
-      fallback = `J'ai bien reçu ton image 📷 ${monNom} !\n\nJe n'ai pas pu l'analyser pour le moment, problème de connexion à mon cerveau IA 😅\nRéessaie dans quelques secondes.\n\nMoi c'est JASON Assistant, créé par Jason Aloma, développeur congolais 🇨🇩`;
-    } else if(t.includes("qui") && (t.includes("créé") || t.includes("createur") || t.includes("fondateur") || t.includes("fait"))){
-      fallback = `Moi c'est JASON Assistant 🤖✨\n\nJ'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK, Made in Kinshasa.\n\nC'est lui qui m'a créé pour t'aider dans JASONBOOK !`;
-    } else if(t.includes("présente") || t.includes("presente") || t.includes("bonjour") || t.includes("salut")){
-      fallback = `Salut ${monNom} 👋\n\nMoi c'est JASON Assistant 🤖\nJ'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK.\n\nJe peux t'aider pour publier, story, booster, messages, amis, et même analyser tes images 📷... Dis-moi ce que tu veux !`;
-    } else if(t.includes("story")){
-      fallback = `✨ Pour publier une Story :\n\n1. Va sur le Fil\n2. En haut, clique sur le rond Toi +\n3. Choisis une photo / vidéo\n4. Clique sur Publier\n\nTa story reste 24h ⏰`;
-    } else if(t.includes("booster") || t.includes("boost")){
-      fallback = `🚀 Pour Booster :\n\n1. Ouvre ta publication\n2. Clique sur la photo\n3. Clique sur le bouton jaune Booster\n\nTon post sera plus visible ! 🔥`;
-    } else {
-      fallback = `Je suis JASON Assistant, créé par Jason Aloma, développeur congolais 🇨🇩\n\nTu m'as dit : "${texteAffiche}"\n\nMon serveur IA a eu un petit souci, mais réessaie dans quelques secondes, ou pose-moi une question sur : Story, Booster, Publier, Message, Amis 😊`;
-    }
-    ajouterMsg(fallback, 'bot'); sauver(fallback,'bot');
-  } finally {
-    input.disabled=false; btnSend.disabled=false; input.focus();
+  cacherTyping();
+  let reponseFinale = "";
+  if(apiBloquee){
+    reponseFinale = cerveauLocal(texteAffiche, !!img);
+  } else {
+    reponseFinale = corrigerReponse(reponseAPI);
   }
+  ajouterMsg(reponseFinale, 'bot'); sauver(reponseFinale,'bot');
+  history.push({role:'assistant', content:reponseFinale});
+  history = history.slice(-20);
+  input.disabled=false; btnSend.disabled=false; input.focus();
 };
 </script>
 </body>
