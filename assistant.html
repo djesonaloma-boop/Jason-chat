@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#0A0A0F">
-<title>JASONBOOK ✨ - Assistant</title>
+<title>JASONBOOK ✨ - JASON Assistant</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
 body{background:#0A0A0F;color:#fff;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
@@ -21,7 +21,7 @@ body{background:#0A0A0F;color:#fff;height:100dvh;display:flex;flex-direction:col
 .suggestions::-webkit-scrollbar{display:none}
 .suggestions button{flex-shrink:0;background:#1F1F2E;border:1px solid var(--ligne);color:#fff;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer}
 .chat-body{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px;min-height:0}
-.msg{max-width:85%;padding:11px 13px;border-radius:18px;font-size:14px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.msg{max-width:88%;padding:11px 13px;border-radius:18px;font-size:14px;line-height:1.55;white-space:pre-wrap;word-wrap:break-word}
 .msg.bot{background:#1F1F2E;border:1px solid var(--ligne);align-self:flex-start;border-bottom-left-radius:4px}
 .msg.mine{background:linear-gradient(135deg,var(--violet),var(--violet2));align-self:flex-end;border-bottom-right-radius:4px}
 .msg small{display:block;font-size:11px;opacity:.7;margin-top:4px;text-align:right}
@@ -52,16 +52,19 @@ body{background:#0A0A0F;color:#fff;height:100dvh;display:flex;flex-direction:col
 <div class="top">
 <span class="back" onclick="history.back()">←</span>
 <div class="avatar">🤖<span class="dot-online"></span></div>
-<div class="info"><b>JASON Assistant ✨</b><small>En ligne • Créé par Jason Aloma</small></div>
+<div class="info"><b>JASON Assistant ✨</b><small>En ligne • Pose-moi toutes tes questions</small></div>
 <button onclick="effacerChat()">🗑️</button>
 </div>
 
 <div class="suggestions">
 <button onclick="poser('Bonjour, présente-toi')">👋 Présente-toi</button>
-<button onclick="poser('Comment publier une story ?')">✨ Story</button>
-<button onclick="poser('Comment booster mon post ?')">🚀 Booster</button>
 <button onclick="poser('Qui t\'a créé ?')">👑 Ton créateur</button>
 <button onclick="poser('Raconte-moi une blague')">😂 Blague</button>
+<button onclick="poser('C\'est quoi JASONBOOK ?')">📖 JASONBOOK</button>
+<button onclick="poser('Combien font 25 x 4 ?')">🧮 Maths</button>
+<button onclick="poser('Traduis Bonjour en anglais')">🌍 Traduction</button>
+<button onclick="poser('Motive-moi')">🔥 Motivation</button>
+<button onclick="poser('Quelle est la capitale du Congo ?')">🇨🇩 Congo</button>
 </div>
 
 <div class="chat-body" id="chatBody"></div>
@@ -69,7 +72,8 @@ body{background:#0A0A0F;color:#fff;height:100dvh;display:flex;flex-direction:col
 <div class="quick">
 <button onclick="poser('Bonjour')">👋 Bonjour</button>
 <button onclick="poser('Aide-moi')">🆘 Aide</button>
-<button onclick="poser('C\'est quoi JASONBOOK ?')">📖 JASONBOOK</button>
+<button onclick="poser('Écris une légende pour mon post')">✍️ Légende</button>
+<button onclick="poser('Dis-moi un fait incroyable')">🤯 Fait incroyable</button>
 </div>
 
 <div class="preview-img" id="previewImgBox">
@@ -81,7 +85,7 @@ body{background:#0A0A0F;color:#fff;height:100dvh;display:flex;flex-direction:col
 <div class="input-wrap">
 <button onclick="document.getElementById('fileImgAssistant').click()">📷</button>
 <input type="file" id="fileImgAssistant" accept="image/*" style="display:none">
-<input id="msgInput" placeholder="Pose ta question à JASON Assistant..." onkeydown="if(event.key==='Enter') envoyer()">
+<input id="msgInput" placeholder="Pose-moi n'importe quelle question..." onkeydown="if(event.key==='Enter') envoyer()">
 <button class="send" id="btnSend" onclick="envoyer()">➤</button>
 </div>
 
@@ -97,12 +101,9 @@ const monNom = localStorage.getItem('jasonbook_nom')||"Ami";
 const body = document.getElementById('chatBody');
 const input = document.getElementById('msgInput');
 const btnSend = document.getElementById('btnSend');
-
-// ✅ ON GARDE L'API MAIS ON NE DEPEND PLUS D'ELLE
 const API_URL = "https://davbot.pages.dev/api/intelligence-artificielle/ask";
-const KNOWLEDGE = `Tu es JASON Assistant, l'assistant officiel de JASONBOOK. Tu as été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK, Made in Kinshasa, RDC. L'utilisateur s'appelle ${monNom}.`;
-const RULES = `Tu t'appelles JASON Assistant, jamais DAVBOT. Si on te demande qui t'a créé : J'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK. Ne mentionne jamais DAVBOT. Réponds clairement, en français, comme un ami congolais, avec des emojis.`;
-
+const KNOWLEDGE = `Tu es JASON Assistant, l'assistant officiel de JASONBOOK. Tu as été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK, Made in Kinshasa, RDC. L'utilisateur s'appelle ${monNom}. Tu réponds à TOUTES les questions : JASONBOOK, culture, maths, sciences, histoire, sport, amour, business, code, traduction, santé, motivation.`;
+const RULES = `Tu t'appelles JASON Assistant, jamais DAVBOT. Si on te demande qui t'a créé : J'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK. Ne mentionne jamais DAVBOT. Réponds clairement, en français, comme un ami congolais, avec des emojis. Tu es un bot universel comme Meta AI.`;
 let history = [];
 let imageTemp = "";
 function heure(){ return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
@@ -130,7 +131,7 @@ async function charger(){
     const snap = await get(ref(db,'jasonbook/assistant/'+uid));
     const d = snap.val();
     if(d){
-      const arr = Object.values(d).sort((a,b)=>a.timestamp-b.timestamp).slice(-30);
+      const arr = Object.values(d).sort((a,b)=>a.timestamp-b.timestamp).slice(-40);
       arr.forEach(m=>{
         ajouterMsg(m.texte, m.qui);
         if(m.qui==='mine') history.push({role:'user', content:m.texte});
@@ -138,27 +139,19 @@ async function charger(){
       });
       history = history.slice(-20);
     } else {
-      const bienvenue = `Salut ${monNom} 👋\n\nMoi c'est JASON Assistant 🤖✨\n\nJ'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK.\n\nJe suis là pour t'aider dans JASONBOOK :\n• Publier un post / story\n• Booster tes publications\n• Envoyer des messages\n• Trouver des amis\n• Analyser une image 📷\n• Toutes tes questions\n\nPose-moi une question ou envoie-moi une image !`;
+      const bienvenue = `Salut ${monNom} 👋\n\nMoi c'est JASON Assistant 🤖✨\n\nJ'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK 🇨🇩\n\nJe suis comme Meta AI sur Facebook, mais pour JASONBOOK !\nTu peux me poser TOUTES tes questions :\n\n📖 Cours / Devoirs / Maths / Sciences\n🌍 Traduction / Langues\n💻 Code / Informatique\n⚽ Sport / Foot / Musique\n❤️ Amour / Amitié / Conseil\n💰 Business / Argent\n📝 Légende pour ton post\n😂 Blague / Motivation\n🇨🇩 Congo / Kinshasa / Histoire\n📷 Envoie-moi une image, je l'analyse\n\nVas-y, pose-moi n'importe quelle question !`;
       ajouterMsg(bienvenue, 'bot'); sauver(bienvenue,'bot');
     }
-  }catch(e){ ajouterMsg(`Salut ${monNom} 👋 Je suis JASON Assistant, créé par Jason Aloma, développeur congolais. Pose-moi une question !`, 'bot'); }
+  }catch(e){ ajouterMsg(`Salut ${monNom} 👋 Je suis JASON Assistant, créé par Jason Aloma, développeur congolais. Pose-moi toutes tes questions !`, 'bot'); }
 }
 charger();
 document.getElementById('fileImgAssistant').addEventListener('change', e=>{
   const f = e.target.files[0]; if(!f) return;
   const r = new FileReader();
-  r.onload = ev=>{
-    imageTemp = ev.target.result;
-    document.getElementById('previewImg').src = imageTemp;
-    document.getElementById('previewImgBox').classList.add('show');
-  };
+  r.onload = ev=>{ imageTemp = ev.target.result; document.getElementById('previewImg').src = imageTemp; document.getElementById('previewImgBox').classList.add('show'); };
   r.readAsDataURL(f);
 });
-window.retirerImage = ()=>{
-  imageTemp = "";
-  document.getElementById('previewImgBox').classList.remove('show');
-  document.getElementById('fileImgAssistant').value = "";
-};
+window.retirerImage = ()=>{ imageTemp = ""; document.getElementById('previewImgBox').classList.remove('show'); document.getElementById('fileImgAssistant').value = ""; };
 window.poser = (txt)=>{ input.value = txt; envoyer(); };
 window.effacerChat = async ()=>{
   if(!confirm("Effacer la conversation avec l'assistant ?")) return;
@@ -168,9 +161,7 @@ window.effacerChat = async ()=>{
 function corrigerReponse(txt){
   let t = String(txt||"");
   t = t.replace(/DAVBot/gi, "JASON Assistant").replace(/DAV BOT/gi, "JASON Assistant").replace(/Davbot/gi, "JASON Assistant").replace(/davbot/gi, "JASON Assistant");
-  if(t.toLowerCase().includes("créé par") && !t.toLowerCase().includes("jason aloma")){
-    t += "\n\n— Je précise : j'ai été créé par Jason Aloma, développeur congolais";
-  }
+  if(t.toLowerCase().includes("créé par") && !t.toLowerCase().includes("jason aloma")) t += "\n\n— Je précise : j'ai été créé par Jason Aloma, développeur congolais";
   return t;
 }
 function extraireReponse(data){
@@ -179,101 +170,146 @@ function extraireReponse(data){
   const cles = ["reply","response","message","text","answer","result","output","content","reponse","ai_response","bot_response","completion","analysis","analyse"];
   for(const k of cles){
     if(typeof data[k] === 'string' && data[k].trim().length > 2) return data[k];
-    if(data[k] && typeof data[k] === 'object'){
-      const sous = extraireReponse(data[k]);
-      if(sous) return sous;
-    }
+    if(data[k] && typeof data[k] === 'object'){ const sous = extraireReponse(data[k]); if(sous) return sous; }
   }
   if(Array.isArray(data.choices) && data.choices[0]){
     const c = data.choices[0];
     if(c.message && typeof c.message.content === 'string') return c.message.content;
     if(typeof c.text === 'string') return c.text;
   }
-  if(data.data) {
-    const sous = extraireReponse(data.data);
-    if(sous) return sous;
-  }
+  if(data.data) { const sous = extraireReponse(data.data); if(sous) return sous; }
   let meilleur = "";
   function fouiller(obj){
     if(!obj || typeof obj !== 'object') return;
     for(const v of Object.values(obj)){
-      if(typeof v === 'string' && v.length > meilleur.length && v.length > 10 && !v.includes("http") && !v.includes("{") && !v.includes("jasonbook_uid")){
-        meilleur = v;
-      } else if(typeof v === 'object'){ fouiller(v); }
+      if(typeof v === 'string' && v.length > meilleur.length && v.length > 10 && !v.includes("http") && !v.includes("{") && !v.includes("jasonbook_uid")) meilleur = v;
+      else if(typeof v === 'object'){ fouiller(v); }
     }
   }
   fouiller(data);
   return meilleur;
 }
+function aleatoire(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
-// ✅ CERVEAU LOCAL - MARCHE MEME SI L'API EST PAYANTE / BLOQUEE
-function cerveauLocal(texte, aImage){
+// ✅ CALCULATRICE : 25 x 4, 12+8, 100/5, etc.
+function essayerMaths(texte){
+  const t = texte.toLowerCase().replace(/combien font?|calcule|c'est combien|ça fait|egal|=|\?/g,"").trim();
+  const nettoye = t.replace(/x|×/g,"*").replace(/:/g,"/").replace(/,/g,".").replace(/[^0-9+\-*/(). ]/g,"").trim();
+  if(nettoye.length >= 3 && /[+\-*/]/.test(nettoye) && /^[0-9+\-*/(). ]+$/.test(nettoye)){
+    try{
+      const res = Function("return ("+nettoye+")")();
+      if(typeof res === 'number' && isFinite(res)) return `🧮 ${texte} = ${res}\n\nTu veux un autre calcul ${monNom} ?`;
+    }catch(e){}
+  }
+  return null;
+}
+function traduire(texte){
   const t = texte.toLowerCase();
-  if(aImage){
-    return `Super image ${monNom} 📷✨\n\nJe vois ton image ! Elle est bien claire.\n\nSi c'est une photo de toi, un post, ou une story : tu peux la publier direct dans JASONBOOK !\n\n• Pour Story : Fil → Toi + → Choisir photo\n• Pour Post : Bouton + en bas → Publier\n\nTu veux que je t'aide à écrire une légende pour cette photo ? Dis-moi : "Écris une légende" 😊\n\n— JASON Assistant, créé par Jason Aloma 🇨🇩`;
-  }
-  if(t.includes("qui") && (t.includes("créé") || t.includes("createur") || t.includes("créateur") || t.includes("fondateur") || t.includes("fait") || t.includes("développé") || t.includes("developpe"))){
-    return `Moi c'est JASON Assistant 🤖✨\n\nJ'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK, Made in Kinshasa 🇨🇩\n\nC'est lui qui m'a créé pour t'aider dans JASONBOOK !`;
-  }
-  if(t.includes("présente") || t.includes("presente") || t.includes("tu es qui") || t.includes("c'est quoi ton nom") || t.includes("ton nom")){
-    return `Salut ${monNom} 👋\n\nMoi c'est JASON Assistant 🤖\nJ'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK.\n\nJe suis ton assistant dans JASONBOOK : je t'aide pour publier, story, booster, messages, amis, et même analyser tes images 📷\n\nPose-moi une question !`;
-  }
-  if(t.includes("bonjour") || t.includes("salut") || t.includes("hello") || t.includes("yo") || t.includes("coucou")){
-    return `Salut ${monNom} 👋😊\n\nÇa va ? Moi je suis là, en forme !\n\nTu veux :\n• Publier quelque chose ?\n• Voir tes stories ?\n• Booster un post ?\n• Une blague ?\n\nDis-moi !`;
-  }
-  if(t.includes("ça va") || t.includes("ca va") || t.includes("comment tu vas") || t.includes("la forme")){
-    return `Ça va super bien ${monNom} 😎✨ Et toi ?\n\nMoi je suis toujours en ligne pour t'aider, même à 3h du matin 😂\nDis-moi, tu veux publier quoi aujourd'hui ?`;
-  }
-  if(t.includes("story") || t.includes("statut") || t.includes("stories")){
-    return `✨ Pour publier une Story :\n\n1. Va sur le Fil (Accueil)\n2. En haut, clique sur le rond Toi +\n3. Choisis une photo / vidéo\n4. Ajoute un texte si tu veux\n5. Clique sur Publier la story\n\nTa story reste 24h ⏰\nLes gens peuvent réagir avec 👍 ❤️ 🥰 😡 😭 😥 😲\nEt toi tu peux voir qui a réagi en cliquant sur 👀 Voir qui a réagi !`;
-  }
-  if(t.includes("booster") || t.includes("boost")){
-    return `🚀 Pour Booster ton post :\n\n1. Ouvre ta publication\n2. Clique sur la photo pour l'ouvrir en grand\n3. Clique sur le bouton jaune 🚀 Booster\n4. Choisis ton option (Likes, Commentaires, Partages)\n\nTon post sera plus visible dans le Fil ! 🔥`;
-  }
-  if(t.includes("publier") || t.includes("post") || t.includes("publication") || t.includes("légende") || t.includes("legende") || t.includes("caption")){
-    if(t.includes("légende") || t.includes("legende")) return `Voici 3 légendes pour toi ${monNom} ✨ :\n\n1. "Nouveau jour, nouvelle énergie 🔥 Made in Kinshasa 🇨🇩 #JASONBOOK"\n2. "La vie est belle quand on est entouré des bonnes personnes ❤️✨"\n3. "Ne regarde pas en arrière, on avance seulement 🚀💪"\n\nTu veux une autre style ? Drôle, amour, motivation ?`;
-    return `📝 Pour publier :\n\n1. Clique sur le bouton + en bas au milieu\n2. Ou clique sur Quoi de neuf ?\n3. Écris ton texte, ajoute une photo / vidéo\n4. Clique sur Publier\n\nEt voilà, tout le monde verra ton post dans le Fil ! ✨`;
-  }
-  if(t.includes("message") || t.includes("discuter") || t.includes("chat") || t.includes("parler")){
-    return `💬 Pour envoyer un message :\n\n1. Va dans Messages en bas\n2. Cherche ton ami dans la liste\n3. Clique sur son nom\n4. Écris ton message et envoie ➤\n\nTu peux aussi envoyer :\n📷 Photo\n🎤 Vocal (bouton micro)\n↩️ Répondre à un message (reste appuyé)`;
-  }
-  if(t.includes("ami") || t.includes("suivre") || t.includes("abonn")){
-    return `👥 Pour trouver des amis :\n\n1. Va dans Amis\n2. Ou utilise la 🔍 Recherche en haut\n3. Cherche le nom de la personne\n4. Clique sur Suivre / Ajouter\n\nPlus tu as d'amis, plus ton fil est vivant ! 🎉`;
-  }
-  if(t.includes("blague") || t.includes("drole") || t.includes("drôle") || t.includes("rire") || t.includes("marrant")){
-    const blagues = [
-      "😂 Pourquoi les plongeurs plongent-ils toujours en arrière ?\nParce que sinon, ils tombent dans le bateau ! 🤣",
-      "😂 Que dit un bit à l'autre ?\nOn se retrouve dans le bus ! 🚌",
-      "😂 Pourquoi les oiseaux ne jouent-ils jamais aux cartes ?\nParce qu'ils ont peur du chat ! 🐱",
-      "😂 Pourquoi JASONBOOK est le meilleur ?\nParce que c'est Made in Kinshasa 🇨🇩✨ !",
-      "😂 Qu'est-ce qu'un Congolais dit quand il est content ?\n« Na za bien ! » 😎🔥"
-    ];
-    return blagues[Math.floor(Math.random()*blagues.length)];
-  }
-  if(t.includes("jasonbook") || t.includes("c'est quoi") || t.includes("cest quoi")){
-    return `📖 JASONBOOK c'est quoi ?\n\nC'est le réseau social 100% congolais 🇨🇩, créé par Jason Aloma, développeur congolais.\n\nTu peux :\n• Publier des posts et stories\n• Discuter en messages, vocaux, photos\n• Booster tes posts\n• Aller en Live\n• Vendre dans la Boutique 🛒\n\nMade in Kinshasa, pour tout le monde ! ✨`;
-  }
-  if(t.includes("kinshasa") || t.includes("congo") || t.includes("rdc") || t.includes("congolais")){
-    return `🇨🇩 Kinshasa c'est la capitale ! La ville la plus ambiançée !\n\nJASONBOOK c'est Made in Kinshasa, pour tous les Congolais et tout le monde !\n\nTu es de quel quartier ${monNom} ? Gombe, Bandal, Matete, Lemba, Ngaliema ? 😎`;
-  }
-  if(t.includes("amour") || t.includes("coeur") || t.includes("crush") || t.includes("copine") || t.includes("copain") || t.includes("draguer")){
-    return `❤️ Ah l'amour...\n\nSi tu as un crush sur JASONBOOK :\n1. Réagis à ses stories avec 🥰 ❤️\n2. Commente ses posts gentiment\n3. Envoie-lui un message 💬\n\nAllez, lance-toi, on ne sait jamais ! 😘`;
-  }
-  if(t.includes("argent") || t.includes("gagner") || t.includes("business") || t.includes("vendre")){
-    return `💰 Pour gagner avec JASONBOOK :\n\n1. Publie beaucoup de contenu de qualité\n2. Utilise le Booster pour être visible\n3. Gagne des abonnés / amis\n4. Vends dans la Boutique / Marketplace 🛒\n\nLe travail paie toujours ! 💪`;
-  }
-  if(t.includes("aide") || t.includes("help") || t.includes("comment") || t.includes("explique")){
-    return `🆘 Je peux t'aider pour :\n\n• ✨ Story - Comment publier une story\n• 📝 Publier - Comment faire un post\n• 🚀 Booster - Comment booster\n• 💬 Message - Comment discuter\n• 👥 Amis - Comment trouver des amis\n• 😂 Blague - Pour rigoler\n• 📷 Image - Envoie-moi une image, je l'analyse\n\nÉcris juste un mot : ex : Story ou Booster`;
-  }
-  if(t.includes("merci")){
-    return `De rien ${monNom} 😊❤️\nC'est normal, je suis là pour toi !\nTu as une autre question ?`;
-  }
-  if(t.includes("au revoir") || t.includes("bye") || t.includes("bonne nuit") || t.includes("à plus")){
-    return `À plus ${monNom} 👋😊\nReviens quand tu veux, je suis toujours là !\n\n— JASON Assistant, créé par Jason Aloma 🇨🇩`;
-  }
-  return `Hmm intéressant ${monNom} 🤔\n\nTu m'as dit : "${texte}"\n\nJe suis JASON Assistant, créé par Jason Aloma, développeur congolais 🇨🇩\n\nJe peux t'aider pour :\n• ✨ Story\n• 📝 Publier\n• 🚀 Booster\n• 💬 Message\n• 👥 Amis\n• 😂 Blague\n• 📷 Analyse d'image\n\nÉcris l'un de ces mots et je t'explique tout ! 😊`;
+  const dico = {
+    "bonjour":"Hello (anglais) / Hola (espagnol) / Bom dia (portugais) / Mbote (lingala)",
+    "merci":"Thank you (anglais) / Gracias (espagnol) / Obrigado (portugais) / Matondi (lingala)",
+    "amour":"Love (anglais) / Amor (espagnol) / Bolingo (lingala)",
+    "ami":"Friend (anglais) / Amigo (espagnol) / Moninga (lingala)",
+    "famille":"Family (anglais) / Familia (espagnol) / Libota (lingala)",
+    "argent":"Money (anglais) / Dinero (espagnol) / Mbongo (lingala)",
+    "manger":"To eat (anglais) / Comer (espagnol) / Kolia (lingala)",
+    "eau":"Water (anglais) / Agua (espagnol) / Mai (lingala)",
+    "maison":"House (anglais) / Casa (espagnol) / Ndako (lingala)",
+    "école":"School (anglais) / Escuela (espagnol) / Kelasi (lingala)",
+    "dieu":"God (anglais) / Dios (espagnol) / Nzambe (lingala)",
+    "coeur":"Heart (anglais) / Corazón (espagnol) / Motema (lingala)",
+    "bonsoir":"Good evening (anglais) / Buenas noches (espagnol) / Mbote na pokwa (lingala)",
+    "je t'aime":"I love you (anglais) / Te amo (espagnol) / Na lingi yo (lingala)"
+  };
+  for(const mot in dico){ if(t.includes(mot)) return `🌍 Traduction de "${mot}" :\n\n${dico[mot]}\n\nTu veux traduire un autre mot ${monNom} ?`; }
+  return null;
 }
 
+// ✅ CERVEAU UNIVERSEL - REPOND A TOUT
+function cerveauUniversel(texte, aImage){
+  const t = texte.toLowerCase();
+  const maths = essayerMaths(texte);
+  if(maths) return maths;
+  const trad = traduire(texte);
+  if(t.includes("traduis") || t.includes("traduction") || t.includes("en anglais") || t.includes("en lingala") || t.includes("en français")){ if(trad) return trad; return `🌍 Dis-moi quel mot tu veux traduire !\nEx : "Traduis Amour en anglais"\n\nJe connais : Bonjour, Merci, Amour, Ami, Famille, Argent, Manger, Eau, Maison, École, Dieu, Coeur, Je t'aime...`; }
+  if(aImage) return `Super image ${monNom} 📷✨\n\nJe vois ton image ! Elle est bien claire.\n\nSi c'est une photo de toi, un post, ou une story : tu peux la publier direct dans JASONBOOK !\n\n• Pour Story : Fil → Toi + → Choisir photo\n• Pour Post : Bouton + → Publier\n\nTu veux que je t'aide à écrire une légende pour cette photo ? Dis-moi : "Écris une légende" 😊\n\n— JASON Assistant, créé par Jason Aloma 🇨🇩`;
+  if(t.includes("qui") && (t.includes("créé") || t.includes("createur") || t.includes("créateur") || t.includes("fondateur") || t.includes("fait") || t.includes("développé") || t.includes("developpe") || t.includes("inventé"))) return `Moi c'est JASON Assistant 🤖✨\n\nJ'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK, Made in Kinshasa 🇨🇩\n\nC'est lui qui m'a créé pour t'aider, comme Meta AI sur Facebook, mais en version congolaise !`;
+  if(t.includes("présente") || t.includes("presente") || t.includes("tu es qui") || t.includes("ton nom") || t.includes("c'est qui")) return `Salut ${monNom} 👋\n\nMoi c'est JASON Assistant 🤖\nJ'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK.\n\nJe suis comme Meta AI : tu peux me poser TOUTES tes questions !\nMaths, cours, traduction, code, sport, amour, business, blagues, JASONBOOK, images...\n\nVas-y, pose-moi n'importe quoi !`;
+  if(t.includes("bonjour") || t.includes("salut") || t.includes("hello") || t === "yo" || t.includes("coucou") || t.includes("mbote")) return `Salut ${monNom} 👋😊\n\nÇa va ? Moi je suis là, en forme !\n\nTu peux me demander TOUT :\n• Un calcul : "25 x 4"\n• Une traduction : "Traduis Amour en anglais"\n• Un cours : "C'est quoi la photosynthèse ?"\n• Une blague, une motivation, un conseil...\n\nDis-moi !`;
+  if(t.includes("ça va") || t.includes("ca va") || t.includes("comment tu vas") || t.includes("la forme")) return `Ça va super bien ${monNom} 😎✨ Et toi ?\n\nMoi je suis toujours en ligne pour t'aider, même à 3h du matin 😂\nTu veux que je t'aide pour quoi aujourd'hui ?`;
+  if(t.includes("jasonbook")) return `📖 JASONBOOK c'est quoi ?\n\nC'est le réseau social 100% congolais 🇨🇩, créé par Jason Aloma, développeur congolais.\n\nTu peux :\n• Publier des posts et stories\n• Discuter en messages, vocaux, photos\n• Booster tes posts\n• Aller en Live\n• Vendre dans la Boutique 🛒\n\nMade in Kinshasa, pour tout le monde ! ✨`;
+  if(t.includes("story") || t.includes("statut")) return `✨ Pour publier une Story :\n\n1. Va sur le Fil (Accueil)\n2. En haut, clique sur le rond Toi +\n3. Choisis une photo / vidéo\n4. Ajoute un texte si tu veux\n5. Clique sur Publier la story\n\nTa story reste 24h ⏰`;
+  if(t.includes("booster") || t.includes("boost")) return `🚀 Pour Booster ton post :\n\n1. Ouvre ta publication\n2. Clique sur la photo pour l'ouvrir en grand\n3. Clique sur le bouton jaune 🚀 Booster\n\nTon post sera plus visible dans le Fil ! 🔥`;
+  if(t.includes("publier") || t.includes("post") || t.includes("publication")) {
+    if(t.includes("légende") || t.includes("legende")) return `Voici 5 légendes pour toi ${monNom} ✨ :\n\n1. "Nouveau jour, nouvelle énergie 🔥 Made in Kinshasa 🇨🇩 #JASONBOOK"\n2. "La vie est belle quand on est entouré des bonnes personnes ❤️✨"\n3. "Ne regarde pas en arrière, on avance seulement 🚀💪"\n4. "Petit pas par petit pas, on arrive loin 👣✨"\n5. "Souris, la vie est trop courte pour être triste 😊❤️"\n\nTu veux un style drôle, amour, ou motivation ?`;
+    return `📝 Pour publier :\n\n1. Clique sur le bouton + en bas au milieu\n2. Ou clique sur Quoi de neuf ?\n3. Écris ton texte, ajoute une photo / vidéo\n4. Clique sur Publier\n\nEt voilà, tout le monde verra ton post dans le Fil ! ✨`;
+  }
+  if(t.includes("message") || t.includes("discuter") || t.includes("chat")) return `💬 Pour envoyer un message :\n\n1. Va dans Messages en bas\n2. Cherche ton ami dans la liste\n3. Clique sur son nom\n4. Écris ton message et envoie ➤\n\nTu peux aussi envoyer :\n📷 Photo\n🎤 Vocal (bouton micro)\n↩️ Répondre à un message (reste appuyé)`;
+  if(t.includes("ami") || t.includes("suivre") || t.includes("abonn")) return `👥 Pour trouver des amis :\n\n1. Va dans Amis\n2. Ou utilise la 🔍 Recherche en haut\n3. Cherche le nom de la personne\n4. Clique sur Suivre / Ajouter\n\nPlus tu as d'amis, plus ton fil est vivant ! 🎉`;
+  // --- CULTURE GENERALE ---
+  if(t.includes("capitale") && (t.includes("congo") || t.includes("rdc") || t.includes("kinshasa"))) return `🇨🇩 La capitale de la République Démocratique du Congo, c'est Kinshasa !\n\nC'est la plus grande ville francophone du monde, avec plus de 17 millions d'habitants !\nEt c'est là que JASONBOOK a été créé par Jason Aloma ✨`;
+  if(t.includes("capitale") && t.includes("france")) return `🇫🇷 La capitale de la France, c'est Paris !\nLa ville de la Tour Eiffel 🗼`;
+  if(t.includes("capitale") && t.includes("angola")) return `🇦🇴 La capitale de l'Angola, c'est Luanda !`;
+  if(t.includes("capitale") && t.includes("cameroun")) return `🇨🇲 La capitale du Cameroun, c'est Yaoundé !`;
+  if(t.includes("capitale") && t.includes("côte") || t.includes("capitale") && t.includes("ivoire")) return `🇨🇮 La capitale de la Côte d'Ivoire, c'est Yamoussoukro, mais la plus grande ville c'est Abidjan !`;
+  if(t.includes("capitale")) return `🌍 Dis-moi de quel pays tu veux la capitale !\nEx : "Quelle est la capitale du Congo ?" ou "Capitale de la France ?"`;
+  if(t.includes("photosynthèse") || t.includes("photosynthese")) return `🌱 La photosynthèse, c'est quoi ?\n\nC'est comment les plantes fabriquent leur nourriture :\n\n☀️ Soleil + 💧 Eau + 💨 CO2 → 🍃 Sucre + 🫧 Oxygène\n\nGrâce aux feuilles vertes (chlorophylle), la plante transforme la lumière du soleil en énergie. C'est pour ça qu'on dit que les plantes nous donnent de l'oxygène à respirer !`;
+  if(t.includes("eau") && (t.includes("formule") || t.includes("c'est quoi") || t.includes("composition"))) return `💧 La formule de l'eau, c'est H2O !\n\nH = Hydrogène (2 atomes)\nO = Oxygène (1 atome)\n\nC'est pour ça qu'on dit H2O = Eau !`;
+  if(t.includes("terre") && (t.includes("tourne") || t.includes("rotation") || t.includes("tour"))) return `🌍 La Terre tourne sur elle-même en 24h, c'est ce qui fait le jour et la nuit !\n\nEt elle tourne autour du Soleil en 365 jours, c'est ce qui fait les années et les saisons !`;
+  if(t.includes("soleil") || t.includes("planète") || t.includes("planete")) return `☀️ Le Soleil est une étoile, pas une planète !\n\nLes 8 planètes qui tournent autour :\nMercure, Vénus, Terre, Mars, Jupiter, Saturne, Uranus, Neptune\n\nLa Terre est la 3ème, la seule avec de la vie ! 🌍`;
+  if(t.includes("2eme guerre") || t.includes("deuxième guerre") || t.includes("guerre mondiale")) return `📚 La 2ème Guerre Mondiale : 1939 - 1945\n\nC'est la plus grande guerre de l'histoire, avec plus de 60 millions de morts.\nElle s'est terminée en 1945 avec la victoire des Alliés.\nC'est après ça qu'on a créé l'ONU pour essayer d'avoir la paix dans le monde. 🕊️`;
+  if(t.includes("lumumba") || t.includes("patrice")) return `🇨🇩 Patrice Lumumba (1925 - 1961) est le héros de l'indépendance du Congo !\n\nLe 30 juin 1960, le Congo devient indépendant de la Belgique, et Lumumba devient le premier Premier Ministre.\n\nIl est célèbre pour son discours du 30 juin 1960, où il a parlé de la liberté et de la dignité des Congolais. Un vrai héros national ! ✨`;
+  if(t.includes("kabila") || t.includes("mobutu")) return `🇨🇩 Mobutu Sese Seko a dirigé le Zaïre (ancien nom du Congo) de 1965 à 1997.\n\nLaurent-Désiré Kabila lui a succédé en 1997, puis son fils Joseph Kabila de 2001 à 2019.\n\nAujourd'hui le président est Félix Tshisekedi.\n\nTu veux que je t'explique plus l'histoire du Congo ?`;
+  // --- SPORT ---
+  if(t.includes("messi") || t.includes("ronaldo") || t.includes("mbappé") || t.includes("mbappe")) return `⚽ Messi, Ronaldo, Mbappé : les 3 monstres du foot !\n\n• Messi 🇦🇷 : 8 Ballons d'Or, champion du monde 2022\n• Ronaldo 🇵🇹 : 5 Ballons d'Or, meilleur buteur de l'histoire en sélection\n• Mbappé 🇫🇷 : Champion du monde 2018, le plus rapide\n\nPour toi, c'est qui le meilleur ${monNom} ? 😎`;
+  if(t.includes("ballon d'or") || t.includes("ballon d or")) return `🏆 Le Ballon d'Or, c'est le prix du meilleur joueur de foot du monde chaque année !\n\nRecord : Messi avec 8 Ballons d'Or !\n2ème : Ronaldo avec 5.\n\nC'est le rêve de tous les footballeurs !`;
+  if(t.includes("coupe du monde") || t.includes("mondial")) return `🏆 La Coupe du Monde, c'est la plus grande compétition de foot !\nTous les 4 ans.\n\nDernière : 2022 au Qatar, gagnée par l'Argentine de Messi 🇦🇷\nProchaine : 2026 aux USA, Canada, Mexique !\n\nEt la RDC, on espère y retourner bientôt ! 🇨🇩🔥`;
+  if(t.includes("leopards") || t.includes("léopards") || t.includes("rdc foot")) return `🇨🇩 Les Léopards, c'est l'équipe nationale de la RDC !\n\nIls ont gagné la CAN 2 fois : 1968 et 1974.\nEt ils ont joué la Coupe du Monde 1974 !\n\nAllez les Léopards ! 🐆🔥`;
+  // --- AMOUR / CONSEIL ---
+  if(t.includes("amour") || t.includes("coeur") || t.includes("crush") || t.includes("copine") || t.includes("copain") || t.includes("draguer") || t.includes("fille") && t.includes("plait")) return `❤️ Ah l'amour...\n\nMon conseil ${monNom} :\n\n1. Sois toi-même, ne fais pas semblant\n2. Réagis à ses stories avec 🥰 ❤️\n3. Commente ses posts gentiment\n4. Envoie-lui un message simple : "Salut, ça va ? 😊"\n5. Ne te décourage pas si ça ne marche pas, la bonne personne viendra !\n\nAllez, lance-toi, on ne sait jamais ! 😘`;
+  if(t.includes("triste") || t.includes("déprimé") || t.includes("deprime") || t.includes("pleurer") || t.includes("mal")) return `Hey ${monNom}... ❤️\n\nJe suis désolé que tu te sentes comme ça.\n\nÉcoute : tout le monde a des moments difficiles, même les plus forts. Ça va passer, je te promets.\n\nCe que tu peux faire :\n• Parle à un ami ou à ta famille\n• Écoute de la musique que tu aimes 🎵\n• Sors prendre l'air\n• Écris ce que tu ressens\n\nEt moi je suis là, tu peux me parler autant que tu veux. Tu n'es pas seul(e) 🤗`;
+  if(t.includes("motive") || t.includes("motivation") || t.includes("abandonner") || t.includes("fatigué") || t.includes("fatigue")) return `🔥 MOTIVATION pour toi ${monNom} :\n\n"Ne regarde pas en arrière, on avance seulement !"\n\nJason Aloma a créé JASONBOOK tout seul, à Kinshasa, avec un téléphone et beaucoup de courage. Si lui a réussi, toi aussi tu peux réussir !\n\n• Chaque jour est une nouvelle chance\n• Petit pas par petit pas, on arrive loin\n• N'abandonne jamais tes rêves\n\nAllez, lève-toi et fonce ! 💪🚀`;
+  // --- BUSINESS / ARGENT ---
+  if(t.includes("argent") || t.includes("gagner") || t.includes("business") || t.includes("vendre") || t.includes("riche") || t.includes("entrepreneur")) return `💰 Pour gagner de l'argent :\n\n1. Sur JASONBOOK : Publie beaucoup, utilise le Booster, vends dans la Boutique 🛒\n2. Apprends un métier : coiffure, couture, informatique, photo, cuisine...\n3. Vends quelque chose que les gens ont besoin\n4. Économise un peu chaque jour, même 1000 FC\n5. Ne dépense pas tout ce que tu gagnes\n\nLe secret des riches ? Travailler, économiser, investir, et ne jamais abandonner ! 💪`;
+  if(t.includes("code") || t.includes("programmation") || t.includes("html") || t.includes("python") || t.includes("javascript") || t.includes("développeur") || t.includes("developpeur")) return `💻 Tu veux apprendre le code ? Super choix !\n\nComme Jason Aloma, le créateur de JASONBOOK !\n\nCommence par :\n1. HTML : pour faire les pages (comme JASONBOOK)\n2. CSS : pour le design, les couleurs\n3. JavaScript : pour rendre la page vivante\n4. Puis Python ou Firebase pour les apps\n\nTu veux que je t'écrive un petit code HTML ? Dis-moi : "Écris-moi un code HTML"`;
+  if(t.includes("écris") && t.includes("code")) return `Voici un petit code HTML pour toi ${monNom} 👨‍💻 :\n\n<h1>Bonjour, je m'appelle ${monNom} !</h1>\n<p>Je suis sur JASONBOOK, créé par Jason Aloma 🇨🇩</p>\n<button>Clique-moi</button>\n\nCopie ça dans un fichier .html et ouvre-le, tu verras ton nom en grand !\nTu veux un code plus avancé ?`;
+  // --- SANTE ---
+  if(t.includes("santé") || t.includes("sante") || t.includes("malade") || t.includes("fièvre") || t.includes("fievre") || t.includes("maux de tête") || t.includes("tête")) return `🩺 Pour ta santé ${monNom} :\n\n• Bois beaucoup d'eau 💧 (2 litres par jour)\n• Dors 7-8h par nuit 😴\n• Mange des fruits et légumes 🍎🥦\n• Fais un peu de sport, même marcher 30 min\n• Si tu as de la fièvre ou mal qui dure, va voir un médecin ou à l'hôpital, ne reste pas seul avec ça.\n\nPrends soin de toi ! ❤️\n\n⚠️ Je ne suis pas médecin, si c'est grave, va vite voir un vrai médecin.`;
+  if(t.includes("manger") || t.includes("recette") || t.includes("cuisine") || t.includes("pondu") || t.includes("fufu")) return `🍲 Recette facile - Pondu + Fufu 🇨🇩 :\n\nPondu :\n1. Feuilles de manioc pilées\n2. Huile de palme, oignons, poisson fumé\n3. Laisse cuire 1h à feu doux\n\nFufu :\n1. Farine de manioc + eau chaude\n2. Mélange bien jusqu'à ce que ça devienne épais\n\nEt voilà, bon appétit ! 😋\nTu veux une autre recette ?`;
+  // --- MUSIQUE / FILM ---
+  if(t.includes("musique") || t.includes("chanson") || t.includes("fally") || t.includes("koffi") || t.includes("ferre") || t.includes("innoss")) return `🎵 La musique congolaise, la meilleure ! 🇨🇩🔥\n\n• Fally Ipupa - Eloko Oyo, A Flyé...\n• Koffi Olomide - Loi, Papa Ngwasuma...\n• Ferré Gola - Qui vivra verra...\n• Innoss'B - Yo Pe, Ozo Ba... \n• Werrason, JB Mpiana, Papa Wemba - les légendes !\n\nTu écoutes qui en ce moment ${monNom} ?`;
+  if(t.includes("film") || t.includes("série") || t.includes("serie") || t.includes("netflix")) return `🎬 Tu veux un film ?\n\n• Action : John Wick, Fast & Furious\n• Comédie : Mr Bean, Le Roi Lion\n• Drame : Le Parrain, Forrest Gump\n• Africain : Black Panther, Queen of Katwe\n\nDis-moi quel genre tu aimes, je te conseille un film ! 🍿`;
+  // --- DIVERS ---
+  if(t.includes("blague") || t.includes("drole") || t.includes("drôle") || t.includes("rire") || t.includes("marrant")) return aleatoire([
+    "😂 Pourquoi les plongeurs plongent-ils toujours en arrière ?\nParce que sinon, ils tombent dans le bateau ! 🤣",
+    "😂 Que dit un bit à l'autre ?\nOn se retrouve dans le bus ! 🚌",
+    "😂 Pourquoi les oiseaux ne jouent-ils jamais aux cartes ?\nParce qu'ils ont peur du chat ! 🐱",
+    "😂 Pourquoi JASONBOOK est le meilleur ?\nParce que c'est Made in Kinshasa 🇨🇩✨ !",
+    "😂 Qu'est-ce qu'un Congolais dit quand il est content ?\n« Na za bien ! » 😎🔥",
+    "😂 Pourquoi le téléphone est-il toujours fatigué ?\nParce qu'il est toujours sur écoute ! 📱😂"
+  ]);
+  if(t.includes("fait incroyable") || t.includes("incroyable") || t.includes("savais-tu") || t.includes("anecdote")) return aleatoire([
+    "🤯 Savais-tu que les bananes sont des baies, mais les fraises non ?! 🍌🍓",
+    "🤯 Savais-tu que la RDC est le 2ème plus grand pays d'Afrique, et le 11ème du monde ?! 🇨🇩",
+    "🤯 Savais-tu que le fleuve Congo est le 2ème fleuve le plus puissant du monde après l'Amazone ?! 🌊",
+    "🤯 Savais-tu que les poulpes ont 3 cœurs ?! 🐙❤️❤️❤️",
+    "🤯 Savais-tu que Kinshasa est la plus grande ville francophone du monde ?! 🇨🇩",
+    "🤯 Savais-tu que le miel ne se périme jamais ? On a trouvé du miel de 3000 ans encore bon ! 🍯"
+  ]);
+  if(t.includes("légende") || t.includes("legende") || t.includes("caption") || t.includes("bio")) return aleatoire([
+    `✍️ Légendes pour toi ${monNom} ✨ :\n\n1. "Nouveau jour, nouvelle énergie 🔥 Made in Kinshasa 🇨🇩 #JASONBOOK"\n2. "La vie est belle quand on est entouré des bonnes personnes ❤️✨"\n3. "Ne regarde pas en arrière, on avance seulement 🚀💪"`,
+    `✍️ Légendes Amour ❤️ :\n\n1. "Toi + Moi = Pour toujours 💕"\n2. "Mon coeur a choisi, c'est toi 😘"\n3. "Avec toi, chaque jour est un cadeau 🎁❤️"`,
+    `✍️ Légendes Motivation 🔥 :\n\n1. "Petit pas par petit pas, on arrive loin 👣✨"\n2. "Ne dors pas sur tes rêves, travaille ! 💪"\n3. "Kinshasa m'a fait, le monde me connaîtra 🌍🇨🇩"`
+  ]);
+  if(t.includes("merci")) return `De rien ${monNom} 😊❤️\nC'est normal, je suis là pour toi !\nTu as une autre question ?`;
+  if(t.includes("au revoir") || t.includes("bye") || t.includes("bonne nuit") || t.includes("à plus")) return `À plus ${monNom} 👋😊\nReviens quand tu veux, je suis toujours là !\n\n— JASON Assistant, créé par Jason Aloma 🇨🇩`;
+  if(t.includes("aide") || t.includes("help") || t.includes("comment") || t.includes("tu peux")) return `🆘 Je peux répondre à TOUT ${monNom} !\n\nEssaie :\n• "25 x 4" → Je calcule\n• "Traduis Amour en anglais" → Je traduis\n• "C'est quoi la photosynthèse ?" → Je t'explique le cours\n• "Quelle est la capitale du Congo ?" → Culture G\n• "Raconte-moi une blague" → Je te fais rire\n• "Motive-moi" → Motivation\n• "Story / Booster / Publier" → Aide JASONBOOK\n• "Écris une légende" → Pour ton post\n• Envoie une image 📷 → Je l'analyse\n\nVas-y, pose-moi n'importe quoi !`;
+  // --- REPONSE INTELLIGENTE POUR TOUT LE RESTE ---
+  if(t.includes("c'est quoi") || t.includes("cest quoi") || t.includes("qu'est-ce") || t.includes("definition") || t.includes("définition")) return `Bonne question ${monNom} 🤔\n\nTu me demandes : "${texte}"\n\nVoilà ce que je sais : c'est un sujet intéressant ! Pour te répondre au mieux, donne-moi un peu plus de détails.\n\nPar exemple :\n• Si c'est un cours, dis-moi ta classe : "C'est quoi la photosynthèse en 5ème ?"\n• Si c'est un mot, dis-moi : "Définition de Amour"\n\nEt si c'est pour JASONBOOK, dis-moi : Story, Booster, Publier, Message...\n\nJe suis là pour tout t'expliquer ! 😊\n\n— JASON Assistant, créé par Jason Aloma 🇨🇩`;
+  if(t.includes("pourquoi")) return `Bonne question "Pourquoi" ${monNom} 🤔\n\nTu me demandes : "${texte}"\n\nSouvent, la réponse est simple : parce que c'est comme ça que le monde fonctionne ! 😅\n\nMais dis-moi un peu plus : pourquoi quoi exactement ?\nEx : "Pourquoi le ciel est bleu ?" → Je t'explique : à cause de la lumière du soleil qui se disperse dans l'air !\n\nRepose ta question avec plus de détails, je te réponds direct !`;
+  if(t.includes("comment")) return `Tu veux savoir comment faire ${monNom} ? 😊\n\nTu m'as dit : "${texte}"\n\nDis-moi un peu plus :\n• Comment publier ? → Dis "Comment publier ?"\n• Comment faire une story ? → Dis "Story"\n• Comment calculer ? → Dis "25 x 4"\n• Comment draguer ? → Dis "Conseil amour"\n\nPlus tu es précis, mieux je t'aide !`;
+  return `Hmm intéressant ${monNom} 🤔\n\nTu m'as dit : "${texte}"\n\nJe suis JASON Assistant, créé par Jason Aloma, développeur congolais 🇨🇩, comme Meta AI mais pour JASONBOOK.\n\nJe peux répondre à TOUT :\n• 🧮 Maths : "25 x 4"\n• 🌍 Traduction : "Traduis Amour en anglais"\n• 📖 Cours : "C'est quoi la photosynthèse ?"\n• 🇨🇩 Congo : "Capitale du Congo ?"\n• 😂 Blague / 🔥 Motivation\n• ✨ JASONBOOK : Story, Booster, Publier\n• 📷 Envoie une image\n\nRepose ta question un peu différemment, je vais te répondre ! 😊`;
+}
 window.envoyer = async ()=>{
   const txt = input.value.trim();
   const img = imageTemp;
@@ -285,8 +321,6 @@ window.envoyer = async ()=>{
   input.value=""; retirerImage();
   input.disabled=true; btnSend.disabled=true;
   afficherTyping();
-
-  // ✅ 1. On essaie l'API /ask
   let reponseAPI = "";
   try{
     const response = await fetch(API_URL, {
@@ -300,21 +334,18 @@ window.envoyer = async ()=>{
     reponseAPI = extraireReponse(data);
     if(!reponseAPI && typeof rawText === 'string') reponseAPI = rawText;
   }catch(e){ reponseAPI = ""; }
-
-  // ✅ 2. Si l'API dit "Connectez-vous / payantes / compte" ou ne répond rien → CERVEAU LOCAL
   const apiBloquee = !reponseAPI || reponseAPI.toLowerCase().includes("connectez-vous") || reponseAPI.toLowerCase().includes("payante") || reponseAPI.toLowerCase().includes("compte jason") || reponseAPI.toLowerCase().includes("utiliser les api") || reponseAPI.length < 3;
-
-  cacherTyping();
-  let reponseFinale = "";
-  if(apiBloquee){
-    reponseFinale = cerveauLocal(texteAffiche, !!img);
-  } else {
-    reponseFinale = corrigerReponse(reponseAPI);
-  }
-  ajouterMsg(reponseFinale, 'bot'); sauver(reponseFinale,'bot');
-  history.push({role:'assistant', content:reponseFinale});
-  history = history.slice(-20);
-  input.disabled=false; btnSend.disabled=false; input.focus();
+  // ✅ Petite pause pour faire genre il réfléchit, comme Meta AI
+  setTimeout(()=>{
+    cacherTyping();
+    let reponseFinale = "";
+    if(apiBloquee){ reponseFinale = cerveauUniversel(texteAffiche, !!img); }
+    else { reponseFinale = corrigerReponse(reponseAPI); }
+    ajouterMsg(reponseFinale, 'bot'); sauver(reponseFinale,'bot');
+    history.push({role:'assistant', content:reponseFinale});
+    history = history.slice(-20);
+    input.disabled=false; btnSend.disabled=false; input.focus();
+  }, 500);
 };
 </script>
 </body>
