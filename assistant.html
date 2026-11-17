@@ -45,6 +45,20 @@ body{background:#0A0A0F;color:#fff;height:100dvh;display:flex;flex-direction:col
 .input-wrap button{width:44px;height:44px;min-width:44px;border:none;border-radius:50%;background:#2A2A35;color:#fff;font-size:18px;cursor:pointer;flex-shrink:0}
 .input-wrap button.send{background:linear-gradient(135deg,var(--violet),var(--or));color:#fff}
 .input-wrap button:disabled{opacity:.5}
+/* ✅ BLOC CODE COMME META AI */
+.code-block{background:#0A0A0F;border:1px solid #2A2A35;border-radius:14px;overflow:hidden;margin:8px 0}
+.code-head{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;background:#1F1F2E}
+.code-head .code-icon{width:32px;height:32px;min-width:32px;background:#2A2A35;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900}
+.code-head b{font-size:13px;color:#fff;flex:1;text-align:left}
+.code-head .voir-code{font-size:12px;color:#A1A1AA;white-space:nowrap}
+.code-head .fleche{font-size:11px;color:#888;transition:transform .2s}
+.code-block.open .fleche{transform:rotate(180deg)}
+.code-body{display:none;background:#0A0A0F}
+.code-block.open .code-body{display:block}
+.code-body pre{white-space:pre-wrap;word-break:break-word;font-family:monospace;font-size:12.5px;line-height:1.6;color:#E5E7EB;margin:0;padding:12px;max-height:380px;overflow:auto}
+.code-actions{display:flex;gap:8px;padding:10px;border-top:1px solid #2A2A35}
+.code-actions button{flex:1;border:0;padding:10px;border-radius:999px;font-weight:800;font-size:13px;cursor:pointer}
+.btn-copier-code{background:#FFC107;color:#000}
 </style>
 </head>
 <body>
@@ -72,6 +86,7 @@ body{background:#0A0A0F;color:#fff;height:100dvh;display:flex;flex-direction:col
 <button onclick="poser('Aide-moi')">🆘 Aide</button>
 <button onclick="poser('Écris une légende pour mon post')">✍️ Légende</button>
 <button onclick="poser('Motive-moi')">🔥 Motivation</button>
+<button onclick="poser('Code-moi un bouton rouge en html')">💻 Code-moi un bouton</button>
 </div>
 
 <div class="preview-img" id="previewImgBox">
@@ -103,11 +118,8 @@ const btnSend = document.getElementById('btnSend');
 let history = [];
 let imageTemp = "";
 
-// ✅ TON API EXACTE
 const API_BASE = "https://davbot.pages.dev";
 function getApiUrl(){
-  // Si tu es sur davbot.pages.dev -> location.origin marche
-  // Sinon on utilise l'URL absolue
   if(location.origin.includes("davbot.pages.dev")) return location.origin + "/api/intelligence-artificielle/ask";
   return API_BASE + "/api/intelligence-artificielle/ask";
 }
@@ -124,13 +136,56 @@ const RULES = `Règles strictes :
 3. Ne mentionne JAMAIS DAVBOT, ni l'API, ni un autre créateur.
 4. Réponds clairement, en français simple, comme un ami congolais, gentil, drôle, avec des emojis.
 5. Réponds DIRECTEMENT à la question, ne demande jamais de préciser.
-6. Si on envoie une image, analyse-la vraiment et décris ce que tu vois.`;
+6. Si on envoie une image, analyse-la vraiment et décris ce que tu vois.
+7. REGLE CODE OBLIGATOIRE : Quand tu donnes du code (html, css, js, python...), tu mets TOUJOURS le code dans un bloc comme ça :
+\`\`\`html
+ton code ici
+\`\`\`
+ou \`\`\`js, \`\`\`css, \`\`\`python. Tu peux mettre 1 petite phrase avant et après, mais JAMAIS du code sans bloc \`\`\`. C'est pour afficher un beau bloc Voir le code.`;
 
 function heure(){ return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
+
+// ✅ TRANSFORME ```lang ... ``` EN BLOC COMME META AI
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function formaterMessage(texte){
+  let t = String(texte||"");
+  // On protège d'abord le texte hors code
+  const blocs = [];
+  t = t.replace(/```(\w*)\n([\s\S]*?)```/g, (m, lang, code) => {
+    const idx = blocs.length;
+    blocs.push({lang: lang||'', code: code});
+    return `__CODEBLOC_${idx}__`;
+  });
+  // Texte normal : **gras** + retours ligne
+  t = escHtml(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+  // On remet les blocs code
+  blocs.forEach((b, idx) => {
+    const nom = b.lang ? 'Code ' + b.lang.toUpperCase() : 'Code';
+    const id = 'code_' + Math.random().toString(36).slice(2,8);
+    const codeSafe = escHtml(b.code.trim());
+    const blocHtml = `<div class="code-block" id="${id}"><div class="code-head" onclick="document.getElementById('${id}').classList.toggle('open')"><span class="code-icon">&lt;&gt;</span><b>${nom}</b><span class="voir-code">Voir le code</span><span class="fleche">▼</span></div><div class="code-body"><pre>${codeSafe}</pre><div class="code-actions"><button class="btn-copier-code" onclick="copierBlocCode('${id}', this)">📋 Copier le code</button></div></div></div>`;
+    t = t.replace(`__CODEBLOC_${idx}__`, blocHtml);
+  });
+  // Si l'IA a oublié les ``` mais a envoyé du HTML brut, on le met aussi en bloc
+  if(blocs.length===0 && (t.includes('&lt;!DOCTYPE') || t.includes('&lt;html') || t.includes('&lt;style'))){
+    const id = 'code_' + Math.random().toString(36).slice(2,8);
+    const txtBrut = String(texte||"").replace(/```html|```/g,'');
+    t = `<div class="code-block" id="${id}"><div class="code-head" onclick="document.getElementById('${id}').classList.toggle('open')"><span class="code-icon">&lt;&gt;</span><b>Code Html</b><span class="voir-code">Voir le code</span><span class="fleche">▼</span></div><div class="code-body"><pre>${escHtml(txtBrut.trim())}</pre><div class="code-actions"><button class="btn-copier-code" onclick="copierBlocCode('${id}', this)">📋 Copier le code</button></div></div></div>`;
+  }
+  return t;
+}
+window.copierBlocCode = async (id, btn) => {
+  const code = document.querySelector('#'+id+' pre').innerText;
+  try{ await navigator.clipboard.writeText(code); btn.innerText = '✅ Copié !'; }
+  catch(e){ prompt('Copie le code :', code); }
+  setTimeout(()=> btn.innerText = '📋 Copier le code', 2000);
+};
+window.toggleCode = (id) => { document.getElementById(id).classList.toggle('open'); };
+
 function ajouterMsg(texte, qui, image=""){
   const div = document.createElement('div');
   div.className = 'msg ' + qui;
-  let html = String(texte).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+  let html = formaterMessage(texte);
   if(image) html += `<img src="${image}">`;
   div.innerHTML = html + `<small>${heure()}</small>`;
   body.appendChild(div); body.scrollTop = body.scrollHeight;
@@ -218,13 +273,14 @@ function essayerMaths(texte){
   }
   return null;
 }
-// ✅ SECOURS LOCAL - SI L'API DIT "Connectez-vous / payantes", ON REPOND QUAND MEME
 function cerveauLocal(texte, aImage){
   const t = texte.toLowerCase();
   const maths = essayerMaths(texte);
   if(maths) return maths;
   if(aImage) return `Super image ${monNom} 📷✨\n\nJe vois ton image ! Elle est bien claire.\n\nSi c'est une photo de toi, un post, ou une story : tu peux la publier direct dans JASONBOOK !\n\n• Pour Story : Fil → Toi + → Choisir photo\n• Pour Post : Bouton + → Publier\n\nTu veux que je t'aide à écrire une légende ? Dis-moi : "Écris une légende" 😊\n\n— JASON Assistant, créé par Jason Aloma 🇨🇩`;
   if(t.includes("qui") && (t.includes("créé") || t.includes("createur") || t.includes("créateur") || t.includes("fondateur") || t.includes("fait"))) return `Moi c'est JASON Assistant 🤖✨\n\nJ'ai été créé par Jason Aloma, un développeur congolais, fondateur de JASONBOOK, Made in Kinshasa 🇨🇩`;
+  if(t.includes("bouton") && t.includes("rouge")) return `Voilà ton bouton rouge 👇\n\n\`\`\`html\n<button style="background:red;color:white;padding:12px 20px;border:none;border-radius:999px;font-weight:800">Clique-moi</button>\n\`\`\`\n\nTu veux que je change la couleur ?`;
+  if(t.includes("code")) return `Ok ${monNom}, voilà un exemple 👇\n\n\`\`\`html\n<button style="background:#7C3AED;color:white;padding:12px 20px;border:none;border-radius:999px">Mon bouton JASONBOOK ✨</button>\n\`\`\`\n\nDis-moi quel code tu veux exactement et je te le fais !`;
   if(t.includes("pourquoi") && t.includes("ciel") && t.includes("bleu")) return `🌌 Pourquoi le ciel est bleu ?\n\nParce que la lumière du soleil se disperse dans l'air, et c'est la couleur bleue qui se disperse le plus. C'est pour ça que nos yeux voient le ciel bleu !\nLe soir, on voit orange / rouge 🌇`;
   if(t.includes("pourquoi") && (t.includes("pleut") || t.includes("pluie"))) return `🌧️ Pourquoi il pleut ?\n\nLe soleil chauffe l'eau → vapeur monte → nuages → gouttes trop lourdes → pluie ! C'est le cycle de l'eau.`;
   if(t.includes("pourquoi") && (t.includes("dort") || t.includes("dormir"))) return `😴 Pourquoi on dort ?\n\nParce que ton corps et ton cerveau ont besoin de se reposer, de ranger ce que tu as appris et de récupérer de l'énergie. Il faut 7-8h par nuit !`;
@@ -240,7 +296,6 @@ function cerveauLocal(texte, aImage){
   return `Hmm intéressant ${monNom} 🤔\n\nTu m'as dit : "${texte}"\n\nJe suis JASON Assistant, créé par Jason Aloma, développeur congolais 🇨🇩\n\nJe peux répondre à tout : Maths, Cours, Traduction, Sport, Amour, Business, JASONBOOK, Blague...\n\nRepose ta question un peu différemment, je vais te répondre ! 😊`;
 }
 
-// ✅ TON CODE EXACT - AVEC location.origin
 window.envoyer = async ()=>{
   const txt = input.value.trim();
   const img = imageTemp;
@@ -254,7 +309,6 @@ window.envoyer = async ()=>{
   afficherTyping();
 
   try{
-    // ✅ ICI C'EST TON CODE
     const response = await fetch(
       getApiUrl(),
       {
@@ -276,7 +330,6 @@ window.envoyer = async ()=>{
     let reponse = extraireReponse(data);
     if(!reponse && typeof data === 'string') reponse = data;
 
-    // ✅ Si l'API dit "Connectez-vous / payantes" -> on utilise le secours local, on ne montre JAMAIS ce message
     const apiBloquee = !reponse || reponse.toLowerCase().includes("connectez-vous") || reponse.toLowerCase().includes("payante") || reponse.toLowerCase().includes("utiliser les api") || reponse.length < 3;
 
     cacherTyping();
